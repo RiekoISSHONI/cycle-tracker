@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { generateShareCode } from '../utils/cycleData';
+import { downloadCalendarEvents } from '../utils/calendarExport';
 
 function SettingsSection({ title, children }) {
   return (
@@ -34,6 +35,7 @@ export function Settings({ cycleData, onUpdate, onReset }) {
   const [shareCode, setShareCode] = useState(cycleData.shareCode || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
+  const [calendarExported, setCalendarExported] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
   const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
@@ -67,6 +69,12 @@ export function Settings({ cycleData, onUpdate, onReset }) {
     });
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2000);
+  };
+
+  const handleExportCalendar = () => {
+    downloadCalendarEvents(cycleData.lastPeriodStart, cycleData.cycleLength, 6);
+    setCalendarExported(true);
+    setTimeout(() => setCalendarExported(false), 3000);
   };
 
   return (
@@ -174,6 +182,55 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             Generate Share Code
           </button>
         )}
+      </SettingsSection>
+
+      {/* Calendar Integration */}
+      <SettingsSection title="Add to Calendar">
+        <div className="flex items-start gap-3 mb-4">
+          <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-sm text-gray-600">
+              Export your predicted cycle events to Apple Calendar, Google Calendar, or any calendar app.
+            </p>
+            <p className="text-xs text-gray-400 mt-1">
+              Includes periods, ovulation days, fertile windows, and self-care reminders for the next 6 months.
+            </p>
+          </div>
+        </div>
+
+        {calendarExported ? (
+          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-4 text-center">
+            <div className="flex items-center justify-center gap-2 text-emerald-600 font-medium">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Calendar file downloaded!
+            </div>
+            <p className="text-sm text-emerald-600/70 mt-1">
+              Open the .ics file to add events to your calendar
+            </p>
+          </div>
+        ) : (
+          <button
+            onClick={handleExportCalendar}
+            className="w-full btn-secondary flex items-center justify-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download Calendar Events
+          </button>
+        )}
+
+        <div className="mt-4 p-3 bg-gray-50 rounded-xl">
+          <p className="text-xs text-gray-500">
+            <span className="font-medium">Tip:</span> On iOS, tap the downloaded file and select "Add All" to import events. On Mac, double-click the file to open in Calendar.
+          </p>
+        </div>
       </SettingsSection>
 
       {/* About */}
