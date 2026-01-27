@@ -1,14 +1,42 @@
 import { useState } from 'react';
 import { generateShareCode } from '../utils/cycleData';
 
+function SettingsSection({ title, children }) {
+  return (
+    <div className="card p-5">
+      <h3 className="font-semibold text-gray-800 mb-4">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
+function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) {
+  return (
+    <div className="flex items-center justify-between py-3">
+      <div className="flex items-center gap-3">
+        <div className={`w-10 h-10 rounded-xl ${iconBg} flex items-center justify-center`}>
+          {icon}
+        </div>
+        <div>
+          <div className={`font-medium ${danger ? 'text-red-600' : 'text-gray-800'}`}>{title}</div>
+          {subtitle && <div className="text-sm text-gray-500">{subtitle}</div>}
+        </div>
+      </div>
+      {action}
+    </div>
+  );
+}
+
 export function Settings({ cycleData, onUpdate, onReset }) {
   const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
   const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
   const [showShareCode, setShowShareCode] = useState(false);
   const [shareCode, setShareCode] = useState(cycleData.shareCode || '');
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
+  const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
 
   const handleSave = () => {
     onUpdate({
@@ -16,6 +44,8 @@ export function Settings({ cycleData, onUpdate, onReset }) {
       lastPeriodStart: lastPeriod,
       cycleLength: parseInt(cycleLength)
     });
+    setShowSaved(true);
+    setTimeout(() => setShowSaved(false), 2000);
   };
 
   const handleGenerateCode = () => {
@@ -35,147 +65,206 @@ export function Settings({ cycleData, onUpdate, onReset }) {
       ...cycleData,
       lastPeriodStart: newDate
     });
+    setShowSaved(true);
+    setTimeout(() => setShowSaved(false), 2000);
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span>⚙️</span> Cycle Settings
-        </h3>
+    <div className="space-y-6 pb-4">
+      {/* Quick Action */}
+      <button
+        onClick={handleLogNewPeriod}
+        className="w-full card p-5 bg-gradient-to-r from-rose-500 to-pink-500 border-0 text-white text-left hover:shadow-lg transition-shadow active:scale-[0.99]"
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <div>
+              <div className="font-semibold text-lg">Log Period Started</div>
+              <div className="text-white/80 text-sm">Tap to mark today as day 1</div>
+            </div>
+          </div>
+          <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </button>
 
-        <div className="space-y-4">
+      {/* Cycle Settings */}
+      <SettingsSection title="Cycle Settings">
+        <div className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Last Period Start Date
+              Last Period Start
             </label>
             <input
               type="date"
               value={lastPeriod}
               onChange={(e) => setLastPeriod(e.target.value)}
               max={today}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+              className="input"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Average Cycle Length: {cycleLength} days
-            </label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-sm font-medium text-gray-700">
+                Cycle Length
+              </label>
+              <span className="text-lg font-bold text-pink-500">{cycleLength} days</span>
+            </div>
             <input
               type="range"
               min="21"
               max="35"
               value={cycleLength}
               onChange={(e) => setCycleLength(e.target.value)}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-500"
+              style={{ '--value': `${sliderPercent}%` }}
+              className="w-full"
             />
+            <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <span>21</span>
+              <span>28 (avg)</span>
+              <span>35</span>
+            </div>
           </div>
 
           <button
             onClick={handleSave}
-            className="w-full bg-pink-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+            className="w-full btn-primary"
           >
             Save Changes
           </button>
         </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span>⚡</span> Quick Actions
-        </h3>
-
-        <button
-          onClick={handleLogNewPeriod}
-          className="w-full bg-gradient-to-r from-red-400 to-red-500 text-white py-3 px-4 rounded-lg font-medium hover:from-red-500 hover:to-red-600 transition-all flex items-center justify-center gap-2"
-        >
-          <span>🔴</span> Log Period Started Today
-        </button>
-      </div>
+      </SettingsSection>
 
       {/* Partner Sharing */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span>💕</span> Share with Partner
-        </h3>
+      <SettingsSection title="Share with Partner">
         <p className="text-sm text-gray-600 mb-4">
-          Generate a code to share your cycle information with your partner. They can use this to understand where you are in your cycle and how to best support you.
+          Generate a code to help your partner understand your cycle and how to best support you.
         </p>
 
         {showShareCode && shareCode ? (
-          <div className="bg-pink-50 rounded-lg p-4 text-center">
-            <p className="text-sm text-gray-600 mb-2">Your share code:</p>
-            <p className="text-3xl font-bold text-pink-600 tracking-wider">{shareCode}</p>
-            <p className="text-xs text-gray-500 mt-2">
-              Share this code with your partner
-            </p>
+          <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 text-center">
+            <div className="text-sm text-gray-600 mb-2">Your share code</div>
+            <div className="text-4xl font-bold text-violet-600 tracking-widest mb-3">
+              {shareCode}
+            </div>
+            <button
+              onClick={() => {
+                navigator.clipboard?.writeText(shareCode);
+              }}
+              className="text-sm text-violet-500 font-medium hover:text-violet-600"
+            >
+              Tap to copy
+            </button>
           </div>
         ) : (
           <button
             onClick={handleGenerateCode}
-            className="w-full bg-purple-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-purple-600 transition-colors"
+            className="w-full btn-secondary flex items-center justify-center gap-2"
           >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
             Generate Share Code
           </button>
         )}
-      </div>
-
-      {/* Reset Data */}
-      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
-        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-          <span>🗑️</span> Reset Data
-        </h3>
-
-        {showResetConfirm ? (
-          <div className="space-y-3">
-            <p className="text-sm text-red-600">
-              Are you sure? This will delete all your cycle data.
-            </p>
-            <div className="flex gap-2">
-              <button
-                onClick={() => {
-                  onReset();
-                  setShowResetConfirm(false);
-                }}
-                className="flex-1 bg-red-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-red-600 transition-colors"
-              >
-                Yes, Reset
-              </button>
-              <button
-                onClick={() => setShowResetConfirm(false)}
-                className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <button
-            onClick={() => setShowResetConfirm(true)}
-            className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-          >
-            Reset All Data
-          </button>
-        )}
-      </div>
+      </SettingsSection>
 
       {/* About */}
-      <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-6 border border-pink-100">
-        <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-          <span>ℹ️</span> About This App
-        </h3>
-        <p className="text-sm text-gray-600">
-          This cycle tracker is based on the research of Dr. Mindy Pelz, focusing on how women can optimize their nutrition, exercise, and lifestyle based on their menstrual cycle phases.
-        </p>
-        <p className="text-sm text-gray-600 mt-2">
-          The partner view helps your significant other understand your cycle and provides specific tips on how to support you during each phase.
-        </p>
-        <p className="text-xs text-gray-500 mt-4">
-          Your data is stored locally and never leaves your device.
-        </p>
-      </div>
+      <SettingsSection title="About">
+        <SettingsRow
+          icon={
+            <svg className="w-5 h-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          }
+          iconBg="bg-pink-100"
+          title="Flo Cycle Tracker"
+          subtitle="Version 1.0.0"
+        />
+
+        <div className="border-t border-gray-100 mt-2 pt-4">
+          <p className="text-sm text-gray-600">
+            Based on Dr. Mindy Pelz's research on cycle syncing. Personalized recommendations for nutrition, exercise, and lifestyle aligned with your hormonal phases.
+          </p>
+        </div>
+      </SettingsSection>
+
+      {/* Privacy */}
+      <SettingsSection title="Privacy & Data">
+        <SettingsRow
+          icon={
+            <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          }
+          iconBg="bg-emerald-100"
+          title="Local Storage Only"
+          subtitle="Your data never leaves your device"
+        />
+
+        <div className="border-t border-gray-100 mt-2 pt-2">
+          <SettingsRow
+            icon={
+              <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            }
+            iconBg="bg-red-100"
+            title="Delete All Data"
+            subtitle="This action cannot be undone"
+            danger
+            action={
+              !showResetConfirm ? (
+                <button
+                  onClick={() => setShowResetConfirm(true)}
+                  className="text-red-500 text-sm font-medium hover:text-red-600"
+                >
+                  Delete
+                </button>
+              ) : null
+            }
+          />
+
+          {showResetConfirm && (
+            <div className="mt-3 p-4 bg-red-50 rounded-2xl">
+              <p className="text-sm text-red-600 mb-3">
+                Are you sure? This will permanently delete all your cycle data.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    onReset();
+                    setShowResetConfirm(false);
+                  }}
+                  className="flex-1 py-2 px-4 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
+                >
+                  Yes, Delete
+                </button>
+                <button
+                  onClick={() => setShowResetConfirm(false)}
+                  className="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </SettingsSection>
+
+      {/* Toast */}
+      {showSaved && (
+        <div className="toast">
+          Changes saved successfully
+        </div>
+      )}
     </div>
   );
 }

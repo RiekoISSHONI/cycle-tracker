@@ -1,8 +1,18 @@
 import { useState } from 'react';
 
+const PHASES_PREVIEW = [
+  { name: 'Menstrual', color: 'bg-rose-500', description: 'Rest & restore' },
+  { name: 'Follicular', color: 'bg-pink-500', description: 'Energy rising' },
+  { name: 'Ovulatory', color: 'bg-amber-500', description: 'Peak power' },
+  { name: 'Luteal', color: 'bg-violet-500', description: 'Wind down' },
+];
+
 export function CycleSetup({ onSave }) {
+  const [step, setStep] = useState(0);
   const [lastPeriod, setLastPeriod] = useState('');
   const [cycleLength, setCycleLength] = useState(28);
+
+  const today = new Date().toISOString().split('T')[0];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,68 +24,191 @@ export function CycleSetup({ onSave }) {
     }
   };
 
-  // Get today's date in YYYY-MM-DD format for max date
-  const today = new Date().toISOString().split('T')[0];
+  const handleNext = () => {
+    if (step < 2) setStep(step + 1);
+  };
+
+  const handleBack = () => {
+    if (step > 0) setStep(step - 1);
+  };
+
+  // Calculate slider percentage for styling
+  const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-        <div className="text-center mb-8">
-          <span className="text-6xl mb-4 block">🌸</span>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Welcome to Cycle Tracker</h1>
-          <p className="text-gray-600">
-            Track your cycle with insights based on Dr. Mindy Pelz's research for optimal health and harmony.
-          </p>
+    <div className="min-h-screen flex flex-col">
+      {/* Background decoration */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full opacity-30 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-200 rounded-full opacity-30 blur-3xl" />
+      </div>
+
+      <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10">
+        {/* Progress dots */}
+        <div className="flex gap-2 mb-8">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === step ? 'w-8 bg-pink-500' : i < step ? 'w-2 bg-pink-400' : 'w-2 bg-gray-300'
+              }`}
+            />
+          ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              When did your last period start?
-            </label>
-            <input
-              type="date"
-              value={lastPeriod}
-              onChange={(e) => setLastPeriod(e.target.value)}
-              max={today}
-              required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all"
-            />
-          </div>
+        <div className="w-full max-w-md">
+          {/* Step 0: Welcome */}
+          {step === 0 && (
+            <div className="text-center animate-fade-in">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center shadow-lg shadow-pink-500/30">
+                <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Average cycle length (days)
-            </label>
-            <div className="flex items-center gap-4">
-              <input
-                type="range"
-                min="21"
-                max="35"
-                value={cycleLength}
-                onChange={(e) => setCycleLength(e.target.value)}
-                className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-500"
-              />
-              <span className="text-lg font-semibold text-pink-600 w-12 text-center">
-                {cycleLength}
-              </span>
+              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                Welcome to Flo
+              </h1>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                Understand your body better with personalized insights based on your cycle phases.
+              </p>
+
+              {/* Phase preview cards */}
+              <div className="grid grid-cols-2 gap-3 mb-8">
+                {PHASES_PREVIEW.map((phase, i) => (
+                  <div
+                    key={phase.name}
+                    className="card p-4 text-left"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  >
+                    <div className={`w-3 h-3 rounded-full ${phase.color} mb-2`} />
+                    <div className="font-semibold text-gray-800 text-sm">{phase.name}</div>
+                    <div className="text-xs text-gray-500">{phase.description}</div>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={handleNext}
+                className="btn-primary w-full"
+              >
+                Get Started
+              </button>
+
+              <p className="text-xs text-gray-400 mt-4">
+                Your data stays on your device
+              </p>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Most cycles are between 21-35 days. The average is 28 days.
-            </p>
-          </div>
+          )}
 
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-pink-600 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-          >
-            Start Tracking
-          </button>
-        </form>
+          {/* Step 1: Last period */}
+          {step === 1 && (
+            <div className="animate-fade-in">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-rose-100 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  When did your last period start?
+                </h2>
+                <p className="text-gray-500">
+                  This helps us calculate where you are in your cycle
+                </p>
+              </div>
 
-        <p className="text-center text-xs text-gray-500 mt-6">
-          Your data is stored locally on your device and is never sent to any server.
-        </p>
+              <div className="card p-6 mb-6">
+                <input
+                  type="date"
+                  value={lastPeriod}
+                  onChange={(e) => setLastPeriod(e.target.value)}
+                  max={today}
+                  required
+                  className="input text-center text-lg"
+                />
+                {lastPeriod && (
+                  <p className="text-center text-sm text-gray-500 mt-3">
+                    {new Date(lastPeriod).toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex gap-3">
+                <button onClick={handleBack} className="btn-secondary flex-1">
+                  Back
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={!lastPeriod}
+                  className={`btn-primary flex-1 ${!lastPeriod ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Cycle length */}
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="animate-fade-in">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-violet-100 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  How long is your cycle?
+                </h2>
+                <p className="text-gray-500">
+                  Count from the first day of one period to the first day of the next
+                </p>
+              </div>
+
+              <div className="card p-6 mb-6">
+                <div className="text-center mb-6">
+                  <span className="text-5xl font-bold text-gray-900">{cycleLength}</span>
+                  <span className="text-xl text-gray-500 ml-2">days</span>
+                </div>
+
+                <input
+                  type="range"
+                  min="21"
+                  max="35"
+                  value={cycleLength}
+                  onChange={(e) => setCycleLength(e.target.value)}
+                  style={{ '--value': `${sliderPercent}%` }}
+                  className="w-full mb-4"
+                />
+
+                <div className="flex justify-between text-sm text-gray-400">
+                  <span>21 days</span>
+                  <span className="text-pink-500 font-medium">Average: 28</span>
+                  <span>35 days</span>
+                </div>
+              </div>
+
+              <p className="text-center text-sm text-gray-500 mb-6">
+                Not sure? 28 days is a good starting point. You can always adjust this later.
+              </p>
+
+              <div className="flex gap-3">
+                <button type="button" onClick={handleBack} className="btn-secondary flex-1">
+                  Back
+                </button>
+                <button type="submit" className="btn-primary flex-1">
+                  Start Tracking
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );
