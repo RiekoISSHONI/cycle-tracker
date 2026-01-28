@@ -62,9 +62,9 @@ function calculateCycleEvents(lastPeriodStart, cycleLength, monthsAhead = 6) {
       if (cycleEnd < today) continue;
     }
 
-    // Period event (5 days)
+    // Period event (7 days)
     const periodEnd = new Date(cycleStart);
-    periodEnd.setDate(periodEnd.getDate() + 5);
+    periodEnd.setDate(periodEnd.getDate() + 7);
 
     events.push({
       type: 'period',
@@ -123,12 +123,12 @@ function generateICSContent(events) {
     lines.push(`SUMMARY:${event.title}`);
     lines.push(`DESCRIPTION:${event.description.replace(/\n/g, '\\n')}`);
 
-    // Add reminder 1 day before for period and PMS events
-    if (event.type === 'period' || event.type === 'pms') {
+    // Add reminder 7 days before for period events
+    if (event.type === 'period') {
       lines.push('BEGIN:VALARM');
-      lines.push('TRIGGER:-P1D');
+      lines.push('TRIGGER:-P7D');
       lines.push('ACTION:DISPLAY');
-      lines.push(`DESCRIPTION:${event.title} starts tomorrow`);
+      lines.push(`DESCRIPTION:${event.title} starts in 7 days`);
       lines.push('END:VALARM');
     }
 
