@@ -75,36 +75,7 @@ function calculateCycleEvents(lastPeriodStart, cycleLength, monthsAhead = 6) {
       color: 'red'
     });
 
-    // Ovulation event (around day 14)
-    const ovulationDay = Math.round(cycleLength / 2);
-    const ovulationStart = new Date(cycleStart);
-    ovulationStart.setDate(ovulationStart.getDate() + ovulationDay - 1);
-    const ovulationEnd = new Date(ovulationStart);
-    ovulationEnd.setDate(ovulationEnd.getDate() + 1);
-
-    events.push({
-      type: 'ovulation',
-      title: 'Ovulation Day',
-      description: 'Peak energy and fertility. Great day for important meetings and workouts.',
-      startDate: ovulationStart,
-      endDate: ovulationEnd,
-      color: 'orange'
-    });
-
-    // Fertile window (5 days before ovulation + ovulation day)
-    const fertileStart = new Date(ovulationStart);
-    fertileStart.setDate(fertileStart.getDate() - 5);
-
-    events.push({
-      type: 'fertile',
-      title: 'Fertile Window Starts',
-      description: 'Higher chance of conception during this window.',
-      startDate: fertileStart,
-      endDate: new Date(fertileStart.getTime() + 24 * 60 * 60 * 1000),
-      color: 'green'
-    });
-
-    // PMS reminder (5 days before period)
+    // Self-care reminder (5 days before period)
     const pmsStart = new Date(cycleStart);
     pmsStart.setDate(pmsStart.getDate() + cycleLength - 5);
 

@@ -197,7 +197,7 @@ export function Settings({ cycleData, onUpdate, onReset }) {
               Export your predicted cycle events to Apple Calendar, Google Calendar, or any calendar app.
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              Includes periods, ovulation days, fertile windows, and self-care reminders for the next 6 months.
+              Includes period predictions and self-care reminders for the next 6 months.
             </p>
           </div>
         </div>
