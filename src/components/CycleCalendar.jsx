@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { CYCLE_PHASES } from '../utils/cycleData';
 
 export function CycleCalendar({ cycleInfo }) {
+  const { t } = useTranslation();
   const { cycleDay, cycleLength, phase } = cycleInfo;
 
   // Generate array of days for the cycle
@@ -47,10 +49,10 @@ export function CycleCalendar({ cycleInfo }) {
   };
 
   const phaseInfo = [
-    { key: 'menstrual', name: 'Menstrual', color: 'bg-rose-500', range: `Days 1-${Math.round(5 * cycleLength / 28)}` },
-    { key: 'follicular', name: 'Follicular', color: 'bg-pink-500', range: `Days ${Math.round(5 * cycleLength / 28) + 1}-${Math.round(13 * cycleLength / 28)}` },
-    { key: 'ovulatory', name: 'Ovulatory', color: 'bg-amber-500', range: `Days ${Math.round(13 * cycleLength / 28) + 1}-${Math.round(17 * cycleLength / 28)}` },
-    { key: 'luteal', name: 'Luteal', color: 'bg-violet-500', range: `Days ${Math.round(17 * cycleLength / 28) + 1}-${cycleLength}` }
+    { key: 'menstrual', name: t('phases.menstrual.name'), color: 'bg-rose-500', range: `1-${Math.round(5 * cycleLength / 28)} ${t('insights.days')}` },
+    { key: 'follicular', name: t('phases.follicular.name'), color: 'bg-pink-500', range: `${Math.round(5 * cycleLength / 28) + 1}-${Math.round(13 * cycleLength / 28)} ${t('insights.days')}` },
+    { key: 'ovulatory', name: t('phases.ovulatory.name'), color: 'bg-amber-500', range: `${Math.round(13 * cycleLength / 28) + 1}-${Math.round(17 * cycleLength / 28)} ${t('insights.days')}` },
+    { key: 'luteal', name: t('phases.luteal.name'), color: 'bg-violet-500', range: `${Math.round(17 * cycleLength / 28) + 1}-${cycleLength} ${t('insights.days')}` }
   ];
 
   return (
@@ -58,18 +60,18 @@ export function CycleCalendar({ cycleInfo }) {
       {/* Current Status */}
       <div className="card p-5">
         <div className="text-center">
-          <div className="text-sm text-gray-500 mb-1">You are currently on</div>
-          <div className="text-3xl font-bold text-gray-900">Day {cycleDay}</div>
+          <div className="text-sm text-gray-500 mb-1">{t('dashboard.day')} {t('dashboard.ofCycle')}</div>
+          <div className="text-3xl font-bold text-gray-900">{cycleDay}</div>
           <div className={`inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-full ${phaseStyles[phase].bg} ${phaseStyles[phase].text}`}>
             <div className={`w-2 h-2 rounded-full ${phaseStyles[phase].activeBg}`} />
-            <span className="text-sm font-medium">{CYCLE_PHASES[phase].name}</span>
+            <span className="text-sm font-medium">{t(`phases.${phase}.name`)}</span>
           </div>
         </div>
       </div>
 
       {/* Calendar Grid */}
       <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-4">Cycle Overview</h3>
+        <h3 className="font-semibold text-gray-800 mb-4">{t('calendar.cycleOverview')}</h3>
 
         <div className="grid grid-cols-7 gap-2">
           {days.map((day) => {
@@ -95,7 +97,7 @@ export function CycleCalendar({ cycleInfo }) {
 
       {/* Phase Legend */}
       <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-4">Phase Guide</h3>
+        <h3 className="font-semibold text-gray-800 mb-4">{t('calendar.phaseGuide')}</h3>
 
         <div className="space-y-3">
           {phaseInfo.map((p) => {
@@ -113,7 +115,7 @@ export function CycleCalendar({ cycleInfo }) {
                     <div className={`font-medium ${isCurrentPhase ? 'text-gray-900' : 'text-gray-700'}`}>
                       {p.name}
                       {isCurrentPhase && (
-                        <span className="ml-2 text-xs text-pink-500 font-semibold">CURRENT</span>
+                        <span className="ml-2 text-xs text-pink-500 font-semibold">{t('calendar.current')}</span>
                       )}
                     </div>
                     <div className="text-sm text-gray-500">{p.range}</div>
@@ -139,12 +141,12 @@ export function CycleCalendar({ cycleInfo }) {
             </svg>
           </div>
           <div>
-            <h4 className="font-semibold text-gray-800">Your Cycle</h4>
-            <p className="text-sm text-gray-600">{cycleLength} days average</p>
+            <h4 className="font-semibold text-gray-800">{t('calendar.yourCycle')}</h4>
+            <p className="text-sm text-gray-600">{cycleLength} {t('calendar.daysAverage')}</p>
           </div>
         </div>
         <p className="text-sm text-gray-600">
-          Each cycle is unique. Track consistently to get more accurate predictions and personalized insights.
+          {t('settings.aboutDescription')}
         </p>
       </div>
     </div>

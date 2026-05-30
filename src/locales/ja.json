@@ -1,0 +1,200 @@
+{
+  "app": {
+    "name": "Flo",
+    "tagline": "生理周期トラッカー"
+  },
+  "nav": {
+    "today": "今日",
+    "calendar": "カレンダー",
+    "insights": "分析",
+    "settings": "設定"
+  },
+  "header": {
+    "forMe": "自分用",
+    "partner": "パートナー"
+  },
+  "phases": {
+    "menstrual": {
+      "name": "月経期",
+      "description": "休息と内省の時期。体が子宮内膜を排出しています。",
+      "energy": "エネルギー低下 - 体の休息ニーズを大切に"
+    },
+    "follicular": {
+      "name": "卵胞期",
+      "description": "エネルギーと創造性が高まる時期。排卵に向けて体が準備中。",
+      "energy": "エネルギー上昇中 - 新しいプロジェクトを始めるのに最適"
+    },
+    "ovulatory": {
+      "name": "排卵期",
+      "description": "エネルギーと自信がピーク。最も輝いている時期。",
+      "energy": "最高のエネルギー - 輝いています！"
+    },
+    "luteal": {
+      "name": "黄体期",
+      "description": "落ち着きと準備の時期。新しいことより完成に集中。",
+      "energy": "エネルギー低下中 - 完成に集中"
+    }
+  },
+  "dashboard": {
+    "day": "Day",
+    "ofCycle": "周期の",
+    "daysUntilPeriod": "日後に生理",
+    "fertileWindow": "妊娠可能期間",
+    "yes": "はい",
+    "no": "いいえ",
+    "higherChance": "妊娠の可能性が高い",
+    "lowerFertility": "妊娠の可能性が低い",
+    "energyHormones": "エネルギーとホルモン",
+    "recommendationsForYou": "あなたへのおすすめ",
+    "partnerGuide": "パートナーガイド"
+  },
+  "tips": {
+    "nutrition": "栄養",
+    "exercise": "運動",
+    "lifestyle": "ライフスタイル",
+    "fasting": "ファスティング"
+  },
+  "partner": {
+    "understanding": "今の彼女を理解する",
+    "howToSupport": "サポートの仕方",
+    "whatToAvoid": "避けるべきこと"
+  },
+  "checkin": {
+    "title": "毎日のチェックイン",
+    "howAreYou": "今日の調子はどうですか？",
+    "mood": "気分",
+    "energy": "エネルギーレベル",
+    "flow": "経血量",
+    "symptoms": "症状",
+    "notes": "メモ",
+    "save": "保存",
+    "saved": "保存しました！",
+    "moodLevels": {
+      "1": "とても悪い",
+      "2": "悪い",
+      "3": "普通",
+      "4": "良い",
+      "5": "とても良い"
+    },
+    "energyLevels": {
+      "1": "疲労困憊",
+      "2": "疲れている",
+      "3": "普通",
+      "4": "元気",
+      "5": "とても元気"
+    },
+    "flowLevels": {
+      "none": "なし",
+      "spotting": "少量",
+      "light": "軽い",
+      "medium": "普通",
+      "heavy": "多い"
+    },
+    "symptomsList": {
+      "cramps": "生理痛",
+      "headache": "頭痛",
+      "bloating": "むくみ",
+      "backPain": "腰痛",
+      "breastTenderness": "胸の張り",
+      "acne": "ニキビ",
+      "cravings": "食欲増加",
+      "nausea": "吐き気",
+      "fatigue": "倦怠感",
+      "insomnia": "不眠"
+    }
+  },
+  "insights": {
+    "title": "あなたの分析",
+    "cycleHistory": "周期履歴",
+    "averageCycle": "平均周期",
+    "days": "日",
+    "moodTrends": "気分の傾向",
+    "symptomPatterns": "症状パターン",
+    "energyPatterns": "エネルギーパターン",
+    "noData": "傾向を見るにはもっとチェックインを記録してください",
+    "lastCycles": "過去{{count}}周期"
+  },
+  "workouts": {
+    "title": "おすすめワークアウト",
+    "forPhase": "{{phase}}に最適",
+    "watchNow": "今すぐ見る",
+    "affiliate": "パートナーコンテンツ"
+  },
+  "recipes": {
+    "title": "フェーズレシピ",
+    "viewRecipe": "レシピを見る"
+  },
+  "dailyTip": {
+    "title": "今日のヒント",
+    "affirmation": "アファメーション"
+  },
+  "calendar": {
+    "cycleOverview": "周期の概要",
+    "phaseGuide": "フェーズガイド",
+    "current": "現在",
+    "yourCycle": "あなたの周期",
+    "daysAverage": "日（平均）"
+  },
+  "settings": {
+    "logPeriod": "生理開始を記録",
+    "markToday": "タップして今日をDay 1に",
+    "cycleSettings": "周期設定",
+    "lastPeriod": "前回の生理開始日",
+    "cycleLength": "周期の長さ",
+    "saveChanges": "変更を保存",
+    "sharePartner": "パートナーと共有",
+    "shareDescription": "パートナーがあなたの周期を理解できるコードを生成します。",
+    "generateCode": "共有コードを生成",
+    "yourCode": "あなたの共有コード",
+    "tapToCopy": "タップしてコピー",
+    "addToCalendar": "カレンダーに追加",
+    "calendarDescription": "予測された周期イベントをAppleカレンダー、Googleカレンダー、その他のカレンダーアプリにエクスポート。",
+    "calendarIncludes": "今後6ヶ月の生理予測とセルフケアリマインダーが含まれます。",
+    "downloadCalendar": "カレンダーイベントをダウンロード",
+    "calendarDownloaded": "カレンダーファイルをダウンロードしました！",
+    "openIcs": ".icsファイルを開いてカレンダーに追加",
+    "calendarTip": "iOSでは、ダウンロードしたファイルをタップし、「すべて追加」を選択してイベントをインポート。",
+    "notifications": "通知",
+    "enableNotifications": "通知を有効にする",
+    "phaseReminders": "フェーズ変更リマインダー",
+    "morningTips": "朝のヒント",
+    "reminderTime": "リマインダー時間",
+    "language": "言語",
+    "about": "アプリについて",
+    "version": "バージョン",
+    "aboutDescription": "Dr. Mindy Pelzの周期同期研究に基づいています。",
+    "privacy": "プライバシーとデータ",
+    "localStorage": "ローカルストレージのみ",
+    "dataLocal": "データはデバイスから離れません",
+    "deleteData": "すべてのデータを削除",
+    "deleteWarning": "この操作は取り消せません",
+    "confirmDelete": "本当に削除しますか？すべての周期データが完全に削除されます。",
+    "yesDelete": "はい、削除",
+    "cancel": "キャンセル",
+    "saved": "変更を保存しました"
+  },
+  "share": {
+    "title": "共有",
+    "shareOn": "{{platform}}で共有",
+    "copyLink": "リンクをコピー",
+    "copied": "コピーしました！"
+  },
+  "onboarding": {
+    "welcome": "Floへようこそ",
+    "description": "周期のフェーズに基づいたパーソナライズされた情報で、あなたの体をより深く理解しましょう。",
+    "getStarted": "始める",
+    "dataPrivacy": "データはあなたのデバイスに保存されます",
+    "whenLastPeriod": "前回の生理はいつ始まりましたか？",
+    "helpsCalculate": "これで周期のどこにいるかを計算します",
+    "howLong": "周期の長さは？",
+    "countDays": "前回の生理初日から次の生理初日までの日数を数えます",
+    "notSure": "わからない場合は28日が良い出発点です。後で調整できます。",
+    "back": "戻る",
+    "continue": "続ける",
+    "startTracking": "トラッキング開始"
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語"
+  }
+}

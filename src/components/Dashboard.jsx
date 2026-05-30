@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatDate, getMotivationalMessage } from '../utils/cycleData';
 
 // Circular progress ring component
@@ -46,8 +47,8 @@ function CycleRing({ cycleDay, cycleLength, phaseData }) {
         />
       </svg>
       <div className="cycle-ring-content">
-        <span className="text-5xl font-bold text-gray-900">Day {cycleDay}</span>
-        <span className="text-gray-500 mt-1">of {cycleLength}</span>
+        <span className="text-5xl font-bold text-gray-900">{cycleDay}</span>
+        <span className="text-gray-500 mt-1">/ {cycleLength}</span>
       </div>
     </div>
   );
@@ -159,6 +160,7 @@ function PartnerTipCard({ icon, title, description, items, variant = 'default' }
 }
 
 export function Dashboard({ cycleInfo, viewMode }) {
+  const { t } = useTranslation();
   const { cycleDay, cycleLength, phaseData, daysUntilPeriod, isFertileWindow, nextPeriodDate, phase } = cycleInfo;
   const motivationalMessage = getMotivationalMessage(phase);
 
@@ -212,7 +214,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
             </svg>
           }
           value={daysUntilPeriod}
-          label="days until period"
+          label={t('dashboard.daysUntilPeriod')}
           sublabel={formatDate(nextPeriodDate)}
           accent
         />
@@ -228,9 +230,9 @@ export function Dashboard({ cycleInfo, viewMode }) {
               </svg>
             )
           }
-          value={isFertileWindow ? 'Yes' : 'No'}
-          label="fertile window"
-          sublabel={isFertileWindow ? 'Higher chance of conception' : 'Lower fertility'}
+          value={isFertileWindow ? t('dashboard.yes') : t('dashboard.no')}
+          label={t('dashboard.fertileWindow')}
+          sublabel={isFertileWindow ? t('dashboard.higherChance') : t('dashboard.lowerFertility')}
         />
       </div>
 
@@ -243,7 +245,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
             </svg>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-800">Energy & Hormones</h3>
+            <h3 className="font-semibold text-gray-800">{t('dashboard.energyHormones')}</h3>
             <p className="text-sm text-gray-600 mt-1">{phaseData.energy}</p>
             <p className="text-sm text-gray-500 mt-2">{phaseData.hormones}</p>
           </div>
@@ -261,28 +263,29 @@ export function Dashboard({ cycleInfo, viewMode }) {
 }
 
 function PersonalView({ phaseData }) {
+  const { t } = useTranslation();
   const tips = phaseData.forHer;
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800 px-1">Recommendations for You</h3>
+      <h3 className="text-lg font-semibold text-gray-800 px-1">{t('dashboard.recommendationsForYou')}</h3>
 
       <TipSection
         icon="🥗"
-        title="Nutrition"
+        title={t('tips.nutrition')}
         items={tips.nutrition}
         defaultExpanded={true}
       />
 
       <TipSection
         icon="💪"
-        title="Exercise"
+        title={t('tips.exercise')}
         items={tips.exercise}
       />
 
       <TipSection
         icon="✨"
-        title="Lifestyle"
+        title={t('tips.lifestyle')}
         items={tips.lifestyle}
       />
 
@@ -293,7 +296,7 @@ function PersonalView({ phaseData }) {
             ⏰
           </div>
           <div>
-            <h4 className="font-semibold text-gray-800">Fasting Window</h4>
+            <h4 className="font-semibold text-gray-800">{t('tips.fasting')}</h4>
             <p className="text-sm text-gray-600 mt-1">{tips.fasting}</p>
           </div>
         </div>
@@ -303,29 +306,30 @@ function PersonalView({ phaseData }) {
 }
 
 function PartnerView({ phaseData }) {
+  const { t } = useTranslation();
   const tips = phaseData.forPartner;
 
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-gray-800 px-1">Partner Guide</h3>
+      <h3 className="text-lg font-semibold text-gray-800 px-1">{t('dashboard.partnerGuide')}</h3>
 
       <PartnerTipCard
         icon="💡"
-        title="Understanding Her Right Now"
+        title={t('partner.understanding')}
         description={tips.understand}
         variant="default"
       />
 
       <PartnerTipCard
         icon="💚"
-        title="How to Support Her"
+        title={t('partner.howToSupport')}
         items={tips.support}
         variant="success"
       />
 
       <PartnerTipCard
         icon="⚠️"
-        title="What to Avoid"
+        title={t('partner.whatToAvoid')}
         items={tips.avoid}
         variant="warning"
       />

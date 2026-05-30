@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const PHASES_PREVIEW = [
   { name: 'Menstrual', color: 'bg-rose-500', description: 'Rest & restore' },
@@ -8,11 +9,13 @@ const PHASES_PREVIEW = [
 ];
 
 export function CycleSetup({ onSave }) {
+  const { t, i18n } = useTranslation();
   const [step, setStep] = useState(0);
   const [lastPeriod, setLastPeriod] = useState('');
   const [cycleLength, setCycleLength] = useState(28);
 
   const today = new Date().toISOString().split('T')[0];
+  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,10 +70,10 @@ export function CycleSetup({ onSave }) {
               </div>
 
               <h1 className="text-3xl font-bold text-gray-900 mb-3">
-                Welcome to Flo
+                {t('onboarding.welcome')}
               </h1>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                Understand your body better with personalized insights based on your cycle phases.
+                {t('onboarding.description')}
               </p>
 
               {/* Phase preview cards */}
@@ -92,11 +95,11 @@ export function CycleSetup({ onSave }) {
                 onClick={handleNext}
                 className="btn-primary w-full"
               >
-                Get Started
+                {t('onboarding.getStarted')}
               </button>
 
               <p className="text-xs text-gray-400 mt-4">
-                Your data stays on your device
+                {t('onboarding.dataPrivacy')}
               </p>
             </div>
           )}
@@ -111,10 +114,10 @@ export function CycleSetup({ onSave }) {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  When did your last period start?
+                  {t('onboarding.whenLastPeriod')}
                 </h2>
                 <p className="text-gray-500">
-                  This helps us calculate where you are in your cycle
+                  {t('onboarding.helpsCalculate')}
                 </p>
               </div>
 
@@ -129,7 +132,7 @@ export function CycleSetup({ onSave }) {
                 />
                 {lastPeriod && (
                   <p className="text-center text-sm text-gray-500 mt-3">
-                    {new Date(lastPeriod).toLocaleDateString('en-US', {
+                    {new Date(lastPeriod).toLocaleDateString(locale, {
                       weekday: 'long',
                       year: 'numeric',
                       month: 'long',
@@ -141,14 +144,14 @@ export function CycleSetup({ onSave }) {
 
               <div className="flex gap-3">
                 <button onClick={handleBack} className="btn-secondary flex-1">
-                  Back
+                  {t('onboarding.back')}
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={!lastPeriod}
                   className={`btn-primary flex-1 ${!lastPeriod ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  Continue
+                  {t('onboarding.continue')}
                 </button>
               </div>
             </div>
@@ -164,17 +167,17 @@ export function CycleSetup({ onSave }) {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  How long is your cycle?
+                  {t('onboarding.howLong')}
                 </h2>
                 <p className="text-gray-500">
-                  Count from the first day of one period to the first day of the next
+                  {t('onboarding.countDays')}
                 </p>
               </div>
 
               <div className="card p-6 mb-6">
                 <div className="text-center mb-6">
                   <span className="text-5xl font-bold text-gray-900">{cycleLength}</span>
-                  <span className="text-xl text-gray-500 ml-2">days</span>
+                  <span className="text-xl text-gray-500 ml-2">{t('insights.days')}</span>
                 </div>
 
                 <input
@@ -188,22 +191,22 @@ export function CycleSetup({ onSave }) {
                 />
 
                 <div className="flex justify-between text-sm text-gray-400">
-                  <span>21 days</span>
-                  <span className="text-pink-500 font-medium">Average: 28</span>
-                  <span>35 days</span>
+                  <span>21 {t('insights.days')}</span>
+                  <span className="text-pink-500 font-medium">28 (avg)</span>
+                  <span>35 {t('insights.days')}</span>
                 </div>
               </div>
 
               <p className="text-center text-sm text-gray-500 mb-6">
-                Not sure? 28 days is a good starting point. You can always adjust this later.
+                {t('onboarding.notSure')}
               </p>
 
               <div className="flex gap-3">
                 <button type="button" onClick={handleBack} className="btn-secondary flex-1">
-                  Back
+                  {t('onboarding.back')}
                 </button>
                 <button type="submit" className="btn-primary flex-1">
-                  Start Tracking
+                  {t('onboarding.startTracking')}
                 </button>
               </div>
             </form>

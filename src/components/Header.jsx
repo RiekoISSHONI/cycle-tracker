@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 export function Header({ viewMode, setViewMode, cycleInfo }) {
+  const { t } = useTranslation();
+
   return (
     <header className="sticky top-0 z-50 glass border-b border-white/30 safe-area-pt">
       <div className="max-w-4xl mx-auto px-4 py-3">
@@ -11,7 +15,7 @@ export function Header({ viewMode, setViewMode, cycleInfo }) {
               </svg>
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">Flo</h1>
+              <h1 className="text-lg font-bold text-gray-900">{t('app.name')}</h1>
             </div>
           </div>
 
@@ -26,7 +30,7 @@ export function Header({ viewMode, setViewMode, cycleInfo }) {
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
-                For Me
+                {t('header.forMe')}
               </button>
               <button
                 onClick={() => setViewMode('partner')}
@@ -36,7 +40,7 @@ export function Header({ viewMode, setViewMode, cycleInfo }) {
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
-                Partner
+                {t('header.partner')}
               </button>
             </div>
           )}

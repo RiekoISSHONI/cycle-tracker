@@ -1,0 +1,200 @@
+{
+  "app": {
+    "name": "Flo",
+    "tagline": "Cycle Tracker"
+  },
+  "nav": {
+    "today": "Today",
+    "calendar": "Calendar",
+    "insights": "Insights",
+    "settings": "Settings"
+  },
+  "header": {
+    "forMe": "For Me",
+    "partner": "Partner"
+  },
+  "phases": {
+    "menstrual": {
+      "name": "Menstrual Phase",
+      "description": "Time for rest and reflection. Your body is shedding the uterine lining.",
+      "energy": "Low energy - honor your body's need for rest"
+    },
+    "follicular": {
+      "name": "Follicular Phase",
+      "description": "Rising energy and creativity. Your body is preparing for ovulation.",
+      "energy": "Increasing energy - great time to start new projects"
+    },
+    "ovulatory": {
+      "name": "Ovulatory Phase",
+      "description": "Peak energy and confidence. You're at your most vibrant.",
+      "energy": "Highest energy - you're glowing!"
+    },
+    "luteal": {
+      "name": "Luteal Phase",
+      "description": "Winding down and preparing. Focus on completion over starting.",
+      "energy": "Decreasing energy - focus on completion"
+    }
+  },
+  "dashboard": {
+    "day": "Day",
+    "ofCycle": "of your cycle",
+    "daysUntilPeriod": "days until period",
+    "fertileWindow": "fertile window",
+    "yes": "Yes",
+    "no": "No",
+    "higherChance": "Higher chance of conception",
+    "lowerFertility": "Lower fertility",
+    "energyHormones": "Energy & Hormones",
+    "recommendationsForYou": "Recommendations for You",
+    "partnerGuide": "Partner Guide"
+  },
+  "tips": {
+    "nutrition": "Nutrition",
+    "exercise": "Exercise",
+    "lifestyle": "Lifestyle",
+    "fasting": "Fasting Window"
+  },
+  "partner": {
+    "understanding": "Understanding Her Right Now",
+    "howToSupport": "How to Support Her",
+    "whatToAvoid": "What to Avoid"
+  },
+  "checkin": {
+    "title": "Daily Check-in",
+    "howAreYou": "How are you feeling today?",
+    "mood": "Mood",
+    "energy": "Energy Level",
+    "flow": "Flow",
+    "symptoms": "Symptoms",
+    "notes": "Notes",
+    "save": "Save Check-in",
+    "saved": "Saved!",
+    "moodLevels": {
+      "1": "Very Low",
+      "2": "Low",
+      "3": "Okay",
+      "4": "Good",
+      "5": "Great"
+    },
+    "energyLevels": {
+      "1": "Exhausted",
+      "2": "Tired",
+      "3": "Normal",
+      "4": "Energized",
+      "5": "Very High"
+    },
+    "flowLevels": {
+      "none": "None",
+      "spotting": "Spotting",
+      "light": "Light",
+      "medium": "Medium",
+      "heavy": "Heavy"
+    },
+    "symptomsList": {
+      "cramps": "Cramps",
+      "headache": "Headache",
+      "bloating": "Bloating",
+      "backPain": "Back Pain",
+      "breastTenderness": "Breast Tenderness",
+      "acne": "Acne",
+      "cravings": "Cravings",
+      "nausea": "Nausea",
+      "fatigue": "Fatigue",
+      "insomnia": "Insomnia"
+    }
+  },
+  "insights": {
+    "title": "Your Insights",
+    "cycleHistory": "Cycle History",
+    "averageCycle": "Average Cycle",
+    "days": "days",
+    "moodTrends": "Mood Trends",
+    "symptomPatterns": "Symptom Patterns",
+    "energyPatterns": "Energy Patterns",
+    "noData": "Log more check-ins to see your trends",
+    "lastCycles": "Last {{count}} Cycles"
+  },
+  "workouts": {
+    "title": "Recommended Workouts",
+    "forPhase": "Best for {{phase}}",
+    "watchNow": "Watch Now",
+    "affiliate": "Partner Content"
+  },
+  "recipes": {
+    "title": "Phase Recipes",
+    "viewRecipe": "View Recipe"
+  },
+  "dailyTip": {
+    "title": "Today's Tip",
+    "affirmation": "Affirmation"
+  },
+  "calendar": {
+    "cycleOverview": "Cycle Overview",
+    "phaseGuide": "Phase Guide",
+    "current": "CURRENT",
+    "yourCycle": "Your Cycle",
+    "daysAverage": "days average"
+  },
+  "settings": {
+    "logPeriod": "Log Period Started",
+    "markToday": "Tap to mark today as day 1",
+    "cycleSettings": "Cycle Settings",
+    "lastPeriod": "Last Period Start",
+    "cycleLength": "Cycle Length",
+    "saveChanges": "Save Changes",
+    "sharePartner": "Share with Partner",
+    "shareDescription": "Generate a code to help your partner understand your cycle.",
+    "generateCode": "Generate Share Code",
+    "yourCode": "Your share code",
+    "tapToCopy": "Tap to copy",
+    "addToCalendar": "Add to Calendar",
+    "calendarDescription": "Export your predicted cycle events to Apple Calendar, Google Calendar, or any calendar app.",
+    "calendarIncludes": "Includes period predictions and self-care reminders for the next 6 months.",
+    "downloadCalendar": "Download Calendar Events",
+    "calendarDownloaded": "Calendar file downloaded!",
+    "openIcs": "Open the .ics file to add events to your calendar",
+    "calendarTip": "On iOS, tap the downloaded file and select \"Add All\" to import events.",
+    "notifications": "Notifications",
+    "enableNotifications": "Enable Notifications",
+    "phaseReminders": "Phase Change Reminders",
+    "morningTips": "Morning Tips",
+    "reminderTime": "Reminder Time",
+    "language": "Language",
+    "about": "About",
+    "version": "Version",
+    "aboutDescription": "Based on Dr. Mindy Pelz's research on cycle syncing.",
+    "privacy": "Privacy & Data",
+    "localStorage": "Local Storage Only",
+    "dataLocal": "Your data never leaves your device",
+    "deleteData": "Delete All Data",
+    "deleteWarning": "This action cannot be undone",
+    "confirmDelete": "Are you sure? This will permanently delete all your cycle data.",
+    "yesDelete": "Yes, Delete",
+    "cancel": "Cancel",
+    "saved": "Changes saved successfully"
+  },
+  "share": {
+    "title": "Share",
+    "shareOn": "Share on {{platform}}",
+    "copyLink": "Copy Link",
+    "copied": "Copied!"
+  },
+  "onboarding": {
+    "welcome": "Welcome to Flo",
+    "description": "Understand your body better with personalized insights based on your cycle phases.",
+    "getStarted": "Get Started",
+    "dataPrivacy": "Your data stays on your device",
+    "whenLastPeriod": "When did your last period start?",
+    "helpsCalculate": "This helps us calculate where you are in your cycle",
+    "howLong": "How long is your cycle?",
+    "countDays": "Count from the first day of one period to the first day of the next",
+    "notSure": "Not sure? 28 days is a good starting point. You can always adjust this later.",
+    "back": "Back",
+    "continue": "Continue",
+    "startTracking": "Start Tracking"
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語"
+  }
+}

@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { generateShareCode } from '../utils/cycleData';
 import { downloadCalendarEvents } from '../utils/calendarExport';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { SocialShare } from './SocialShare';
 
 function SettingsSection({ title, children }) {
   return (
@@ -29,6 +32,7 @@ function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) 
 }
 
 export function Settings({ cycleData, onUpdate, onReset }) {
+  const { t } = useTranslation();
   const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
   const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
   const [showShareCode, setShowShareCode] = useState(false);
@@ -92,8 +96,8 @@ export function Settings({ cycleData, onUpdate, onReset }) {
               </svg>
             </div>
             <div>
-              <div className="font-semibold text-lg">Log Period Started</div>
-              <div className="text-white/80 text-sm">Tap to mark today as day 1</div>
+              <div className="font-semibold text-lg">{t('settings.logPeriod')}</div>
+              <div className="text-white/80 text-sm">{t('settings.markToday')}</div>
             </div>
           </div>
           <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,11 +107,11 @@ export function Settings({ cycleData, onUpdate, onReset }) {
       </button>
 
       {/* Cycle Settings */}
-      <SettingsSection title="Cycle Settings">
+      <SettingsSection title={t('settings.cycleSettings')}>
         <div className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Last Period Start
+              {t('settings.lastPeriod')}
             </label>
             <input
               type="date"
@@ -121,9 +125,9 @@ export function Settings({ cycleData, onUpdate, onReset }) {
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="text-sm font-medium text-gray-700">
-                Cycle Length
+                {t('settings.cycleLength')}
               </label>
-              <span className="text-lg font-bold text-pink-500">{cycleLength} days</span>
+              <span className="text-lg font-bold text-pink-500">{cycleLength} {t('insights.days')}</span>
             </div>
             <input
               type="range"
@@ -141,34 +145,28 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             </div>
           </div>
 
-          <button
-            onClick={handleSave}
-            className="w-full btn-primary"
-          >
-            Save Changes
+          <button onClick={handleSave} className="w-full btn-primary">
+            {t('settings.saveChanges')}
           </button>
         </div>
       </SettingsSection>
 
+      {/* Language Switcher */}
+      <LanguageSwitcher />
+
       {/* Partner Sharing */}
-      <SettingsSection title="Share with Partner">
-        <p className="text-sm text-gray-600 mb-4">
-          Generate a code to help your partner understand your cycle and how to best support you.
-        </p>
+      <SettingsSection title={t('settings.sharePartner')}>
+        <p className="text-sm text-gray-600 mb-4">{t('settings.shareDescription')}</p>
 
         {showShareCode && shareCode ? (
           <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 text-center">
-            <div className="text-sm text-gray-600 mb-2">Your share code</div>
-            <div className="text-4xl font-bold text-violet-600 tracking-widest mb-3">
-              {shareCode}
-            </div>
+            <div className="text-sm text-gray-600 mb-2">{t('settings.yourCode')}</div>
+            <div className="text-4xl font-bold text-violet-600 tracking-widest mb-3">{shareCode}</div>
             <button
-              onClick={() => {
-                navigator.clipboard?.writeText(shareCode);
-              }}
+              onClick={() => navigator.clipboard?.writeText(shareCode)}
               className="text-sm text-violet-500 font-medium hover:text-violet-600"
             >
-              Tap to copy
+              {t('settings.tapToCopy')}
             </button>
           </div>
         ) : (
@@ -179,13 +177,19 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
             </svg>
-            Generate Share Code
+            {t('settings.generateCode')}
           </button>
         )}
       </SettingsSection>
 
+      {/* Social Share */}
+      <SocialShare
+        title="Flo Cycle Tracker"
+        text="Check out this cycle tracker app - it helps me understand my body better!"
+      />
+
       {/* Calendar Integration */}
-      <SettingsSection title="Add to Calendar">
+      <SettingsSection title={t('settings.addToCalendar')}>
         <div className="flex items-start gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
             <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -193,12 +197,8 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             </svg>
           </div>
           <div>
-            <p className="text-sm text-gray-600">
-              Export your predicted cycle events to Apple Calendar, Google Calendar, or any calendar app.
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              Includes period predictions and self-care reminders for the next 6 months.
-            </p>
+            <p className="text-sm text-gray-600">{t('settings.calendarDescription')}</p>
+            <p className="text-xs text-gray-400 mt-1">{t('settings.calendarIncludes')}</p>
           </div>
         </div>
 
@@ -208,11 +208,9 @@ export function Settings({ cycleData, onUpdate, onReset }) {
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
-              Calendar file downloaded!
+              {t('settings.calendarDownloaded')}
             </div>
-            <p className="text-sm text-emerald-600/70 mt-1">
-              Open the .ics file to add events to your calendar
-            </p>
+            <p className="text-sm text-emerald-600/70 mt-1">{t('settings.openIcs')}</p>
           </div>
         ) : (
           <button
@@ -222,19 +220,19 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
-            Download Calendar Events
+            {t('settings.downloadCalendar')}
           </button>
         )}
 
         <div className="mt-4 p-3 bg-gray-50 rounded-xl">
           <p className="text-xs text-gray-500">
-            <span className="font-medium">Tip:</span> On iOS, tap the downloaded file and select "Add All" to import events. On Mac, double-click the file to open in Calendar.
+            <span className="font-medium">Tip:</span> {t('settings.calendarTip')}
           </p>
         </div>
       </SettingsSection>
 
       {/* About */}
-      <SettingsSection title="About">
+      <SettingsSection title={t('settings.about')}>
         <SettingsRow
           icon={
             <svg className="w-5 h-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -243,18 +241,15 @@ export function Settings({ cycleData, onUpdate, onReset }) {
           }
           iconBg="bg-pink-100"
           title="Flo Cycle Tracker"
-          subtitle="Version 1.0.0"
+          subtitle={`${t('settings.version')} 2.0.0`}
         />
-
         <div className="border-t border-gray-100 mt-2 pt-4">
-          <p className="text-sm text-gray-600">
-            Based on Dr. Mindy Pelz's research on cycle syncing. Personalized recommendations for nutrition, exercise, and lifestyle aligned with your hormonal phases.
-          </p>
+          <p className="text-sm text-gray-600">{t('settings.aboutDescription')}</p>
         </div>
       </SettingsSection>
 
       {/* Privacy */}
-      <SettingsSection title="Privacy & Data">
+      <SettingsSection title={t('settings.privacy')}>
         <SettingsRow
           icon={
             <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -262,8 +257,8 @@ export function Settings({ cycleData, onUpdate, onReset }) {
             </svg>
           }
           iconBg="bg-emerald-100"
-          title="Local Storage Only"
-          subtitle="Your data never leaves your device"
+          title={t('settings.localStorage')}
+          subtitle={t('settings.dataLocal')}
         />
 
         <div className="border-t border-gray-100 mt-2 pt-2">
@@ -274,8 +269,8 @@ export function Settings({ cycleData, onUpdate, onReset }) {
               </svg>
             }
             iconBg="bg-red-100"
-            title="Delete All Data"
-            subtitle="This action cannot be undone"
+            title={t('settings.deleteData')}
+            subtitle={t('settings.deleteWarning')}
             danger
             action={
               !showResetConfirm ? (
@@ -283,7 +278,7 @@ export function Settings({ cycleData, onUpdate, onReset }) {
                   onClick={() => setShowResetConfirm(true)}
                   className="text-red-500 text-sm font-medium hover:text-red-600"
                 >
-                  Delete
+                  {t('settings.yesDelete').split(',')[0]}
                 </button>
               ) : null
             }
@@ -291,24 +286,19 @@ export function Settings({ cycleData, onUpdate, onReset }) {
 
           {showResetConfirm && (
             <div className="mt-3 p-4 bg-red-50 rounded-2xl">
-              <p className="text-sm text-red-600 mb-3">
-                Are you sure? This will permanently delete all your cycle data.
-              </p>
+              <p className="text-sm text-red-600 mb-3">{t('settings.confirmDelete')}</p>
               <div className="flex gap-2">
                 <button
-                  onClick={() => {
-                    onReset();
-                    setShowResetConfirm(false);
-                  }}
+                  onClick={() => { onReset(); setShowResetConfirm(false); }}
                   className="flex-1 py-2 px-4 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
                 >
-                  Yes, Delete
+                  {t('settings.yesDelete')}
                 </button>
                 <button
                   onClick={() => setShowResetConfirm(false)}
                   className="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors"
                 >
-                  Cancel
+                  {t('settings.cancel')}
                 </button>
               </div>
             </div>
@@ -318,9 +308,7 @@ export function Settings({ cycleData, onUpdate, onReset }) {
 
       {/* Toast */}
       {showSaved && (
-        <div className="toast">
-          Changes saved successfully
-        </div>
+        <div className="toast">{t('settings.saved')}</div>
       )}
     </div>
   );
