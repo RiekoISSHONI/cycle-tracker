@@ -100,7 +100,7 @@ function App() {
 
   return (
     <div className="min-h-screen pb-24 relative">
-      {cycleInfo && <PhaseBackground phase={cycleInfo.phase} />}
+      {cycleInfo && <PhaseBackground phase={cycleInfo.phase} theme={theme} />}
 
       <Header
         viewMode={viewMode}

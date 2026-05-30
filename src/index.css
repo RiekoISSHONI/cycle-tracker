@@ -767,3 +767,719 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   background: linear-gradient(to top, var(--accent-bg) 0%, transparent 100%);
   animation: cozy-breathe 6s ease-in-out infinite;
 }
+
+/* ==========================================
+   SUNSET THEME ANIMATIONS
+   ========================================== */
+
+@keyframes wave-flow {
+  0%, 100% { transform: translateX(-25%) translateY(0); }
+  50% { transform: translateX(0%) translateY(-20px); }
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  50% { transform: translate(20px, -30px) scale(1.1); opacity: 0.6; }
+}
+
+@keyframes sun-ray {
+  0% { transform: rotate(0deg) scaleY(0.8); opacity: 0.3; }
+  50% { transform: rotate(180deg) scaleY(1); opacity: 0.5; }
+  100% { transform: rotate(360deg) scaleY(0.8); opacity: 0.3; }
+}
+
+@keyframes sun-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(20px); }
+  50% { transform: translate(-50%, -50%) scale(1.2); filter: blur(30px); }
+}
+
+@keyframes corona-expand {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.2; }
+}
+
+@keyframes cloud-drift {
+  0%, 100% { transform: translateX(0); opacity: 0.3; }
+  50% { transform: translateX(30px); opacity: 0.5; }
+}
+
+.phase-bg.sunset-menstrual .sunset-wave {
+  position: absolute;
+  width: 200%;
+  height: 300px;
+  background: linear-gradient(180deg, transparent 0%, #ff7e5f20 30%, #feb47b30 60%, transparent 100%);
+  border-radius: 40%;
+}
+
+.phase-bg.sunset-menstrual .wave-1 {
+  top: 10%;
+  left: -50%;
+  animation: wave-flow 8s ease-in-out infinite;
+}
+
+.phase-bg.sunset-menstrual .wave-2 {
+  top: 25%;
+  left: -30%;
+  animation: wave-flow 10s ease-in-out infinite 2s;
+}
+
+.phase-bg.sunset-menstrual .sunset-orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff7e5f 0%, #feb47b 50%, transparent 70%);
+}
+
+.phase-bg.sunset-menstrual .orb-1 {
+  width: 200px;
+  height: 200px;
+  top: 15%;
+  right: 10%;
+  animation: orb-float 6s ease-in-out infinite;
+}
+
+.phase-bg.sunset-menstrual .orb-2 {
+  width: 150px;
+  height: 150px;
+  top: 40%;
+  left: 15%;
+  animation: orb-float 8s ease-in-out infinite 1s;
+}
+
+.phase-bg.sunset-menstrual .warmth-glow {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  bottom: 0;
+  background: linear-gradient(to top, #ffe5d950 0%, transparent 100%);
+}
+
+.phase-bg.sunset-follicular .sunset-ray {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 150px;
+  background: linear-gradient(to bottom, #ff7e5f60 0%, transparent 100%);
+  transform-origin: bottom center;
+  border-radius: 4px;
+}
+
+.phase-bg.sunset-follicular .ray-1 { transform: rotate(-60deg); animation: sun-ray 15s linear infinite; }
+.phase-bg.sunset-follicular .ray-2 { transform: rotate(-30deg); animation: sun-ray 18s linear infinite 1s; }
+.phase-bg.sunset-follicular .ray-3 { transform: rotate(0deg); animation: sun-ray 12s linear infinite 2s; }
+.phase-bg.sunset-follicular .ray-4 { transform: rotate(30deg); animation: sun-ray 16s linear infinite 0.5s; }
+.phase-bg.sunset-follicular .ray-5 { transform: rotate(60deg); animation: sun-ray 14s linear infinite 1.5s; }
+.phase-bg.sunset-follicular .ray-6 { transform: rotate(90deg); animation: sun-ray 20s linear infinite 3s; }
+
+.phase-bg.sunset-follicular .sunrise-glow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 200px;
+  background: radial-gradient(ellipse at bottom, #ffcba450 0%, #ff7e5f20 40%, transparent 70%);
+}
+
+.phase-bg.sunset-ovulatory .sun-core {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffb347 0%, #ff7e5f 60%, transparent 100%);
+  animation: sun-pulse 4s ease-in-out infinite;
+}
+
+.phase-bg.sunset-ovulatory .sun-corona {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  border-radius: 50%;
+  border: 2px solid #ffb34760;
+}
+
+.phase-bg.sunset-ovulatory .corona-1 {
+  width: 250px;
+  height: 250px;
+  animation: corona-expand 3s ease-in-out infinite;
+}
+
+.phase-bg.sunset-ovulatory .corona-2 {
+  width: 320px;
+  height: 320px;
+  animation: corona-expand 3s ease-in-out infinite 1.5s;
+}
+
+.phase-bg.sunset-ovulatory .sun-flare {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffb347;
+  border-radius: 50%;
+  filter: blur(2px);
+  animation: sparkle 3s ease-in-out infinite;
+}
+
+.phase-bg.sunset-ovulatory .flare-1 { top: 10%; left: 20%; animation-delay: 0s; }
+.phase-bg.sunset-ovulatory .flare-2 { top: 25%; left: 75%; animation-delay: 0.5s; }
+.phase-bg.sunset-ovulatory .flare-3 { top: 40%; left: 15%; animation-delay: 1s; }
+.phase-bg.sunset-ovulatory .flare-4 { top: 15%; left: 85%; animation-delay: 1.5s; }
+.phase-bg.sunset-ovulatory .flare-5 { top: 35%; left: 60%; animation-delay: 2s; }
+.phase-bg.sunset-ovulatory .flare-6 { top: 50%; left: 30%; animation-delay: 2.5s; }
+.phase-bg.sunset-ovulatory .flare-7 { top: 20%; left: 45%; animation-delay: 0.3s; }
+.phase-bg.sunset-ovulatory .flare-8 { top: 45%; left: 80%; animation-delay: 1.8s; }
+
+.phase-bg.sunset-luteal .dusk-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #feb47b10 0%, #ff7e5f15 50%, #ce93d820 100%);
+}
+
+.phase-bg.sunset-luteal .floating-cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #ffcba440 0%, transparent 70%);
+}
+
+.phase-bg.sunset-luteal .cloud-1 { width: 300px; height: 150px; top: 10%; left: 10%; animation: cloud-drift 12s ease-in-out infinite; }
+.phase-bg.sunset-luteal .cloud-2 { width: 250px; height: 120px; top: 25%; right: 15%; animation: cloud-drift 15s ease-in-out infinite 2s; }
+.phase-bg.sunset-luteal .cloud-3 { width: 200px; height: 100px; top: 45%; left: 20%; animation: cloud-drift 10s ease-in-out infinite 4s; }
+.phase-bg.sunset-luteal .cloud-4 { width: 280px; height: 140px; top: 60%; right: 10%; animation: cloud-drift 14s ease-in-out infinite 1s; }
+.phase-bg.sunset-luteal .cloud-5 { width: 220px; height: 110px; top: 35%; left: 50%; animation: cloud-drift 13s ease-in-out infinite 3s; }
+
+/* ==========================================
+   BOTANICAL THEME ANIMATIONS
+   ========================================== */
+
+@keyframes petal-fall {
+  0% { transform: translateY(-50px) rotate(0deg) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(100vh) rotate(360deg) translateX(50px); opacity: 0; }
+}
+
+@keyframes vine-grow {
+  0%, 100% { transform: scaleY(0.8) translateY(20px); opacity: 0.3; }
+  50% { transform: scaleY(1) translateY(0); opacity: 0.5; }
+}
+
+@keyframes bloom-open {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.9) rotate(0deg); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.1) rotate(10deg); opacity: 0.6; }
+}
+
+@keyframes leaf-fall {
+  0% { transform: translateY(-30px) rotate(-20deg); opacity: 0; }
+  15% { opacity: 0.6; }
+  85% { opacity: 0.6; }
+  100% { transform: translateY(100vh) rotate(200deg); opacity: 0; }
+}
+
+.phase-bg.botanical-menstrual .falling-petal {
+  position: absolute;
+  width: 20px;
+  height: 30px;
+  background: radial-gradient(ellipse at center, #c4a77d 0%, #c4a77d80 50%, transparent 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+.phase-bg.botanical-menstrual .petal-1 { left: 10%; animation: petal-fall 12s ease-in-out infinite; }
+.phase-bg.botanical-menstrual .petal-2 { left: 25%; animation: petal-fall 15s ease-in-out infinite 1.5s; }
+.phase-bg.botanical-menstrual .petal-3 { left: 40%; animation: petal-fall 11s ease-in-out infinite 3s; }
+.phase-bg.botanical-menstrual .petal-4 { left: 55%; animation: petal-fall 14s ease-in-out infinite 0.8s; }
+.phase-bg.botanical-menstrual .petal-5 { left: 70%; animation: petal-fall 13s ease-in-out infinite 2.2s; }
+.phase-bg.botanical-menstrual .petal-6 { left: 85%; animation: petal-fall 16s ease-in-out infinite 4s; }
+.phase-bg.botanical-menstrual .petal-7 { left: 15%; animation: petal-fall 10s ease-in-out infinite 5s; }
+.phase-bg.botanical-menstrual .petal-8 { left: 60%; animation: petal-fall 17s ease-in-out infinite 6s; }
+
+.phase-bg.botanical-menstrual .earth-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, #c4a77d20 0%, transparent 100%);
+}
+
+.phase-bg.botanical-follicular .growing-vine {
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 200px;
+  background: linear-gradient(to top, #7c9a7e60 0%, #7c9a7e20 80%, transparent 100%);
+  border-radius: 4px;
+  transform-origin: bottom center;
+}
+
+.phase-bg.botanical-follicular .vine-1 { left: 5%; height: 180px; animation: vine-grow 6s ease-in-out infinite; }
+.phase-bg.botanical-follicular .vine-2 { left: 20%; height: 220px; animation: vine-grow 7s ease-in-out infinite 0.5s; }
+.phase-bg.botanical-follicular .vine-3 { left: 35%; height: 160px; animation: vine-grow 5s ease-in-out infinite 1s; }
+.phase-bg.botanical-follicular .vine-4 { left: 55%; height: 240px; animation: vine-grow 8s ease-in-out infinite 1.5s; }
+.phase-bg.botanical-follicular .vine-5 { left: 75%; height: 190px; animation: vine-grow 6s ease-in-out infinite 2s; }
+.phase-bg.botanical-follicular .vine-6 { left: 90%; height: 210px; animation: vine-grow 7s ease-in-out infinite 0.8s; }
+
+.phase-bg.botanical-follicular .spring-light {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 200px;
+  background: radial-gradient(ellipse at top, #7c9a7e20 0%, transparent 70%);
+}
+
+.phase-bg.botanical-ovulatory .bloom-center {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d4a574 0%, #c4a77d 60%, transparent 100%);
+  animation: bloom-open 5s ease-in-out infinite;
+}
+
+.phase-bg.botanical-ovulatory .bloom-petal {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 80px;
+  height: 120px;
+  background: radial-gradient(ellipse, #7c9a7e50 0%, transparent 70%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform-origin: center bottom;
+}
+
+.phase-bg.botanical-ovulatory .bloom-1 { transform: translate(-50%, -50%) rotate(0deg); animation: bloom-open 5s ease-in-out infinite; }
+.phase-bg.botanical-ovulatory .bloom-2 { transform: translate(-50%, -50%) rotate(45deg); animation: bloom-open 5s ease-in-out infinite 0.3s; }
+.phase-bg.botanical-ovulatory .bloom-3 { transform: translate(-50%, -50%) rotate(90deg); animation: bloom-open 5s ease-in-out infinite 0.6s; }
+.phase-bg.botanical-ovulatory .bloom-4 { transform: translate(-50%, -50%) rotate(135deg); animation: bloom-open 5s ease-in-out infinite 0.9s; }
+.phase-bg.botanical-ovulatory .bloom-5 { transform: translate(-50%, -50%) rotate(180deg); animation: bloom-open 5s ease-in-out infinite 1.2s; }
+.phase-bg.botanical-ovulatory .bloom-6 { transform: translate(-50%, -50%) rotate(225deg); animation: bloom-open 5s ease-in-out infinite 1.5s; }
+.phase-bg.botanical-ovulatory .bloom-7 { transform: translate(-50%, -50%) rotate(270deg); animation: bloom-open 5s ease-in-out infinite 1.8s; }
+.phase-bg.botanical-ovulatory .bloom-8 { transform: translate(-50%, -50%) rotate(315deg); animation: bloom-open 5s ease-in-out infinite 2.1s; }
+
+.phase-bg.botanical-luteal .autumn-leaf {
+  position: absolute;
+  width: 18px;
+  height: 22px;
+  background: linear-gradient(135deg, #c4a77d 0%, #9c8aa5 100%);
+  border-radius: 50% 0% 50% 50%;
+}
+
+.phase-bg.botanical-luteal .leaf-1 { left: 8%; animation: leaf-fall 15s linear infinite; }
+.phase-bg.botanical-luteal .leaf-2 { left: 18%; animation: leaf-fall 18s linear infinite 1s; }
+.phase-bg.botanical-luteal .leaf-3 { left: 28%; animation: leaf-fall 14s linear infinite 2s; }
+.phase-bg.botanical-luteal .leaf-4 { left: 38%; animation: leaf-fall 17s linear infinite 0.5s; }
+.phase-bg.botanical-luteal .leaf-5 { left: 48%; animation: leaf-fall 16s linear infinite 3s; }
+.phase-bg.botanical-luteal .leaf-6 { left: 58%; animation: leaf-fall 19s linear infinite 1.5s; }
+.phase-bg.botanical-luteal .leaf-7 { left: 68%; animation: leaf-fall 15s linear infinite 4s; }
+.phase-bg.botanical-luteal .leaf-8 { left: 78%; animation: leaf-fall 13s linear infinite 2.5s; }
+.phase-bg.botanical-luteal .leaf-9 { left: 88%; animation: leaf-fall 18s linear infinite 0.8s; }
+.phase-bg.botanical-luteal .leaf-10 { left: 95%; animation: leaf-fall 16s linear infinite 3.5s; }
+
+.phase-bg.botanical-luteal .harvest-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, #e8dcc420 0%, transparent 100%);
+}
+
+/* ==========================================
+   DUSK THEME ANIMATIONS
+   ========================================== */
+
+@keyframes nebula-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(30px, 20px) scale(1.1); opacity: 0.35; }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+
+@keyframes star-rise {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-50px) scale(1); opacity: 0; }
+}
+
+@keyframes moon-glow-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(25px); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.15); filter: blur(35px); opacity: 0.7; }
+}
+
+@keyframes halo-expand {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+@keyframes arc-swoop {
+  0%, 100% { transform: scaleX(1) translateX(0); opacity: 0.2; }
+  50% { transform: scaleX(1.1) translateX(10px); opacity: 0.4; }
+}
+
+.phase-bg.dusk-menstrual .nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #6b5b9540 0%, #b8a9c920 40%, transparent 70%);
+  filter: blur(30px);
+}
+
+.phase-bg.dusk-menstrual .nebula-1 {
+  width: 400px;
+  height: 300px;
+  top: 10%;
+  left: 20%;
+  animation: nebula-drift 15s ease-in-out infinite;
+}
+
+.phase-bg.dusk-menstrual .nebula-2 {
+  width: 350px;
+  height: 250px;
+  top: 35%;
+  right: 15%;
+  animation: nebula-drift 18s ease-in-out infinite 3s;
+}
+
+.phase-bg.dusk-menstrual .tiny-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #d4af37;
+  border-radius: 50%;
+}
+
+.phase-bg.dusk-menstrual .star-1 { top: 8%; left: 15%; animation: star-twinkle 2s ease-in-out infinite; }
+.phase-bg.dusk-menstrual .star-2 { top: 12%; left: 45%; animation: star-twinkle 2.5s ease-in-out infinite 0.3s; }
+.phase-bg.dusk-menstrual .star-3 { top: 20%; left: 75%; animation: star-twinkle 1.8s ease-in-out infinite 0.6s; }
+.phase-bg.dusk-menstrual .star-4 { top: 30%; left: 25%; animation: star-twinkle 2.2s ease-in-out infinite 0.9s; }
+.phase-bg.dusk-menstrual .star-5 { top: 35%; left: 85%; animation: star-twinkle 2s ease-in-out infinite 1.2s; }
+.phase-bg.dusk-menstrual .star-6 { top: 45%; left: 10%; animation: star-twinkle 2.3s ease-in-out infinite 1.5s; }
+.phase-bg.dusk-menstrual .star-7 { top: 50%; left: 55%; animation: star-twinkle 1.9s ease-in-out infinite 0.2s; }
+.phase-bg.dusk-menstrual .star-8 { top: 15%; left: 90%; animation: star-twinkle 2.1s ease-in-out infinite 0.7s; }
+.phase-bg.dusk-menstrual .star-9 { top: 25%; left: 5%; animation: star-twinkle 2.4s ease-in-out infinite 1s; }
+.phase-bg.dusk-menstrual .star-10 { top: 40%; left: 65%; animation: star-twinkle 2s ease-in-out infinite 1.3s; }
+.phase-bg.dusk-menstrual .star-11 { top: 55%; left: 35%; animation: star-twinkle 2.2s ease-in-out infinite 0.4s; }
+.phase-bg.dusk-menstrual .star-12 { top: 18%; left: 60%; animation: star-twinkle 1.7s ease-in-out infinite 0.8s; }
+
+.phase-bg.dusk-follicular .twilight-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #1a1525 0%, #6b5b9520 50%, #b8a9c910 100%);
+  opacity: 0.3;
+}
+
+.phase-bg.dusk-follicular .rising-star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #d4af37;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #d4af37;
+}
+
+.phase-bg.dusk-follicular .rstar-1 { left: 10%; animation: star-rise 12s ease-out infinite; }
+.phase-bg.dusk-follicular .rstar-2 { left: 25%; animation: star-rise 15s ease-out infinite 1.5s; }
+.phase-bg.dusk-follicular .rstar-3 { left: 40%; animation: star-rise 11s ease-out infinite 3s; }
+.phase-bg.dusk-follicular .rstar-4 { left: 55%; animation: star-rise 14s ease-out infinite 0.8s; }
+.phase-bg.dusk-follicular .rstar-5 { left: 70%; animation: star-rise 13s ease-out infinite 2.2s; }
+.phase-bg.dusk-follicular .rstar-6 { left: 85%; animation: star-rise 16s ease-out infinite 4s; }
+.phase-bg.dusk-follicular .rstar-7 { left: 15%; animation: star-rise 10s ease-out infinite 5s; }
+.phase-bg.dusk-follicular .rstar-8 { left: 60%; animation: star-rise 17s ease-out infinite 6s; }
+
+.phase-bg.dusk-ovulatory .moon-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d4af37 0%, #6b5b95 50%, transparent 100%);
+  animation: moon-glow-pulse 5s ease-in-out infinite;
+}
+
+.phase-bg.dusk-ovulatory .moon-halo {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  border-radius: 50%;
+  border: 2px solid #d4af3750;
+}
+
+.phase-bg.dusk-ovulatory .halo-1 {
+  width: 200px;
+  height: 200px;
+  animation: halo-expand 4s ease-out infinite;
+}
+
+.phase-bg.dusk-ovulatory .halo-2 {
+  width: 200px;
+  height: 200px;
+  animation: halo-expand 4s ease-out infinite 2s;
+}
+
+.phase-bg.dusk-ovulatory .shimmer-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #d4af37;
+  border-radius: 50%;
+}
+
+.phase-bg.dusk-ovulatory .sstar-1 { top: 5%; left: 12%; animation: star-twinkle 1.5s ease-in-out infinite; }
+.phase-bg.dusk-ovulatory .sstar-2 { top: 10%; left: 35%; animation: star-twinkle 1.8s ease-in-out infinite 0.2s; }
+.phase-bg.dusk-ovulatory .sstar-3 { top: 8%; left: 58%; animation: star-twinkle 1.6s ease-in-out infinite 0.4s; }
+.phase-bg.dusk-ovulatory .sstar-4 { top: 15%; left: 80%; animation: star-twinkle 2s ease-in-out infinite 0.6s; }
+.phase-bg.dusk-ovulatory .sstar-5 { top: 25%; left: 20%; animation: star-twinkle 1.7s ease-in-out infinite 0.8s; }
+.phase-bg.dusk-ovulatory .sstar-6 { top: 35%; left: 90%; animation: star-twinkle 1.9s ease-in-out infinite 1s; }
+.phase-bg.dusk-ovulatory .sstar-7 { top: 40%; left: 5%; animation: star-twinkle 1.5s ease-in-out infinite 1.2s; }
+.phase-bg.dusk-ovulatory .sstar-8 { top: 30%; left: 70%; animation: star-twinkle 2.1s ease-in-out infinite 0.3s; }
+.phase-bg.dusk-ovulatory .sstar-9 { top: 45%; left: 45%; animation: star-twinkle 1.8s ease-in-out infinite 0.5s; }
+.phase-bg.dusk-ovulatory .sstar-10 { top: 50%; left: 25%; animation: star-twinkle 1.6s ease-in-out infinite 0.7s; }
+.phase-bg.dusk-ovulatory .sstar-11 { top: 12%; left: 92%; animation: star-twinkle 2s ease-in-out infinite 0.9s; }
+.phase-bg.dusk-ovulatory .sstar-12 { top: 55%; left: 75%; animation: star-twinkle 1.7s ease-in-out infinite 1.1s; }
+.phase-bg.dusk-ovulatory .sstar-13 { top: 20%; left: 8%; animation: star-twinkle 1.9s ease-in-out infinite 1.3s; }
+.phase-bg.dusk-ovulatory .sstar-14 { top: 38%; left: 55%; animation: star-twinkle 1.5s ease-in-out infinite 0.1s; }
+.phase-bg.dusk-ovulatory .sstar-15 { top: 48%; left: 85%; animation: star-twinkle 2.2s ease-in-out infinite 1.4s; }
+
+.phase-bg.dusk-luteal .swooping-arc {
+  position: absolute;
+  width: 300%;
+  height: 400px;
+  border: 3px solid #6b5b9530;
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+.phase-bg.dusk-luteal .arc-1 {
+  top: 10%;
+  left: -50%;
+  animation: arc-swoop 10s ease-in-out infinite;
+}
+
+.phase-bg.dusk-luteal .arc-2 {
+  top: 30%;
+  left: -80%;
+  animation: arc-swoop 12s ease-in-out infinite 2s;
+}
+
+.phase-bg.dusk-luteal .arc-3 {
+  top: 50%;
+  left: -60%;
+  animation: arc-swoop 14s ease-in-out infinite 4s;
+}
+
+.phase-bg.dusk-luteal .night-mist {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to top, #6b5b9515 0%, transparent 100%);
+}
+
+/* ==========================================
+   AURORA THEME ANIMATIONS
+   ========================================== */
+
+@keyframes aurora-wave {
+  0%, 100% {
+    transform: translateX(-20%) skewX(-5deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(20%) skewX(5deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes curtain-sway {
+  0%, 100% {
+    transform: scaleY(1) translateX(0);
+    opacity: 0.3;
+  }
+  33% {
+    transform: scaleY(1.1) translateX(10px);
+    opacity: 0.5;
+  }
+  66% {
+    transform: scaleY(0.95) translateX(-10px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes ribbon-flow {
+  0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { transform: translateX(100%) rotate(5deg); opacity: 0; }
+}
+
+@keyframes aurora-burst {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(40px); opacity: 0.4; }
+  50% { transform: translate(-50%, -50%) scale(1.3); filter: blur(60px); opacity: 0.6; }
+}
+
+@keyframes magic-float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-50px) scale(1); opacity: 0; }
+}
+
+@keyframes spark-fade {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 0.8; transform: scale(1.2); }
+}
+
+.phase-bg.aurora-menstrual .aurora-curtain {
+  position: absolute;
+  top: 0;
+  width: 150%;
+  height: 70%;
+  background: linear-gradient(180deg,
+    #20b2aa30 0%,
+    #ff6b8120 30%,
+    #a78bfa15 60%,
+    transparent 100%
+  );
+  transform-origin: top center;
+}
+
+.phase-bg.aurora-menstrual .curtain-1 {
+  left: -25%;
+  animation: curtain-sway 8s ease-in-out infinite;
+}
+
+.phase-bg.aurora-menstrual .curtain-2 {
+  left: 0%;
+  animation: curtain-sway 10s ease-in-out infinite 2s;
+}
+
+.phase-bg.aurora-menstrual .curtain-3 {
+  left: 25%;
+  animation: curtain-sway 9s ease-in-out infinite 4s;
+}
+
+.phase-bg.aurora-follicular .aurora-ribbon {
+  position: absolute;
+  height: 80px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #20b2aa40 20%,
+    #ff6b8130 50%,
+    #ffd93d20 80%,
+    transparent 100%
+  );
+  filter: blur(10px);
+}
+
+.phase-bg.aurora-follicular .ribbon-1 { top: 10%; width: 100%; animation: ribbon-flow 15s linear infinite; }
+.phase-bg.aurora-follicular .ribbon-2 { top: 25%; width: 80%; animation: ribbon-flow 18s linear infinite 3s; }
+.phase-bg.aurora-follicular .ribbon-3 { top: 40%; width: 120%; animation: ribbon-flow 12s linear infinite 6s; }
+.phase-bg.aurora-follicular .ribbon-4 { top: 55%; width: 90%; animation: ribbon-flow 16s linear infinite 9s; }
+.phase-bg.aurora-follicular .ribbon-5 { top: 70%; width: 110%; animation: ribbon-flow 20s linear infinite 1s; }
+
+.phase-bg.aurora-follicular .magic-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, #20b2aa15 0%, transparent 100%);
+}
+
+.phase-bg.aurora-ovulatory .aurora-burst {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    #ffd93d 0%,
+    #20b2aa 30%,
+    #ff6b81 60%,
+    #a78bfa 80%,
+    transparent 100%
+  );
+  animation: aurora-burst 6s ease-in-out infinite;
+}
+
+.phase-bg.aurora-ovulatory .magic-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.phase-bg.aurora-ovulatory .mparticle-1 { left: 5%; background: #20b2aa; animation: magic-float 10s ease-out infinite; }
+.phase-bg.aurora-ovulatory .mparticle-2 { left: 12%; background: #ff6b81; animation: magic-float 12s ease-out infinite 0.5s; }
+.phase-bg.aurora-ovulatory .mparticle-3 { left: 20%; background: #ffd93d; animation: magic-float 9s ease-out infinite 1s; }
+.phase-bg.aurora-ovulatory .mparticle-4 { left: 28%; background: #a78bfa; animation: magic-float 11s ease-out infinite 1.5s; }
+.phase-bg.aurora-ovulatory .mparticle-5 { left: 35%; background: #20b2aa; animation: magic-float 13s ease-out infinite 2s; }
+.phase-bg.aurora-ovulatory .mparticle-6 { left: 42%; background: #ff6b81; animation: magic-float 10s ease-out infinite 2.5s; }
+.phase-bg.aurora-ovulatory .mparticle-7 { left: 50%; background: #ffd93d; animation: magic-float 8s ease-out infinite 3s; }
+.phase-bg.aurora-ovulatory .mparticle-8 { left: 58%; background: #a78bfa; animation: magic-float 14s ease-out infinite 3.5s; }
+.phase-bg.aurora-ovulatory .mparticle-9 { left: 65%; background: #20b2aa; animation: magic-float 11s ease-out infinite 4s; }
+.phase-bg.aurora-ovulatory .mparticle-10 { left: 72%; background: #ff6b81; animation: magic-float 9s ease-out infinite 4.5s; }
+.phase-bg.aurora-ovulatory .mparticle-11 { left: 78%; background: #ffd93d; animation: magic-float 12s ease-out infinite 5s; }
+.phase-bg.aurora-ovulatory .mparticle-12 { left: 85%; background: #a78bfa; animation: magic-float 10s ease-out infinite 5.5s; }
+.phase-bg.aurora-ovulatory .mparticle-13 { left: 92%; background: #20b2aa; animation: magic-float 13s ease-out infinite 6s; }
+.phase-bg.aurora-ovulatory .mparticle-14 { left: 18%; background: #ff6b81; animation: magic-float 11s ease-out infinite 6.5s; }
+.phase-bg.aurora-ovulatory .mparticle-15 { left: 38%; background: #ffd93d; animation: magic-float 9s ease-out infinite 7s; }
+.phase-bg.aurora-ovulatory .mparticle-16 { left: 55%; background: #a78bfa; animation: magic-float 14s ease-out infinite 7.5s; }
+.phase-bg.aurora-ovulatory .mparticle-17 { left: 68%; background: #20b2aa; animation: magic-float 10s ease-out infinite 8s; }
+.phase-bg.aurora-ovulatory .mparticle-18 { left: 82%; background: #ff6b81; animation: magic-float 12s ease-out infinite 8.5s; }
+.phase-bg.aurora-ovulatory .mparticle-19 { left: 25%; background: #ffd93d; animation: magic-float 11s ease-out infinite 9s; }
+.phase-bg.aurora-ovulatory .mparticle-20 { left: 48%; background: #a78bfa; animation: magic-float 13s ease-out infinite 9.5s; }
+
+.phase-bg.aurora-luteal .aurora-wave {
+  position: absolute;
+  width: 200%;
+  height: 200px;
+  background: linear-gradient(180deg,
+    #20b2aa20 0%,
+    #a78bfa15 50%,
+    transparent 100%
+  );
+  filter: blur(20px);
+}
+
+.phase-bg.aurora-luteal .awave-1 {
+  top: 20%;
+  left: -50%;
+  animation: aurora-wave 12s ease-in-out infinite;
+}
+
+.phase-bg.aurora-luteal .awave-2 {
+  top: 45%;
+  left: -30%;
+  animation: aurora-wave 15s ease-in-out infinite 3s;
+}
+
+.phase-bg.aurora-luteal .fading-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ffd93d;
+  border-radius: 50%;
+  filter: blur(2px);
+}
+
+.phase-bg.aurora-luteal .spark-1 { top: 15%; left: 20%; animation: spark-fade 4s ease-in-out infinite; }
+.phase-bg.aurora-luteal .spark-2 { top: 30%; left: 70%; animation: spark-fade 5s ease-in-out infinite 0.5s; }
+.phase-bg.aurora-luteal .spark-3 { top: 45%; left: 35%; animation: spark-fade 4.5s ease-in-out infinite 1s; }
+.phase-bg.aurora-luteal .spark-4 { top: 60%; left: 80%; animation: spark-fade 3.5s ease-in-out infinite 1.5s; }
+.phase-bg.aurora-luteal .spark-5 { top: 25%; left: 50%; animation: spark-fade 5s ease-in-out infinite 2s; }
+.phase-bg.aurora-luteal .spark-6 { top: 50%; left: 15%; animation: spark-fade 4s ease-in-out infinite 2.5s; }
+.phase-bg.aurora-luteal .spark-7 { top: 35%; left: 90%; animation: spark-fade 4.5s ease-in-out infinite 3s; }
+.phase-bg.aurora-luteal .spark-8 { top: 55%; left: 55%; animation: spark-fade 5s ease-in-out infinite 3.5s; }
