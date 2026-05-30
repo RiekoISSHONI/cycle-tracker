@@ -9,16 +9,16 @@ const SYMPTOMS = [
 
 const FLOW_LEVELS = ['none', 'spotting', 'light', 'medium', 'heavy'];
 
-function RatingScale({ value, onChange, labels, max = 5 }) {
+function RatingScale({ value, onChange, max = 5 }) {
   return (
     <div className="flex gap-2">
       {Array.from({ length: max }, (_, i) => i + 1).map((num) => (
         <button
           key={num}
           onClick={() => onChange(num)}
-          className={`flex-1 py-3 rounded-xl font-medium transition-all ${
+          className={`mood-btn flex-1 py-3 rounded-xl font-medium transition-all ${
             value === num
-              ? 'bg-pink-500 text-white shadow-lg scale-105'
+              ? 'active bg-pink-500 text-white shadow-lg'
               : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
           }`}
         >
@@ -29,9 +29,10 @@ function RatingScale({ value, onChange, labels, max = 5 }) {
   );
 }
 
-export function DailyCheckin({ cycleDay, onSave, existingData }) {
-  const { t } = useTranslation();
+export function DailyCheckin({ cycleDay, onSave, existingData, checkins = [], onLogPeriod, periodHistory = [] }) {
+  const { t, i18n } = useTranslation();
   const today = new Date().toISOString().split('T')[0];
+  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
 
   const [mood, setMood] = useState(existingData?.mood || 3);
   const [energy, setEnergy] = useState(existingData?.energy || 3);
@@ -39,6 +40,8 @@ export function DailyCheckin({ cycleDay, onSave, existingData }) {
   const [symptoms, setSymptoms] = useState(existingData?.symptoms || []);
   const [notes, setNotes] = useState(existingData?.notes || '');
   const [saved, setSaved] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [periodLogged, setPeriodLogged] = useState(false);
 
   const toggleSymptom = (symptom) => {
     setSymptoms(prev =>
@@ -62,13 +65,140 @@ export function DailyCheckin({ cycleDay, onSave, existingData }) {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const handleLogPeriod = () => {
+    if (onLogPeriod) {
+      onLogPeriod(today);
+      setPeriodLogged(true);
+      setFlow('medium');
+      setTimeout(() => setPeriodLogged(false), 2000);
+    }
+  };
+
+  const recentCheckins = [...checkins]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 14);
+
+  const getMoodLabel = (m) => {
+    const labels = { 1: '😔', 2: '😕', 3: '😐', 4: '🙂', 5: '😊' };
+    return labels[m] || '😐';
+  };
+
   return (
     <div className="space-y-6 pb-4">
+      {/* Period Log Button */}
+      <button
+        onClick={handleLogPeriod}
+        disabled={periodLogged}
+        className={`w-full card p-5 text-left transition-all active:scale-[0.99] ${
+          periodLogged
+            ? 'bg-gradient-to-r from-emerald-500 to-green-500 border-0'
+            : 'bg-gradient-to-r from-rose-500 to-pink-500 border-0'
+        }`}
+      >
+        <div className="flex items-center justify-between text-white">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
+              {periodLogged ? (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              )}
+            </div>
+            <div>
+              <div className="font-semibold text-lg">
+                {periodLogged ? t('checkin.periodLogged') : t('checkin.logPeriodStart')}
+              </div>
+              <div className="text-white/80 text-sm">
+                {periodLogged ? t('checkin.cycleRestarted') : t('checkin.tapIfStarted')}
+              </div>
+            </div>
+          </div>
+          {!periodLogged && (
+            <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          )}
+        </div>
+      </button>
+
       {/* Header */}
       <div className="card p-5 bg-gradient-to-br from-pink-50 to-rose-50 border-pink-100">
-        <h2 className="text-xl font-bold text-gray-800">{t('checkin.title')}</h2>
-        <p className="text-gray-600 mt-1">{t('checkin.howAreYou')}</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-gray-800">{t('checkin.title')}</h2>
+            <p className="text-gray-600 mt-1">{t('checkin.howAreYou')}</p>
+          </div>
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="px-3 py-2 rounded-xl bg-white/80 text-pink-600 text-sm font-medium hover:bg-white transition-colors"
+          >
+            {showHistory ? t('checkin.hideHistory') : t('checkin.viewHistory')}
+          </button>
+        </div>
       </div>
+
+      {/* History View */}
+      {showHistory && (
+        <div className="card p-5 space-y-3">
+          <h3 className="font-semibold text-gray-800">{t('checkin.recentEntries')}</h3>
+          {recentCheckins.length === 0 ? (
+            <p className="text-sm text-gray-500">{t('checkin.noEntries')}</p>
+          ) : (
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {recentCheckins.map((entry) => (
+                <div
+                  key={entry.date}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="text-2xl">{getMoodLabel(entry.mood)}</div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-800">
+                        {new Date(entry.date).toLocaleDateString(locale, {
+                          weekday: 'short',
+                          month: 'short',
+                          day: 'numeric'
+                        })}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {t('checkin.day')} {entry.cycleDay} • {t(`checkin.flowLevels.${entry.flow}`)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1 max-w-[120px] justify-end">
+                    {entry.symptoms?.slice(0, 3).map((s) => (
+                      <span key={s} className="px-2 py-0.5 bg-violet-100 text-violet-600 rounded-full text-xs">
+                        {t(`checkin.symptomsList.${s}`)}
+                      </span>
+                    ))}
+                    {entry.symptoms?.length > 3 && (
+                      <span className="text-xs text-gray-400">+{entry.symptoms.length - 3}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Period History */}
+          {periodHistory.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <h4 className="text-sm font-medium text-gray-700 mb-2">{t('checkin.periodHistory')}</h4>
+              <div className="flex flex-wrap gap-2">
+                {periodHistory.slice(0, 6).map((date) => (
+                  <span key={date} className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-xs font-medium">
+                    {new Date(date).toLocaleDateString(locale, { month: 'short', day: 'numeric' })}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Mood */}
       <div className="card p-5">
@@ -132,14 +262,14 @@ export function DailyCheckin({ cycleDay, onSave, existingData }) {
         </div>
       </div>
 
-      {/* Notes */}
+      {/* Notes / Diary */}
       <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-3">{t('checkin.notes')}</h3>
+        <h3 className="font-semibold text-gray-800 mb-3">{t('checkin.diary')}</h3>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="..."
-          rows={3}
+          placeholder={t('checkin.diaryPlaceholder')}
+          rows={4}
           className="input resize-none"
         />
       </div>

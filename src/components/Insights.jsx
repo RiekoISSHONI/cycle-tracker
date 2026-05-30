@@ -54,8 +54,9 @@ function SymptomBar({ symptom, count, total, t }) {
   );
 }
 
-export function Insights({ checkins, cycleData }) {
-  const { t } = useTranslation();
+export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }) {
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
 
   const stats = useMemo(() => {
     if (!checkins || checkins.length === 0) {
@@ -178,19 +179,91 @@ export function Insights({ checkins, cycleData }) {
       {/* Cycle Info */}
       <div className="card p-5">
         <h3 className="font-semibold text-gray-800 mb-3">{t('insights.cycleHistory')}</h3>
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center">
-            <svg className="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-gray-800">
-              {cycleData.cycleLength} {t('insights.days')}
+
+        {cycleStats && periodHistory.length >= 2 ? (
+          <div className="space-y-4">
+            {/* Average with range */}
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center">
+                <svg className="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-gray-800">
+                  {cycleStats.averageLength} {t('insights.days')}
+                </div>
+                <div className="text-sm text-gray-500">{t('insights.averageCycle')}</div>
+              </div>
             </div>
-            <div className="text-sm text-gray-500">{t('insights.averageCycle')}</div>
+
+            {/* Cycle range for irregular periods */}
+            {cycleStats.isIrregular && (
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-100">
+                <div className="flex items-center gap-2 text-amber-700">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="font-medium text-sm">{t('insights.irregularCycle')}</span>
+                </div>
+                <p className="text-sm text-amber-600 mt-1">
+                  {t('insights.cycleRange', { min: cycleStats.minLength, max: cycleStats.maxLength })}
+                </p>
+              </div>
+            )}
+
+            {/* Recent cycle lengths */}
+            {cycleStats.cycleLengths.length > 0 && (
+              <div>
+                <div className="text-sm text-gray-600 mb-2">{t('insights.recentCycles')}</div>
+                <div className="flex flex-wrap gap-2">
+                  {cycleStats.cycleLengths.slice(-6).map((len, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-medium"
+                    >
+                      {len} {t('insights.days')}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Period history */}
+            {periodHistory.length > 0 && (
+              <div>
+                <div className="text-sm text-gray-600 mb-2">{t('insights.periodDates')}</div>
+                <div className="flex flex-wrap gap-2">
+                  {periodHistory.slice(0, 6).map((date) => (
+                    <span
+                      key={date}
+                      className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-sm font-medium"
+                    >
+                      {new Date(date).toLocaleDateString(locale, { month: 'short', day: 'numeric' })}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center">
+              <svg className="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-gray-800">
+                {cycleData.cycleLength} {t('insights.days')}
+              </div>
+              <div className="text-sm text-gray-500">{t('insights.averageCycle')}</div>
+              {periodHistory.length < 2 && (
+                <div className="text-xs text-gray-400 mt-1">{t('insights.logMorePeriods')}</div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

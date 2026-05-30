@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { calculateCycleInfo } from './utils/cycleData';
+import { calculateCycleInfo, calculateCycleStats } from './utils/cycleData';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { CycleSetup } from './components/CycleSetup';
@@ -15,16 +15,36 @@ import { Workouts } from './components/Workouts';
 function App() {
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
+  const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
 
+  const cycleStats = useMemo(() => {
+    return calculateCycleStats(periodHistory);
+  }, [periodHistory]);
+
+  const effectiveCycleLength = useMemo(() => {
+    if (periodHistory.length >= 2) {
+      return cycleStats.averageLength;
+    }
+    return cycleData?.cycleLength || 28;
+  }, [periodHistory, cycleStats, cycleData]);
+
   const cycleInfo = useMemo(() => {
     if (!cycleData?.lastPeriodStart) return null;
-    return calculateCycleInfo(cycleData.lastPeriodStart, cycleData.cycleLength);
-  }, [cycleData]);
+    const info = calculateCycleInfo(cycleData.lastPeriodStart, effectiveCycleLength);
+    return {
+      ...info,
+      cycleStats,
+      isIrregular: cycleStats.isIrregular
+    };
+  }, [cycleData, effectiveCycleLength, cycleStats]);
 
   const handleSetup = (data) => {
     setCycleData(data);
+    if (data.lastPeriodStart) {
+      setPeriodHistory([data.lastPeriodStart]);
+    }
   };
 
   const handleUpdate = (data) => {
@@ -34,8 +54,21 @@ function App() {
   const handleReset = () => {
     setCycleData(null);
     setCheckins([]);
+    setPeriodHistory([]);
     setActiveTab('dashboard');
     setViewMode('personal');
+  };
+
+  const handleLogPeriod = (date) => {
+    setCycleData(prev => ({
+      ...prev,
+      lastPeriodStart: date
+    }));
+    setPeriodHistory(prev => {
+      if (prev.includes(date)) return prev;
+      const updated = [...prev, date].sort((a, b) => new Date(b) - new Date(a));
+      return updated.slice(0, 12);
+    });
   };
 
   const handleCheckinSave = (checkinData) => {
@@ -86,11 +119,19 @@ function App() {
             cycleDay={cycleInfo.cycleDay}
             onSave={handleCheckinSave}
             existingData={todayCheckin}
+            checkins={checkins}
+            onLogPeriod={handleLogPeriod}
+            periodHistory={periodHistory}
           />
         )}
 
         {activeTab === 'insights' && (
-          <Insights checkins={checkins} cycleData={cycleData} />
+          <Insights
+            checkins={checkins}
+            cycleData={cycleData}
+            cycleStats={cycleStats}
+            periodHistory={periodHistory}
+          />
         )}
 
         {activeTab === 'calendar' && cycleInfo && (

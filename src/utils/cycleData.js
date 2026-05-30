@@ -334,3 +334,82 @@ export function generateShareCode() {
   }
   return code;
 }
+
+/**
+ * Calculate cycle statistics from period history
+ * @param {Array} periodDates - Array of period start dates (ISO strings)
+ * @returns {Object} Cycle statistics
+ */
+export function calculateCycleStats(periodDates) {
+  if (!periodDates || periodDates.length < 2) {
+    return {
+      averageLength: 28,
+      minLength: 28,
+      maxLength: 28,
+      isIrregular: false,
+      cycleLengths: []
+    };
+  }
+
+  const sorted = [...periodDates].sort((a, b) => new Date(a) - new Date(b));
+  const cycleLengths = [];
+
+  for (let i = 1; i < sorted.length; i++) {
+    const prev = new Date(sorted[i - 1]);
+    const curr = new Date(sorted[i]);
+    const days = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
+    if (days > 0 && days < 60) {
+      cycleLengths.push(days);
+    }
+  }
+
+  if (cycleLengths.length === 0) {
+    return {
+      averageLength: 28,
+      minLength: 28,
+      maxLength: 28,
+      isIrregular: false,
+      cycleLengths: []
+    };
+  }
+
+  const sum = cycleLengths.reduce((a, b) => a + b, 0);
+  const avg = Math.round(sum / cycleLengths.length);
+  const min = Math.min(...cycleLengths);
+  const max = Math.max(...cycleLengths);
+  const variance = max - min;
+
+  return {
+    averageLength: avg,
+    minLength: min,
+    maxLength: max,
+    isIrregular: variance > 7,
+    cycleLengths
+  };
+}
+
+/**
+ * Get prediction range for next period
+ * @param {string} lastPeriodStart - Last period start date
+ * @param {Object} stats - Cycle statistics
+ * @returns {Object} Prediction range
+ */
+export function getPredictionRange(lastPeriodStart, stats) {
+  const start = new Date(lastPeriodStart);
+
+  const earliestDate = new Date(start);
+  earliestDate.setDate(earliestDate.getDate() + stats.minLength);
+
+  const expectedDate = new Date(start);
+  expectedDate.setDate(expectedDate.getDate() + stats.averageLength);
+
+  const latestDate = new Date(start);
+  latestDate.setDate(latestDate.getDate() + stats.maxLength);
+
+  return {
+    earliest: earliestDate,
+    expected: expectedDate,
+    latest: latestDate,
+    rangeInDays: stats.maxLength - stats.minLength
+  };
+}
