@@ -243,5 +243,28 @@
       "position_unavailable": "Unable to determine your location. Please try again.",
       "timeout": "Location request timed out. Please try again."
     }
+  },
+  "consent": {
+    "title": "Your Privacy Matters",
+    "subtitle": "Before we begin, here's how we handle your data",
+    "localStorage": "Data Stays On Your Device",
+    "localStorageDesc": "All your cycle data is stored locally in your browser, not on any server.",
+    "noAccount": "No Account Required",
+    "noAccountDesc": "We don't collect emails, passwords, or any personal identifiers.",
+    "location": "Location Is Optional",
+    "locationDesc": "Only used when you search for nearby clinics. Never stored or tracked.",
+    "viewDetails": "View Full Privacy Details",
+    "dataCollected": "What data is stored locally:",
+    "dataList": {
+      "cycleData": "Cycle dates and length preferences",
+      "checkins": "Daily check-ins (mood, symptoms, notes)",
+      "preferences": "App settings (theme, language)"
+    },
+    "howUsed": "How your data is used:",
+    "howUsedDesc": "Your data is used solely to provide cycle predictions, insights, and personalized recommendations within the app.",
+    "yourRights": "Your rights:",
+    "yourRightsDesc": "You can delete all your data at any time from Settings. Since data is stored locally, clearing your browser data will also remove it.",
+    "accept": "I Understand & Accept",
+    "byAccepting": "By continuing, you agree to local data storage for app functionality."
   }
 }

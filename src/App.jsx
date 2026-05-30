@@ -12,8 +12,10 @@ import { Insights } from './components/Insights';
 import { DailyTip } from './components/DailyTip';
 import { Workouts } from './components/Workouts';
 import { PhaseBackground } from './components/PhaseBackground';
+import { ConsentModal } from './components/ConsentModal';
 
 function App() {
+  const [hasConsented, setHasConsented] = useLocalStorage('privacyConsent', false);
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
@@ -24,6 +26,14 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  const handleAcceptConsent = () => {
+    setHasConsented(true);
+  };
+
+  if (!hasConsented) {
+    return <ConsentModal onAccept={handleAcceptConsent} />;
+  }
 
   const cycleStats = useMemo(() => {
     return calculateCycleStats(periodHistory);
