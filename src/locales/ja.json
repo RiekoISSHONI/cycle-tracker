@@ -39,11 +39,7 @@
     "day": "Day",
     "ofCycle": "周期の",
     "daysUntilPeriod": "日後に生理",
-    "fertileWindow": "妊娠可能期間",
-    "yes": "はい",
-    "no": "いいえ",
-    "higherChance": "妊娠の可能性が高い",
-    "lowerFertility": "妊娠の可能性が低い",
+    "cycleProgress": "周期の進捗",
     "energyHormones": "エネルギーとホルモン",
     "recommendationsForYou": "あなたへのおすすめ",
     "partnerGuide": "パートナーガイド"

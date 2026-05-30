@@ -161,7 +161,7 @@ function PartnerTipCard({ icon, title, description, items, variant = 'default' }
 
 export function Dashboard({ cycleInfo, viewMode }) {
   const { t } = useTranslation();
-  const { cycleDay, cycleLength, phaseData, daysUntilPeriod, isFertileWindow, nextPeriodDate, phase } = cycleInfo;
+  const { cycleDay, cycleLength, phaseData, daysUntilPeriod, nextPeriodDate, phase } = cycleInfo;
   const motivationalMessage = getMotivationalMessage(phase);
 
   const phaseGradients = {
@@ -220,19 +220,13 @@ export function Dashboard({ cycleInfo, viewMode }) {
         />
         <StatCard
           icon={
-            isFertileWindow ? (
-              <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-              </svg>
-            )
+            <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
           }
-          value={isFertileWindow ? t('dashboard.yes') : t('dashboard.no')}
-          label={t('dashboard.fertileWindow')}
-          sublabel={isFertileWindow ? t('dashboard.higherChance') : t('dashboard.lowerFertility')}
+          value={`${Math.round((cycleDay / cycleLength) * 100)}%`}
+          label={t('dashboard.cycleProgress')}
+          sublabel={phaseData.name}
         />
       </div>
 

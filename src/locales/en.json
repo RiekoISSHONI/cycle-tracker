@@ -39,11 +39,7 @@
     "day": "Day",
     "ofCycle": "of your cycle",
     "daysUntilPeriod": "days until period",
-    "fertileWindow": "fertile window",
-    "yes": "Yes",
-    "no": "No",
-    "higherChance": "Higher chance of conception",
-    "lowerFertility": "Lower fertility",
+    "cycleProgress": "cycle progress",
     "energyHormones": "Energy & Hormones",
     "recommendationsForYou": "Recommendations for You",
     "partnerGuide": "Partner Guide"
