@@ -364,3 +364,306 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   transform: scale(1.05);
   box-shadow: var(--shadow-medium);
 }
+
+/* ==========================================
+   Phase Background Animations
+   ========================================== */
+
+.phase-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.phase-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================
+   MENSTRUAL PHASE - Embracing warmth
+   ========================================== */
+
+@keyframes embrace-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.25;
+  }
+}
+
+@keyframes warmth-pulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.phase-bg.menstrual .embrace-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.3) 0%, transparent 70%);
+}
+
+.phase-bg.menstrual .embrace-1 {
+  width: 300px;
+  height: 300px;
+  top: 20%;
+  left: 50%;
+  animation: embrace-pulse 4s ease-in-out infinite;
+}
+
+.phase-bg.menstrual .embrace-2 {
+  width: 250px;
+  height: 250px;
+  top: 25%;
+  left: 48%;
+  animation: embrace-pulse 4s ease-in-out infinite 0.5s;
+}
+
+.phase-bg.menstrual .embrace-3 {
+  width: 200px;
+  height: 200px;
+  top: 30%;
+  left: 52%;
+  animation: embrace-pulse 4s ease-in-out infinite 1s;
+}
+
+.phase-bg.menstrual .warmth-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 113, 133, 0.2) 0%, transparent 60%);
+  animation: warmth-pulse 6s ease-in-out infinite;
+}
+
+/* ==========================================
+   FOLLICULAR PHASE - Rising energy
+   ========================================== */
+
+@keyframes rise {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rays-rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.phase-bg.follicular .rising-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.4) 0%, rgba(244, 114, 182, 0.2) 100%);
+}
+
+.phase-bg.follicular .bubble-1 { width: 20px; height: 20px; left: 10%; animation: rise 8s ease-in-out infinite; }
+.phase-bg.follicular .bubble-2 { width: 30px; height: 30px; left: 25%; animation: rise 10s ease-in-out infinite 1s; }
+.phase-bg.follicular .bubble-3 { width: 15px; height: 15px; left: 40%; animation: rise 7s ease-in-out infinite 0.5s; }
+.phase-bg.follicular .bubble-4 { width: 25px; height: 25px; left: 55%; animation: rise 9s ease-in-out infinite 2s; }
+.phase-bg.follicular .bubble-5 { width: 18px; height: 18px; left: 70%; animation: rise 8s ease-in-out infinite 1.5s; }
+.phase-bg.follicular .bubble-6 { width: 22px; height: 22px; left: 85%; animation: rise 11s ease-in-out infinite 0.8s; }
+.phase-bg.follicular .bubble-7 { width: 12px; height: 12px; left: 15%; animation: rise 6s ease-in-out infinite 3s; }
+.phase-bg.follicular .bubble-8 { width: 28px; height: 28px; left: 60%; animation: rise 12s ease-in-out infinite 2.5s; }
+
+.phase-bg.follicular .growth-rays {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(236, 72, 153, 0.08) 10deg,
+    transparent 20deg,
+    transparent 40deg,
+    rgba(236, 72, 153, 0.08) 50deg,
+    transparent 60deg,
+    transparent 80deg,
+    rgba(236, 72, 153, 0.08) 90deg,
+    transparent 100deg
+  );
+  border-radius: 50%;
+  animation: rays-rotate 30s linear infinite;
+}
+
+/* ==========================================
+   OVULATORY PHASE - Radiant energy
+   ========================================== */
+
+@keyframes radiance-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+@keyframes ring-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+.phase-bg.ovulatory .radiance-core {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 70%);
+  animation: radiance-pulse 3s ease-in-out infinite;
+}
+
+.phase-bg.ovulatory .radiance-ring {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.3);
+}
+
+.phase-bg.ovulatory .ring-1 {
+  width: 200px;
+  height: 200px;
+  animation: ring-expand 3s ease-out infinite;
+}
+
+.phase-bg.ovulatory .ring-2 {
+  width: 200px;
+  height: 200px;
+  animation: ring-expand 3s ease-out infinite 1s;
+}
+
+.phase-bg.ovulatory .ring-3 {
+  width: 200px;
+  height: 200px;
+  animation: ring-expand 3s ease-out infinite 2s;
+}
+
+.phase-bg.ovulatory .sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(251, 191, 36, 0.6);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.phase-bg.ovulatory .sparkle-1 { top: 15%; left: 20%; animation: sparkle 2s ease-in-out infinite; }
+.phase-bg.ovulatory .sparkle-2 { top: 25%; left: 75%; animation: sparkle 2.5s ease-in-out infinite 0.3s; }
+.phase-bg.ovulatory .sparkle-3 { top: 40%; left: 15%; animation: sparkle 2s ease-in-out infinite 0.6s; }
+.phase-bg.ovulatory .sparkle-4 { top: 35%; left: 85%; animation: sparkle 2.2s ease-in-out infinite 0.9s; }
+.phase-bg.ovulatory .sparkle-5 { top: 50%; left: 30%; animation: sparkle 2.3s ease-in-out infinite 1.2s; }
+.phase-bg.ovulatory .sparkle-6 { top: 45%; left: 70%; animation: sparkle 2.1s ease-in-out infinite 1.5s; }
+
+/* ==========================================
+   LUTEAL PHASE - Settling calm
+   ========================================== */
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cozy-breathe {
+  0%, 100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.phase-bg.luteal .falling-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(167, 139, 250, 0.3) 100%);
+}
+
+.phase-bg.luteal .particle-1 { width: 8px; height: 8px; left: 5%; animation: fall 12s linear infinite; }
+.phase-bg.luteal .particle-2 { width: 12px; height: 12px; left: 15%; animation: fall 15s linear infinite 1s; }
+.phase-bg.luteal .particle-3 { width: 6px; height: 6px; left: 25%; animation: fall 10s linear infinite 2s; }
+.phase-bg.luteal .particle-4 { width: 10px; height: 10px; left: 35%; animation: fall 14s linear infinite 0.5s; }
+.phase-bg.luteal .particle-5 { width: 7px; height: 7px; left: 45%; animation: fall 11s linear infinite 3s; }
+.phase-bg.luteal .particle-6 { width: 9px; height: 9px; left: 55%; animation: fall 13s linear infinite 1.5s; }
+.phase-bg.luteal .particle-7 { width: 11px; height: 11px; left: 65%; animation: fall 16s linear infinite 2.5s; }
+.phase-bg.luteal .particle-8 { width: 5px; height: 5px; left: 75%; animation: fall 9s linear infinite 4s; }
+.phase-bg.luteal .particle-9 { width: 8px; height: 8px; left: 85%; animation: fall 12s linear infinite 0.8s; }
+.phase-bg.luteal .particle-10 { width: 10px; height: 10px; left: 95%; animation: fall 14s linear infinite 3.5s; }
+.phase-bg.luteal .particle-11 { width: 6px; height: 6px; left: 10%; animation: fall 11s linear infinite 5s; }
+.phase-bg.luteal .particle-12 { width: 9px; height: 9px; left: 50%; animation: fall 13s linear infinite 4.5s; }
+
+.phase-bg.luteal .cozy-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(139, 92, 246, 0.1) 0%, transparent 100%);
+  animation: cozy-breathe 5s ease-in-out infinite;
+}

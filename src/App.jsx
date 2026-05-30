@@ -11,6 +11,7 @@ import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
 import { DailyTip } from './components/DailyTip';
 import { Workouts } from './components/Workouts';
+import { PhaseBackground } from './components/PhaseBackground';
 
 function App() {
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
@@ -93,7 +94,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 relative">
+      {cycleInfo && <PhaseBackground phase={cycleInfo.phase} />}
+
       <Header
         viewMode={viewMode}
         setViewMode={setViewMode}
