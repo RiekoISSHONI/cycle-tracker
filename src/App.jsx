@@ -17,7 +17,7 @@ function App() {
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
-  const [theme, setTheme] = useLocalStorage('theme', 'pastel');
+  const [theme, setTheme] = useLocalStorage('theme', 'sunset');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
 

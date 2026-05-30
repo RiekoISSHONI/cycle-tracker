@@ -174,8 +174,25 @@
     "reminderTime": "Reminder Time",
     "language": "Language",
     "colorTheme": "Color Theme",
-    "themePastel": "Pastel",
-    "themePop": "Pop",
+    "themeDescription": "Choose the look that feels right for you",
+    "theme": {
+      "sunset": {
+        "name": "Warm Sunset",
+        "description": "Nurturing & cozy"
+      },
+      "botanical": {
+        "name": "Botanical",
+        "description": "Grounded & natural"
+      },
+      "dusk": {
+        "name": "Dusk",
+        "description": "Premium & calming"
+      },
+      "aurora": {
+        "name": "Aurora",
+        "description": "Magical & uplifting"
+      }
+    },
     "about": "About",
     "version": "Version",
     "aboutDescription": "Based on Dr. Mindy Pelz's research on cycle syncing.",

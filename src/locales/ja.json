@@ -174,8 +174,25 @@
     "reminderTime": "リマインダー時間",
     "language": "言語",
     "colorTheme": "カラーテーマ",
-    "themePastel": "パステル",
-    "themePop": "ポップ",
+    "themeDescription": "あなたにぴったりの見た目を選んでください",
+    "theme": {
+      "sunset": {
+        "name": "ウォームサンセット",
+        "description": "やさしくて心地よい"
+      },
+      "botanical": {
+        "name": "ボタニカル",
+        "description": "落ち着きと自然"
+      },
+      "dusk": {
+        "name": "ダスク",
+        "description": "上品で癒やされる"
+      },
+      "aurora": {
+        "name": "オーロラ",
+        "description": "魔法のような輝き"
+      }
+    },
     "about": "アプリについて",
     "version": "バージョン",
     "aboutDescription": "Dr. Mindy Pelzの周期同期研究に基づいています。",
