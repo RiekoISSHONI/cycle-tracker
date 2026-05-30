@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 
 const LANGUAGES = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵' }
+  { code: 'en', name: 'English', abbr: 'EN' },
+  { code: 'ja', name: '日本語', abbr: 'JA' }
 ];
 
 export function LanguageSwitcher() {
@@ -28,7 +28,13 @@ export function LanguageSwitcher() {
                 : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
             }`}
           >
-            <span className="text-2xl">{lang.flag}</span>
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm ${
+              i18n.language === lang.code
+                ? 'bg-pink-500 text-white'
+                : 'bg-gray-200 text-gray-600'
+            }`}>
+              {lang.abbr}
+            </div>
             <span className={`font-medium ${
               i18n.language === lang.code ? 'text-pink-600' : 'text-gray-700'
             }`}>

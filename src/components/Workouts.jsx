@@ -132,18 +132,26 @@ const WORKOUTS = {
   ]
 };
 
-const TYPE_ICONS = {
-  yoga: '🧘‍♀️',
-  stretching: '🙆‍♀️',
-  walking: '🚶‍♀️',
-  hiit: '🔥',
-  dance: '💃',
-  strength: '💪',
-  running: '🏃‍♀️',
-  crossfit: '🏋️‍♀️',
-  pilates: '🦋',
-  swimming: '🏊‍♀️'
+const TYPE_COLORS = {
+  yoga: 'bg-purple-500',
+  stretching: 'bg-teal-500',
+  walking: 'bg-green-500',
+  hiit: 'bg-red-500',
+  dance: 'bg-pink-500',
+  strength: 'bg-orange-500',
+  running: 'bg-blue-500',
+  crossfit: 'bg-amber-500',
+  pilates: 'bg-indigo-500',
+  swimming: 'bg-cyan-500'
 };
+
+function TypeBadge({ type }) {
+  return (
+    <div className={`px-2 py-1 ${TYPE_COLORS[type] || 'bg-gray-500'} rounded-lg text-white text-xs font-medium uppercase tracking-wide`}>
+      {type}
+    </div>
+  );
+}
 
 function WorkoutCard({ workout, t }) {
   const handleClick = () => {
@@ -170,8 +178,8 @@ function WorkoutCard({ workout, t }) {
         <div className="absolute top-2 right-2 px-2 py-1 bg-black/60 rounded-lg text-white text-xs font-medium">
           {workout.duration}
         </div>
-        <div className="absolute top-2 left-2 text-2xl">
-          {TYPE_ICONS[workout.type]}
+        <div className="absolute top-2 left-2">
+          <TypeBadge type={workout.type} />
         </div>
       </div>
 

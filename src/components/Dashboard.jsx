@@ -89,7 +89,7 @@ function TipSection({ icon, title, items, defaultExpanded = false }) {
         className="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50/50 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center text-lg">
+          <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
             {icon}
           </div>
           <span className="font-semibold text-gray-800">{title}</span>
@@ -137,7 +137,7 @@ function PartnerTipCard({ icon, title, description, items, variant = 'default' }
   return (
     <div className={`card p-4 ${variants[variant]}`}>
       <div className="flex items-start gap-3 mb-3">
-        <div className={`w-10 h-10 rounded-xl ${iconBg[variant]} flex items-center justify-center text-lg`}>
+        <div className={`w-10 h-10 rounded-xl ${iconBg[variant]} flex items-center justify-center`}>
           {icon}
         </div>
         <div>
@@ -265,20 +265,20 @@ function PersonalView({ phaseData }) {
       <h3 className="text-lg font-semibold text-gray-800 px-1">{t('dashboard.recommendationsForYou')}</h3>
 
       <TipSection
-        icon="🥗"
+        icon={<svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>}
         title={t('tips.nutrition')}
         items={tips.nutrition}
         defaultExpanded={true}
       />
 
       <TipSection
-        icon="💪"
+        icon={<svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
         title={t('tips.exercise')}
         items={tips.exercise}
       />
 
       <TipSection
-        icon="✨"
+        icon={<svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>}
         title={t('tips.lifestyle')}
         items={tips.lifestyle}
       />
@@ -286,8 +286,8 @@ function PersonalView({ phaseData }) {
       {/* Fasting recommendation */}
       <div className="card p-4 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-100">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-lg">
-            ⏰
+          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
           <div>
             <h4 className="font-semibold text-gray-800">{t('tips.fasting')}</h4>
@@ -308,21 +308,21 @@ function PartnerView({ phaseData }) {
       <h3 className="text-lg font-semibold text-gray-800 px-1">{t('dashboard.partnerGuide')}</h3>
 
       <PartnerTipCard
-        icon="💡"
+        icon={<svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>}
         title={t('partner.understanding')}
         description={tips.understand}
         variant="default"
       />
 
       <PartnerTipCard
-        icon="💚"
+        icon={<svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
         title={t('partner.howToSupport')}
         items={tips.support}
         variant="success"
       />
 
       <PartnerTipCard
-        icon="⚠️"
+        icon={<svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>}
         title={t('partner.whatToAvoid')}
         items={tips.avoid}
         variant="warning"

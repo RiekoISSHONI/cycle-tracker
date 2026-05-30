@@ -78,9 +78,19 @@ export function DailyCheckin({ cycleDay, onSave, existingData, checkins = [], on
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, 14);
 
-  const getMoodLabel = (m) => {
-    const labels = { 1: '😔', 2: '😕', 3: '😐', 4: '🙂', 5: '😊' };
-    return labels[m] || '😐';
+  const getMoodIcon = (m) => {
+    const colors = {
+      1: 'bg-red-100 text-red-500',
+      2: 'bg-orange-100 text-orange-500',
+      3: 'bg-gray-100 text-gray-500',
+      4: 'bg-emerald-100 text-emerald-500',
+      5: 'bg-green-100 text-green-500'
+    };
+    return (
+      <div className={`w-8 h-8 rounded-lg ${colors[m]} flex items-center justify-center font-bold text-sm`}>
+        {m}
+      </div>
+    );
   };
 
   return (
@@ -155,7 +165,7 @@ export function DailyCheckin({ cycleDay, onSave, existingData, checkins = [], on
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">{getMoodLabel(entry.mood)}</div>
+                    {getMoodIcon(entry.mood)}
                     <div>
                       <div className="text-sm font-medium text-gray-800">
                         {new Date(entry.date).toLocaleDateString(locale, {

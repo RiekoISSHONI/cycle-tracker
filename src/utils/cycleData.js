@@ -6,7 +6,6 @@
 export const CYCLE_PHASES = {
   menstrual: {
     name: 'Menstrual Phase',
-    emoji: '🌑',
     days: [1, 5],
     color: 'from-red-400 to-red-600',
     bgColor: 'bg-red-50',
@@ -56,7 +55,6 @@ export const CYCLE_PHASES = {
   },
   follicular: {
     name: 'Follicular Phase',
-    emoji: '🌒',
     days: [6, 13],
     color: 'from-pink-400 to-purple-500',
     bgColor: 'bg-pink-50',
@@ -106,7 +104,6 @@ export const CYCLE_PHASES = {
   },
   ovulatory: {
     name: 'Ovulatory Phase',
-    emoji: '🌕',
     days: [14, 17],
     color: 'from-yellow-400 to-orange-500',
     bgColor: 'bg-yellow-50',
@@ -156,7 +153,6 @@ export const CYCLE_PHASES = {
   },
   luteal: {
     name: 'Luteal Phase',
-    emoji: '🌘',
     days: [18, 28],
     color: 'from-indigo-400 to-purple-600',
     bgColor: 'bg-indigo-50',
