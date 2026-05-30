@@ -229,5 +229,19 @@
   "languages": {
     "en": "English",
     "ja": "日本語"
+  },
+  "obgyn": {
+    "title": "Find OBGYN Near You",
+    "description": "Locate women's health clinics and gynecologists in your area.",
+    "findNearby": "Find Nearby Clinics",
+    "locating": "Getting your location...",
+    "opened": "Opened in Google Maps",
+    "privacyNote": "Your location is only used to find nearby clinics and is never stored or shared.",
+    "errors": {
+      "geolocation_not_supported": "Location services are not supported by your browser.",
+      "permission_denied": "Location permission was denied. Please enable location access in your browser settings.",
+      "position_unavailable": "Unable to determine your location. Please try again.",
+      "timeout": "Location request timed out. Please try again."
+    }
   }
 }

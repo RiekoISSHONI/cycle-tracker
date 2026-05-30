@@ -5,6 +5,7 @@ import { downloadCalendarEvents } from '../utils/calendarExport';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { SocialShare } from './SocialShare';
 import { ThemePicker } from './ThemePicker';
+import { OBGYNFinder } from './OBGYNFinder';
 
 function SettingsSection({ title, children }) {
   return (
@@ -157,6 +158,9 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
 
       {/* Theme Picker */}
       <ThemePicker currentTheme={theme} onChange={onThemeChange} />
+
+      {/* OBGYN Finder */}
+      <OBGYNFinder />
 
       {/* Partner Sharing */}
       <SettingsSection title={t('settings.sharePartner')}>
