@@ -4,6 +4,7 @@ import { generateShareCode } from '../utils/cycleData';
 import { downloadCalendarEvents } from '../utils/calendarExport';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { SocialShare } from './SocialShare';
+import { ThemePicker } from './ThemePicker';
 
 function SettingsSection({ title, children }) {
   return (
@@ -31,7 +32,7 @@ function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) 
   );
 }
 
-export function Settings({ cycleData, onUpdate, onReset }) {
+export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange }) {
   const { t } = useTranslation();
   const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
   const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
@@ -153,6 +154,9 @@ export function Settings({ cycleData, onUpdate, onReset }) {
 
       {/* Language Switcher */}
       <LanguageSwitcher />
+
+      {/* Theme Picker */}
+      <ThemePicker currentTheme={theme} onChange={onThemeChange} />
 
       {/* Partner Sharing */}
       <SettingsSection title={t('settings.sharePartner')}>

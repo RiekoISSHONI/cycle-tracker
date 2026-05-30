@@ -7,6 +7,32 @@
   --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.08), 0 4px 16px -4px rgba(0, 0, 0, 0.06);
   --shadow-medium: 0 4px 12px -2px rgba(0, 0, 0, 0.1), 0 8px 24px -4px rgba(0, 0, 0, 0.08);
   --shadow-glow-pink: 0 4px 20px -4px rgba(236, 72, 153, 0.35);
+
+  /* Pastel Theme (default) */
+  --theme-menstrual-primary: rgba(225, 29, 72, 0.3);
+  --theme-menstrual-secondary: rgba(251, 113, 133, 0.2);
+  --theme-follicular-primary: rgba(236, 72, 153, 0.4);
+  --theme-follicular-secondary: rgba(244, 114, 182, 0.2);
+  --theme-ovulatory-primary: rgba(251, 191, 36, 0.4);
+  --theme-ovulatory-secondary: rgba(251, 191, 36, 0.3);
+  --theme-luteal-primary: rgba(139, 92, 246, 0.5);
+  --theme-luteal-secondary: rgba(167, 139, 250, 0.3);
+  --theme-bg-gradient: linear-gradient(165deg, #fdf2f8 0%, #fef7ff 30%, #f5f3ff 60%, #ede9fe 100%);
+  --theme-animation-intensity: 0.15;
+}
+
+/* Pop Theme */
+[data-theme="pop"] {
+  --theme-menstrual-primary: rgba(225, 29, 72, 0.6);
+  --theme-menstrual-secondary: rgba(251, 113, 133, 0.5);
+  --theme-follicular-primary: rgba(236, 72, 153, 0.7);
+  --theme-follicular-secondary: rgba(244, 114, 182, 0.5);
+  --theme-ovulatory-primary: rgba(251, 191, 36, 0.7);
+  --theme-ovulatory-secondary: rgba(251, 191, 36, 0.6);
+  --theme-luteal-primary: rgba(139, 92, 246, 0.8);
+  --theme-luteal-secondary: rgba(167, 139, 250, 0.6);
+  --theme-bg-gradient: linear-gradient(165deg, #fce7f3 0%, #fbcfe8 30%, #e9d5ff 60%, #c4b5fd 100%);
+  --theme-animation-intensity: 0.35;
 }
 
 * {
@@ -23,7 +49,7 @@ body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(165deg, #fdf2f8 0%, #fef7ff 30%, #f5f3ff 60%, #ede9fe 100%);
+  background: var(--theme-bg-gradient);
   background-attachment: fixed;
 }
 
@@ -415,7 +441,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .phase-bg.menstrual .embrace-circle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(225, 29, 72, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--theme-menstrual-primary) 0%, transparent 70%);
 }
 
 .phase-bg.menstrual .embrace-1 {
@@ -449,7 +475,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(251, 113, 133, 0.2) 0%, transparent 60%);
+  background: radial-gradient(circle, var(--theme-menstrual-secondary) 0%, transparent 60%);
   animation: warmth-pulse 6s ease-in-out infinite;
 }
 
@@ -486,7 +512,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .phase-bg.follicular .rising-bubble {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.4) 0%, rgba(244, 114, 182, 0.2) 100%);
+  background: linear-gradient(135deg, var(--theme-follicular-primary) 0%, var(--theme-follicular-secondary) 100%);
 }
 
 .phase-bg.follicular .bubble-1 { width: 20px; height: 20px; left: 10%; animation: rise 8s ease-in-out infinite; }
@@ -564,7 +590,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.4) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 70%);
+  background: radial-gradient(circle, var(--theme-ovulatory-primary) 0%, var(--theme-ovulatory-secondary) 50%, transparent 70%);
   animation: radiance-pulse 3s ease-in-out infinite;
 }
 
@@ -642,7 +668,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .phase-bg.luteal .falling-particle {
   position: absolute;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.5) 0%, rgba(167, 139, 250, 0.3) 100%);
+  background: linear-gradient(135deg, var(--theme-luteal-primary) 0%, var(--theme-luteal-secondary) 100%);
 }
 
 .phase-bg.luteal .particle-1 { width: 8px; height: 8px; left: 5%; animation: fall 12s linear infinite; }

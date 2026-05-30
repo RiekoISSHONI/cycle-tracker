@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { calculateCycleInfo, calculateCycleStats } from './utils/cycleData';
 import { Header } from './components/Header';
@@ -17,8 +17,13 @@ function App() {
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
+  const [theme, setTheme] = useLocalStorage('theme', 'pastel');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const cycleStats = useMemo(() => {
     return calculateCycleStats(periodHistory);
@@ -146,6 +151,8 @@ function App() {
             cycleData={cycleData}
             onUpdate={handleUpdate}
             onReset={handleReset}
+            theme={theme}
+            onThemeChange={setTheme}
           />
         )}
       </main>
