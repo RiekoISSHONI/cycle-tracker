@@ -22,6 +22,23 @@ export const CYCLE_PHASES = {
         'Magnesium-rich foods for cramps (dark chocolate, nuts)',
         'Stay hydrated with warm herbal teas'
       ],
+      tcmNutrition: {
+        principle: 'Moving Blood & Warming the Uterus',
+        foods: [
+          'Red dates (hong zao) - nourishes blood and qi',
+          'Ginger tea - warms the uterus and promotes circulation',
+          'Brown sugar water - traditional remedy for cramps',
+          'Dang gui (angelica root) soup - the "female ginseng"',
+          'Warming bone broths with goji berries',
+          'Black chicken soup - deeply nourishing'
+        ],
+        avoid: [
+          'Cold and raw foods (salads, ice cream, cold drinks)',
+          'Iced beverages - constricts blood flow',
+          'Excessive spicy food - can increase bleeding'
+        ],
+        tea: 'Rose bud tea or ginger red date tea'
+      },
       exercise: [
         'Gentle yoga and stretching',
         'Light walking',
@@ -71,6 +88,23 @@ export const CYCLE_PHASES = {
         'Sprouted and fresh vegetables',
         'Phytoestrogen foods (flax seeds, chickpeas)'
       ],
+      tcmNutrition: {
+        principle: 'Nourishing Yin & Building Blood',
+        foods: [
+          'Black sesame seeds - nourishes kidney yin and blood',
+          'Goji berries (gou qi zi) - tonifies liver and kidney',
+          'Eggs - excellent for building yin',
+          'Seaweed and kelp - nourishes yin, rich in minerals',
+          'Duck meat - cooling and yin-nourishing',
+          'Tofu and soy products - gentle yin tonics'
+        ],
+        avoid: [
+          'Excessive spicy or heating foods',
+          'Too much caffeine - depletes yin',
+          'Overly greasy foods'
+        ],
+        tea: 'Chrysanthemum tea or goji berry tea'
+      },
       exercise: [
         'Try new workouts',
         'Cardio and high-energy activities',
@@ -120,6 +154,23 @@ export const CYCLE_PHASES = {
         'Fiber-rich foods to help metabolize estrogen',
         'Cruciferous vegetables (broccoli, cauliflower)'
       ],
+      tcmNutrition: {
+        principle: 'Harmonizing Yin & Yang for Transformation',
+        foods: [
+          'Lotus seeds - calms the heart, supports fertility',
+          'Chinese yam (shan yao) - strengthens spleen and kidney',
+          'Lean proteins - supports the transformation',
+          'Fresh fruits - natural cooling balance',
+          'Asparagus - clears heat and nourishes yin',
+          'Mung beans - gentle cooling properties'
+        ],
+        avoid: [
+          'Excessive alcohol - disrupts qi flow',
+          'Very cold foods - can shock the system',
+          'Heavy, greasy meals'
+        ],
+        tea: 'Jasmine tea or lotus leaf tea'
+      },
       exercise: [
         'High-intensity interval training (HIIT)',
         'Heavy lifting - you\'re strongest now',
@@ -169,6 +220,23 @@ export const CYCLE_PHASES = {
         'Roasted vegetables and warm foods',
         'Avoid excess salt, sugar, caffeine, and alcohol'
       ],
+      tcmNutrition: {
+        principle: 'Warming Yang & Supporting Kidney Energy',
+        foods: [
+          'Walnuts - warms kidney yang, supports brain',
+          'Lamb or mutton - strongly warming',
+          'Cinnamon - warms the interior, promotes circulation',
+          'Fennel seeds - warms digestive system',
+          'Sweet potato - nourishes spleen qi',
+          'Chestnuts - strengthens kidney yang'
+        ],
+        avoid: [
+          'Cold and raw foods - depletes yang',
+          'Excessive dairy - creates dampness',
+          'Too much sugar - weakens spleen'
+        ],
+        tea: 'Cinnamon tea or longan red date tea'
+      },
       exercise: [
         'Moderate intensity workouts',
         'Pilates and strength training',

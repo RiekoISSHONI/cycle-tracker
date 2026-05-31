@@ -50,6 +50,23 @@
     "lifestyle": "ライフスタイル",
     "fasting": "ファスティング"
   },
+  "nutrition": {
+    "western": "現代科学",
+    "tcm": "漢方の知恵",
+    "modernScience": "科学に基づく栄養学",
+    "tcmPrinciple": "漢方の原則",
+    "recommendedFoods": "おすすめの食べ物",
+    "avoidFoods": "避けるべき食べ物",
+    "recommendedTea": "おすすめのお茶",
+    "shopPhase": "このフェーズにおすすめ",
+    "affiliate": "提携リンク",
+    "affiliateNote": "アフィリエイトとして、対象購入から収益を得る場合があります",
+    "categories": {
+      "teas": "お茶",
+      "foods": "食品",
+      "supplements": "サプリメント"
+    }
+  },
   "partner": {
     "understanding": "今の彼女を理解する",
     "howToSupport": "サポートの仕方",

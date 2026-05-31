@@ -50,6 +50,23 @@
     "lifestyle": "Lifestyle",
     "fasting": "Fasting Window"
   },
+  "nutrition": {
+    "western": "Modern Science",
+    "tcm": "TCM Wisdom",
+    "modernScience": "Evidence-Based Nutrition",
+    "tcmPrinciple": "TCM Principle",
+    "recommendedFoods": "Recommended Foods",
+    "avoidFoods": "Foods to Avoid",
+    "recommendedTea": "Recommended Tea",
+    "shopPhase": "Shop for This Phase",
+    "affiliate": "Partner Links",
+    "affiliateNote": "As an affiliate, we may earn from qualifying purchases",
+    "categories": {
+      "teas": "Teas",
+      "foods": "Foods",
+      "supplements": "Supplements"
+    }
+  },
   "partner": {
     "understanding": "Understanding Her Right Now",
     "howToSupport": "How to Support Her",
