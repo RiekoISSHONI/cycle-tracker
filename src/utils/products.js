@@ -5,6 +5,40 @@
 
 export const PHASE_PRODUCTS = {
   menstrual: {
+    soups: [
+      {
+        name: 'Si Wu Tang (Four Things Soup)',
+        brand: 'Eu Yan Sang / TCM Brands',
+        description: 'The #1 TCM formula for women. Nourishes and moves blood.',
+        evidence: 'Studies show it increases hemoglobin, reduces menstrual pain, regulates cycles',
+        tcmUse: 'Si Wu Tang: Dang Gui, Shu Di, Bai Shao, Chuan Xiong - tonifies and invigorates blood',
+        amazonSearch: 'Si+Wu+Tang+four+things+soup+herbal'
+      },
+      {
+        name: 'Dang Gui Ginger Lamb Soup',
+        brand: 'Herbal Pack',
+        description: 'Warming soup for cold-type menstrual pain. Classic winter tonic.',
+        evidence: 'Dang Gui shown to improve blood circulation and reduce uterine contractions',
+        tcmUse: 'Dang Gui Bu Xue Tang variation - warms yang, nourishes blood, expels cold',
+        amazonSearch: 'Dang+Gui+angelica+soup+herbal+pack'
+      },
+      {
+        name: 'Black Chicken Herbal Soup',
+        brand: 'Eu Yan Sang',
+        description: 'Wu Ji (black chicken) deeply nourishes blood and yin.',
+        evidence: 'Black chicken higher in carnosine and antioxidants than regular chicken',
+        tcmUse: 'Wu Ji Bai Feng: supreme blood and yin tonic for women',
+        amazonSearch: 'black+chicken+herbal+soup+mix'
+      },
+      {
+        name: 'Red Date Longan Soup Mix',
+        brand: 'Greenmax',
+        description: 'Sweet warming soup to replenish blood and calm the mind.',
+        evidence: 'Jujube and longan shown to reduce anxiety and improve sleep quality',
+        tcmUse: 'Gui Pi Tang base herbs - tonifies heart blood, calms shen (spirit)',
+        amazonSearch: 'red+date+longan+soup+mix'
+      }
+    ],
     teas: [
       {
         name: 'Ginger Root Tea',
@@ -69,6 +103,32 @@ export const PHASE_PRODUCTS = {
     ]
   },
   follicular: {
+    soups: [
+      {
+        name: 'Liu Wei Di Huang Soup',
+        brand: 'TCM Herbal Pack',
+        description: 'Six Ingredient Rehmannia - classic yin nourishing formula.',
+        evidence: 'Studies show improved kidney function and reduced fatigue',
+        tcmUse: 'Liu Wei Di Huang Wan base - nourishes kidney and liver yin',
+        amazonSearch: 'Liu+Wei+Di+Huang+herbal+soup'
+      },
+      {
+        name: 'Goji & Chrysanthemum Soup',
+        brand: 'Herbal Mix',
+        description: 'Cooling yin tonic for the rising energy phase.',
+        evidence: 'Goji and chrysanthemum both have proven antioxidant effects',
+        tcmUse: 'Qi Ju Di Huang variation - nourishes yin, clears liver heat',
+        amazonSearch: 'goji+chrysanthemum+soup+herbal'
+      },
+      {
+        name: 'Snow Fungus Lotus Soup',
+        brand: 'Greenmax',
+        description: 'Bai Mu Er (snow fungus) - beauty and yin tonic.',
+        evidence: 'Snow fungus contains polysaccharides that support skin hydration',
+        tcmUse: 'Yin Er moistens lungs, nourishes yin, benefits the skin',
+        amazonSearch: 'snow+fungus+lotus+seed+soup'
+      }
+    ],
     teas: [
       {
         name: 'Green Tea Matcha',
@@ -133,6 +193,32 @@ export const PHASE_PRODUCTS = {
     ]
   },
   ovulatory: {
+    soups: [
+      {
+        name: 'Lotus Seed Lily Bulb Soup',
+        brand: 'Herbal Mix',
+        description: 'Calming soup to balance peak energy. Supports heart and spirit.',
+        evidence: 'Lotus seeds contain alkaloids that promote calmness',
+        tcmUse: 'Lian Zi and Bai He calm the heart, nourish yin without excess heat',
+        amazonSearch: 'lotus+seed+lily+bulb+soup'
+      },
+      {
+        name: 'Mung Bean Soup Mix',
+        brand: 'Asian Best',
+        description: 'Cooling detox soup for peak hormone phase.',
+        evidence: 'Mung beans have documented antioxidant and anti-inflammatory effects',
+        tcmUse: 'Lu Dou clears heat, resolves toxins, balances excess yang',
+        amazonSearch: 'mung+bean+soup+mix'
+      },
+      {
+        name: 'Chinese Yam Goji Soup',
+        brand: 'TCM Pack',
+        description: 'Balanced yin-yang soup for the transformative ovulation phase.',
+        evidence: 'Chinese yam (dioscorea) supports hormonal health',
+        tcmUse: 'Shan Yao strengthens spleen and kidney, harmonizes yin and yang',
+        amazonSearch: 'chinese+yam+goji+soup+herbal'
+      }
+    ],
     teas: [
       {
         name: 'Peppermint Tea',
@@ -197,6 +283,40 @@ export const PHASE_PRODUCTS = {
     ]
   },
   luteal: {
+    soups: [
+      {
+        name: 'Ba Zhen Tang (Eight Treasure Soup)',
+        brand: 'Eu Yan Sang',
+        description: 'Combines Si Wu Tang + Si Jun Zi Tang. Tonifies qi AND blood.',
+        evidence: 'Research shows improved energy, reduced PMS, better mood',
+        tcmUse: 'Ba Zhen Tang - supreme formula to tonify both qi and blood together',
+        amazonSearch: 'Ba+Zhen+Tang+eight+treasure+soup'
+      },
+      {
+        name: 'Gui Pi Tang Soup Mix',
+        brand: 'TCM Herbal',
+        description: 'For PMS anxiety, insomnia, and overthinking.',
+        evidence: 'Studies show improved sleep quality and reduced anxiety',
+        tcmUse: 'Gui Pi Tang tonifies heart and spleen, calms the spirit',
+        amazonSearch: 'Gui+Pi+Tang+herbal+soup'
+      },
+      {
+        name: 'Xiao Yao San Soup',
+        brand: 'Plum Flower',
+        description: 'The "Free and Easy Wanderer" - #1 formula for PMS and liver qi stagnation.',
+        evidence: 'Multiple clinical trials show efficacy for PMS symptoms',
+        tcmUse: 'Xiao Yao San soothes liver qi, strengthens spleen, nourishes blood',
+        amazonSearch: 'Xiao+Yao+San+free+easy+wanderer'
+      },
+      {
+        name: 'Warming Lamb & Herb Soup',
+        brand: 'Herbal Pack',
+        description: 'Warms yang for the late luteal phase chill.',
+        evidence: 'Lamb is high in iron, zinc, B12 - supports warmth and blood',
+        tcmUse: 'Lamb + Du Zhong + Dang Gui warms kidney yang, nourishes blood',
+        amazonSearch: 'lamb+herbal+soup+chinese'
+      }
+    ],
     teas: [
       {
         name: 'Chamomile Tea',

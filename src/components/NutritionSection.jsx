@@ -97,7 +97,7 @@ function ProductCard({ product, t }) {
 export function NutritionSection({ phaseData, phase }) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('western');
-  const [productCategory, setProductCategory] = useState('teas');
+  const [productCategory, setProductCategory] = useState('soups');
 
   const tips = phaseData.forHer;
   const tcm = tips.tcmNutrition;
@@ -213,7 +213,7 @@ export function NutritionSection({ phaseData, phase }) {
 
         {/* Category Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-          {['teas', 'foods', 'supplements'].map((cat) => (
+          {['soups', 'teas', 'foods', 'supplements'].map((cat) => (
             <button
               key={cat}
               onClick={() => setProductCategory(cat)}

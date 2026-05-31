@@ -65,6 +65,7 @@
     "tcmUse": "TCM Traditional Use",
     "buyNow": "Shop on Amazon",
     "categories": {
+      "soups": "Soups",
       "teas": "Teas",
       "foods": "Foods",
       "supplements": "Supplements"

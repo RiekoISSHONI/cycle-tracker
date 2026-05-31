@@ -65,6 +65,7 @@
     "tcmUse": "漢方での使用",
     "buyNow": "Amazonで購入",
     "categories": {
+      "soups": "薬膳スープ",
       "teas": "お茶",
       "foods": "食品",
       "supplements": "サプリメント"
