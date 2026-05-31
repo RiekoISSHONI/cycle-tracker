@@ -2,6 +2,13 @@ import { useTranslation } from 'react-i18next';
 
 const THEMES = [
   {
+    id: 'meguri',
+    name: 'Deep Autumn',
+    description: 'Calm & refined',
+    colors: ['#b5582f', '#c08a2d', '#3f5040', '#f3ece0'],
+    accent: '#b5582f'
+  },
+  {
     id: 'sunset',
     name: 'Warm Sunset',
     description: 'Nurturing & cozy',

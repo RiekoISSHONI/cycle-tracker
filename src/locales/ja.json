@@ -211,6 +211,10 @@
     "colorTheme": "カラーテーマ",
     "themeDescription": "あなたにぴったりの見た目を選んでください",
     "theme": {
+      "meguri": {
+        "name": "深秋",
+        "description": "穏やかで洗練された"
+      },
       "sunset": {
         "name": "ウォームサンセット",
         "description": "やさしくて心地よい"

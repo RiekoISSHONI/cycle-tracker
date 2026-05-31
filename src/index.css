@@ -1,29 +1,57 @@
 @import "tailwindcss";
 
+/* Google Fonts for Meguri brand */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap');
+
 /* ==========================================
-   Theme Variables
+   Theme Variables - Meguri Brand
    ========================================== */
 
 :root {
-  /* Default to Sunset theme */
-  --accent: #ff7e5f;
-  --accent-light: #feb47b;
-  --accent-soft: #ffcba4;
-  --accent-bg: #ffe5d9;
-  --gradient-start: #fff5f0;
-  --gradient-mid: #fff0e6;
-  --gradient-end: #ffe5d9;
+  /* Meguri Deep Autumn palette (default) */
+  --cream: #f3ece0;
+  --washi: #ece3d4;
+  --bark: #3a2e26;
+  --ink: #2b231d;
+  --terra: #b5582f;
+  --ochre: #c08a2d;
+  --forest: #3f5040;
+  --muted: #8a7a68;
 
-  /* Phase colors - warm tones */
-  --phase-menstrual: #e57373;
-  --phase-follicular: #ff7e5f;
-  --phase-ovulatory: #ffb347;
-  --phase-luteal: #ce93d8;
+  /* Map to existing variable names */
+  --accent: var(--terra);
+  --accent-light: var(--ochre);
+  --accent-soft: #d4a574;
+  --accent-bg: var(--washi);
+  --gradient-start: var(--cream);
+  --gradient-mid: #f0e8dc;
+  --gradient-end: var(--washi);
 
-  /* Shadows */
-  --shadow-soft: 0 2px 12px -3px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 8px 24px -6px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 4px 24px -4px var(--accent);
+  /* Phase colors - warm autumn tones */
+  --phase-menstrual: #a04030;
+  --phase-follicular: var(--terra);
+  --phase-ovulatory: var(--ochre);
+  --phase-luteal: var(--forest);
+
+  /* Shadows - softer for zen aesthetic */
+  --shadow-soft: 0 2px 16px -4px rgba(43, 35, 29, 0.06);
+  --shadow-medium: 0 8px 32px -8px rgba(43, 35, 29, 0.1);
+  --shadow-glow: 0 4px 24px -4px var(--terra);
+}
+
+/* Meguri Theme (Deep Autumn) */
+[data-theme="meguri"] {
+  --accent: #b5582f;
+  --accent-light: #c08a2d;
+  --accent-soft: #d4a574;
+  --accent-bg: #ece3d4;
+  --gradient-start: #f3ece0;
+  --gradient-mid: #f0e8dc;
+  --gradient-end: #ece3d4;
+  --phase-menstrual: #a04030;
+  --phase-follicular: #b5582f;
+  --phase-ovulatory: #c08a2d;
+  --phase-luteal: #3f5040;
 }
 
 /* Warm Sunset Theme */
@@ -101,7 +129,9 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Zen Kaku Gothic New', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  color: var(--ink, #2b231d);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(165deg, var(--gradient-start) 0%, var(--gradient-mid) 40%, var(--gradient-end) 100%);
@@ -137,13 +167,13 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 1.5rem;
+  border-radius: 1.25rem;
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  border: 1px solid rgba(236, 227, 212, 0.6);
+  transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
 }
 
 .card:hover {
@@ -162,11 +192,26 @@ body {
 }
 
 /* ==========================================
-   Typography
+   Typography - Meguri Brand
    ========================================== */
 
 h1, h2, h3, h4 {
-  letter-spacing: -0.02em;
+  font-family: 'Shippori Mincho', 'Georgia', serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--bark, #3a2e26);
+}
+
+.font-display {
+  font-family: 'Shippori Mincho', 'Georgia', serif;
+}
+
+.font-body {
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+}
+
+.text-muted {
+  color: var(--muted, #8a7a68);
 }
 
 /* ==========================================
@@ -175,38 +220,39 @@ h1, h2, h3, h4 {
 
 .btn {
   padding: 1rem 1.75rem;
-  border-radius: 1rem;
-  font-weight: 600;
+  border-radius: 0.75rem;
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-weight: 500;
   font-size: 0.9375rem;
-  letter-spacing: -0.01em;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.02em;
+  transition: all 0.4s ease-out;
 }
 
 .btn:active {
-  transform: scale(0.96);
+  transform: scale(0.98);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-  color: white;
-  box-shadow: 0 4px 16px -4px var(--accent);
+  background: var(--terra, #b5582f);
+  color: var(--cream, #f3ece0);
+  box-shadow: 0 4px 16px -4px rgba(181, 88, 47, 0.3);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 8px 24px -4px var(--accent);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 20px -4px rgba(181, 88, 47, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: white;
-  color: #374151;
-  border: 2px solid var(--accent-soft);
+  background: var(--cream, #f3ece0);
+  color: var(--bark, #3a2e26);
+  border: 1px solid var(--accent-soft);
   box-shadow: var(--shadow-soft);
 }
 
 .btn-secondary:hover {
-  border-color: var(--accent);
-  background: var(--accent-bg);
+  border-color: var(--terra, #b5582f);
+  background: var(--washi, #ece3d4);
 }
 
 /* ==========================================
@@ -335,23 +381,24 @@ h1, h2, h3, h4 {
   left: 50%;
   transform: translateX(-50%);
   padding: 1rem 2rem;
-  border-radius: 1.25rem;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-  color: white;
+  border-radius: 0.75rem;
+  background: var(--terra, #b5582f);
+  color: var(--cream, #f3ece0);
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
   font-size: 0.9375rem;
-  font-weight: 600;
-  box-shadow: 0 12px 48px -8px var(--accent);
-  animation: toast-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  font-weight: 500;
+  box-shadow: 0 8px 32px -8px rgba(181, 88, 47, 0.4);
+  animation: toast-in 0.6s ease-out forwards;
 }
 
 @keyframes toast-in {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(20px) scale(0.9);
+    transform: translateX(-50%) translateY(12px);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
+    transform: translateX(-50%) translateY(0);
   }
 }
 
@@ -429,21 +476,22 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 /* ==========================================
-   Animations
+   Animations - Slow & Soft (Zen aesthetic)
+   Motion: 400-600ms ease-out, no bouncy/playful easing
    ========================================== */
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulse-soft {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.02); }
+  50% { opacity: 0.85; transform: scale(1.01); }
 }
 
 @keyframes slide-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -453,42 +501,42 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 @keyframes scale-in {
-  from { opacity: 0; transform: scale(0.9); }
+  from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 .animate-pulse-soft {
-  animation: pulse-soft 3s ease-in-out infinite;
+  animation: pulse-soft 5s ease-in-out infinite;
 }
 
 .animate-slide-up {
-  animation: slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slide-up 0.5s ease-out forwards;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+  animation: fade-in 0.6s ease-out forwards;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: scale-in 0.5s ease-out forwards;
 }
 
-/* Stagger children */
+/* Stagger children - slower, more deliberate */
 .stagger-children > * {
   opacity: 0;
-  animation: slide-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slide-up 0.5s ease-out forwards;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(1) { animation-delay: 0.08s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.16s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.32s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.40s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.48s; }
 
 /* ==========================================
    Phase Background Container

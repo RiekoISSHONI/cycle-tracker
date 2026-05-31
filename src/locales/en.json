@@ -211,6 +211,10 @@
     "colorTheme": "Color Theme",
     "themeDescription": "Choose the look that feels right for you",
     "theme": {
+      "meguri": {
+        "name": "Deep Autumn",
+        "description": "Calm & refined"
+      },
       "sunset": {
         "name": "Warm Sunset",
         "description": "Nurturing & cozy"
