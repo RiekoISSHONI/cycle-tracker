@@ -64,6 +64,8 @@
     "scienceEvidence": "Scientific Evidence",
     "tcmUse": "TCM Traditional Use",
     "buyNow": "Shop on Amazon",
+    "visitStore": "Visit Store",
+    "featured": "Featured",
     "categories": {
       "soups": "Soups",
       "teas": "Teas",

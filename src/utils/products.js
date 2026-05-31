@@ -1,11 +1,49 @@
 /**
  * Curated product recommendations backed by both modern science and TCM
  * Each product is selected based on research evidence AND traditional use
+ *
+ * Partner brands are flagged for future revenue partnerships
+ * isPartner: true = direct brand partnership (future revenue)
+ * isPartner: false/undefined = affiliate link
  */
+
+// Partner brands configuration - for future direct partnerships
+export const PARTNER_BRANDS = {
+  forher: {
+    name: 'for her.',
+    nameJa: 'フォーハー',
+    description: 'Women\'s wellness soups based on TCM & Eastern medicine',
+    descriptionJa: '漢方・東洋医学に基づく女性のためのウェルネススープ',
+    website: 'https://forher.jp',
+    logo: '/partners/forher-logo.png',
+    isActive: true
+  }
+  // Add more partner brands here as partnerships develop
+};
 
 export const PHASE_PRODUCTS = {
   menstrual: {
     soups: [
+      {
+        name: 'for her. Omamori Soup Set',
+        nameJa: 'for her. おまもりスープセット',
+        brand: 'for her.',
+        description: 'Postpartum & menstrual recovery soups by TCM specialists.',
+        evidence: 'Developed with postpartum doulas and herbal medicine experts',
+        tcmUse: 'Based on Eastern medicine, Ayurveda, and TCM principles',
+        directUrl: 'https://forher.jp/collections/商品一覧',
+        isPartner: true
+      },
+      {
+        name: 'for her. Beets & Goji Potage',
+        nameJa: 'ビーツとクコの実の美活ポタージュ',
+        brand: 'for her.',
+        description: 'Antioxidant-rich potage with goji berries for blood nourishment.',
+        evidence: 'Beets increase nitric oxide; goji improves hemoglobin levels',
+        tcmUse: 'Gou Qi Zi (goji) nourishes liver blood and kidney yin',
+        directUrl: 'https://forher.jp/products/ビーツとクコの実の美活ポタージュ',
+        isPartner: true
+      },
       {
         name: 'Si Wu Tang (Four Things Soup)',
         brand: 'Eu Yan Sang / TCM Brands',
@@ -104,6 +142,16 @@ export const PHASE_PRODUCTS = {
   },
   follicular: {
     soups: [
+      {
+        name: 'for her. Shiitake Cashew Soup',
+        nameJa: '椎茸とカシューナッツのクリームスープ',
+        brand: 'for her.',
+        description: 'Creamy soup supporting energy and emotional balance.',
+        evidence: 'Shiitake contains beta-glucans for immune support; cashews provide magnesium',
+        tcmUse: 'Xiang Gu (shiitake) tonifies qi, supports immune wei qi',
+        directUrl: 'https://forher.jp/products/soup-5',
+        isPartner: true
+      },
       {
         name: 'Liu Wei Di Huang Soup',
         brand: 'TCM Herbal Pack',
@@ -403,5 +451,14 @@ export function getAmazonSearchUrl(searchTerm) {
 }
 
 export function getProductUrl(product) {
+  // Partner products use direct URLs (future revenue partnerships)
+  if (product.isPartner && product.directUrl) {
+    return product.directUrl;
+  }
+  // Fallback to Amazon affiliate search
   return getAmazonSearchUrl(product.amazonSearch);
+}
+
+export function isPartnerProduct(product) {
+  return product.isPartner === true;
 }

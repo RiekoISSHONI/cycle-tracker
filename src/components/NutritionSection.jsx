@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASE_PRODUCTS, getProductUrl } from '../utils/products';
+import { PHASE_PRODUCTS, getProductUrl, isPartnerProduct } from '../utils/products';
 
 function TabButton({ active, onClick, children }) {
   return (
@@ -19,6 +19,7 @@ function TabButton({ active, onClick, children }) {
 
 function ProductCard({ product, t }) {
   const [expanded, setExpanded] = useState(false);
+  const isPartner = isPartnerProduct(product);
 
   const handleBuy = (e) => {
     e.stopPropagation();
@@ -26,18 +27,33 @@ function ProductCard({ product, t }) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+    <div className={`rounded-xl border overflow-hidden ${
+      isPartner
+        ? 'bg-gradient-to-br from-rose-50 to-pink-50 border-pink-200'
+        : 'bg-white border-gray-100'
+    }`}>
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-3 p-3 hover:bg-gray-50 transition-all text-left w-full"
+        className="flex items-center gap-3 p-3 hover:bg-white/50 transition-all text-left w-full"
       >
-        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-50 to-rose-50 flex items-center justify-center flex-shrink-0">
-          <svg className="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
+          isPartner
+            ? 'bg-gradient-to-br from-pink-400 to-rose-500'
+            : 'bg-gradient-to-br from-pink-50 to-rose-50'
+        }`}>
+          <svg className={`w-6 h-6 ${isPartner ? 'text-white' : 'text-pink-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-medium text-gray-800 text-sm">{product.name}</div>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-800 text-sm">{product.nameJa || product.name}</span>
+            {isPartner && (
+              <span className="px-1.5 py-0.5 text-[10px] font-medium bg-pink-500 text-white rounded-full">
+                {t('nutrition.featured')}
+              </span>
+            )}
+          </div>
           <div className="text-xs text-gray-500">{product.brand}</div>
           <div className="text-xs text-gray-600 mt-0.5">{product.description}</div>
         </div>
@@ -78,12 +94,16 @@ function ProductCard({ product, t }) {
           {/* Buy Button */}
           <button
             onClick={handleBuy}
-            className="w-full py-2 px-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2"
+            className={`w-full py-2 px-4 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2 ${
+              isPartner
+                ? 'bg-gradient-to-r from-pink-500 to-rose-500'
+                : 'bg-gradient-to-r from-gray-600 to-gray-700'
+            }`}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
-            {t('nutrition.buyNow')}
+            {isPartner ? t('nutrition.visitStore') : t('nutrition.buyNow')}
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
