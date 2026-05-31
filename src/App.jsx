@@ -121,7 +121,13 @@ function App() {
       <main className="max-w-4xl mx-auto px-4 py-6">
         {activeTab === 'dashboard' && cycleInfo && (
           <div className="space-y-6">
-            <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} />
+            <Dashboard
+              cycleInfo={cycleInfo}
+              viewMode={viewMode}
+              checkins={checkins}
+              periodHistory={periodHistory}
+              cycleStats={cycleStats}
+            />
 
             {viewMode === 'personal' && (
               <>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { formatDate, getMotivationalMessage } from '../utils/cycleData';
 import { NutritionSection } from './NutritionSection';
 import { SkinSection } from './SkinSection';
+import { PredictionsCard } from './Predictions';
 
 // Circular progress ring component
 function CycleRing({ cycleDay, cycleLength, phaseData }) {
@@ -161,7 +162,7 @@ function PartnerTipCard({ icon, title, description, items, variant = 'default' }
   );
 }
 
-export function Dashboard({ cycleInfo, viewMode }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], periodHistory = [], cycleStats }) {
   const { t } = useTranslation();
   const { cycleDay, cycleLength, phaseData, daysUntilPeriod, nextPeriodDate, phase } = cycleInfo;
   const motivationalMessage = getMotivationalMessage(phase);
@@ -247,6 +248,16 @@ export function Dashboard({ cycleInfo, viewMode }) {
           </div>
         </div>
       </div>
+
+      {/* Predictions - Personal view only */}
+      {viewMode === 'personal' && (
+        <PredictionsCard
+          cycleInfo={cycleInfo}
+          checkins={checkins}
+          periodHistory={periodHistory}
+          cycleStats={cycleStats}
+        />
+      )}
 
       {/* Phase-specific content */}
       {viewMode === 'personal' ? (

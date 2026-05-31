@@ -162,6 +162,23 @@
     "periodDates": "生理開始日",
     "logMorePeriods": "パターンを見るにはもっと生理を記録してください"
   },
+  "predictions": {
+    "title": "予測",
+    "nextPeriod": "次の生理",
+    "today": "今日",
+    "tomorrow": "明日",
+    "days": "日",
+    "expectedMood": "予想される気分",
+    "expectedEnergy": "予想されるエネルギー",
+    "expectedFlow": "予想される経血量",
+    "likelySymptoms": "起こりやすい症状",
+    "weekAhead": "7日間の予測",
+    "basedOn": "{{count}}周期に基づく",
+    "logMore": "予測を改善するにはもっとチェックインを記録してください",
+    "highConfidence": "高い信頼度",
+    "mediumConfidence": "中程度の信頼度",
+    "learning": "パターンを学習中"
+  },
   "workouts": {
     "title": "おすすめワークアウト",
     "forPhase": "{{phase}}に最適",

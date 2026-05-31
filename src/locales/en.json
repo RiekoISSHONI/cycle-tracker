@@ -162,6 +162,23 @@
     "periodDates": "Period start dates",
     "logMorePeriods": "Log more periods to see patterns"
   },
+  "predictions": {
+    "title": "Predictions",
+    "nextPeriod": "Next Period",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "days": "days",
+    "expectedMood": "Expected Mood",
+    "expectedEnergy": "Expected Energy",
+    "expectedFlow": "Expected Flow",
+    "likelySymptoms": "Likely Symptoms",
+    "weekAhead": "7-Day Forecast",
+    "basedOn": "Based on {{count}} cycles",
+    "logMore": "Log more check-ins to improve predictions",
+    "highConfidence": "High confidence",
+    "mediumConfidence": "Medium confidence",
+    "learning": "Still learning your patterns"
+  },
   "workouts": {
     "title": "Recommended Workouts",
     "forPhase": "Best for {{phase}}",
