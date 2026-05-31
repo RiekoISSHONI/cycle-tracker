@@ -322,5 +322,18 @@
     "yourRightsDesc": "設定からいつでもすべてのデータを削除できます。データはローカルに保存されているため、ブラウザのデータを消去することでも削除されます。",
     "accept": "理解して同意する",
     "byAccepting": "続けることで、アプリ機能のためのローカルデータ保存に同意したことになります。"
+  },
+  "commerce": {
+    "disclosureTitle": "外部ショップを開きます",
+    "disclosureMessage": "外部ショップを開きます。Meguriはあなたの周期データを共有しません — データはあなたのデバイスに残ります。",
+    "privacyBadge": "周期データは非公開のまま",
+    "affiliateLabel": "パートナー",
+    "cancel": "キャンセル",
+    "continue": "続ける",
+    "calmMode": "静寂モード",
+    "calmModeDesc": "商品おすすめを非表示にして集中できる体験を",
+    "calmModeEnabled": "商品表示オフ",
+    "thisWeeksCare": "今週のケア",
+    "curatedFor": "現在のフェーズに合わせて厳選"
   }
 }

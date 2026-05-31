@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { generateShareCode } from '../utils/cycleData';
 import { downloadCalendarEvents } from '../utils/calendarExport';
+import { isCalmModeEnabled, setCalmMode } from '../utils/commerce';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { SocialShare } from './SocialShare';
 import { ThemePicker } from './ThemePicker';
@@ -42,6 +43,7 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [calendarExported, setCalendarExported] = useState(false);
+  const [calmMode, setCalmModeState] = useState(isCalmModeEnabled());
 
   const today = new Date().toISOString().split('T')[0];
   const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
@@ -81,6 +83,12 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
     downloadCalendarEvents(cycleData.lastPeriodStart, cycleData.cycleLength, 6);
     setCalendarExported(true);
     setTimeout(() => setCalendarExported(false), 3000);
+  };
+
+  const handleCalmModeToggle = () => {
+    const newValue = !calmMode;
+    setCalmModeState(newValue);
+    setCalmMode(newValue);
   };
 
   return (
@@ -158,6 +166,43 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
 
       {/* Theme Picker */}
       <ThemePicker currentTheme={theme} onChange={onThemeChange} />
+
+      {/* Calm Mode */}
+      <SettingsSection title={t('commerce.calmMode')}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
+              <svg className="w-5 h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+            <div>
+              <div className="font-medium text-gray-800">{t('commerce.calmMode')}</div>
+              <div className="text-sm text-gray-500">{t('commerce.calmModeDesc')}</div>
+            </div>
+          </div>
+          <button
+            onClick={handleCalmModeToggle}
+            className={`relative w-12 h-7 rounded-full transition-colors ${
+              calmMode ? 'bg-forest' : 'bg-gray-300'
+            }`}
+          >
+            <div
+              className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                calmMode ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
+        {calmMode && (
+          <div className="mt-3 p-3 bg-forest/10 rounded-xl flex items-center gap-2">
+            <svg className="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="text-sm text-forest font-medium">{t('commerce.calmModeEnabled')}</span>
+          </div>
+        )}
+      </SettingsSection>
 
       {/* OBGYN Finder */}
       <OBGYNFinder />

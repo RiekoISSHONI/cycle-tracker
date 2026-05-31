@@ -322,5 +322,18 @@
     "yourRightsDesc": "You can delete all your data at any time from Settings. Since data is stored locally, clearing your browser data will also remove it.",
     "accept": "I Understand & Accept",
     "byAccepting": "By continuing, you agree to local data storage for app functionality."
+  },
+  "commerce": {
+    "disclosureTitle": "Opening Outside Shop",
+    "disclosureMessage": "This opens an outside shop. Meguri shares nothing about your cycle — your data stays on your device.",
+    "privacyBadge": "Your cycle data stays private",
+    "affiliateLabel": "Partner",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "calmMode": "Calm Mode",
+    "calmModeDesc": "Hide product recommendations for a distraction-free experience",
+    "calmModeEnabled": "Commerce hidden",
+    "thisWeeksCare": "This Week's Care",
+    "curatedFor": "Curated for your current phase"
   }
 }
