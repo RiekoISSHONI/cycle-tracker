@@ -1,7 +1,7 @@
 {
-  "name": "Flo Cycle Tracker",
-  "short_name": "Flo",
-  "description": "Track your menstrual cycle with personalized recommendations",
+  "name": "Meguri Cycle Tracker",
+  "short_name": "Meguri",
+  "description": "Track your menstrual cycle with science-backed personalized recommendations",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fdf2f8",

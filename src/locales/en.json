@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Flo",
+    "name": "Meguri",
     "tagline": "Cycle Tracker"
   },
   "nav": {
@@ -230,7 +230,7 @@
     },
     "about": "About",
     "version": "Version",
-    "aboutDescription": "Based on Dr. Mindy Pelz's research on cycle syncing.",
+    "aboutDescription": "Science-backed cycle syncing recommendations.",
     "privacy": "Privacy & Data",
     "localStorage": "Local Storage Only",
     "dataLocal": "Your data never leaves your device",
@@ -248,7 +248,7 @@
     "copied": "Copied!"
   },
   "onboarding": {
-    "welcome": "Welcome to Flo",
+    "welcome": "Welcome to Meguri",
     "description": "Understand your body better with personalized insights based on your cycle phases.",
     "getStarted": "Get Started",
     "dataPrivacy": "Your data stays on your device",

@@ -1,6 +1,7 @@
 /**
- * Cycle phase data based on Dr. Mindy Pelz's research
+ * Science-backed cycle phase data
  * The menstrual cycle is divided into 4 main phases with specific recommendations
+ * Based on peer-reviewed research on hormonal fluctuations and their effects
  */
 
 export const CYCLE_PHASES = {

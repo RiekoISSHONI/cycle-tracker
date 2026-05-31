@@ -192,7 +192,7 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
 
       {/* Social Share */}
       <SocialShare
-        title="Flo Cycle Tracker"
+        title="Meguri Cycle Tracker"
         text="Check out this cycle tracker app - it helps me understand my body better!"
       />
 
@@ -248,7 +248,7 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
             </svg>
           }
           iconBg="bg-pink-100"
-          title="Flo Cycle Tracker"
+          title="Meguri Cycle Tracker"
           subtitle={`${t('settings.version')} 2.0.0`}
         />
         <div className="border-t border-gray-100 mt-2 pt-4">

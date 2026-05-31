@@ -82,7 +82,7 @@ export function SocialShare({ title, text, url }) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: title || 'Flo Cycle Tracker',
+          title: title || 'Meguri Cycle Tracker',
           text: shareText,
           url: shareUrl
         });

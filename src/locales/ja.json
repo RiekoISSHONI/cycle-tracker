@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Flo",
+    "name": "Meguri",
     "tagline": "生理周期トラッカー"
   },
   "nav": {
@@ -230,7 +230,7 @@
     },
     "about": "アプリについて",
     "version": "バージョン",
-    "aboutDescription": "Dr. Mindy Pelzの周期同期研究に基づいています。",
+    "aboutDescription": "科学的根拠に基づく周期同期のおすすめ。",
     "privacy": "プライバシーとデータ",
     "localStorage": "ローカルストレージのみ",
     "dataLocal": "データはデバイスから離れません",
@@ -248,7 +248,7 @@
     "copied": "コピーしました！"
   },
   "onboarding": {
-    "welcome": "Floへようこそ",
+    "welcome": "Meguriへようこそ",
     "description": "周期のフェーズに基づいたパーソナライズされた情報で、あなたの体をより深く理解しましょう。",
     "getStarted": "始める",
     "dataPrivacy": "データはあなたのデバイスに保存されます",

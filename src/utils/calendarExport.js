@@ -18,7 +18,7 @@ function formatICSDate(date) {
  * Generate a unique ID for calendar events
  */
 function generateUID() {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@flo-cycle-tracker`;
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}@meguri-cycle-tracker`;
 }
 
 /**
@@ -104,7 +104,7 @@ function generateICSContent(events) {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Flo Cycle Tracker//EN',
+    'PRODID:-//Meguri Cycle Tracker//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'X-WR-CALNAME:My Cycle',

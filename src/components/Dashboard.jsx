@@ -284,18 +284,6 @@ function PersonalView({ phaseData, phase }) {
         items={tips.lifestyle}
       />
 
-      {/* Fasting recommendation */}
-      <div className="card p-4 bg-gradient-to-br from-amber-50 to-orange-50 border-amber-100">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
-            <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-800">{t('tips.fasting')}</h4>
-            <p className="text-sm text-gray-600 mt-1">{tips.fasting}</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
