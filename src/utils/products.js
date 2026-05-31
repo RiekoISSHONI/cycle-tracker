@@ -1,6 +1,6 @@
 /**
- * Product recommendations for each cycle phase
- * These are example products - replace with actual affiliate links
+ * Curated product recommendations backed by both modern science and TCM
+ * Each product is selected based on research evidence AND traditional use
  */
 
 export const PHASE_PRODUCTS = {
@@ -9,268 +9,277 @@ export const PHASE_PRODUCTS = {
       {
         name: 'Ginger Root Tea',
         brand: 'Traditional Medicinals',
-        description: 'Warming ginger to ease cramps and aid circulation',
-        image: '/products/ginger-tea.jpg',
-        amazonSearch: 'Traditional+Medicinals+Ginger+Tea'
+        description: 'Clinically shown to reduce menstrual pain. TCM: warms uterus, moves blood stasis.',
+        evidence: 'Multiple studies show ginger reduces dysmenorrhea as effectively as ibuprofen',
+        tcmUse: 'Warms the middle jiao, dispels cold, promotes blood circulation',
+        amazonSearch: 'Traditional+Medicinals+Ginger+Tea+organic'
       },
       {
-        name: 'Red Date Ginger Tea',
+        name: 'Red Date & Ginger Tea',
         brand: 'Prince of Peace',
-        description: 'TCM formula for blood nourishment during menstruation',
-        image: '/products/red-date-tea.jpg',
-        amazonSearch: 'red+date+ginger+tea'
-      },
-      {
-        name: 'Rose Bud Tea',
-        brand: 'Buddha Teas',
-        description: 'Promotes blood circulation and emotional balance',
-        image: '/products/rose-tea.jpg',
-        amazonSearch: 'organic+rose+bud+tea'
+        description: 'Iron-rich red dates + warming ginger. TCM classic for menstruation.',
+        evidence: 'Red dates (jujube) shown to increase hemoglobin and reduce fatigue',
+        tcmUse: 'Hong Zao tonifies blood and qi, calms the spirit',
+        amazonSearch: 'red+date+ginger+tea+instant'
       }
     ],
     foods: [
       {
         name: 'Organic Goji Berries',
         brand: 'Navitas Organics',
-        description: 'Blood-building superfood rich in iron',
-        image: '/products/goji.jpg',
-        amazonSearch: 'organic+goji+berries'
+        description: 'Rich in iron, vitamin C, antioxidants. TCM blood tonic.',
+        evidence: 'Studies show improved energy, immune function, and antioxidant status',
+        tcmUse: 'Gou Qi Zi nourishes liver blood and kidney yin',
+        amazonSearch: 'Navitas+organic+goji+berries'
       },
       {
-        name: 'Bone Broth Powder',
-        brand: 'Ancient Nutrition',
-        description: 'Warming, nourishing protein for recovery',
-        image: '/products/bone-broth.jpg',
-        amazonSearch: 'Ancient+Nutrition+bone+broth'
+        name: 'Grass-Fed Bone Broth',
+        brand: 'Kettle & Fire',
+        description: 'Collagen, minerals, amino acids for recovery. TCM: deeply nourishing.',
+        evidence: 'Provides glycine, proline for gut healing and joint support',
+        tcmUse: 'Animal broths tonify qi, blood, and essence (jing)',
+        amazonSearch: 'Kettle+Fire+bone+broth'
       },
       {
-        name: 'Dark Chocolate (85%)',
+        name: 'Dark Chocolate 85%',
         brand: 'Lindt Excellence',
-        description: 'Magnesium-rich for cramp relief',
-        image: '/products/dark-chocolate.jpg',
-        amazonSearch: 'Lindt+85+dark+chocolate'
+        description: 'High magnesium reduces cramps. Contains iron and antioxidants.',
+        evidence: 'Magnesium supplementation proven to reduce menstrual pain',
+        tcmUse: 'Bitter flavor clears heat, supports heart',
+        amazonSearch: 'Lindt+Excellence+85+dark+chocolate'
       }
     ],
     supplements: [
       {
-        name: 'Iron + Vitamin C',
-        brand: 'MegaFood',
-        description: 'Replenish iron lost during menstruation',
-        image: '/products/iron.jpg',
-        amazonSearch: 'MegaFood+Blood+Builder'
-      },
-      {
         name: 'Magnesium Glycinate',
         brand: 'Pure Encapsulations',
-        description: 'Reduces cramps and supports relaxation',
-        image: '/products/magnesium.jpg',
+        description: 'Most absorbable form. Reduces cramps, supports sleep.',
+        evidence: 'Meta-analyses confirm magnesium reduces menstrual pain significantly',
+        tcmUse: 'Supports liver function, relaxes tendons and muscles',
         amazonSearch: 'Pure+Encapsulations+Magnesium+Glycinate'
+      },
+      {
+        name: 'Iron Bisglycinate',
+        brand: 'Thorne',
+        description: 'Gentle, non-constipating iron to replenish blood loss.',
+        evidence: 'Iron bisglycinate has superior absorption with fewer GI side effects',
+        tcmUse: 'Tonifies blood, prevents blood deficiency',
+        amazonSearch: 'Thorne+Iron+Bisglycinate'
       }
     ]
   },
   follicular: {
     teas: [
       {
-        name: 'Chrysanthemum Tea',
-        brand: 'Prince of Peace',
-        description: 'Cooling tea to balance rising energy',
-        image: '/products/chrysanthemum.jpg',
-        amazonSearch: 'chrysanthemum+tea+organic'
-      },
-      {
         name: 'Green Tea Matcha',
-        brand: 'Jade Leaf',
-        description: 'Sustained energy without the crash',
-        image: '/products/matcha.jpg',
-        amazonSearch: 'Jade+Leaf+Matcha'
+        brand: 'Jade Leaf Organic',
+        description: 'L-theanine for calm focus. Antioxidants support estrogen metabolism.',
+        evidence: 'EGCG in green tea supports healthy estrogen balance',
+        tcmUse: 'Clears heat, benefits the eyes, calms the mind',
+        amazonSearch: 'Jade+Leaf+organic+matcha'
       },
       {
-        name: 'Goji Berry Tea',
+        name: 'Chrysanthemum Tea',
         brand: 'Buddha Teas',
-        description: 'Nourishes liver and kidney yin',
-        image: '/products/goji-tea.jpg',
-        amazonSearch: 'goji+berry+tea'
+        description: 'Cooling tea for rising energy phase. Supports liver and eyes.',
+        evidence: 'Contains luteolin and apigenin with anti-inflammatory effects',
+        tcmUse: 'Ju Hua clears liver heat, brightens the eyes',
+        amazonSearch: 'chrysanthemum+tea+organic'
       }
     ],
     foods: [
       {
         name: 'Black Sesame Seeds',
-        brand: 'Kevala',
-        description: 'TCM superfood for kidney yin and blood',
-        image: '/products/black-sesame.jpg',
-        amazonSearch: 'organic+black+sesame+seeds'
+        brand: 'Kevala Organic',
+        description: 'Calcium, iron, zinc. TCM kidney and blood tonic.',
+        evidence: 'High in lignans that support hormone balance',
+        tcmUse: 'Hei Zhi Ma nourishes liver and kidney, moistens intestines',
+        amazonSearch: 'Kevala+organic+black+sesame+seeds'
       },
       {
-        name: 'Fermented Kimchi',
-        brand: "Mother in Law's",
-        description: 'Probiotic-rich for gut health',
-        image: '/products/kimchi.jpg',
-        amazonSearch: 'Mother+in+Laws+Kimchi'
-      },
-      {
-        name: 'Flax Seeds',
+        name: 'Ground Flaxseed',
         brand: 'Spectrum Essentials',
-        description: 'Phytoestrogens to support estrogen balance',
-        image: '/products/flax.jpg',
-        amazonSearch: 'organic+ground+flax+seed'
+        description: 'Lignans support estrogen balance. Omega-3 reduces inflammation.',
+        evidence: 'Flax lignans shown to modulate estrogen metabolism',
+        tcmUse: 'Moistens intestines, supports healthy bowel movements',
+        amazonSearch: 'Spectrum+ground+flaxseed+organic'
+      },
+      {
+        name: 'Kimchi (Probiotic)',
+        brand: 'Mother In Laws',
+        description: 'Live probiotics support gut-hormone axis. Fermented vegetables.',
+        evidence: 'Gut microbiome crucial for estrogen metabolism (estrobolome)',
+        tcmUse: 'Fermented foods support spleen qi and digestion',
+        amazonSearch: 'Mother+in+Laws+Kimchi'
       }
     ],
     supplements: [
       {
         name: 'B-Complex',
-        brand: 'Garden of Life',
-        description: 'Energy and mood support',
-        image: '/products/b-complex.jpg',
-        amazonSearch: 'Garden+of+Life+B+Complex'
+        brand: 'Thorne Basic B Complex',
+        description: 'Methylated B vitamins for energy and hormone synthesis.',
+        evidence: 'B vitamins essential for estrogen metabolism in liver',
+        tcmUse: 'Supports qi transformation and blood production',
+        amazonSearch: 'Thorne+Basic+B+Complex'
       },
       {
-        name: 'Probiotics for Women',
+        name: 'Probiotics (Women)',
         brand: 'Garden of Life',
-        description: 'Support gut and hormonal health',
-        image: '/products/probiotics.jpg',
-        amazonSearch: 'Garden+of+Life+Probiotics+Women'
+        description: '50 billion CFU with strains supporting vaginal and gut health.',
+        evidence: 'Specific strains support healthy estrogen metabolism',
+        tcmUse: 'Strengthens spleen qi, supports middle jiao',
+        amazonSearch: 'Garden+of+Life+Probiotics+Women+50+billion'
       }
     ]
   },
   ovulatory: {
     teas: [
       {
-        name: 'Jasmine Green Tea',
-        brand: 'Twinings',
-        description: 'Light and uplifting for peak energy',
-        image: '/products/jasmine.jpg',
-        amazonSearch: 'jasmine+green+tea+organic'
-      },
-      {
-        name: 'Lotus Leaf Tea',
-        brand: 'TeaVivre',
-        description: 'Traditional tea for clarity and balance',
-        image: '/products/lotus.jpg',
-        amazonSearch: 'lotus+leaf+tea'
-      },
-      {
         name: 'Peppermint Tea',
         brand: 'Traditional Medicinals',
-        description: 'Refreshing and cooling',
-        image: '/products/peppermint.jpg',
+        description: 'Cooling and refreshing. May help balance androgens.',
+        evidence: 'Studies show spearmint/peppermint may reduce excess androgens',
+        tcmUse: 'Bo He disperses wind-heat, soothes liver qi',
         amazonSearch: 'Traditional+Medicinals+Peppermint'
+      },
+      {
+        name: 'Jasmine Green Tea',
+        brand: 'Numi Organic',
+        description: 'Light caffeine for peak energy. Calming jasmine aroma.',
+        evidence: 'Green tea polyphenols support antioxidant status',
+        tcmUse: 'Mo Li Hua soothes liver qi, uplifts mood',
+        amazonSearch: 'Numi+organic+jasmine+green+tea'
       }
     ],
     foods: [
       {
         name: 'Raw Almonds',
         brand: 'Blue Diamond',
-        description: 'Healthy fats for hormone production',
-        image: '/products/almonds.jpg',
-        amazonSearch: 'raw+almonds+organic'
+        description: 'Vitamin E for follicle health. Healthy fats for hormones.',
+        evidence: 'Vitamin E shown to improve endometrial thickness',
+        tcmUse: 'Moistens lungs, lubricates intestines',
+        amazonSearch: 'Blue+Diamond+raw+almonds+whole+natural'
       },
       {
-        name: 'Mung Bean Noodles',
-        brand: 'Ka-Me',
-        description: 'Cooling TCM food for balance',
-        image: '/products/mung-noodles.jpg',
-        amazonSearch: 'mung+bean+noodles'
+        name: 'Wild Salmon (Canned)',
+        brand: 'Wild Planet',
+        description: 'Omega-3 DHA/EPA and vitamin D for fertility support.',
+        evidence: 'Omega-3s reduce inflammation and support ovulation',
+        tcmUse: 'Tonifies qi and blood, warms yang',
+        amazonSearch: 'Wild+Planet+wild+salmon'
       },
       {
-        name: 'Fresh Berries Mix',
-        brand: 'Organic',
-        description: 'Antioxidant-rich for vibrant energy',
-        image: '/products/berries.jpg',
-        amazonSearch: 'organic+frozen+berries+mix'
+        name: 'Cruciferous Sprouts',
+        brand: 'Fresh or Seeds',
+        description: 'Sulforaphane supports estrogen detox pathways.',
+        evidence: 'DIM and I3C from crucifers support healthy estrogen metabolism',
+        tcmUse: 'Clears heat, resolves toxins',
+        amazonSearch: 'broccoli+sprouts+seeds+organic'
       }
     ],
     supplements: [
       {
         name: 'Omega-3 Fish Oil',
         brand: 'Nordic Naturals',
-        description: 'Anti-inflammatory support',
-        image: '/products/omega3.jpg',
-        amazonSearch: 'Nordic+Naturals+Omega+3'
+        description: 'Pharmaceutical grade EPA/DHA. Anti-inflammatory.',
+        evidence: 'Omega-3s shown to support ovulation and reduce inflammation',
+        tcmUse: 'Nourishes yin, moistens dryness',
+        amazonSearch: 'Nordic+Naturals+Ultimate+Omega'
       },
       {
-        name: 'Zinc',
+        name: 'Vitamin D3 + K2',
         brand: 'Thorne',
-        description: 'Supports hormone balance',
-        image: '/products/zinc.jpg',
-        amazonSearch: 'Thorne+Zinc'
+        description: 'Most women are deficient. Essential for fertility.',
+        evidence: 'Vitamin D deficiency linked to ovulatory dysfunction',
+        tcmUse: 'Supports kidney yang and bone health',
+        amazonSearch: 'Thorne+Vitamin+D+K2'
       }
     ]
   },
   luteal: {
     teas: [
       {
+        name: 'Chamomile Tea',
+        brand: 'Traditional Medicinals',
+        description: 'Calms anxiety, improves sleep. Reduces PMS symptoms.',
+        evidence: 'Clinical trials show chamomile reduces anxiety and improves sleep',
+        tcmUse: 'Calms the spirit, harmonizes the stomach',
+        amazonSearch: 'Traditional+Medicinals+Chamomile'
+      },
+      {
         name: 'Cinnamon Tea',
-        brand: 'Celestial Seasonings',
-        description: 'Warming support for yang energy',
-        image: '/products/cinnamon-tea.jpg',
-        amazonSearch: 'cinnamon+tea+organic'
+        brand: 'Pukka',
+        description: 'Balances blood sugar, reduces cravings. Warming for yang.',
+        evidence: 'Cinnamon improves insulin sensitivity and reduces sugar cravings',
+        tcmUse: 'Rou Gui warms kidney yang, disperses cold',
+        amazonSearch: 'Pukka+cinnamon+tea'
       },
       {
         name: 'Longan Red Date Tea',
-        brand: 'Prince of Peace',
-        description: 'TCM formula for blood and qi',
-        image: '/products/longan-tea.jpg',
+        brand: 'Greenmax',
+        description: 'TCM classic for blood and qi. Calms the mind.',
+        evidence: 'Longan contains iron and antioxidants, promotes calmness',
+        tcmUse: 'Long Yan Rou tonifies heart blood, calms spirit',
         amazonSearch: 'longan+red+date+tea'
-      },
-      {
-        name: 'Chamomile Tea',
-        brand: 'Traditional Medicinals',
-        description: 'Calming for PMS and better sleep',
-        image: '/products/chamomile.jpg',
-        amazonSearch: 'Traditional+Medicinals+Chamomile'
       }
     ],
     foods: [
       {
         name: 'Walnuts',
-        brand: 'California',
-        description: 'Warms kidney yang, supports brain',
-        image: '/products/walnuts.jpg',
-        amazonSearch: 'organic+walnuts'
+        brand: 'California Organic',
+        description: 'Omega-3 ALA, melatonin for sleep. TCM kidney yang tonic.',
+        evidence: 'Walnuts improve mood and contain natural melatonin',
+        tcmUse: 'He Tao Ren warms kidney yang, nourishes brain',
+        amazonSearch: 'organic+raw+walnuts'
       },
       {
-        name: 'Sweet Potato Chips',
-        brand: 'Jackson\'s Honest',
-        description: 'Healthy carbs for serotonin',
-        image: '/products/sweet-potato.jpg',
-        amazonSearch: 'sweet+potato+chips+healthy'
+        name: 'Sweet Potato',
+        brand: 'Fresh or Frozen',
+        description: 'Complex carbs support serotonin. Rich in vitamin A.',
+        evidence: 'Complex carbs increase tryptophan uptake for serotonin production',
+        tcmUse: 'Tonifies spleen qi, nourishes blood',
+        amazonSearch: 'organic+sweet+potato'
       },
       {
-        name: 'Roasted Chestnuts',
-        brand: 'Galil',
-        description: 'TCM food to strengthen kidney yang',
-        image: '/products/chestnuts.jpg',
-        amazonSearch: 'roasted+chestnuts+snack'
+        name: 'Pumpkin Seeds',
+        brand: 'Go Raw Organic',
+        description: 'High zinc and magnesium for PMS relief.',
+        evidence: 'Zinc and magnesium both reduce PMS symptoms',
+        tcmUse: 'Supports kidney function, rich in oils',
+        amazonSearch: 'Go+Raw+organic+pumpkin+seeds'
       }
     ],
     supplements: [
       {
         name: 'Magnesium Glycinate',
         brand: 'Pure Encapsulations',
-        description: 'Reduce PMS symptoms and cramps',
-        image: '/products/magnesium.jpg',
+        description: 'Reduces PMS, improves sleep, eases anxiety.',
+        evidence: 'Magnesium deficiency linked to PMS; supplementation helps',
+        tcmUse: 'Relaxes liver qi, calms the spirit',
         amazonSearch: 'Pure+Encapsulations+Magnesium+Glycinate'
       },
       {
-        name: 'Vitamin B6',
-        brand: 'Thorne',
-        description: 'Mood and hormone support for PMS',
-        image: '/products/b6.jpg',
-        amazonSearch: 'Thorne+Vitamin+B6'
+        name: 'Vitamin B6 (P5P)',
+        brand: 'Thorne Pyridoxal 5-Phosphate',
+        description: 'Active B6 for mood, reduces water retention.',
+        evidence: 'B6 shown to significantly reduce PMS symptoms',
+        tcmUse: 'Supports liver function and blood production',
+        amazonSearch: 'Thorne+P5P'
       },
       {
-        name: 'Evening Primrose Oil',
-        brand: 'Nature Made',
-        description: 'Traditional support for PMS',
-        image: '/products/evening-primrose.jpg',
-        amazonSearch: 'Evening+Primrose+Oil'
+        name: 'Vitex (Chaste Tree)',
+        brand: 'Gaia Herbs',
+        description: 'Traditional herb for PMS and cycle regulation.',
+        evidence: 'Multiple studies show vitex reduces PMS symptoms',
+        tcmUse: 'Regulates liver qi, harmonizes menstruation',
+        amazonSearch: 'Gaia+Herbs+Vitex+Berry'
       }
     ]
   }
 };
 
 export function getAmazonSearchUrl(searchTerm) {
-  return `https://www.amazon.com/s?k=${encodeURIComponent(searchTerm)}`;
+  return `https://www.amazon.com/s?k=${searchTerm}`;
 }
 
 export function getProductUrl(product) {

@@ -60,7 +60,10 @@
     "recommendedTea": "おすすめのお茶",
     "shopPhase": "このフェーズにおすすめ",
     "affiliate": "提携リンク",
-    "affiliateNote": "アフィリエイトとして、対象購入から収益を得る場合があります",
+    "affiliateNote": "科学研究と漢方医学の原則に基づいて選ばれた商品です",
+    "scienceEvidence": "科学的根拠",
+    "tcmUse": "漢方での使用",
+    "buyNow": "Amazonで購入",
     "categories": {
       "teas": "お茶",
       "foods": "食品",

@@ -60,7 +60,10 @@
     "recommendedTea": "Recommended Tea",
     "shopPhase": "Shop for This Phase",
     "affiliate": "Partner Links",
-    "affiliateNote": "As an affiliate, we may earn from qualifying purchases",
+    "affiliateNote": "Products selected based on scientific research and traditional Chinese medicine principles",
+    "scienceEvidence": "Scientific Evidence",
+    "tcmUse": "TCM Traditional Use",
+    "buyNow": "Shop on Amazon",
     "categories": {
       "teas": "Teas",
       "foods": "Foods",

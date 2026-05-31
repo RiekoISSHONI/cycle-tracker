@@ -17,30 +17,80 @@ function TabButton({ active, onClick, children }) {
   );
 }
 
-function ProductCard({ product }) {
-  const handleClick = () => {
+function ProductCard({ product, t }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const handleBuy = (e) => {
+    e.stopPropagation();
     window.open(getProductUrl(product), '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <button
-      onClick={handleClick}
-      className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all text-left w-full"
-    >
-      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center flex-shrink-0">
-        <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center gap-3 p-3 hover:bg-gray-50 transition-all text-left w-full"
+      >
+        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-50 to-rose-50 flex items-center justify-center flex-shrink-0">
+          <svg className="w-6 h-6 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="font-medium text-gray-800 text-sm">{product.name}</div>
+          <div className="text-xs text-gray-500">{product.brand}</div>
+          <div className="text-xs text-gray-600 mt-0.5">{product.description}</div>
+        </div>
+        <svg
+          className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="font-medium text-gray-800 text-sm truncate">{product.name}</div>
-        <div className="text-xs text-gray-500 truncate">{product.brand}</div>
-        <div className="text-xs text-gray-400 mt-0.5 line-clamp-1">{product.description}</div>
-      </div>
-      <svg className="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-      </svg>
-    </button>
+      </button>
+
+      {expanded && (
+        <div className="px-3 pb-3 space-y-2">
+          {/* Scientific Evidence */}
+          <div className="p-2 bg-blue-50 rounded-lg">
+            <div className="flex items-center gap-1.5 mb-1">
+              <svg className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-xs font-medium text-blue-700">{t('nutrition.scienceEvidence')}</span>
+            </div>
+            <p className="text-xs text-blue-600">{product.evidence}</p>
+          </div>
+
+          {/* TCM Use */}
+          <div className="p-2 bg-amber-50 rounded-lg">
+            <div className="flex items-center gap-1.5 mb-1">
+              <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
+              </svg>
+              <span className="text-xs font-medium text-amber-700">{t('nutrition.tcmUse')}</span>
+            </div>
+            <p className="text-xs text-amber-600">{product.tcmUse}</p>
+          </div>
+
+          {/* Buy Button */}
+          <button
+            onClick={handleBuy}
+            className="w-full py-2 px-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            {t('nutrition.buyNow')}
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -181,7 +231,7 @@ export function NutritionSection({ phaseData, phase }) {
         {/* Products Grid */}
         <div className="space-y-2">
           {products[productCategory]?.map((product, index) => (
-            <ProductCard key={index} product={product} />
+            <ProductCard key={index} product={product} t={t} />
           ))}
         </div>
 
