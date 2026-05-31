@@ -50,6 +50,17 @@
     "lifestyle": "Lifestyle",
     "fasting": "Fasting Window"
   },
+  "skin": {
+    "title": "Your Skin This Phase",
+    "overview": "Why",
+    "routine": "Routine",
+    "tcmCare": "TCM",
+    "scienceExplains": "Science Explains",
+    "tcmExplains": "TCM Perspective",
+    "routineIntro": "Recommended skincare for this phase:",
+    "tcmIntro": "Traditional Chinese medicine skincare:",
+    "tcmTip": "In TCM, skin health reflects internal organ balance. Treating the root cause internally often improves skin more than topical products alone."
+  },
   "nutrition": {
     "western": "Modern Science",
     "tcm": "TCM Wisdom",
@@ -70,7 +81,8 @@
       "soups": "Soups",
       "teas": "Teas",
       "foods": "Foods",
-      "supplements": "Supplements"
+      "supplements": "Supplements",
+      "skincare": "Skincare"
     }
   },
   "partner": {

@@ -233,7 +233,7 @@ export function NutritionSection({ phaseData, phase }) {
 
         {/* Category Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-          {['soups', 'teas', 'foods', 'supplements'].map((cat) => (
+          {['soups', 'teas', 'foods', 'supplements', 'skincare'].map((cat) => (
             <button
               key={cat}
               onClick={() => setProductCategory(cat)}

@@ -50,6 +50,17 @@
     "lifestyle": "ライフスタイル",
     "fasting": "ファスティング"
   },
+  "skin": {
+    "title": "このフェーズの肌状態",
+    "overview": "なぜ？",
+    "routine": "ケア",
+    "tcmCare": "漢方",
+    "scienceExplains": "科学的な理由",
+    "tcmExplains": "漢方の視点",
+    "routineIntro": "このフェーズにおすすめのスキンケア：",
+    "tcmIntro": "漢方に基づくスキンケア：",
+    "tcmTip": "漢方では、肌の健康は内臓のバランスを反映すると考えます。根本的な原因を内側から治療することで、外用製品だけよりも肌が改善することが多いです。"
+  },
   "nutrition": {
     "western": "現代科学",
     "tcm": "漢方の知恵",
@@ -70,7 +81,8 @@
       "soups": "薬膳スープ",
       "teas": "お茶",
       "foods": "食品",
-      "supplements": "サプリメント"
+      "supplements": "サプリメント",
+      "skincare": "スキンケア"
     }
   },
   "partner": {

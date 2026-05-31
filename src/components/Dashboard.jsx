@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { formatDate, getMotivationalMessage } from '../utils/cycleData';
 import { NutritionSection } from './NutritionSection';
+import { SkinSection } from './SkinSection';
 
 // Circular progress ring component
 function CycleRing({ cycleDay, cycleLength, phaseData }) {
@@ -264,6 +265,9 @@ function PersonalView({ phaseData, phase }) {
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-semibold text-gray-800 px-1">{t('dashboard.recommendationsForYou')}</h3>
+
+      {/* Skin Section */}
+      <SkinSection phaseData={phaseData} phase={phase} />
 
       {/* Nutrition Section with TCM and Products */}
       <NutritionSection phaseData={phaseData} phase={phase} />

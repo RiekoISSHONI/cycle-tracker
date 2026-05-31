@@ -15,6 +15,24 @@ export const CYCLE_PHASES = {
     hormones: 'Estrogen and progesterone are at their lowest levels.',
     energy: 'Low energy - honor your body\'s need for rest',
     forHer: {
+      skin: {
+        condition: 'Dry, dull, and sensitive. May look tired or pale.',
+        science: 'Low estrogen reduces sebum production, collagen synthesis, and skin hydration. Blood loss can cause temporary paleness.',
+        tcm: 'Blood deficiency (xue xu) manifests as pale, dry complexion lacking luster. The skin reflects internal blood status.',
+        care: [
+          'Focus on deep hydration - use rich moisturizers',
+          'Gentle, fragrance-free products only',
+          'Hydrating sheet masks with hyaluronic acid',
+          'Avoid harsh exfoliants - skin is sensitive',
+          'Use facial oils (rosehip, jojoba) to restore glow',
+          'Get extra sleep for skin repair'
+        ],
+        tcmCare: [
+          'Gua sha with rose quartz to promote blood flow',
+          'Pearl powder masks - traditional brightening',
+          'Goji berry-infused products for blood nourishment'
+        ]
+      },
       nutrition: [
         'Focus on iron-rich foods (leafy greens, red meat, legumes)',
         'Warm, nourishing soups and stews',
@@ -81,6 +99,24 @@ export const CYCLE_PHASES = {
     hormones: 'Estrogen is rising, making you feel more energetic and confident.',
     energy: 'Increasing energy - great time to start new projects',
     forHer: {
+      skin: {
+        condition: 'Improving daily! Skin becomes clearer, more radiant, and balanced.',
+        science: 'Rising estrogen boosts collagen and hyaluronic acid production. Skin barrier strengthens, pores appear smaller.',
+        tcm: 'Yin energy rising brings moisture and luster back to the skin. Blood is building, showing as healthy color.',
+        care: [
+          'Great time for gentle exfoliation (AHA/BHA)',
+          'Vitamin C serums for brightening',
+          'Lighter moisturizers as skin balances',
+          'Try new skincare products now - skin is resilient',
+          'Focus on anti-aging treatments',
+          'Hydrating toners with niacinamide'
+        ],
+        tcmCare: [
+          'Jade roller massage to move qi and reduce puffiness',
+          'Green tea-based products - antioxidant and cooling',
+          'White fungus (snow fungus) masks for deep hydration'
+        ]
+      },
       nutrition: [
         'Light, fresh foods - salads, smoothies',
         'Fermented foods for gut health',
@@ -147,6 +183,24 @@ export const CYCLE_PHASES = {
     hormones: 'Estrogen peaks, testosterone rises, and LH surges trigger ovulation.',
     energy: 'Highest energy - you\'re glowing!',
     forHer: {
+      skin: {
+        condition: 'Your best skin days! Glowing, plump, clear, and radiant.',
+        science: 'Peak estrogen maximizes collagen, elastin, and hyaluronic acid. Skin is at its most hydrated and resilient. Natural "glow" from increased blood flow.',
+        tcm: 'Yin at its peak, skin shows abundant "shen" (spirit/radiance). The face reflects inner vitality and balance.',
+        care: [
+          'Minimal routine needed - skin is thriving',
+          'Light, non-comedogenic products',
+          'Focus on maintenance, not correction',
+          'Great time for professional treatments (facials)',
+          'Photograph your skin - this is your baseline!',
+          'SPF is essential - skin is more photosensitive'
+        ],
+        tcmCare: [
+          'Facial acupressure for maintaining glow',
+          'Rosewater mists to preserve radiance',
+          'Light gua sha to keep qi flowing'
+        ]
+      },
       nutrition: [
         'Raw fruits and vegetables',
         'Lighter meals - your metabolism is fastest',
@@ -213,6 +267,26 @@ export const CYCLE_PHASES = {
     hormones: 'Progesterone rises then falls. This hormonal shift can cause PMS symptoms.',
     energy: 'Decreasing energy - focus on completion over starting',
     forHer: {
+      skin: {
+        condition: 'Oily T-zone, breakouts, enlarged pores, dullness. PMS skin is real.',
+        science: 'Progesterone increases sebum production. Rising testosterone can trigger acne. Skin barrier weakens, inflammation increases. Water retention causes puffiness.',
+        tcm: 'Liver qi stagnation causes skin eruptions. Heat rising manifests as redness and breakouts. Dampness shows as oiliness and congestion.',
+        care: [
+          'Double cleanse to remove excess oil',
+          'Salicylic acid (BHA) for pore clearing',
+          'Spot treatments with benzoyl peroxide or tea tree',
+          'Clay masks 1-2x per week for oil control',
+          'Non-comedogenic, oil-free moisturizers',
+          'Don\'t pick at breakouts - scarring risk is higher',
+          'Retinol if your skin tolerates it'
+        ],
+        tcmCare: [
+          'Green tea compresses to reduce inflammation',
+          'Mung bean masks to clear heat and detoxify',
+          'Facial acupressure on Liver 3 point for qi flow',
+          'Avoid greasy skincare - increases dampness'
+        ]
+      },
       nutrition: [
         'Complex carbohydrates to support serotonin',
         'Magnesium-rich foods (reduce cravings and cramps)',

@@ -138,6 +138,32 @@ export const PHASE_PRODUCTS = {
         tcmUse: 'Tonifies blood, prevents blood deficiency',
         amazonSearch: 'Thorne+Iron+Bisglycinate'
       }
+    ],
+    skincare: [
+      {
+        name: 'Hyaluronic Acid Serum',
+        brand: 'The Ordinary',
+        description: 'Deep hydration for dry, dull menstrual phase skin.',
+        evidence: 'HA holds 1000x its weight in water, proven to increase skin hydration',
+        tcmUse: 'Replenishes yin fluids lost during menstruation',
+        amazonSearch: 'The+Ordinary+Hyaluronic+Acid+Serum'
+      },
+      {
+        name: 'Rosehip Seed Oil',
+        brand: 'Trilogy',
+        description: 'Rich in vitamins A & C. Restores glow to tired skin.',
+        evidence: 'Studies show improved skin elasticity and brightness',
+        tcmUse: 'Nourishes blood, restores luster to blood-deficient skin',
+        amazonSearch: 'Trilogy+Rosehip+Oil'
+      },
+      {
+        name: 'Gentle Cream Cleanser',
+        brand: 'CeraVe',
+        description: 'Non-stripping cleanser for sensitive menstrual phase skin.',
+        evidence: 'Ceramides restore skin barrier, gentle surfactants preserve moisture',
+        tcmUse: 'Protects wei qi (defensive energy) of skin',
+        amazonSearch: 'CeraVe+Hydrating+Cream+Cleanser'
+      }
     ]
   },
   follicular: {
@@ -238,6 +264,32 @@ export const PHASE_PRODUCTS = {
         tcmUse: 'Strengthens spleen qi, supports middle jiao',
         amazonSearch: 'Garden+of+Life+Probiotics+Women+50+billion'
       }
+    ],
+    skincare: [
+      {
+        name: 'Vitamin C Serum',
+        brand: 'Skinceuticals C E Ferulic',
+        description: 'Brightening serum - perfect for improving follicular skin.',
+        evidence: 'L-ascorbic acid boosts collagen synthesis and brightens',
+        tcmUse: 'Supports rising yang energy, brightens complexion',
+        amazonSearch: 'Vitamin+C+Serum+Skinceuticals'
+      },
+      {
+        name: 'Gentle Exfoliating Toner',
+        brand: 'Paula\'s Choice BHA',
+        description: 'Salicylic acid to refine pores as skin strengthens.',
+        evidence: 'BHA penetrates pores, reduces congestion',
+        tcmUse: 'Clears stagnation, promotes smooth qi flow in skin',
+        amazonSearch: 'Paulas+Choice+BHA+Exfoliant'
+      },
+      {
+        name: 'Green Tea Moisturizer',
+        brand: 'Innisfree',
+        description: 'Light, antioxidant-rich hydration for balanced skin.',
+        evidence: 'EGCG in green tea has proven antioxidant benefits',
+        tcmUse: 'Clears heat while moistening, balances skin',
+        amazonSearch: 'Innisfree+Green+Tea+Moisturizer'
+      }
     ]
   },
   ovulatory: {
@@ -327,6 +379,32 @@ export const PHASE_PRODUCTS = {
         evidence: 'Vitamin D deficiency linked to ovulatory dysfunction',
         tcmUse: 'Supports kidney yang and bone health',
         amazonSearch: 'Thorne+Vitamin+D+K2'
+      }
+    ],
+    skincare: [
+      {
+        name: 'Mineral Sunscreen SPF 50',
+        brand: 'Supergoop',
+        description: 'Essential - skin is more photosensitive at peak estrogen.',
+        evidence: 'UV protection prevents hyperpigmentation during hormone peak',
+        tcmUse: 'Protects wei qi, prevents heat damage',
+        amazonSearch: 'Supergoop+Unseen+Sunscreen+SPF+50'
+      },
+      {
+        name: 'Rosewater Face Mist',
+        brand: 'Heritage Store',
+        description: 'Maintain your natural glow with hydrating mist.',
+        evidence: 'Rose has anti-inflammatory properties, hydrates without heaviness',
+        tcmUse: 'Mei Gui Hua (rose) soothes liver qi, beautifies skin',
+        amazonSearch: 'Heritage+Store+Rosewater'
+      },
+      {
+        name: 'Light Gel Moisturizer',
+        brand: 'Neutrogena Hydro Boost',
+        description: 'Lightweight hydration - skin is already thriving.',
+        evidence: 'Hyaluronic acid gel provides hydration without occlusion',
+        tcmUse: 'Light formula supports abundant yin without creating dampness',
+        amazonSearch: 'Neutrogena+Hydro+Boost+Gel+Cream'
       }
     ]
   },
@@ -441,6 +519,40 @@ export const PHASE_PRODUCTS = {
         evidence: 'Multiple studies show vitex reduces PMS symptoms',
         tcmUse: 'Regulates liver qi, harmonizes menstruation',
         amazonSearch: 'Gaia+Herbs+Vitex+Berry'
+      }
+    ],
+    skincare: [
+      {
+        name: 'Salicylic Acid Cleanser',
+        brand: 'CeraVe SA Cleanser',
+        description: 'BHA cleanser to prevent luteal phase breakouts.',
+        evidence: 'Salicylic acid penetrates pores, prevents acne formation',
+        tcmUse: 'Clears heat and dampness that cause skin eruptions',
+        amazonSearch: 'CeraVe+SA+Cleanser'
+      },
+      {
+        name: 'Niacinamide Serum',
+        brand: 'The Ordinary Niacinamide 10%',
+        description: 'Controls oil, minimizes pores, calms inflammation.',
+        evidence: 'Niacinamide proven to reduce sebum and inflammation',
+        tcmUse: 'Clears heat without drying, balances skin',
+        amazonSearch: 'The+Ordinary+Niacinamide+Zinc'
+      },
+      {
+        name: 'Tea Tree Spot Treatment',
+        brand: 'The Body Shop',
+        description: 'Natural spot treatment for hormonal breakouts.',
+        evidence: 'Tea tree oil has antibacterial properties comparable to benzoyl peroxide',
+        tcmUse: 'Clears heat-toxins, resolves skin eruptions',
+        amazonSearch: 'The+Body+Shop+Tea+Tree+Oil'
+      },
+      {
+        name: 'Clay Mask',
+        brand: 'Aztec Secret Indian Clay',
+        description: 'Deep cleansing for oily, congested luteal skin.',
+        evidence: 'Bentonite clay absorbs excess sebum and draws out impurities',
+        tcmUse: 'Clears dampness and heat from skin',
+        amazonSearch: 'Aztec+Secret+Indian+Healing+Clay'
       }
     ]
   }
