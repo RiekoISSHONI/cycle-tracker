@@ -12,13 +12,13 @@ export const CYCLE_PHASES = {
     bgColor: 'bg-red-50',
     borderColor: 'border-red-200',
     textColor: 'text-red-700',
-    description: 'Time for rest and reflection. Your body is shedding the uterine lining.',
-    hormones: 'Estrogen and progesterone are at their lowest levels.',
-    energy: 'Low energy - honor your body\'s need for rest',
+    description: 'Your body is shedding the uterine lining. Hormones are at their lowest, and FSH begins rising to prepare the next cycle.',
+    hormones: 'Estrogen and progesterone at lowest levels. FSH begins rising to stimulate follicle development.',
+    energy: 'Energy varies individually - research shows no consistent performance decline',
     forHer: {
       skin: {
-        condition: 'Dry, dull, and sensitive. May look tired or pale.',
-        science: 'Low estrogen reduces sebum production, collagen synthesis, and skin hydration. Blood loss can cause temporary paleness.',
+        condition: 'Skin stabilizing. Premenstrual breakouts begin healing as hormones reset.',
+        science: 'Low hormones mean relatively stable sebum production. Any acne from the luteal phase starts to heal as inflammation decreases.',
         tcm: 'Blood deficiency (xue xu) manifests as pale, dry complexion lacking luster. The skin reflects internal blood status.',
         care: [
           'Focus on deep hydration - use rich moisturizers',
@@ -35,11 +35,11 @@ export const CYCLE_PHASES = {
         ]
       },
       nutrition: [
-        'Focus on iron-rich foods (leafy greens, red meat, legumes)',
-        'Warm, nourishing soups and stews',
-        'Anti-inflammatory foods (turmeric, ginger, fatty fish)',
-        'Magnesium-rich foods for cramps (dark chocolate, nuts)',
-        'Stay hydrated with warm herbal teas'
+        'Iron-rich foods essential - RDA is 18mg/day for menstruating women (vs 8mg for men)',
+        'Include vitamin C with iron foods to boost absorption',
+        'Leafy greens, red meat, legumes, fortified cereals',
+        'Anti-inflammatory foods (fatty fish, turmeric, ginger)',
+        'Magnesium for cramps (dark chocolate, nuts, seeds)'
       ],
       tcmNutrition: {
         principle: 'Moving Blood & Warming the Uterus',
@@ -59,19 +59,19 @@ export const CYCLE_PHASES = {
         tea: 'Rose bud tea or ginger red date tea'
       },
       exercise: [
-        'Gentle yoga and stretching',
-        'Light walking',
-        'Restorative activities',
-        'Avoid intense workouts - your body needs recovery'
+        'Train as you feel - research shows no performance impairment',
+        'Some may prefer gentler activities due to discomfort',
+        'Walking, yoga, and stretching if energy is low',
+        'Listen to your body - individual variation is significant'
       ],
       lifestyle: [
-        'Prioritize sleep and rest',
-        'Journal and reflect',
-        'Take warm baths',
+        'Prioritize sleep for recovery',
+        'Good time for reflection and planning',
+        'Take warm baths to ease cramps',
         'Practice self-compassion',
-        'Reduce social commitments if possible'
+        'Reduce commitments if needed'
       ],
-      fasting: 'Best time for a 13-15 hour overnight fast. Avoid extended fasting.'
+      fasting: 'Listen to your body during this phase.'
     },
     forPartner: {
       understand: 'She may experience cramps, fatigue, and mood changes. This is completely normal.',
@@ -96,13 +96,13 @@ export const CYCLE_PHASES = {
     bgColor: 'bg-pink-50',
     borderColor: 'border-pink-200',
     textColor: 'text-pink-700',
-    description: 'Rising energy and creativity. Your body is preparing for ovulation.',
-    hormones: 'Estrogen is rising, making you feel more energetic and confident.',
-    energy: 'Increasing energy - great time to start new projects',
+    description: 'Estrogen rises steadily as your body prepares for ovulation. Many experience improved mood and energy.',
+    hormones: 'Estrogen rising steadily. FSH stimulates follicle maturation. Insulin sensitivity improves.',
+    energy: 'Increasing energy - estrogen may enhance endurance and recovery',
     forHer: {
       skin: {
-        condition: 'Improving daily! Skin becomes clearer, more radiant, and balanced.',
-        science: 'Rising estrogen boosts collagen and hyaluronic acid production. Skin barrier strengthens, pores appear smaller.',
+        condition: 'Skin improving daily. Sebum production at its lowest as estrogen rises.',
+        science: 'Rising estrogen regulates sebum production - research shows lowest oiliness occurs as estrogen approaches its peak. Skin barrier function improves.',
         tcm: 'Yin energy rising brings moisture and luster back to the skin. Blood is building, showing as healthy color.',
         care: [
           'Great time for gentle exfoliation (AHA/BHA)',
@@ -119,11 +119,11 @@ export const CYCLE_PHASES = {
         ]
       },
       nutrition: [
-        'Light, fresh foods - salads, smoothies',
-        'Fermented foods for gut health',
-        'Lean proteins',
-        'Sprouted and fresh vegetables',
-        'Phytoestrogen foods (flax seeds, chickpeas)'
+        'Better insulin sensitivity - 68.5% time in target glucose range (research data)',
+        'BMR is at its lowest - adjust portions if needed',
+        'Fresh foods, salads, and smoothies',
+        'Fermented foods support gut-hormone connection',
+        'Lean proteins and omega-3 rich foods'
       ],
       tcmNutrition: {
         principle: 'Nourishing Yin & Building Blood',
@@ -143,20 +143,20 @@ export const CYCLE_PHASES = {
         tea: 'Chrysanthemum tea or goji berry tea'
       },
       exercise: [
-        'Try new workouts',
-        'Cardio and high-energy activities',
-        'Strength training',
+        'Strength training may be optimally timed - estrogen aids recovery',
+        'Cardio and endurance activities',
+        'Try new workout routines',
         'Group fitness classes',
-        'This is your peak performance time!'
+        'Building phase - good time to increase training load'
       ],
       lifestyle: [
-        'Start new projects',
-        'Schedule important meetings',
-        'Be social and connect with others',
-        'Try new experiences',
-        'Brain is primed for learning'
+        'Start new projects - energy supports initiation',
+        'Studies suggest improved verbal working memory',
+        'Good time for learning and skill acquisition',
+        'Social activities and networking',
+        'Schedule brainstorming and creative work'
       ],
-      fasting: 'Good time for longer fasts (15-17 hours). Your body handles fasting well now.'
+      fasting: 'Listen to your body during this phase.'
     },
     forPartner: {
       understand: 'She\'s feeling more energetic, social, and adventurous. Her mood is typically upbeat.',
@@ -180,13 +180,13 @@ export const CYCLE_PHASES = {
     bgColor: 'bg-yellow-50',
     borderColor: 'border-yellow-200',
     textColor: 'text-yellow-700',
-    description: 'Peak energy and confidence. You\'re at your most fertile and vibrant.',
-    hormones: 'Estrogen peaks, testosterone rises, and LH surges trigger ovulation.',
-    energy: 'Highest energy - you\'re glowing!',
+    description: 'LH surge triggers ovulation. Estrogen peaks, then drops. Many feel confident and energetic.',
+    hormones: 'LH surge triggers ovulation. Estrogen at peak then drops. Testosterone rises briefly. Progesterone begins rising.',
+    energy: 'Peak energy for many - but watch for injury risk',
     forHer: {
       skin: {
-        condition: 'Your best skin days! Glowing, plump, clear, and radiant.',
-        science: 'Peak estrogen maximizes collagen, elastin, and hyaluronic acid. Skin is at its most hydrated and resilient. Natural "glow" from increased blood flow.',
+        condition: 'Your best skin days! Lowest sebum production, clearest complexion.',
+        science: 'Research confirms lowest oiliness at ovulation due to peak estrogen. Skin is at its most balanced and resilient.',
         tcm: 'Yin at its peak, skin shows abundant "shen" (spirit/radiance). The face reflects inner vitality and balance.',
         care: [
           'Minimal routine needed - skin is thriving',
@@ -203,11 +203,11 @@ export const CYCLE_PHASES = {
         ]
       },
       nutrition: [
-        'Raw fruits and vegetables',
-        'Lighter meals - your metabolism is fastest',
+        'Fiber-rich foods help metabolize excess estrogen',
+        'Cruciferous vegetables (broccoli, cauliflower, kale)',
+        'Lighter meals with fresh produce',
         'Anti-inflammatory foods',
-        'Fiber-rich foods to help metabolize estrogen',
-        'Cruciferous vegetables (broccoli, cauliflower)'
+        'Stay well hydrated'
       ],
       tcmNutrition: {
         principle: 'Harmonizing Yin & Yang for Transformation',
@@ -227,20 +227,20 @@ export const CYCLE_PHASES = {
         tea: 'Jasmine tea or lotus leaf tea'
       },
       exercise: [
-        'High-intensity interval training (HIIT)',
-        'Heavy lifting - you\'re strongest now',
-        'Competitive sports',
-        'Push your limits!',
-        'Group workouts for connection'
+        'CAUTION: ACL injury risk peaks now (research shows 88% of muscular injuries occur around ovulation)',
+        'Peak joint laxity - be mindful during high-impact activities',
+        'Warm up thoroughly before any exercise',
+        'Strength training with proper form',
+        'Consider lower-impact cardio options'
       ],
       lifestyle: [
-        'Schedule important presentations',
-        'Negotiate and communicate',
+        'Verbal fluency may peak - good for presentations',
+        'Schedule important communications',
         'Network and socialize',
-        'Your verbal skills peak now',
+        'Studies show enhanced emotional memory consolidation',
         'Great time for difficult conversations'
       ],
-      fasting: 'Can do 15-17 hour fasts. Listen to your body.'
+      fasting: 'Listen to your body during this phase.'
     },
     forPartner: {
       understand: 'She\'s at her most confident, communicative, and attractive. Libido is typically highest.',
@@ -264,22 +264,22 @@ export const CYCLE_PHASES = {
     bgColor: 'bg-indigo-50',
     borderColor: 'border-indigo-200',
     textColor: 'text-indigo-700',
-    description: 'Winding down and preparing. Your body is focused on potential pregnancy support.',
-    hormones: 'Progesterone rises then falls. This hormonal shift can cause PMS symptoms.',
-    energy: 'Decreasing energy - focus on completion over starting',
+    description: 'Progesterone dominates. Your metabolism speeds up and body temperature rises slightly.',
+    hormones: 'Progesterone dominant. Core body temperature elevated. Both hormones drop premenstrually triggering PMS in some.',
+    energy: 'Variable energy - elevated core temperature may cause fatigue',
     forHer: {
       skin: {
-        condition: 'Oily T-zone, breakouts, enlarged pores, dullness. PMS skin is real.',
-        science: 'Progesterone increases sebum production. Rising testosterone can trigger acne. Skin barrier weakens, inflammation increases. Water retention causes puffiness.',
+        condition: 'Premenstrual acne peaks. 63% of women experience breakouts 7-10 days before their period.',
+        science: 'Research confirms progesterone and androgens increase sebum production. Premenstrual acne is documented in 63% of women, typically appearing 7-10 days before menstruation.',
         tcm: 'Liver qi stagnation causes skin eruptions. Heat rising manifests as redness and breakouts. Dampness shows as oiliness and congestion.',
         care: [
+          'Start acne prevention 7-10 days before expected period',
           'Double cleanse to remove excess oil',
           'Salicylic acid (BHA) for pore clearing',
           'Spot treatments with benzoyl peroxide or tea tree',
           'Clay masks 1-2x per week for oil control',
           'Non-comedogenic, oil-free moisturizers',
-          'Don\'t pick at breakouts - scarring risk is higher',
-          'Retinol if your skin tolerates it'
+          'Don\'t pick at breakouts - scarring risk is higher'
         ],
         tcmCare: [
           'Green tea compresses to reduce inflammation',
@@ -289,11 +289,12 @@ export const CYCLE_PHASES = {
         ]
       },
       nutrition: [
-        'Complex carbohydrates to support serotonin',
-        'Magnesium-rich foods (reduce cravings and cramps)',
-        'B-vitamin rich foods for mood',
-        'Roasted vegetables and warm foods',
-        'Avoid excess salt, sugar, caffeine, and alcohol'
+        'BMR increases 100-300 kcal/day - slight appetite increase is normal',
+        'Insulin resistance increases - blood sugar less stable',
+        'Complex carbs support serotonin and mood',
+        'Magnesium-rich foods (dark chocolate, nuts, leafy greens)',
+        'B-vitamins for energy and mood stability',
+        'Reduce caffeine and alcohol which can worsen symptoms'
       ],
       tcmNutrition: {
         principle: 'Warming Yang & Supporting Kidney Energy',
@@ -313,20 +314,20 @@ export const CYCLE_PHASES = {
         tea: 'Cinnamon tea or longan red date tea'
       },
       exercise: [
-        'Moderate intensity workouts',
-        'Pilates and strength training',
-        'Yoga - especially in the late luteal phase',
-        'Walking and swimming',
-        'Listen to your body - scale back if needed'
+        'Injury risk is lower than ovulatory phase',
+        'Elevated core temperature - stay hydrated, avoid overheating',
+        'Moderate intensity may feel better than high intensity',
+        'Yoga, pilates, swimming, walking',
+        'Late luteal: scale back if energy drops'
       ],
       lifestyle: [
-        'Complete ongoing projects',
-        'Organize and nest',
-        'Administrative tasks',
-        'Self-care and alone time',
+        'Focus on completing projects, not starting new ones',
+        'Detail-oriented and administrative tasks',
+        'Increased amygdala reactivity - emotions may feel stronger',
+        'Extra self-care and rest',
         'Prepare for the upcoming menstrual phase'
       ],
-      fasting: 'Reduce fasting to 13-15 hours. In the 5 days before your period, avoid fasting longer than 13 hours.'
+      fasting: 'Listen to your body during this phase.'
     },
     forPartner: {
       understand: 'She may experience PMS - bloating, mood swings, cravings, and sensitivity. Be extra patient.',
