@@ -204,7 +204,37 @@ function WorkoutCard({ workout, t }) {
   );
 }
 
-export function Workouts({ phase }) {
+function CompactWorkoutCard({ workout }) {
+  const handleClick = () => {
+    window.open(workout.videoUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="flex items-center gap-3 p-3 rounded-xl bg-washi/50 hover:bg-washi transition-colors w-full text-left"
+    >
+      <div className="w-16 h-16 rounded-lg bg-gray-200 overflow-hidden flex-shrink-0">
+        <img
+          src={workout.thumbnail}
+          alt={workout.title}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div className="flex-1 min-w-0">
+        <h4 className="font-medium text-bark text-sm truncate">{workout.title}</h4>
+        <p className="text-xs text-muted">{workout.instructor} · {workout.duration}</p>
+      </div>
+      <svg className="w-5 h-5 text-terra flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </button>
+  );
+}
+
+export function Workouts({ phase, embedded = false }) {
   const { t } = useTranslation();
   const workouts = WORKOUTS[phase] || WORKOUTS.follicular;
 
@@ -214,6 +244,16 @@ export function Workouts({ phase }) {
     ovulatory: t('phases.ovulatory.name'),
     luteal: t('phases.luteal.name')
   };
+
+  if (embedded) {
+    return (
+      <div className="space-y-2">
+        {workouts.slice(0, 3).map((workout) => (
+          <CompactWorkoutCard key={workout.id} workout={workout} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">

@@ -574,3 +574,14 @@ export function getProductUrl(product) {
 export function isPartnerProduct(product) {
   return product.isPartner === true;
 }
+
+export function getPhaseProducts(phase) {
+  const phaseData = PHASE_PRODUCTS[phase] || PHASE_PRODUCTS.follicular;
+  return {
+    teas: phaseData.teas || [],
+    supplements: phaseData.supplements || [],
+    skincare: phaseData.skincare || [],
+    foods: phaseData.foods || [],
+    soups: phaseData.soups || []
+  };
+}

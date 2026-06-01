@@ -446,7 +446,50 @@ export function getMotivationalMessage(phase) {
   };
 
   const phaseMessages = messages[phase] || messages.menstrual;
-  return phaseMessages[Math.floor(Math.random() * phaseMessages.length)];
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  return phaseMessages[dayOfYear % phaseMessages.length];
+}
+
+/**
+ * Get a daily tip for the current phase
+ */
+export function getDailyTip(phase) {
+  const tips = {
+    menstrual: [
+      "Your body is doing incredible work right now. Rest is productive.",
+      "Iron-rich foods like spinach and red meat help replenish what you're losing.",
+      "Warm baths with Epsom salts can help ease cramps naturally.",
+      "This is the perfect time for journaling and self-reflection.",
+      "Gentle stretching can help with lower back pain during this phase."
+    ],
+    follicular: [
+      "Your energy is building! It's the perfect time to start new projects.",
+      "Try new foods and recipes - your body is more adaptable now.",
+      "This is your brain's peak learning phase. Take on new challenges!",
+      "High-intensity workouts feel easier during this phase.",
+      "Social activities will feel more energizing now than any other time."
+    ],
+    ovulatory: [
+      "You're at your most magnetic! Schedule important meetings now.",
+      "Your communication skills are at their peak - have that difficult conversation.",
+      "This is the best time for date nights and connecting with your partner.",
+      "Push your fitness limits - you're strongest during ovulation.",
+      "Your skin is glowing naturally - embrace minimal makeup days!"
+    ],
+    luteal: [
+      "Cravings are normal - choose dark chocolate for magnesium benefits.",
+      "Focus on completing tasks rather than starting new ones.",
+      "Extra sleep isn't laziness - your body needs more rest now.",
+      "Reduce caffeine to help with any anxiety or mood swings.",
+      "Cozy activities like reading and baking match your energy perfectly."
+    ]
+  };
+
+  const phaseTips = tips[phase] || tips.follicular;
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  return phaseTips[dayOfYear % phaseTips.length];
 }
 
 /**

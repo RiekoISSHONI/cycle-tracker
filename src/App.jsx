@@ -9,10 +9,9 @@ import { CycleCalendar } from './components/CycleCalendar';
 import { Settings } from './components/Settings';
 import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
-import { DailyTip } from './components/DailyTip';
-import { Workouts } from './components/Workouts';
 import { PhaseBackground } from './components/PhaseBackground';
 import { ConsentModal } from './components/ConsentModal';
+import { Shop } from './components/Shop';
 
 function App() {
   const [hasConsented, setHasConsented] = useLocalStorage('privacyConsent', false);
@@ -127,22 +126,10 @@ function App() {
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {activeTab === 'dashboard' && cycleInfo && (
-          <div className="space-y-6">
-            <Dashboard
-              cycleInfo={cycleInfo}
-              viewMode={viewMode}
-              checkins={checkins}
-              periodHistory={periodHistory}
-              cycleStats={cycleStats}
-            />
-
-            {viewMode === 'personal' && (
-              <>
-                <DailyTip phase={cycleInfo.phase} />
-                <Workouts phase={cycleInfo.phase} />
-              </>
-            )}
-          </div>
+          <Dashboard
+            cycleInfo={cycleInfo}
+            viewMode={viewMode}
+          />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (
@@ -167,6 +154,10 @@ function App() {
 
         {activeTab === 'calendar' && cycleInfo && (
           <CycleCalendar cycleInfo={cycleInfo} />
+        )}
+
+        {activeTab === 'shop' && cycleInfo && (
+          <Shop phase={cycleInfo.phase} />
         )}
 
         {activeTab === 'settings' && (
