@@ -7,6 +7,7 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 import { SocialShare } from './SocialShare';
 import { ThemePicker } from './ThemePicker';
 import { OBGYNFinder } from './OBGYNFinder';
+import { PartnerShare } from './PartnerShare';
 
 function SettingsSection({ title, children }) {
   return (
@@ -34,7 +35,7 @@ function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) 
   );
 }
 
-export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange }) {
+export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThemeChange }) {
   const { t } = useTranslation();
   const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
   const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
@@ -44,6 +45,7 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
   const [showSaved, setShowSaved] = useState(false);
   const [calendarExported, setCalendarExported] = useState(false);
   const [calmMode, setCalmModeState] = useState(isCalmModeEnabled());
+  const [showPartnerShare, setShowPartnerShare] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
   const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
@@ -211,6 +213,19 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
       <SettingsSection title={t('settings.sharePartner')}>
         <p className="text-sm text-gray-600 mb-4">{t('settings.shareDescription')}</p>
 
+        {/* New Partner Share Button */}
+        {cycleInfo && (
+          <button
+            onClick={() => setShowPartnerShare(true)}
+            className="w-full btn-primary flex items-center justify-center gap-2 mb-4"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            {t('partnerShare.title')}
+          </button>
+        )}
+
         {showShareCode && shareCode ? (
           <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 text-center">
             <div className="text-sm text-gray-600 mb-2">{t('settings.yourCode')}</div>
@@ -228,7 +243,7 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
             className="w-full btn-secondary flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
             </svg>
             {t('settings.generateCode')}
           </button>
@@ -362,6 +377,14 @@ export function Settings({ cycleData, onUpdate, onReset, theme, onThemeChange })
       {/* Toast */}
       {showSaved && (
         <div className="toast">{t('settings.saved')}</div>
+      )}
+
+      {/* Partner Share Modal */}
+      {showPartnerShare && cycleInfo && (
+        <PartnerShare
+          cycleInfo={cycleInfo}
+          onClose={() => setShowPartnerShare(false)}
+        />
       )}
     </div>
   );

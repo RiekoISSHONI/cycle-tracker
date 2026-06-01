@@ -163,6 +163,7 @@ function App() {
         {activeTab === 'settings' && (
           <Settings
             cycleData={cycleData}
+            cycleInfo={cycleInfo}
             onUpdate={handleUpdate}
             onReset={handleReset}
             theme={theme}
