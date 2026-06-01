@@ -5,6 +5,13 @@ import { NutritionSection } from './NutritionSection';
 import { SkinSection } from './SkinSection';
 import { PredictionsCard } from './Predictions';
 
+const phaseKanji = {
+  menstrual: { kanji: '静', reading: 'shizuka', meaning: 'stillness' },
+  follicular: { kanji: '芽', reading: 'me', meaning: 'sprout' },
+  ovulatory: { kanji: '輝', reading: 'kagayaki', meaning: 'radiance' },
+  luteal: { kanji: '穏', reading: 'odayaka', meaning: 'calm' }
+};
+
 // Circular progress ring component
 function CycleRing({ cycleDay, cycleLength, phaseData }) {
   const size = 220;
@@ -184,14 +191,26 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], periodHistory = 
   return (
     <div className="space-y-6 stagger-children pb-4">
       {/* Main Phase Card */}
-      <div className={`card p-6 bg-gradient-to-br ${phaseBgLight[phase]} border-0`}>
+      <div className={`card p-6 bg-gradient-to-br ${phaseBgLight[phase]} border-0 relative overflow-hidden`}>
         <div className="flex flex-col items-center text-center">
+          {/* Phase Kanji - Decorative */}
+          {phaseKanji[phase] && (
+            <div className="absolute top-4 right-4 opacity-15">
+              <span className="text-6xl font-display" style={{ color: 'var(--accent)' }}>
+                {phaseKanji[phase].kanji}
+              </span>
+            </div>
+          )}
+
           {/* Cycle Ring */}
           <CycleRing cycleDay={cycleDay} cycleLength={cycleLength} phaseData={phaseData} />
 
-          {/* Phase Name */}
-          <div className="mt-4">
+          {/* Phase Name with Kanji */}
+          <div className="mt-4 flex flex-col items-center gap-2">
             <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${phaseGradients[phase]} text-white font-medium shadow-lg`}>
+              {phaseKanji[phase] && (
+                <span className="text-lg opacity-90">{phaseKanji[phase].kanji}</span>
+              )}
               {phaseData.name}
             </span>
           </div>

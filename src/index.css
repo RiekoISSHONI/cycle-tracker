@@ -115,6 +115,149 @@
 }
 
 /* ==========================================
+   Phase-Based Color Shifts
+   Subtle accent variations per cycle phase
+   ========================================== */
+
+/* Menstrual - Deeper, warmer tones (rest & introspection) */
+[data-phase="menstrual"] {
+  --accent: var(--phase-menstrual);
+  --shadow-glow: 0 4px 24px -4px var(--phase-menstrual);
+}
+
+[data-theme="meguri"][data-phase="menstrual"] {
+  --accent: #a04030;
+  --accent-light: #c4665a;
+  --gradient-start: #f5ebe6;
+  --gradient-mid: #f0e5de;
+  --gradient-end: #ebe0d8;
+}
+
+[data-theme="sunset"][data-phase="menstrual"] {
+  --accent: #e57373;
+  --accent-light: #ffab91;
+  --gradient-start: #fff5f3;
+  --gradient-mid: #ffede8;
+}
+
+[data-theme="botanical"][data-phase="menstrual"] {
+  --accent: #c4a77d;
+  --accent-light: #d4bc96;
+}
+
+[data-theme="dusk"][data-phase="menstrual"] {
+  --accent: #b8738a;
+  --accent-light: #d4a0b5;
+}
+
+[data-theme="aurora"][data-phase="menstrual"] {
+  --accent: #ff6b81;
+  --accent-light: #ff8fa0;
+}
+
+/* Follicular - Brighter, fresher tones (rising energy) */
+[data-phase="follicular"] {
+  --accent: var(--phase-follicular);
+  --shadow-glow: 0 4px 24px -4px var(--phase-follicular);
+}
+
+[data-theme="meguri"][data-phase="follicular"] {
+  --accent: #b5582f;
+  --accent-light: #d4784f;
+  --gradient-start: #f5efe8;
+  --gradient-mid: #f2ebe2;
+  --gradient-end: #ede5da;
+}
+
+[data-theme="sunset"][data-phase="follicular"] {
+  --accent: #ff7e5f;
+  --accent-light: #ffab8f;
+}
+
+[data-theme="botanical"][data-phase="follicular"] {
+  --accent: #7c9a7e;
+  --accent-light: #a0bda2;
+}
+
+[data-theme="dusk"][data-phase="follicular"] {
+  --accent: #8e7bb8;
+  --accent-light: #b0a0d0;
+}
+
+[data-theme="aurora"][data-phase="follicular"] {
+  --accent: #20b2aa;
+  --accent-light: #5ccfc9;
+}
+
+/* Ovulatory - Vibrant, radiant tones (peak energy) */
+[data-phase="ovulatory"] {
+  --accent: var(--phase-ovulatory);
+  --shadow-glow: 0 4px 24px -4px var(--phase-ovulatory);
+}
+
+[data-theme="meguri"][data-phase="ovulatory"] {
+  --accent: #c08a2d;
+  --accent-light: #d9a84d;
+  --gradient-start: #f8f2e8;
+  --gradient-mid: #f5ede0;
+  --gradient-end: #f0e8d8;
+}
+
+[data-theme="sunset"][data-phase="ovulatory"] {
+  --accent: #ffb347;
+  --accent-light: #ffcc7a;
+}
+
+[data-theme="botanical"][data-phase="ovulatory"] {
+  --accent: #d4a574;
+  --accent-light: #e5c09a;
+}
+
+[data-theme="dusk"][data-phase="ovulatory"] {
+  --accent: #d4af37;
+  --accent-light: #e5c860;
+}
+
+[data-theme="aurora"][data-phase="ovulatory"] {
+  --accent: #ffd93d;
+  --accent-light: #ffe580;
+}
+
+/* Luteal - Softer, muted tones (winding down) */
+[data-phase="luteal"] {
+  --accent: var(--phase-luteal);
+  --shadow-glow: 0 4px 24px -4px var(--phase-luteal);
+}
+
+[data-theme="meguri"][data-phase="luteal"] {
+  --accent: #3f5040;
+  --accent-light: #5a7058;
+  --gradient-start: #f0ebe6;
+  --gradient-mid: #ebe6e0;
+  --gradient-end: #e5e0da;
+}
+
+[data-theme="sunset"][data-phase="luteal"] {
+  --accent: #ce93d8;
+  --accent-light: #e1bee7;
+}
+
+[data-theme="botanical"][data-phase="luteal"] {
+  --accent: #9c8aa5;
+  --accent-light: #b8a8c0;
+}
+
+[data-theme="dusk"][data-phase="luteal"] {
+  --accent: #6b5b95;
+  --accent-light: #9b8cb5;
+}
+
+[data-theme="aurora"][data-phase="luteal"] {
+  --accent: #a78bfa;
+  --accent-light: #c4b0fc;
+}
+
+/* ==========================================
    Base Styles
    ========================================== */
 

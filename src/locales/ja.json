@@ -17,22 +17,30 @@
     "menstrual": {
       "name": "月経期",
       "description": "休息と内省の時期。体が子宮内膜を排出しています。",
-      "energy": "エネルギー低下 - 体の休息ニーズを大切に"
+      "energy": "エネルギー低下 - 体の休息ニーズを大切に",
+      "kanji": "静",
+      "kanjiMeaning": "静けさ"
     },
     "follicular": {
       "name": "卵胞期",
       "description": "エネルギーと創造性が高まる時期。排卵に向けて体が準備中。",
-      "energy": "エネルギー上昇中 - 新しいプロジェクトを始めるのに最適"
+      "energy": "エネルギー上昇中 - 新しいプロジェクトを始めるのに最適",
+      "kanji": "芽",
+      "kanjiMeaning": "芽生え"
     },
     "ovulatory": {
       "name": "排卵期",
       "description": "エネルギーと自信がピーク。最も輝いている時期。",
-      "energy": "最高のエネルギー - 輝いています！"
+      "energy": "最高のエネルギー - 輝いています！",
+      "kanji": "輝",
+      "kanjiMeaning": "輝き"
     },
     "luteal": {
       "name": "黄体期",
       "description": "落ち着きと準備の時期。新しいことより完成に集中。",
-      "energy": "エネルギー低下中 - 完成に集中"
+      "energy": "エネルギー低下中 - 完成に集中",
+      "kanji": "穏",
+      "kanjiMeaning": "穏やか"
     }
   },
   "dashboard": {

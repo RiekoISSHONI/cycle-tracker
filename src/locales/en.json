@@ -17,22 +17,30 @@
     "menstrual": {
       "name": "Menstrual Phase",
       "description": "Time for rest and reflection. Your body is shedding the uterine lining.",
-      "energy": "Low energy - honor your body's need for rest"
+      "energy": "Low energy - honor your body's need for rest",
+      "kanji": "静",
+      "kanjiMeaning": "Stillness"
     },
     "follicular": {
       "name": "Follicular Phase",
       "description": "Rising energy and creativity. Your body is preparing for ovulation.",
-      "energy": "Increasing energy - great time to start new projects"
+      "energy": "Increasing energy - great time to start new projects",
+      "kanji": "芽",
+      "kanjiMeaning": "Sprout"
     },
     "ovulatory": {
       "name": "Ovulatory Phase",
       "description": "Peak energy and confidence. You're at your most vibrant.",
-      "energy": "Highest energy - you're glowing!"
+      "energy": "Highest energy - you're glowing!",
+      "kanji": "輝",
+      "kanjiMeaning": "Radiance"
     },
     "luteal": {
       "name": "Luteal Phase",
       "description": "Winding down and preparing. Focus on completion over starting.",
-      "energy": "Decreasing energy - focus on completion"
+      "energy": "Decreasing energy - focus on completion",
+      "kanji": "穏",
+      "kanjiMeaning": "Calm"
     }
   },
   "dashboard": {
