@@ -62,6 +62,7 @@
   "skin": {
     "title": "Your Skin This Phase",
     "overview": "Why",
+    "why": "Why",
     "routine": "Routine",
     "tcmCare": "TCM",
     "scienceExplains": "Science Explains",
@@ -73,6 +74,7 @@
   "nutrition": {
     "western": "Modern Science",
     "tcm": "TCM Wisdom",
+    "evidence": "Nutrition Science",
     "modernScience": "Evidence-Based Nutrition",
     "tcmPrinciple": "TCM Principle",
     "recommendedFoods": "Recommended Foods",
@@ -192,7 +194,8 @@
     "title": "Recommended Workouts",
     "forPhase": "Best for {{phase}}",
     "watchNow": "Watch Now",
-    "affiliate": "Partner Content"
+    "affiliate": "Partner Content",
+    "videos": "Workout Videos"
   },
   "recipes": {
     "title": "Phase Recipes",

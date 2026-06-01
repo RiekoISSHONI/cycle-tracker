@@ -62,6 +62,7 @@
   "skin": {
     "title": "このフェーズの肌状態",
     "overview": "なぜ？",
+    "why": "なぜ？",
     "routine": "ケア",
     "tcmCare": "漢方",
     "scienceExplains": "科学的な理由",
@@ -73,6 +74,7 @@
   "nutrition": {
     "western": "現代科学",
     "tcm": "漢方の知恵",
+    "evidence": "栄養科学",
     "modernScience": "科学に基づく栄養学",
     "tcmPrinciple": "漢方の原則",
     "recommendedFoods": "おすすめの食べ物",
@@ -192,7 +194,8 @@
     "title": "おすすめワークアウト",
     "forPhase": "{{phase}}に最適",
     "watchNow": "今すぐ見る",
-    "affiliate": "パートナーコンテンツ"
+    "affiliate": "パートナーコンテンツ",
+    "videos": "ワークアウト動画"
   },
   "recipes": {
     "title": "フェーズレシピ",

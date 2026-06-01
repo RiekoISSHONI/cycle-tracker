@@ -18,7 +18,7 @@ function TabButton({ active, onClick, children }) {
 
 export function SkinSection({ phaseData, phase }) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('routine');
 
   const skin = phaseData.forHer?.skin;
 
@@ -53,46 +53,20 @@ export function SkinSection({ phaseData, phase }) {
       {/* Tabs */}
       <div className="p-2 bg-gray-50">
         <div className="flex gap-1">
-          <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')}>
-            {t('skin.overview')}
-          </TabButton>
           <TabButton active={activeTab === 'routine'} onClick={() => setActiveTab('routine')}>
             {t('skin.routine')}
           </TabButton>
           <TabButton active={activeTab === 'tcm'} onClick={() => setActiveTab('tcm')}>
             {t('skin.tcmCare')}
           </TabButton>
+          <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')}>
+            {t('skin.why')}
+          </TabButton>
         </div>
       </div>
 
       {/* Content */}
       <div className="p-4">
-        {activeTab === 'overview' && (
-          <div className="space-y-4">
-            {/* Science explanation */}
-            <div className="p-3 bg-blue-50 rounded-xl">
-              <div className="flex items-center gap-2 mb-2">
-                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-                </svg>
-                <span className="text-sm font-medium text-blue-700">{t('skin.scienceExplains')}</span>
-              </div>
-              <p className="text-sm text-blue-600">{skin.science}</p>
-            </div>
-
-            {/* TCM explanation */}
-            <div className="p-3 bg-amber-50 rounded-xl">
-              <div className="flex items-center gap-2 mb-2">
-                <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
-                </svg>
-                <span className="text-sm font-medium text-amber-700">{t('skin.tcmExplains')}</span>
-              </div>
-              <p className="text-sm text-amber-600">{skin.tcm}</p>
-            </div>
-          </div>
-        )}
-
         {activeTab === 'routine' && (
           <div className="space-y-3">
             <p className="text-sm text-gray-600 mb-3">{t('skin.routineIntro')}</p>
@@ -129,6 +103,32 @@ export function SkinSection({ phaseData, phase }) {
                 </svg>
                 <p className="text-xs text-amber-700">{t('skin.tcmTip')}</p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'overview' && (
+          <div className="space-y-4">
+            {/* Science explanation */}
+            <div className="p-3 bg-blue-50 rounded-xl">
+              <div className="flex items-center gap-2 mb-2">
+                <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <span className="text-sm font-medium text-blue-700">{t('skin.scienceExplains')}</span>
+              </div>
+              <p className="text-sm text-blue-600">{skin.science}</p>
+            </div>
+
+            {/* TCM explanation */}
+            <div className="p-3 bg-amber-50 rounded-xl">
+              <div className="flex items-center gap-2 mb-2">
+                <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
+                </svg>
+                <span className="text-sm font-medium text-amber-700">{t('skin.tcmExplains')}</span>
+              </div>
+              <p className="text-sm text-amber-600">{skin.tcm}</p>
             </div>
           </div>
         )}

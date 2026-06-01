@@ -1,6 +1,56 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASE_PRODUCTS, getProductUrl, isPartnerProduct } from '../utils/products';
+
+const RECIPES = {
+  menstrual: {
+    en: {
+      name: "Iron-Rich Lentil Soup",
+      description: "Warming soup packed with iron and anti-inflammatory spices",
+      ingredients: ["red lentils", "turmeric", "ginger", "spinach", "garlic"]
+    },
+    ja: {
+      name: "鉄分たっぷりレンズ豆スープ",
+      description: "鉄分と抗炎症スパイスたっぷりの温かいスープ",
+      ingredients: ["赤レンズ豆", "ターメリック", "生姜", "ほうれん草", "にんにく"]
+    }
+  },
+  follicular: {
+    en: {
+      name: "Fresh Spring Salad",
+      description: "Light and energizing with fermented foods for gut health",
+      ingredients: ["mixed greens", "avocado", "kimchi", "chickpeas", "lemon"]
+    },
+    ja: {
+      name: "フレッシュ春サラダ",
+      description: "腸の健康のための発酵食品を含む軽くて活力のあるサラダ",
+      ingredients: ["ミックスグリーン", "アボカド", "キムチ", "ひよこ豆", "レモン"]
+    }
+  },
+  ovulatory: {
+    en: {
+      name: "Rainbow Buddha Bowl",
+      description: "Colorful, fiber-rich bowl to support estrogen metabolism",
+      ingredients: ["quinoa", "broccoli", "carrots", "edamame", "tahini"]
+    },
+    ja: {
+      name: "レインボーブッダボウル",
+      description: "エストロゲン代謝をサポートするカラフルで食物繊維豊富なボウル",
+      ingredients: ["キヌア", "ブロッコリー", "にんじん", "枝豆", "タヒニ"]
+    }
+  },
+  luteal: {
+    en: {
+      name: "Comforting Sweet Potato Curry",
+      description: "Complex carbs and magnesium to support serotonin",
+      ingredients: ["sweet potato", "coconut milk", "chickpeas", "spinach", "curry spices"]
+    },
+    ja: {
+      name: "心温まるさつまいもカレー",
+      description: "セロトニンをサポートする複合炭水化物とマグネシウム",
+      ingredients: ["さつまいも", "ココナッツミルク", "ひよこ豆", "ほうれん草", "カレースパイス"]
+    }
+  }
+};
 
 function TabButton({ active, onClick, children }) {
   return (
@@ -17,48 +67,56 @@ function TabButton({ active, onClick, children }) {
   );
 }
 
-function ProductCard({ product, t }) {
+export function NutritionSection({ phaseData, phase }) {
+  const { t, i18n } = useTranslation();
   const [expanded, setExpanded] = useState(false);
-  const isPartner = isPartnerProduct(product);
+  const [activeTab, setActiveTab] = useState('western');
+  const lang = i18n.language.startsWith('ja') ? 'ja' : 'en';
 
-  const handleBuy = (e) => {
-    e.stopPropagation();
-    window.open(getProductUrl(product), '_blank', 'noopener,noreferrer');
-  };
+  const tips = phaseData.forHer;
+  const tcm = tips.tcmNutrition;
+  const recipe = RECIPES[phase]?.[lang] || RECIPES.follicular[lang];
 
   return (
-    <div className={`rounded-xl border overflow-hidden ${
-      isPartner
-        ? 'bg-gradient-to-br from-rose-50 to-pink-50 border-pink-200'
-        : 'bg-white border-gray-100'
-    }`}>
+    <div className="card overflow-hidden">
+      {/* Recipe - Always Visible */}
+      <div className="p-4 border-b border-gray-100">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-bark">{t('recipes.title')}</h3>
+            <h4 className="text-terra font-medium mt-1">{recipe.name}</h4>
+            <p className="text-sm text-muted mt-1">{recipe.description}</p>
+            <div className="flex flex-wrap gap-1 mt-2">
+              {recipe.ingredients.map((ing, i) => (
+                <span key={i} className="px-2 py-1 bg-gray-100 rounded-full text-xs text-gray-600">
+                  {ing}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Collapsible Nutrition Evidence */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-3 p-3 hover:bg-white/50 transition-all text-left w-full"
+        className="w-full p-4 flex items-center justify-between text-left hover:bg-washi/50 transition-colors"
       >
-        <div className={`w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ${
-          isPartner
-            ? 'bg-gradient-to-br from-pink-400 to-rose-500'
-            : 'bg-gradient-to-br from-pink-50 to-rose-50'
-        }`}>
-          <svg className={`w-6 h-6 ${isPartner ? 'text-white' : 'text-pink-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-800 text-sm">{product.nameJa || product.name}</span>
-            {isPartner && (
-              <span className="px-1.5 py-0.5 text-[10px] font-medium bg-pink-500 text-white rounded-full">
-                {t('nutrition.featured')}
-              </span>
-            )}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
           </div>
-          <div className="text-xs text-gray-500">{product.brand}</div>
-          <div className="text-xs text-gray-600 mt-0.5">{product.description}</div>
+          <span className="font-medium text-bark">{t('nutrition.evidence')}</span>
         </div>
         <svg
-          className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 text-muted transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -67,80 +125,21 @@ function ProductCard({ product, t }) {
         </svg>
       </button>
 
-      {expanded && (
-        <div className="px-3 pb-3 space-y-2">
-          {/* Scientific Evidence */}
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <div className="flex items-center gap-1.5 mb-1">
-              <svg className="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-xs font-medium text-blue-700">{t('nutrition.scienceEvidence')}</span>
+      <div className={`expandable-content ${expanded ? 'expanded' : ''}`}>
+        <div className="px-4 pb-4">
+          {/* Tab Header */}
+          <div className="p-2 bg-gray-50 rounded-xl mb-4">
+            <div className="flex gap-1">
+              <TabButton active={activeTab === 'western'} onClick={() => setActiveTab('western')}>
+                {t('nutrition.western')}
+              </TabButton>
+              <TabButton active={activeTab === 'tcm'} onClick={() => setActiveTab('tcm')}>
+                {t('nutrition.tcm')}
+              </TabButton>
             </div>
-            <p className="text-xs text-blue-600">{product.evidence}</p>
           </div>
 
-          {/* TCM Use */}
-          <div className="p-2 bg-amber-50 rounded-lg">
-            <div className="flex items-center gap-1.5 mb-1">
-              <svg className="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
-              </svg>
-              <span className="text-xs font-medium text-amber-700">{t('nutrition.tcmUse')}</span>
-            </div>
-            <p className="text-xs text-amber-600">{product.tcmUse}</p>
-          </div>
-
-          {/* Buy Button */}
-          <button
-            onClick={handleBuy}
-            className={`w-full py-2 px-4 text-white text-sm font-medium rounded-lg hover:shadow-md transition-all flex items-center justify-center gap-2 ${
-              isPartner
-                ? 'bg-gradient-to-r from-pink-500 to-rose-500'
-                : 'bg-gradient-to-r from-gray-600 to-gray-700'
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            {isPartner ? t('nutrition.visitStore') : t('nutrition.buyNow')}
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-export function NutritionSection({ phaseData, phase }) {
-  const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState('western');
-  const [productCategory, setProductCategory] = useState('soups');
-
-  const tips = phaseData.forHer;
-  const tcm = tips.tcmNutrition;
-  const products = PHASE_PRODUCTS[phase] || PHASE_PRODUCTS.follicular;
-
-  return (
-    <div className="space-y-4">
-      {/* Nutrition Advice Card */}
-      <div className="card overflow-hidden">
-        {/* Tab Header */}
-        <div className="p-2 bg-gray-50">
-          <div className="flex gap-1">
-            <TabButton active={activeTab === 'western'} onClick={() => setActiveTab('western')}>
-              {t('nutrition.western')}
-            </TabButton>
-            <TabButton active={activeTab === 'tcm'} onClick={() => setActiveTab('tcm')}>
-              {t('nutrition.tcm')}
-            </TabButton>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-4">
+          {/* Content */}
           {activeTab === 'western' ? (
             <div className="space-y-3">
               <div className="flex items-center gap-2 mb-3">
@@ -215,49 +214,6 @@ export function NutritionSection({ phaseData, phase }) {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Product Recommendations */}
-      <div className="card p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-pink-100 flex items-center justify-center">
-              <svg className="w-4 h-4 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-            </div>
-            <span className="font-semibold text-gray-800">{t('nutrition.shopPhase')}</span>
-          </div>
-          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">{t('nutrition.affiliate')}</span>
-        </div>
-
-        {/* Category Tabs */}
-        <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
-          {['soups', 'teas', 'foods', 'supplements', 'skincare'].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setProductCategory(cat)}
-              className={`px-4 py-1.5 text-sm rounded-full whitespace-nowrap transition-all ${
-                productCategory === cat
-                  ? 'bg-pink-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {t(`nutrition.categories.${cat}`)}
-            </button>
-          ))}
-        </div>
-
-        {/* Products Grid */}
-        <div className="space-y-2">
-          {products[productCategory]?.map((product, index) => (
-            <ProductCard key={index} product={product} t={t} />
-          ))}
-        </div>
-
-        <p className="text-xs text-gray-400 mt-4 text-center">
-          {t('nutrition.affiliateNote')}
-        </p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Google Fonts for Meguri brand */
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap');
 
 /* ==========================================
    Theme Variables - Meguri Brand
@@ -272,7 +272,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: 'Zen Kaku Gothic New', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Noto Sans JP', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   color: var(--ink, #2b231d);
   -webkit-font-smoothing: antialiased;
@@ -350,7 +350,7 @@ h1, h2, h3, h4 {
 }
 
 .font-body {
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'Noto Sans JP', system-ui, sans-serif;
 }
 
 .text-muted {
@@ -364,7 +364,7 @@ h1, h2, h3, h4 {
 .btn {
   padding: 1rem 1.75rem;
   border-radius: 0.75rem;
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'Noto Sans JP', system-ui, sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   letter-spacing: 0.02em;
@@ -527,7 +527,7 @@ h1, h2, h3, h4 {
   border-radius: 0.75rem;
   background: var(--terra, #b5582f);
   color: var(--cream, #f3ece0);
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'Noto Sans JP', system-ui, sans-serif;
   font-size: 0.9375rem;
   font-weight: 500;
   box-shadow: 0 8px 32px -8px rgba(181, 88, 47, 0.4);

@@ -245,6 +245,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
 
 function PersonalView({ phaseData, phase }) {
   const { t } = useTranslation();
+  const [workoutsExpanded, setWorkoutsExpanded] = useState(false);
   const tips = phaseData.forHer;
 
   return (
@@ -267,15 +268,18 @@ function PersonalView({ phaseData, phase }) {
         </div>
       </div>
 
-      {/* Lifestyle */}
-      <CollapsibleSection
-        icon={<svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>}
-        title={t('tips.lifestyle')}
-        iconBg="bg-violet-100"
-        iconColor="text-violet-500"
-      >
+      {/* Lifestyle - Always Visible (Not Collapsible) */}
+      <div className="card p-4">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+          </div>
+          <h3 className="font-medium text-bark pt-2">{t('tips.lifestyle')}</h3>
+        </div>
         <TipsList items={tips.lifestyle} />
-      </CollapsibleSection>
+      </div>
 
       {/* Nutrition/Recipe */}
       <NutritionSection phaseData={phaseData} phase={phase} />
@@ -283,18 +287,42 @@ function PersonalView({ phaseData, phase }) {
       {/* Skin */}
       <SkinSection phaseData={phaseData} phase={phase} />
 
-      {/* Exercise */}
-      <CollapsibleSection
-        icon={<svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>}
-        title={t('tips.exercise')}
-        iconBg="bg-rose-100"
-        iconColor="text-rose-500"
-      >
-        <TipsList items={tips.exercise} />
-        <div className="mt-4">
-          <Workouts phase={phase} embedded />
+      {/* Exercise - Tips always visible, videos collapsible */}
+      <div className="card overflow-hidden">
+        <div className="p-4">
+          <div className="flex items-start gap-3 mb-3">
+            <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 className="font-medium text-bark pt-2">{t('tips.exercise')}</h3>
+          </div>
+          <TipsList items={tips.exercise} />
         </div>
-      </CollapsibleSection>
+
+        {/* Collapsible Videos Section */}
+        <button
+          onClick={() => setWorkoutsExpanded(!workoutsExpanded)}
+          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-washi/50 transition-colors border-t border-gray-100"
+        >
+          <span className="text-sm font-medium text-terra">{t('workouts.videos')}</span>
+          <svg
+            className={`w-5 h-5 text-muted transition-transform duration-300 ${workoutsExpanded ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div className={`expandable-content ${workoutsExpanded ? 'expanded' : ''}`}>
+          <div className="px-4 pb-4">
+            <Workouts phase={phase} embedded />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
