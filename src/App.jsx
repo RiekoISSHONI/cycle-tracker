@@ -27,12 +27,6 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    if (cycleInfo?.phase) {
-      document.documentElement.setAttribute('data-phase', cycleInfo.phase);
-    }
-  }, [cycleInfo?.phase]);
-
   const handleAcceptConsent = () => {
     setHasConsented(true);
   };
@@ -61,6 +55,12 @@ function App() {
       isIrregular: cycleStats.isIrregular
     };
   }, [cycleData, effectiveCycleLength, cycleStats]);
+
+  useEffect(() => {
+    if (cycleInfo?.phase) {
+      document.documentElement.setAttribute('data-phase', cycleInfo.phase);
+    }
+  }, [cycleInfo?.phase]);
 
   const handleSetup = (data) => {
     setCycleData(data);
