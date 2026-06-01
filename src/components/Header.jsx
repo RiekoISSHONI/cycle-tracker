@@ -9,13 +9,11 @@ export function Header({ viewMode, setViewMode, cycleInfo }) {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center shadow-md shadow-pink-500/20">
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
+            <div className="w-9 h-9 rounded-xl bg-cream flex items-center justify-center shadow-md" style={{ boxShadow: '0 4px 12px -2px rgba(181, 88, 47, 0.2)' }}>
+              <span className="text-xl font-display text-terra font-medium">巡</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">{t('app.name')}</h1>
+              <h1 className="text-lg font-display font-medium text-bark">{t('app.name')}</h1>
             </div>
           </div>
 
