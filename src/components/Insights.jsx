@@ -94,12 +94,19 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5);
 
+    // Journal entries with notes
+    const journalEntries = checkins
+      .filter(c => c.notes && c.notes.trim().length > 0)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 10);
+
     return {
       moodData,
       energyData,
       avgMood,
       avgEnergy,
       topSymptoms,
+      journalEntries,
       totalCheckins: checkins.length
     };
   }, [checkins]);
@@ -171,6 +178,30 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                 total={stats.totalCheckins}
                 t={t}
               />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Journal Entries */}
+      {stats.journalEntries && stats.journalEntries.length > 0 && (
+        <div className="card p-5">
+          <h3 className="font-semibold text-gray-800 mb-4">{t('insights.journalEntries')}</h3>
+          <div className="space-y-3 max-h-80 overflow-y-auto">
+            {stats.journalEntries.map((entry) => (
+              <div key={entry.date} className="p-3 bg-gray-50 rounded-xl">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-gray-700">
+                    {new Date(entry.date).toLocaleDateString(locale, {
+                      weekday: 'short',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </span>
+                  <span className="text-xs text-gray-500">{t('checkin.day')} {entry.cycleDay}</span>
+                </div>
+                <p className="text-sm text-gray-600">{entry.notes}</p>
+              </div>
             ))}
           </div>
         </div>

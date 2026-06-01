@@ -171,7 +171,8 @@
     "cycleRange": "周期は{{min}}日から{{max}}日の範囲です",
     "recentCycles": "最近の周期",
     "periodDates": "生理開始日",
-    "logMorePeriods": "パターンを見るにはもっと生理を記録してください"
+    "logMorePeriods": "パターンを見るにはもっと生理を記録してください",
+    "journalEntries": "日記の記録"
   },
   "predictions": {
     "title": "予測",

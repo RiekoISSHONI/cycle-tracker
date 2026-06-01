@@ -171,7 +171,8 @@
     "cycleRange": "Your cycles range from {{min}} to {{max}} days",
     "recentCycles": "Recent cycle lengths",
     "periodDates": "Period start dates",
-    "logMorePeriods": "Log more periods to see patterns"
+    "logMorePeriods": "Log more periods to see patterns",
+    "journalEntries": "Journal Entries"
   },
   "predictions": {
     "title": "Predictions",
