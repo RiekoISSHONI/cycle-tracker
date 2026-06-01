@@ -23,18 +23,6 @@ function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const handleAcceptConsent = () => {
-    setHasConsented(true);
-  };
-
-  if (!hasConsented) {
-    return <ConsentModal onAccept={handleAcceptConsent} />;
-  }
-
   const cycleStats = useMemo(() => {
     return calculateCycleStats(periodHistory);
   }, [periodHistory]);
@@ -56,11 +44,24 @@ function App() {
     };
   }, [cycleData, effectiveCycleLength, cycleStats]);
 
+  const todayCheckin = useMemo(() => {
+    const today = new Date().toISOString().split('T')[0];
+    return checkins.find(c => c.date === today);
+  }, [checkins]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   useEffect(() => {
     if (cycleInfo?.phase) {
       document.documentElement.setAttribute('data-phase', cycleInfo.phase);
     }
   }, [cycleInfo?.phase]);
+
+  const handleAcceptConsent = () => {
+    setHasConsented(true);
+  };
 
   const handleSetup = (data) => {
     setCycleData(data);
@@ -105,10 +106,10 @@ function App() {
     });
   };
 
-  const todayCheckin = useMemo(() => {
-    const today = new Date().toISOString().split('T')[0];
-    return checkins.find(c => c.date === today);
-  }, [checkins]);
+  // Early returns AFTER all hooks
+  if (!hasConsented) {
+    return <ConsentModal onAccept={handleAcceptConsent} />;
+  }
 
   if (!cycleData) {
     return <CycleSetup onSave={handleSetup} />;
