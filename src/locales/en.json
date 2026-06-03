@@ -361,7 +361,10 @@
     "clothingToggle": "What to Wear 👗",
     "clothingHer": "Comfort Wear",
     "comfortWear": "Perfect outfit picks for this phase:",
-    "sharedWithLove": "Shared with love"
+    "sharedWithLove": "Shared with love",
+    "newShare": "New Share",
+    "history": "History",
+    "noHistory": "No shares yet. Share with your partner to see history here."
   },
   "commerce": {
     "disclosureTitle": "Opening Outside Shop",

@@ -361,7 +361,10 @@
     "clothingToggle": "おすすめの服 👗",
     "clothingHer": "コンフォートウェア",
     "comfortWear": "このフェーズにぴったりの服:",
-    "sharedWithLove": "愛を込めて"
+    "sharedWithLove": "愛を込めて",
+    "newShare": "新規共有",
+    "history": "履歴",
+    "noHistory": "まだ共有履歴がありません。パートナーと共有すると履歴が表示されます。"
   },
   "commerce": {
     "disclosureTitle": "外部ショップを開きます",

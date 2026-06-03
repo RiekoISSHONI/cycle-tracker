@@ -1,5 +1,6 @@
 import { useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getGiftItems, getClothingItems } from '../utils/giftItems';
 
 // Rotate items daily based on date seed
@@ -279,6 +280,8 @@ export function PartnerShare({ cycleInfo, onClose }) {
   const cardRef = useRef(null);
   const [sharing, setSharing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+  const [shareHistory, setShareHistory] = useLocalStorage('partnerShareHistory', []);
 
   const [options, setOptions] = useState({
     feeling: true,
@@ -389,6 +392,22 @@ export function PartnerShare({ cycleInfo, onClose }) {
     return text;
   };
 
+  const saveToHistory = () => {
+    const historyEntry = {
+      id: Date.now(),
+      date: new Date().toISOString(),
+      phase: cycleInfo.phase,
+      phaseName: cycleInfo.phaseData.name,
+      cycleDay: cycleInfo.cycleDay,
+      options: { ...options }
+    };
+
+    setShareHistory(prev => {
+      const updated = [historyEntry, ...prev];
+      return updated.slice(0, 50); // Keep last 50 shares
+    });
+  };
+
   const handleShare = async () => {
     setSharing(true);
     const text = generateShareText();
@@ -399,14 +418,17 @@ export function PartnerShare({ cycleInfo, onClose }) {
           title: 'Meguri - Partner Update',
           text: text
         });
+        saveToHistory();
       } else {
         await navigator.clipboard.writeText(text);
+        saveToHistory();
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }
     } catch (err) {
       if (err.name !== 'AbortError') {
         await navigator.clipboard.writeText(text);
+        saveToHistory();
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }
@@ -418,17 +440,83 @@ export function PartnerShare({ cycleInfo, onClose }) {
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div className="bg-cream rounded-2xl max-w-md w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="p-4 border-b border-washi flex items-center justify-between">
-          <h2 className="font-display text-lg text-bark">{t('partnerShare.title')}</h2>
-          <button onClick={onClose} className="p-2 hover:bg-washi rounded-xl transition-colors">
-            <svg className="w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        <div className="p-4 border-b border-washi">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-display text-lg text-bark">{t('partnerShare.title')}</h2>
+            <button onClick={onClose} className="p-2 hover:bg-washi rounded-xl transition-colors">
+              <svg className="w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowHistory(false)}
+              className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
+                !showHistory ? 'bg-terra text-white' : 'bg-washi text-muted hover:bg-washi/80'
+              }`}
+            >
+              {t('partnerShare.newShare')}
+            </button>
+            <button
+              onClick={() => setShowHistory(true)}
+              className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
+                showHistory ? 'bg-terra text-white' : 'bg-washi text-muted hover:bg-washi/80'
+              }`}
+            >
+              {t('partnerShare.history')} {shareHistory.length > 0 && `(${shareHistory.length})`}
+            </button>
+          </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {showHistory ? (
+            /* History View */
+            <div className="space-y-3">
+              {shareHistory.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="text-3xl mb-2">📭</div>
+                  <p className="text-muted text-sm">{t('partnerShare.noHistory')}</p>
+                </div>
+              ) : (
+                shareHistory.map((entry) => (
+                  <div key={entry.id} className="bg-washi rounded-xl p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{phaseKanji[entry.phase]?.kanji || '巡'}</span>
+                        <div>
+                          <p className="font-medium text-bark text-sm">{entry.phaseName}</p>
+                          <p className="text-xs text-muted">Day {entry.cycleDay}</p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted">
+                        {new Date(entry.date).toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {entry.options.feeling && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">💭 {t('partnerShare.howImFeeling')}</span>}
+                      {entry.options.support && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">💚 {t('partnerShare.supportTips')}</span>}
+                      {entry.options.avoid && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🚫 {t('partnerShare.avoidTips')}</span>}
+                      {entry.options.nutrition && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🍳 {t('partnerShare.nutritionIdeas')}</span>}
+                      {entry.options.exercise && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🏃 {t('partnerShare.exerciseTogether')}</span>}
+                      {entry.options.gifts && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🎁 {t('partnerShare.giftHerToggle')}</span>}
+                      {entry.options.clothing && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">👗 {t('partnerShare.clothingToggle')}</span>}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          ) : (
+          /* New Share View */
+          <>
           {/* Toggle Options */}
           <div className="space-y-2">
             <p className="text-sm text-muted mb-3">{t('partnerShare.chooseWhat')}</p>
@@ -490,34 +578,38 @@ export function PartnerShare({ cycleInfo, onClose }) {
               </div>
             </div>
           </div>
+          </>
+          )}
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-washi">
-          <button
-            onClick={handleShare}
-            disabled={sharing}
-            className="w-full btn-primary flex items-center justify-center gap-2"
-          >
-            {sharing ? (
-              <span>{t('partnerShare.sharing')}</span>
-            ) : copied ? (
-              <>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span>{t('partnerShare.copied')}</span>
-              </>
-            ) : (
-              <>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-                <span>{t('partnerShare.shareSummary')}</span>
-              </>
-            )}
-          </button>
-        </div>
+        {/* Footer - only show for new share */}
+        {!showHistory && (
+          <div className="p-4 border-t border-washi">
+            <button
+              onClick={handleShare}
+              disabled={sharing}
+              className="w-full btn-primary flex items-center justify-center gap-2"
+            >
+              {sharing ? (
+                <span>{t('partnerShare.sharing')}</span>
+              ) : copied ? (
+                <>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{t('partnerShare.copied')}</span>
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                  </svg>
+                  <span>{t('partnerShare.shareSummary')}</span>
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
