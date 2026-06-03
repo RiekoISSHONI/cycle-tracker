@@ -1,6 +1,67 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getGiftItems, getClothingItems } from '../utils/giftItems';
+
+// Rotate items daily based on date seed
+function rotateItems(items, seed) {
+  const shuffled = [...items];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = (seed + i) % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+function CollapsibleShopSection({ title, emoji, subtitle, items, lang, defaultExpanded = false }) {
+  const [expanded, setExpanded] = useState(defaultExpanded);
+
+  return (
+    <div className="px-4 pb-4">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between mb-2"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-lg">{emoji}</span>
+          <h3 className="font-medium text-bark text-sm">{title}</h3>
+        </div>
+        <svg
+          className={`w-4 h-4 text-muted transition-transform ${expanded ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {expanded && (
+        <>
+          <p className="text-xs text-muted mb-2">{subtitle}</p>
+          <div className="space-y-2">
+            {items.map((item) => (
+              <a
+                key={item.id}
+                href={item.affiliateUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2 bg-white/50 rounded-lg hover:bg-white/80 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <span>{item.emoji}</span>
+                  <div>
+                    <p className="text-xs font-medium text-bark">{lang === 'ja' ? item.nameJa : item.name}</p>
+                    <p className="text-xs text-muted">{item.description}</p>
+                  </div>
+                </div>
+                <span className="text-xs text-terra font-medium">Shop →</span>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 const phaseKanji = {
   menstrual: { kanji: '静', meaning: 'stillness' },
@@ -45,9 +106,23 @@ function ShareCard({ cycleInfo, options, lang }) {
   const phaseData = cycleInfo.phaseData;
   const colors = phaseColors[phase];
   const kanji = phaseKanji[phase];
-  const giftItems = getGiftItems(phase);
-  const clothingItems = getClothingItems(phase);
   const partnerTips = phaseData.forPartner;
+
+  // Rotate items daily
+  const daySeed = useMemo(() => {
+    const today = new Date();
+    return today.getFullYear() * 1000 + today.getMonth() * 32 + today.getDate();
+  }, []);
+
+  const rotatedGifts = useMemo(() =>
+    rotateItems(getGiftItems(phase), daySeed).slice(0, 3),
+    [phase, daySeed]
+  );
+
+  const rotatedClothing = useMemo(() =>
+    rotateItems(getClothingItems(phase), daySeed + 1).slice(0, 2),
+    [phase, daySeed]
+  );
 
   const today = new Date().toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', {
     month: 'short',
@@ -165,66 +240,28 @@ function ShareCard({ cycleInfo, options, lang }) {
         </div>
       )}
 
-      {/* Gift Her */}
+      {/* Gift Her - Collapsible */}
       {options.gifts && (
-        <div className="px-4 pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">🎁</span>
-            <h3 className="font-medium text-bark text-sm">{t('partnerShare.giftHer')}</h3>
-          </div>
-          <p className="text-xs text-muted mb-2">{t('partnerShare.thingsShedLove')}</p>
-          <div className="space-y-2">
-            {giftItems.slice(0, 4).map((item) => (
-              <a
-                key={item.id}
-                href={item.affiliateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-white/50 rounded-lg hover:bg-white/80 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <span>{item.emoji}</span>
-                  <div>
-                    <p className="text-xs font-medium text-bark">{lang === 'ja' ? item.nameJa : item.name}</p>
-                    <p className="text-xs text-muted">{item.description}</p>
-                  </div>
-                </div>
-                <span className="text-xs text-terra font-medium">Shop →</span>
-              </a>
-            ))}
-          </div>
-        </div>
+        <CollapsibleShopSection
+          title={t('partnerShare.giftHer')}
+          emoji="🎁"
+          subtitle={t('partnerShare.thingsShedLove')}
+          items={rotatedGifts}
+          lang={lang}
+          defaultExpanded={false}
+        />
       )}
 
-      {/* Clothing */}
+      {/* Clothing - Collapsible */}
       {options.clothing && (
-        <div className="px-4 pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">👗</span>
-            <h3 className="font-medium text-bark text-sm">{t('partnerShare.clothingHer')}</h3>
-          </div>
-          <p className="text-xs text-muted mb-2">{t('partnerShare.comfortWear')}</p>
-          <div className="space-y-2">
-            {clothingItems.slice(0, 3).map((item) => (
-              <a
-                key={item.id}
-                href={item.affiliateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 bg-white/50 rounded-lg hover:bg-white/80 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <span>{item.emoji}</span>
-                  <div>
-                    <p className="text-xs font-medium text-bark">{lang === 'ja' ? item.nameJa : item.name}</p>
-                    <p className="text-xs text-muted">{item.description}</p>
-                  </div>
-                </div>
-                <span className="text-xs text-terra font-medium">Shop →</span>
-              </a>
-            ))}
-          </div>
-        </div>
+        <CollapsibleShopSection
+          title={t('partnerShare.clothingHer')}
+          emoji="👗"
+          subtitle={t('partnerShare.comfortWear')}
+          items={rotatedClothing}
+          lang={lang}
+          defaultExpanded={false}
+        />
       )}
 
       {/* Footer */}
@@ -258,12 +295,26 @@ export function PartnerShare({ cycleInfo, onClose }) {
     setOptions(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Rotate items for share text (same logic as ShareCard)
+  const daySeed = useMemo(() => {
+    const today = new Date();
+    return today.getFullYear() * 1000 + today.getMonth() * 32 + today.getDate();
+  }, []);
+
+  const rotatedGiftsForText = useMemo(() =>
+    rotateItems(getGiftItems(cycleInfo.phase), daySeed).slice(0, 3),
+    [cycleInfo.phase, daySeed]
+  );
+
+  const rotatedClothingForText = useMemo(() =>
+    rotateItems(getClothingItems(cycleInfo.phase), daySeed + 1).slice(0, 2),
+    [cycleInfo.phase, daySeed]
+  );
+
   const generateShareText = () => {
     const phase = cycleInfo.phase;
     const phaseData = cycleInfo.phaseData;
     const kanji = phaseKanji[phase];
-    const giftItems = getGiftItems(phase);
-    const clothingItems = getClothingItems(phase);
     const partnerTips = phaseData.forPartner;
 
     let text = `巡 Meguri\n\n`;
@@ -314,7 +365,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
     if (options.gifts) {
       text += `🎁 ${t('partnerShare.giftHer')}\n`;
       text += `${t('partnerShare.thingsShedLove')}\n`;
-      giftItems.slice(0, 4).forEach(item => {
+      rotatedGiftsForText.forEach(item => {
         text += `${item.emoji} ${lang === 'ja' ? item.nameJa : item.name} - ${item.description}\n`;
         text += `   ${item.affiliateUrl}\n`;
       });
@@ -324,7 +375,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
     if (options.clothing) {
       text += `👗 ${t('partnerShare.clothingHer')}\n`;
       text += `${t('partnerShare.comfortWear')}\n`;
-      clothingItems.slice(0, 3).forEach(item => {
+      rotatedClothingForText.forEach(item => {
         text += `${item.emoji} ${lang === 'ja' ? item.nameJa : item.name} - ${item.description}\n`;
         text += `   ${item.affiliateUrl}\n`;
       });
