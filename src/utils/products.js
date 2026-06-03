@@ -116,27 +116,9 @@ export const PHASE_PRODUCTS = {
         name: 'Dark Chocolate 85%',
         brand: 'Lindt Excellence',
         description: 'High magnesium reduces cramps. Contains iron and antioxidants.',
-        evidence: 'Magnesium supplementation proven to reduce menstrual pain',
+        evidence: 'Magnesium-rich foods may help reduce menstrual discomfort',
         tcmUse: 'Bitter flavor clears heat, supports heart',
         amazonSearch: 'Lindt+Excellence+85+dark+chocolate'
-      }
-    ],
-    supplements: [
-      {
-        name: 'Magnesium Glycinate',
-        brand: 'Pure Encapsulations',
-        description: 'Most absorbable form. Reduces cramps, supports sleep.',
-        evidence: 'Meta-analyses confirm magnesium reduces menstrual pain significantly',
-        tcmUse: 'Supports liver function, relaxes tendons and muscles',
-        amazonSearch: 'Pure+Encapsulations+Magnesium+Glycinate'
-      },
-      {
-        name: 'Iron Bisglycinate',
-        brand: 'Thorne',
-        description: 'Gentle, non-constipating iron to replenish blood loss.',
-        evidence: 'Iron bisglycinate has superior absorption with fewer GI side effects',
-        tcmUse: 'Tonifies blood, prevents blood deficiency',
-        amazonSearch: 'Thorne+Iron+Bisglycinate'
       }
     ],
     skincare: [
@@ -247,24 +229,6 @@ export const PHASE_PRODUCTS = {
         amazonSearch: 'Mother+in+Laws+Kimchi'
       }
     ],
-    supplements: [
-      {
-        name: 'B-Complex',
-        brand: 'Thorne Basic B Complex',
-        description: 'Methylated B vitamins for energy and hormone synthesis.',
-        evidence: 'B vitamins essential for estrogen metabolism in liver',
-        tcmUse: 'Supports qi transformation and blood production',
-        amazonSearch: 'Thorne+Basic+B+Complex'
-      },
-      {
-        name: 'Probiotics (Women)',
-        brand: 'Garden of Life',
-        description: '50 billion CFU with strains supporting vaginal and gut health.',
-        evidence: 'Specific strains support healthy estrogen metabolism',
-        tcmUse: 'Strengthens spleen qi, supports middle jiao',
-        amazonSearch: 'Garden+of+Life+Probiotics+Women+50+billion'
-      }
-    ],
     skincare: [
       {
         name: 'Vitamin C Serum',
@@ -361,24 +325,6 @@ export const PHASE_PRODUCTS = {
         evidence: 'DIM and I3C from crucifers support healthy estrogen metabolism',
         tcmUse: 'Clears heat, resolves toxins',
         amazonSearch: 'broccoli+sprouts+seeds+organic'
-      }
-    ],
-    supplements: [
-      {
-        name: 'Omega-3 Fish Oil',
-        brand: 'Nordic Naturals',
-        description: 'Pharmaceutical grade EPA/DHA. Anti-inflammatory.',
-        evidence: 'Omega-3s shown to support ovulation and reduce inflammation',
-        tcmUse: 'Nourishes yin, moistens dryness',
-        amazonSearch: 'Nordic+Naturals+Ultimate+Omega'
-      },
-      {
-        name: 'Vitamin D3 + K2',
-        brand: 'Thorne',
-        description: 'Most women are deficient. Essential for fertility.',
-        evidence: 'Vitamin D deficiency linked to ovulatory dysfunction',
-        tcmUse: 'Supports kidney yang and bone health',
-        amazonSearch: 'Thorne+Vitamin+D+K2'
       }
     ],
     skincare: [
@@ -490,35 +436,9 @@ export const PHASE_PRODUCTS = {
         name: 'Pumpkin Seeds',
         brand: 'Go Raw Organic',
         description: 'High zinc and magnesium for PMS relief.',
-        evidence: 'Zinc and magnesium both reduce PMS symptoms',
+        evidence: 'Zinc and magnesium-rich foods may help reduce PMS symptoms',
         tcmUse: 'Supports kidney function, rich in oils',
         amazonSearch: 'Go+Raw+organic+pumpkin+seeds'
-      }
-    ],
-    supplements: [
-      {
-        name: 'Magnesium Glycinate',
-        brand: 'Pure Encapsulations',
-        description: 'Reduces PMS, improves sleep, eases anxiety.',
-        evidence: 'Magnesium deficiency linked to PMS; supplementation helps',
-        tcmUse: 'Relaxes liver qi, calms the spirit',
-        amazonSearch: 'Pure+Encapsulations+Magnesium+Glycinate'
-      },
-      {
-        name: 'Vitamin B6 (P5P)',
-        brand: 'Thorne Pyridoxal 5-Phosphate',
-        description: 'Active B6 for mood, reduces water retention.',
-        evidence: 'B6 shown to significantly reduce PMS symptoms',
-        tcmUse: 'Supports liver function and blood production',
-        amazonSearch: 'Thorne+P5P'
-      },
-      {
-        name: 'Vitex (Chaste Tree)',
-        brand: 'Gaia Herbs',
-        description: 'Traditional herb for PMS and cycle regulation.',
-        evidence: 'Multiple studies show vitex reduces PMS symptoms',
-        tcmUse: 'Regulates liver qi, harmonizes menstruation',
-        amazonSearch: 'Gaia+Herbs+Vitex+Berry'
       }
     ],
     skincare: [
@@ -579,7 +499,6 @@ export function getPhaseProducts(phase) {
   const phaseData = PHASE_PRODUCTS[phase] || PHASE_PRODUCTS.follicular;
   return {
     teas: phaseData.teas || [],
-    supplements: phaseData.supplements || [],
     skincare: phaseData.skincare || [],
     foods: phaseData.foods || [],
     soups: phaseData.soups || []
