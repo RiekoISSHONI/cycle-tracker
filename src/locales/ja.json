@@ -375,5 +375,29 @@
     "calmModeEnabled": "商品表示オフ",
     "thisWeeksCare": "今週のケア",
     "curatedFor": "現在のフェーズに合わせて厳選"
+  },
+  "premium": {
+    "unlockFeature": "プレミアム機能",
+    "tapToUpgrade": "タップしてプレミアムを解除",
+    "upgradeTo": "Meguri プレミアム",
+    "unlockAll": "すべての機能を解除",
+    "features": {
+      "pillReminders": "ピル・薬リマインダー",
+      "fullInsights": "詳細な分析とパターン分析",
+      "unlimitedHistory": "無制限のチェックイン履歴",
+      "journalExport": "日記エクスポート（PDF/テキスト）",
+      "partnerShare": "パートナー共有とギフト機能"
+    },
+    "thisFeature": "この機能",
+    "month": "月",
+    "cancelAnytime": "いつでもキャンセル可能。",
+    "startTrial": "7日間無料トライアル開始",
+    "maybeLater": "後で",
+    "currentPlan": "現在のプラン",
+    "free": "無料",
+    "premiumPlan": "プレミアム",
+    "activeUntil": "有効期限",
+    "managePlan": "サブスクリプション管理",
+    "restorePurchase": "購入を復元"
   }
 }

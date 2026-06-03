@@ -375,5 +375,29 @@
     "calmModeEnabled": "Commerce hidden",
     "thisWeeksCare": "This Week's Care",
     "curatedFor": "Curated for your current phase"
+  },
+  "premium": {
+    "unlockFeature": "Premium Feature",
+    "tapToUpgrade": "Tap to unlock with Premium",
+    "upgradeTo": "Meguri Premium",
+    "unlockAll": "Unlock the full experience",
+    "features": {
+      "pillReminders": "Pill & medication reminders",
+      "fullInsights": "Full insights & pattern analysis",
+      "unlimitedHistory": "Unlimited check-in history",
+      "journalExport": "Journal export (PDF/text)",
+      "partnerShare": "Partner Share with Gift Her"
+    },
+    "thisFeature": "This feature",
+    "month": "month",
+    "cancelAnytime": "Cancel anytime. No commitment.",
+    "startTrial": "Start 7-Day Free Trial",
+    "maybeLater": "Maybe later",
+    "currentPlan": "Current Plan",
+    "free": "Free",
+    "premiumPlan": "Premium",
+    "activeUntil": "Active until",
+    "managePlan": "Manage Subscription",
+    "restorePurchase": "Restore Purchase"
   }
 }
