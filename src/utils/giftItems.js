@@ -138,6 +138,118 @@ export const GIFT_ITEMS = {
   ]
 };
 
+// Phase-specific clothing recommendations
+export const CLOTHING_ITEMS = {
+  menstrual: [
+    {
+      id: 'menstrual-loungewear',
+      name: 'Cozy Loungewear Set',
+      nameJa: 'ルームウェアセット',
+      emoji: '👚',
+      description: 'Soft & comfortable',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+soft+loungewear+set'
+    },
+    {
+      id: 'menstrual-slippers',
+      name: 'Fuzzy Slippers',
+      nameJa: 'ルームスリッパ',
+      emoji: '🥿',
+      description: 'Warm & cozy feet',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+fuzzy+slippers'
+    },
+    {
+      id: 'menstrual-robe',
+      name: 'Plush Robe',
+      nameJa: 'バスローブ',
+      emoji: '🧥',
+      description: 'Ultimate comfort',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+plush+robe+soft'
+    }
+  ],
+  follicular: [
+    {
+      id: 'follicular-activewear',
+      name: 'Activewear Set',
+      nameJa: 'スポーツウェア',
+      emoji: '👟',
+      description: 'For her new workouts',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+activewear+set+matching'
+    },
+    {
+      id: 'follicular-sundress',
+      name: 'Light Sundress',
+      nameJa: 'サンドレス',
+      emoji: '👗',
+      description: 'Fresh & feminine',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+casual+sundress'
+    },
+    {
+      id: 'follicular-sneakers',
+      name: 'Stylish Sneakers',
+      nameJa: 'スニーカー',
+      emoji: '👟',
+      description: 'Ready to move',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+comfortable+stylish+sneakers'
+    }
+  ],
+  ovulatory: [
+    {
+      id: 'ovulatory-dress',
+      name: 'Date Night Dress',
+      nameJa: 'ワンピース',
+      emoji: '👗',
+      description: 'She\'s radiant',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+elegant+date+night+dress'
+    },
+    {
+      id: 'ovulatory-heels',
+      name: 'Elegant Heels',
+      nameJa: 'ヒール',
+      emoji: '👠',
+      description: 'Confidence boost',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+comfortable+elegant+heels'
+    },
+    {
+      id: 'ovulatory-lingerie',
+      name: 'Pretty Lingerie',
+      nameJa: 'ランジェリー',
+      emoji: '🩷',
+      description: 'Feel beautiful',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+comfortable+pretty+lingerie'
+    }
+  ],
+  luteal: [
+    {
+      id: 'luteal-cardigan',
+      name: 'Oversized Cardigan',
+      nameJa: 'オーバーサイズカーディガン',
+      emoji: '🧶',
+      description: 'Cozy layers',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+oversized+cozy+cardigan'
+    },
+    {
+      id: 'luteal-joggers',
+      name: 'Soft Joggers',
+      nameJa: 'ジョガーパンツ',
+      emoji: '👖',
+      description: 'Relaxed comfort',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+soft+joggers+comfortable'
+    },
+    {
+      id: 'luteal-socks',
+      name: 'Cozy Sock Set',
+      nameJa: '靴下セット',
+      emoji: '🧦',
+      description: 'Warm & soft',
+      affiliateUrl: 'https://www.amazon.com/s?k=womens+cozy+warm+socks+gift+set'
+    }
+  ]
+};
+
 export function getGiftItems(phase) {
   return GIFT_ITEMS[phase] || GIFT_ITEMS.follicular;
+}
+
+export function getClothingItems(phase) {
+  return CLOTHING_ITEMS[phase] || CLOTHING_ITEMS.follicular;
 }

@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getGiftItems } from '../utils/giftItems';
+import { getGiftItems, getClothingItems } from '../utils/giftItems';
 
 const phaseKanji = {
   menstrual: { kanji: '静', meaning: 'stillness' },
@@ -46,6 +46,7 @@ function ShareCard({ cycleInfo, options, lang }) {
   const colors = phaseColors[phase];
   const kanji = phaseKanji[phase];
   const giftItems = getGiftItems(phase);
+  const clothingItems = getClothingItems(phase);
   const partnerTips = phaseData.forPartner;
 
   const today = new Date().toLocaleDateString(lang === 'ja' ? 'ja-JP' : 'en-US', {
@@ -195,6 +196,37 @@ function ShareCard({ cycleInfo, options, lang }) {
         </div>
       )}
 
+      {/* Clothing */}
+      {options.clothing && (
+        <div className="px-4 pb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">👗</span>
+            <h3 className="font-medium text-bark text-sm">{t('partnerShare.clothingHer')}</h3>
+          </div>
+          <p className="text-xs text-muted mb-2">{t('partnerShare.comfortWear')}</p>
+          <div className="space-y-2">
+            {clothingItems.slice(0, 3).map((item) => (
+              <a
+                key={item.id}
+                href={item.affiliateUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-2 bg-white/50 rounded-lg hover:bg-white/80 transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <span>{item.emoji}</span>
+                  <div>
+                    <p className="text-xs font-medium text-bark">{lang === 'ja' ? item.nameJa : item.name}</p>
+                    <p className="text-xs text-muted">{item.description}</p>
+                  </div>
+                </div>
+                <span className="text-xs text-terra font-medium">Shop →</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <div className="p-3 bg-white/50 text-center border-t border-white/50">
         <p className="text-xs text-muted">{t('partnerShare.sharedWithLove')} · {today}</p>
@@ -218,7 +250,8 @@ export function PartnerShare({ cycleInfo, onClose }) {
     nutrition: false,
     exercise: false,
     daysUntil: false,
-    gifts: false
+    gifts: false,
+    clothing: false
   });
 
   const toggleOption = (key) => {
@@ -230,6 +263,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
     const phaseData = cycleInfo.phaseData;
     const kanji = phaseKanji[phase];
     const giftItems = getGiftItems(phase);
+    const clothingItems = getClothingItems(phase);
     const partnerTips = phaseData.forPartner;
 
     let text = `巡 Meguri\n\n`;
@@ -281,6 +315,16 @@ export function PartnerShare({ cycleInfo, onClose }) {
       text += `🎁 ${t('partnerShare.giftHer')}\n`;
       text += `${t('partnerShare.thingsShedLove')}\n`;
       giftItems.slice(0, 4).forEach(item => {
+        text += `${item.emoji} ${lang === 'ja' ? item.nameJa : item.name} - ${item.description}\n`;
+        text += `   ${item.affiliateUrl}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (options.clothing) {
+      text += `👗 ${t('partnerShare.clothingHer')}\n`;
+      text += `${t('partnerShare.comfortWear')}\n`;
+      clothingItems.slice(0, 3).forEach(item => {
         text += `${item.emoji} ${lang === 'ja' ? item.nameJa : item.name} - ${item.description}\n`;
         text += `   ${item.affiliateUrl}\n`;
       });
@@ -378,6 +422,11 @@ export function PartnerShare({ cycleInfo, onClose }) {
               checked={options.gifts}
               onChange={() => toggleOption('gifts')}
               label={t('partnerShare.giftHerToggle')}
+            />
+            <Toggle
+              checked={options.clothing}
+              onChange={() => toggleOption('clothing')}
+              label={t('partnerShare.clothingToggle')}
             />
           </div>
 
