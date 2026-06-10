@@ -74,61 +74,70 @@ export function UpgradeModal({ onClose, feature }) {
   ];
 
   const handleUpgrade = () => {
-    // In production: integrate with payment provider
     upgradeToPremium();
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-      <div className="bg-cream rounded-2xl max-w-sm w-full overflow-hidden">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-amber-400 to-orange-400 p-6 text-center text-white">
-          <div className="text-3xl mb-2">✨</div>
-          <h2 className="font-display text-xl">{t('premium.upgradeTo')}</h2>
-          <p className="text-white/80 text-sm mt-1">{t('premium.unlockAll')}</p>
+      <div className="bg-cream rounded-3xl max-w-sm w-full overflow-hidden shadow-xl">
+        {/* Header with Logo */}
+        <div className="bg-gradient-to-br from-terra to-rose-600 p-8 text-center text-white relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-4 left-4 text-6xl font-display">巡</div>
+            <div className="absolute bottom-4 right-4 text-6xl font-display">巡</div>
+          </div>
+          <div className="relative">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+              <span className="text-3xl font-display">巡</span>
+            </div>
+            <h2 className="font-display text-2xl">{t('premium.upgradeTo')}</h2>
+            <p className="text-white/80 text-sm mt-2">{t('premium.unlockAll')}</p>
+          </div>
         </div>
 
         {/* Features */}
-        <div className="p-4 space-y-3">
+        <div className="p-5 space-y-2">
           {features.map((f) => (
             <div
               key={f.key}
-              className={`flex items-center gap-3 p-3 rounded-xl ${
-                f.key === feature ? 'bg-amber-100 border border-amber-300' : 'bg-washi'
+              className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
+                f.key === feature
+                  ? 'bg-terra/10 border border-terra/30'
+                  : 'bg-washi hover:bg-washi/80'
               }`}
             >
-              <span className="text-xl">{f.icon}</span>
-              <span className="text-sm text-bark">{f.label}</span>
+              <span className="text-lg">{f.icon}</span>
+              <span className="text-sm text-bark flex-1">{f.label}</span>
               {f.key === feature && (
-                <span className="ml-auto text-xs text-amber-600 font-medium">
-                  {t('premium.thisFeature')}
-                </span>
+                <svg className="w-5 h-5 text-terra" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
               )}
             </div>
           ))}
         </div>
 
         {/* Price */}
-        <div className="px-4 py-3 text-center border-t border-washi">
+        <div className="px-5 py-4 text-center bg-washi/50">
           <div className="flex items-baseline justify-center gap-1">
-            <span className="text-3xl font-display text-bark">$4.99</span>
+            <span className="text-4xl font-display text-bark">$4.99</span>
             <span className="text-muted">/ {t('premium.month')}</span>
           </div>
           <p className="text-xs text-muted mt-1">{t('premium.cancelAnytime')}</p>
         </div>
 
         {/* Actions */}
-        <div className="p-4 space-y-2">
+        <div className="p-5 space-y-3">
           <button
             onClick={handleUpgrade}
-            className="w-full btn-primary bg-gradient-to-r from-amber-400 to-orange-400 border-none"
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-terra to-rose-600 text-white font-medium shadow-lg shadow-terra/30 hover:shadow-xl hover:shadow-terra/40 transition-shadow"
           >
             {t('premium.startTrial')}
           </button>
           <button
             onClick={onClose}
-            className="w-full p-3 text-muted text-sm hover:text-bark transition-colors"
+            className="w-full py-3 text-muted text-sm hover:text-bark transition-colors"
           >
             {t('premium.maybeLater')}
           </button>

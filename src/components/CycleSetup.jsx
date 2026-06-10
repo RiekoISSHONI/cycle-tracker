@@ -63,16 +63,14 @@ export function CycleSetup({ onSave }) {
           {/* Step 0: Welcome */}
           {step === 0 && (
             <div className="text-center animate-fade-in">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center shadow-lg shadow-pink-500/30">
-                <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-terra to-rose-600 flex items-center justify-center shadow-lg shadow-terra/30">
+                <span className="text-4xl font-display text-white">巡</span>
               </div>
 
-              <h1 className="text-3xl font-bold text-gray-900 mb-3">
+              <h1 className="text-3xl font-display text-bark mb-3">
                 {t('onboarding.welcome')}
               </h1>
-              <p className="text-gray-600 mb-8 leading-relaxed">
+              <p className="text-muted mb-8 leading-relaxed">
                 {t('onboarding.description')}
               </p>
 
@@ -113,10 +111,10 @@ export function CycleSetup({ onSave }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                <h2 className="text-2xl font-display text-bark mb-2">
                   {t('onboarding.whenLastPeriod')}
                 </h2>
-                <p className="text-gray-500">
+                <p className="text-muted">
                   {t('onboarding.helpsCalculate')}
                 </p>
               </div>
@@ -128,7 +126,7 @@ export function CycleSetup({ onSave }) {
                   onChange={(e) => setLastPeriod(e.target.value)}
                   max={today}
                   required
-                  className="input text-center text-lg"
+                  className="w-full px-4 py-3 rounded-xl border border-washi bg-white text-center text-lg text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
                 />
                 {lastPeriod && (
                   <p className="text-center text-sm text-gray-500 mt-3">
@@ -166,10 +164,10 @@ export function CycleSetup({ onSave }) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                <h2 className="text-2xl font-display text-bark mb-2">
                   {t('onboarding.howLong')}
                 </h2>
-                <p className="text-gray-500">
+                <p className="text-muted">
                   {t('onboarding.countDays')}
                 </p>
               </div>

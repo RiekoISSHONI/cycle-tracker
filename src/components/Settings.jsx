@@ -266,7 +266,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Partner Sharing */}
       <SettingsSection title={t('settings.sharePartner')}>
-        <p className="text-sm text-gray-600 mb-4">{t('settings.shareDescription')}</p>
+        <p className="text-sm text-muted mb-4">{t('settings.shareDescription')}</p>
 
         {/* New Partner Share Button - Premium Feature */}
         {cycleInfo && (
@@ -289,12 +289,12 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
         )}
 
         {showShareCode && shareCode ? (
-          <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-5 text-center">
-            <div className="text-sm text-gray-600 mb-2">{t('settings.yourCode')}</div>
-            <div className="text-4xl font-bold text-violet-600 tracking-widest mb-3">{shareCode}</div>
+          <div className="bg-gradient-to-br from-terra/10 to-rose-100/50 rounded-2xl p-5 text-center">
+            <div className="text-sm text-muted mb-2">{t('settings.yourCode')}</div>
+            <div className="text-4xl font-display text-terra tracking-widest mb-3">{shareCode}</div>
             <button
               onClick={() => navigator.clipboard?.writeText(shareCode)}
-              className="text-sm text-violet-500 font-medium hover:text-violet-600"
+              className="text-sm text-terra font-medium hover:text-terra/80"
             >
               {t('settings.tapToCopy')}
             </button>
@@ -363,18 +363,17 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* About */}
       <SettingsSection title={t('settings.about')}>
-        <SettingsRow
-          icon={
-            <svg className="w-5 h-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          }
-          iconBg="bg-pink-100"
-          title="Meguri Cycle Tracker"
-          subtitle={`${t('settings.version')} 2.0.0`}
-        />
-        <div className="border-t border-gray-100 mt-2 pt-4">
-          <p className="text-sm text-gray-600">{t('settings.aboutDescription')}</p>
+        <div className="flex items-center gap-3 py-3">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-terra to-rose-600 flex items-center justify-center">
+            <span className="text-xl font-display text-white">巡</span>
+          </div>
+          <div>
+            <div className="font-display text-bark">Meguri</div>
+            <div className="text-sm text-muted">{t('settings.version')} 2.0.0</div>
+          </div>
+        </div>
+        <div className="border-t border-washi mt-2 pt-4">
+          <p className="text-sm text-muted">{t('settings.aboutDescription')}</p>
         </div>
       </SettingsSection>
 
