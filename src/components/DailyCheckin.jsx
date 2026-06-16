@@ -99,10 +99,10 @@ export function DailyCheckin({ cycleDay, onSave, existingData, checkins = [], on
       <button
         onClick={handleLogPeriod}
         disabled={periodLogged}
-        className={`w-full card p-5 text-left transition-all active:scale-[0.99] ${
+        className={`w-full p-5 rounded-2xl text-left transition-all active:scale-[0.99] shadow-lg ${
           periodLogged
-            ? 'bg-gradient-to-r from-emerald-500 to-green-500 border-0'
-            : 'bg-gradient-to-r from-rose-500 to-pink-500 border-0'
+            ? 'bg-gradient-to-r from-emerald-500 to-green-500'
+            : 'bg-gradient-to-r from-rose-500 to-pink-500'
         }`}
       >
         <div className="flex items-center justify-between text-white">

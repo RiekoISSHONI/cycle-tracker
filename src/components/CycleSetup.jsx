@@ -11,7 +11,8 @@ const PHASES_PREVIEW = [
 export function CycleSetup({ onSave }) {
   const { t, i18n } = useTranslation();
   const [step, setStep] = useState(0);
-  const [lastPeriod, setLastPeriod] = useState('');
+  const [lastPeriodStart, setLastPeriodStart] = useState('');
+  const [lastPeriodEnd, setLastPeriodEnd] = useState('');
   const [cycleLength, setCycleLength] = useState(28);
 
   const today = new Date().toISOString().split('T')[0];
@@ -19,9 +20,10 @@ export function CycleSetup({ onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (lastPeriod) {
+    if (lastPeriodStart) {
       onSave({
-        lastPeriodStart: lastPeriod,
+        lastPeriodStart: lastPeriodStart,
+        lastPeriodEnd: lastPeriodEnd || null,
         cycleLength: parseInt(cycleLength)
       });
     }
@@ -102,7 +104,7 @@ export function CycleSetup({ onSave }) {
             </div>
           )}
 
-          {/* Step 1: Last period */}
+          {/* Step 1: Last period dates */}
           {step === 1 && (
             <div className="animate-fade-in">
               <div className="text-center mb-8">
@@ -119,25 +121,60 @@ export function CycleSetup({ onSave }) {
                 </p>
               </div>
 
-              <div className="card p-6 mb-6">
-                <input
-                  type="date"
-                  value={lastPeriod}
-                  onChange={(e) => setLastPeriod(e.target.value)}
-                  max={today}
-                  required
-                  className="w-full px-4 py-3 rounded-xl border border-washi bg-white text-center text-lg text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
-                />
-                {lastPeriod && (
-                  <p className="text-center text-sm text-gray-500 mt-3">
-                    {new Date(lastPeriod).toLocaleDateString(locale, {
-                      weekday: 'long',
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                )}
+              <div className="space-y-4 mb-6">
+                {/* Period Start Date */}
+                <div className="card p-5">
+                  <label className="block text-sm font-medium text-bark mb-2">
+                    {t('onboarding.periodStart')}
+                  </label>
+                  <input
+                    type="date"
+                    value={lastPeriodStart}
+                    onChange={(e) => setLastPeriodStart(e.target.value)}
+                    max={today}
+                    required
+                    className="w-full h-12 px-4 rounded-xl border border-washi bg-white text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
+                  />
+                  {lastPeriodStart && (
+                    <p className="text-sm text-muted mt-2">
+                      {new Date(lastPeriodStart).toLocaleDateString(locale, {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                  )}
+                </div>
+
+                {/* Period End Date */}
+                <div className="card p-5">
+                  <label className="block text-sm font-medium text-bark mb-2">
+                    {t('onboarding.periodEnd')}
+                  </label>
+                  <input
+                    type="date"
+                    value={lastPeriodEnd}
+                    onChange={(e) => setLastPeriodEnd(e.target.value)}
+                    min={lastPeriodStart}
+                    max={today}
+                    className="w-full h-12 px-4 rounded-xl border border-washi bg-white text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
+                  />
+                  {lastPeriodEnd && (
+                    <p className="text-sm text-muted mt-2">
+                      {new Date(lastPeriodEnd).toLocaleDateString(locale, {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                      {lastPeriodStart && lastPeriodEnd && (
+                        <span className="ml-2 text-terra">
+                          ({Math.ceil((new Date(lastPeriodEnd) - new Date(lastPeriodStart)) / (1000 * 60 * 60 * 24)) + 1} {t('insights.days')})
+                        </span>
+                      )}
+                    </p>
+                  )}
+                  <p className="text-xs text-muted mt-2">{t('onboarding.periodEndOptional')}</p>
+                </div>
               </div>
 
               <div className="flex gap-3">
@@ -146,8 +183,8 @@ export function CycleSetup({ onSave }) {
                 </button>
                 <button
                   onClick={handleNext}
-                  disabled={!lastPeriod}
-                  className={`btn-primary flex-1 ${!lastPeriod ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!lastPeriodStart}
+                  className={`btn-primary flex-1 ${!lastPeriodStart ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {t('onboarding.continue')}
                 </button>
