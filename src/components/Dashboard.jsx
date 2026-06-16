@@ -153,7 +153,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
 
   return (
     <div className="space-y-4 pb-4">
-      {/* Main Phase Card */}
+      {/* Main Phase Card - Combined with Days Until Period */}
       <div className={`card p-6 bg-gradient-to-br ${phaseBgLight[phase]} border-0 relative overflow-hidden`}>
         <div className="flex flex-col items-center text-center">
           {/* Phase Kanji - Decorative */}
@@ -182,24 +182,34 @@ export function Dashboard({ cycleInfo, viewMode }) {
           <p className="text-muted mt-3 text-sm max-w-xs">
             {phaseData.description}
           </p>
+
+          {/* Days Until Period - Integrated */}
+          <div className="mt-4 pt-4 border-t border-white/30 w-full">
+            <div className="flex items-center justify-center gap-2">
+              <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span className="text-bark">
+                <span className="font-display text-xl">{daysUntilPeriod}</span>
+                <span className="text-sm text-muted ml-1">{t('dashboard.daysUntilPeriod')}</span>
+              </span>
+              <span className="text-xs text-muted">· {formatDate(nextPeriodDate)}</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Days Until Period */}
-      <div className="card p-4 flex items-center justify-between">
+      {/* Affirmation */}
+      <div className="card p-4 bg-gradient-to-r from-emerald-50/50 to-teal-50/50">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-rose-100 flex items-center justify-center">
-            <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
           </div>
-          <div>
-            <div className="text-2xl font-display font-medium text-bark">{daysUntilPeriod} <span className="text-base font-normal text-muted">{t('insights.days')}</span></div>
-            <div className="text-sm text-muted">{t('dashboard.daysUntilPeriod')}</div>
+          <div className="flex-1">
+            <p className="text-sm text-bark italic">"{motivationalMessage}"</p>
           </div>
-        </div>
-        <div className="text-right text-sm text-muted">
-          {formatDate(nextPeriodDate)}
         </div>
       </div>
 
@@ -212,23 +222,8 @@ export function Dashboard({ cycleInfo, viewMode }) {
             </svg>
           </div>
           <div>
-            <h3 className="font-medium text-bark">{t('dailyTip.title')}</h3>
+            <h3 className="font-medium text-bark text-sm">{t('dailyTip.title')}</h3>
             <p className="text-sm text-muted mt-1">{dailyTip}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Affirmation */}
-      <div className="card p-4">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-medium text-bark">{t('dailyTip.affirmation')}</h3>
-            <p className="text-sm text-muted mt-1 italic">"{motivationalMessage}"</p>
           </div>
         </div>
       </div>
