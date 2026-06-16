@@ -104,10 +104,14 @@ function Toggle({ checked, onChange, label, locked = false }) {
 function ShareCard({ cycleInfo, options, lang }) {
   const { t } = useTranslation();
   const phase = cycleInfo.phase;
-  const phaseData = cycleInfo.phaseData;
   const colors = phaseColors[phase];
-  const kanji = phaseKanji[phase];
-  const partnerTips = phaseData.forPartner;
+  const kanjiChar = t(`phases.${phase}.kanji`);
+  const phaseName = t(`phases.${phase}.name`);
+  const energy = t(`phases.${phase}.energy`);
+  const partnerSupport = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
+  const partnerAvoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
+  const nutritionTips = t(`phaseTips.${phase}.lifestyle`, { returnObjects: true }) || [];
+  const exerciseTips = t(`phaseTips.${phase}.exercise`, { returnObjects: true }) || [];
 
   // Rotate items daily
   const daySeed = useMemo(() => {
@@ -143,18 +147,18 @@ function ShareCard({ cycleInfo, options, lang }) {
       <div className="p-4 text-center">
         <p className="text-sm text-muted mb-1">{t('partnerShare.sheIsIn')}</p>
         <div className="flex items-center justify-center gap-2 mb-1">
-          <span className="text-3xl font-display">{kanji.kanji}</span>
-          <h2 className="text-xl font-display text-bark">{phaseData.name}</h2>
+          <span className="text-3xl font-display">{kanjiChar}</span>
+          <h2 className="text-xl font-display text-bark">{phaseName}</h2>
         </div>
         <p className="text-sm text-muted">
-          {t('dashboard.day')} {cycleInfo.cycleDay} {t('checkin.day')} {cycleInfo.cycleLength}
+          {t('dashboard.day')} {cycleInfo.cycleDay} / {cycleInfo.cycleLength}
         </p>
       </div>
 
       {/* How I'm Feeling */}
       {options.feeling && (
         <div className="px-4 pb-4">
-          <p className="text-sm text-center text-muted italic">{phaseData.energy}</p>
+          <p className="text-sm text-center text-muted italic">{energy}</p>
         </div>
       )}
 
@@ -166,7 +170,7 @@ function ShareCard({ cycleInfo, options, lang }) {
             <h3 className="font-medium text-bark text-sm">{t('partnerShare.howToSupport')}</h3>
           </div>
           <ul className="space-y-1">
-            {partnerTips.support.slice(0, 4).map((tip, i) => (
+            {partnerSupport.slice(0, 4).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-terra mt-0.5">•</span>
                 <span>{tip}</span>
@@ -184,7 +188,7 @@ function ShareCard({ cycleInfo, options, lang }) {
             <h3 className="font-medium text-bark text-sm">{t('partnerShare.whatToAvoid')}</h3>
           </div>
           <ul className="space-y-1">
-            {partnerTips.avoid.slice(0, 3).map((tip, i) => (
+            {partnerAvoid.slice(0, 3).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-red-400 mt-0.5">•</span>
                 <span>{tip}</span>
@@ -203,7 +207,7 @@ function ShareCard({ cycleInfo, options, lang }) {
           </div>
           <p className="text-xs text-muted mb-1">{t('partnerShare.cookMealsWith')}</p>
           <ul className="space-y-1">
-            {phaseData.forHer.nutrition.slice(0, 3).map((tip, i) => (
+            {nutritionTips.slice(0, 3).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-emerald-500 mt-0.5">•</span>
                 <span>{tip}</span>
@@ -222,7 +226,7 @@ function ShareCard({ cycleInfo, options, lang }) {
           </div>
           <p className="text-xs text-muted mb-1">{t('partnerShare.greatTimeFor')}</p>
           <ul className="space-y-1">
-            {phaseData.forHer.exercise.slice(0, 3).map((tip, i) => (
+            {exerciseTips.slice(0, 3).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-rose-400 mt-0.5">•</span>
                 <span>{tip}</span>
@@ -316,22 +320,26 @@ export function PartnerShare({ cycleInfo, onClose }) {
 
   const generateShareText = () => {
     const phase = cycleInfo.phase;
-    const phaseData = cycleInfo.phaseData;
-    const kanji = phaseKanji[phase];
-    const partnerTips = phaseData.forPartner;
+    const kanjiChar = t(`phases.${phase}.kanji`);
+    const phaseName = t(`phases.${phase}.name`);
+    const energy = t(`phases.${phase}.energy`);
+    const partnerSupport = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
+    const partnerAvoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
+    const lifestyleTips = t(`phaseTips.${phase}.lifestyle`, { returnObjects: true }) || [];
+    const exerciseTipsArr = t(`phaseTips.${phase}.exercise`, { returnObjects: true }) || [];
 
     let text = `巡 Meguri\n\n`;
     text += `${t('partnerShare.sheIsIn')}\n`;
-    text += `${kanji.kanji} ${phaseData.name}\n`;
+    text += `${kanjiChar} ${phaseName}\n`;
     text += `${t('dashboard.day')} ${cycleInfo.cycleDay} / ${cycleInfo.cycleLength}\n\n`;
 
     if (options.feeling) {
-      text += `${phaseData.energy}\n\n`;
+      text += `${energy}\n\n`;
     }
 
     if (options.support) {
       text += `💚 ${t('partnerShare.howToSupport')}\n`;
-      partnerTips.support.slice(0, 4).forEach(tip => {
+      partnerSupport.slice(0, 4).forEach(tip => {
         text += `• ${tip}\n`;
       });
       text += `\n`;
@@ -339,7 +347,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
 
     if (options.avoid) {
       text += `🚫 ${t('partnerShare.whatToAvoid')}\n`;
-      partnerTips.avoid.slice(0, 3).forEach(tip => {
+      partnerAvoid.slice(0, 3).forEach(tip => {
         text += `• ${tip}\n`;
       });
       text += `\n`;
@@ -347,7 +355,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
 
     if (options.nutrition) {
       text += `🍳 ${t('partnerShare.nutritionIdeas')}\n`;
-      phaseData.forHer.nutrition.slice(0, 3).forEach(tip => {
+      lifestyleTips.slice(0, 3).forEach(tip => {
         text += `• ${tip}\n`;
       });
       text += `\n`;
@@ -355,7 +363,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
 
     if (options.exercise) {
       text += `🏃 ${t('partnerShare.exerciseTogether')}\n`;
-      phaseData.forHer.exercise.slice(0, 3).forEach(tip => {
+      exerciseTipsArr.slice(0, 3).forEach(tip => {
         text += `• ${tip}\n`;
       });
       text += `\n`;

@@ -73,8 +73,13 @@ export function NutritionSection({ phaseData, phase }) {
   const [activeTab, setActiveTab] = useState('western');
   const lang = i18n.language.startsWith('ja') ? 'ja' : 'en';
 
-  const tips = phaseData.forHer;
-  const tcm = tips.tcmNutrition;
+  const nutritionTips = t(`nutritionContent.${phase}.western`, { returnObjects: true }) || [];
+  const tcm = {
+    principle: t(`nutritionContent.${phase}.tcm.principle`),
+    foods: t(`nutritionContent.${phase}.tcm.foods`, { returnObjects: true }) || [],
+    avoid: t(`nutritionContent.${phase}.tcm.avoid`, { returnObjects: true }) || [],
+    tea: t(`nutritionContent.${phase}.tcm.tea`)
+  };
   const recipe = RECIPES[phase]?.[lang] || RECIPES.follicular[lang];
 
   return (
@@ -151,7 +156,7 @@ export function NutritionSection({ phaseData, phase }) {
                 <span className="font-medium text-gray-700">{t('nutrition.modernScience')}</span>
               </div>
               <ul className="space-y-2">
-                {tips.nutrition.map((item, index) => (
+                {nutritionTips.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 text-sm text-gray-600">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
                     <span>{item}</span>

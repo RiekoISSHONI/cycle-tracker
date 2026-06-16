@@ -21,9 +21,15 @@ export function SkinSection({ phaseData, phase }) {
   const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState('routine');
 
-  const skin = phaseData.forHer?.skin;
+  const skin = {
+    condition: t(`skinContent.${phase}.condition`),
+    science: t(`skinContent.${phase}.science`),
+    tcm: t(`skinContent.${phase}.tcm`),
+    care: t(`skinContent.${phase}.care`, { returnObjects: true }) || [],
+    tcmCare: t(`skinContent.${phase}.tcmCare`, { returnObjects: true }) || []
+  };
 
-  if (!skin) return null;
+  if (!skin.condition) return null;
 
   const phaseColors = {
     menstrual: { bg: 'from-rose-50 to-red-50', accent: 'text-rose-600', badge: 'bg-rose-100', iconBg: 'bg-rose-100' },

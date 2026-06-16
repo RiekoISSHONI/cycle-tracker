@@ -383,6 +383,367 @@
     "thisWeeksCare": "This Week's Care",
     "curatedFor": "Curated for your current phase"
   },
+  "affirmations": {
+    "menstrual": [
+      "Rest is productive. Honor your body's need to recharge.",
+      "This is your winter - a time for introspection and renewal.",
+      "Be gentle with yourself. This phase is about releasing and letting go."
+    ],
+    "follicular": [
+      "Your energy is building! This is the perfect time to plant new seeds.",
+      "You're entering your spring - fresh starts and new beginnings await.",
+      "Your creativity is heightened. Dream big and plan boldly!"
+    ],
+    "ovulatory": [
+      "You're in full bloom! Your confidence and charisma are at their peak.",
+      "This is your summer - shine bright and share your gifts with the world.",
+      "Your communication skills are supercharged. Speak your truth!"
+    ],
+    "luteal": [
+      "Time to harvest what you've planted. Focus on completing, not starting.",
+      "This is your autumn - a time for reflection and preparation.",
+      "Nourish yourself as you prepare for a new cycle."
+    ]
+  },
+  "dailyTips": {
+    "menstrual": [
+      "Your body is doing incredible work right now. Rest is productive.",
+      "Iron-rich foods like spinach and red meat help replenish what you're losing.",
+      "Warm baths with Epsom salts can help ease cramps naturally.",
+      "This is the perfect time for journaling and self-reflection.",
+      "Gentle stretching can help with lower back pain during this phase."
+    ],
+    "follicular": [
+      "Your energy is building! It's the perfect time to start new projects.",
+      "Try new foods and recipes - your body is more adaptable now.",
+      "This is your brain's peak learning phase. Take on new challenges!",
+      "High-intensity workouts feel easier during this phase.",
+      "Social activities will feel more energizing now than any other time."
+    ],
+    "ovulatory": [
+      "You're at your most magnetic! Schedule important meetings now.",
+      "Your communication skills are at their peak - have that difficult conversation.",
+      "This is the best time for date nights and connecting with your partner.",
+      "Push your fitness limits - you're strongest during ovulation.",
+      "Your skin is glowing naturally - embrace minimal makeup days!"
+    ],
+    "luteal": [
+      "Cravings are normal - choose dark chocolate for magnesium benefits.",
+      "Focus on completing tasks rather than starting new ones.",
+      "Extra sleep isn't laziness - your body needs more rest now.",
+      "Reduce caffeine to help with any anxiety or mood swings.",
+      "Cozy activities like reading and baking match your energy perfectly."
+    ]
+  },
+  "phaseTips": {
+    "menstrual": {
+      "lifestyle": [
+        "Prioritize sleep for recovery",
+        "Good time for reflection and planning",
+        "Take warm baths to ease cramps",
+        "Practice self-compassion",
+        "Reduce commitments if needed"
+      ],
+      "exercise": [
+        "Train as you feel - research shows no performance impairment",
+        "Some may prefer gentler activities due to discomfort",
+        "Walking, yoga, and stretching if energy is low",
+        "Listen to your body - individual variation is significant"
+      ]
+    },
+    "follicular": {
+      "lifestyle": [
+        "Start new projects - energy supports initiation",
+        "Studies suggest improved verbal working memory",
+        "Good time for learning and skill acquisition",
+        "Social activities and networking",
+        "Schedule brainstorming and creative work"
+      ],
+      "exercise": [
+        "Strength training may be optimally timed - estrogen aids recovery",
+        "Cardio and endurance activities",
+        "Try new workout routines",
+        "Group fitness classes",
+        "Building phase - good time to increase training load"
+      ]
+    },
+    "ovulatory": {
+      "lifestyle": [
+        "Verbal fluency may peak - good for presentations",
+        "Schedule important communications",
+        "Network and socialize",
+        "Studies show enhanced emotional memory consolidation",
+        "Great time for difficult conversations"
+      ],
+      "exercise": [
+        "CAUTION: ACL injury risk peaks now (research shows 88% of muscular injuries occur around ovulation)",
+        "Peak joint laxity - be mindful during high-impact activities",
+        "Warm up thoroughly before any exercise",
+        "Strength training with proper form",
+        "Consider lower-impact cardio options"
+      ]
+    },
+    "luteal": {
+      "lifestyle": [
+        "Focus on completing projects, not starting new ones",
+        "Detail-oriented and administrative tasks",
+        "Increased amygdala reactivity - emotions may feel stronger",
+        "Extra self-care and rest",
+        "Prepare for the upcoming menstrual phase"
+      ],
+      "exercise": [
+        "Injury risk is lower than ovulatory phase",
+        "Elevated core temperature - stay hydrated, avoid overheating",
+        "Moderate intensity may feel better than high intensity",
+        "Yoga, pilates, swimming, walking",
+        "Late luteal: scale back if energy drops"
+      ]
+    }
+  },
+  "skinContent": {
+    "menstrual": {
+      "condition": "Skin stabilizing. Premenstrual breakouts begin healing as hormones reset.",
+      "science": "Low hormones mean relatively stable sebum production. Any acne from the luteal phase starts to heal as inflammation decreases.",
+      "tcm": "Blood deficiency manifests as pale, dry complexion lacking luster. The skin reflects internal blood status.",
+      "care": [
+        "Focus on deep hydration - use rich moisturizers",
+        "Gentle, fragrance-free products only",
+        "Hydrating sheet masks with hyaluronic acid",
+        "Avoid harsh exfoliants - skin is sensitive",
+        "Use facial oils (rosehip, jojoba) to restore glow",
+        "Get extra sleep for skin repair"
+      ],
+      "tcmCare": [
+        "Gua sha with rose quartz to promote blood flow",
+        "Pearl powder masks - traditional brightening",
+        "Goji berry-infused products for blood nourishment"
+      ]
+    },
+    "follicular": {
+      "condition": "Skin improving daily. Sebum production at its lowest as estrogen rises.",
+      "science": "Rising estrogen regulates sebum production - research shows lowest oiliness occurs as estrogen approaches its peak. Skin barrier function improves.",
+      "tcm": "Yin energy rising brings moisture and luster back to the skin. Blood is building, showing as healthy color.",
+      "care": [
+        "Great time for gentle exfoliation (AHA/BHA)",
+        "Vitamin C serums for brightening",
+        "Lighter moisturizers as skin balances",
+        "Try new skincare products now - skin is resilient",
+        "Focus on anti-aging treatments",
+        "Hydrating toners with niacinamide"
+      ],
+      "tcmCare": [
+        "Jade roller massage to move qi and reduce puffiness",
+        "Green tea-based products - antioxidant and cooling",
+        "White fungus (snow fungus) masks for deep hydration"
+      ]
+    },
+    "ovulatory": {
+      "condition": "Your best skin days! Lowest sebum production, clearest complexion.",
+      "science": "Research confirms lowest oiliness at ovulation due to peak estrogen. Skin is at its most balanced and resilient.",
+      "tcm": "Yin at its peak, skin shows abundant radiance. The face reflects inner vitality and balance.",
+      "care": [
+        "Minimal routine needed - skin is thriving",
+        "Light, non-comedogenic products",
+        "Focus on maintenance, not correction",
+        "Great time for professional treatments (facials)",
+        "Photograph your skin - this is your baseline!",
+        "SPF is essential - skin is more photosensitive"
+      ],
+      "tcmCare": [
+        "Facial acupressure for maintaining glow",
+        "Rosewater mists to preserve radiance",
+        "Light gua sha to keep qi flowing"
+      ]
+    },
+    "luteal": {
+      "condition": "Premenstrual acne peaks. 63% of women experience breakouts 7-10 days before their period.",
+      "science": "Research confirms progesterone and androgens increase sebum production. Premenstrual acne is documented in 63% of women, typically appearing 7-10 days before menstruation.",
+      "tcm": "Liver qi stagnation causes skin eruptions. Heat rising manifests as redness and breakouts. Dampness shows as oiliness and congestion.",
+      "care": [
+        "Start acne prevention 7-10 days before expected period",
+        "Double cleanse to remove excess oil",
+        "Salicylic acid (BHA) for pore clearing",
+        "Spot treatments with benzoyl peroxide or tea tree",
+        "Clay masks 1-2x per week for oil control",
+        "Non-comedogenic, oil-free moisturizers",
+        "Don't pick at breakouts - scarring risk is higher"
+      ],
+      "tcmCare": [
+        "Green tea compresses to reduce inflammation",
+        "Mung bean masks to clear heat and detoxify",
+        "Facial acupressure on Liver 3 point for qi flow",
+        "Avoid greasy skincare - increases dampness"
+      ]
+    }
+  },
+  "nutritionContent": {
+    "menstrual": {
+      "western": [
+        "Iron-rich foods essential - RDA is 18mg/day for menstruating women (vs 8mg for men)",
+        "Include vitamin C with iron foods to boost absorption",
+        "Leafy greens, red meat, legumes, fortified cereals",
+        "Anti-inflammatory foods (fatty fish, turmeric, ginger)",
+        "Magnesium for cramps (dark chocolate, nuts, seeds)"
+      ],
+      "tcm": {
+        "principle": "Moving Blood & Warming the Uterus",
+        "foods": [
+          "Red dates - nourishes blood and qi",
+          "Ginger tea - warms the uterus and promotes circulation",
+          "Brown sugar water - traditional remedy for cramps",
+          "Dang gui (angelica root) soup - the \"female ginseng\"",
+          "Warming bone broths with goji berries",
+          "Black chicken soup - deeply nourishing"
+        ],
+        "avoid": [
+          "Cold and raw foods (salads, ice cream, cold drinks)",
+          "Iced beverages - constricts blood flow",
+          "Excessive spicy food - can increase bleeding"
+        ],
+        "tea": "Rose bud tea or ginger red date tea"
+      }
+    },
+    "follicular": {
+      "western": [
+        "Better insulin sensitivity - 68.5% time in target glucose range (research data)",
+        "BMR is at its lowest - adjust portions if needed",
+        "Fresh foods, salads, and smoothies",
+        "Fermented foods support gut-hormone connection",
+        "Lean proteins and omega-3 rich foods"
+      ],
+      "tcm": {
+        "principle": "Nourishing Yin & Building Blood",
+        "foods": [
+          "Black sesame seeds - nourishes kidney yin and blood",
+          "Goji berries - tonifies liver and kidney",
+          "Eggs - excellent for building yin",
+          "Seaweed and kelp - nourishes yin, rich in minerals",
+          "Duck meat - cooling and yin-nourishing",
+          "Tofu and soy products - gentle yin tonics"
+        ],
+        "avoid": [
+          "Excessive spicy or heating foods",
+          "Too much caffeine - depletes yin",
+          "Overly greasy foods"
+        ],
+        "tea": "Chrysanthemum tea or goji berry tea"
+      }
+    },
+    "ovulatory": {
+      "western": [
+        "Fiber-rich foods help metabolize excess estrogen",
+        "Cruciferous vegetables (broccoli, cauliflower, kale)",
+        "Lighter meals with fresh produce",
+        "Anti-inflammatory foods",
+        "Stay well hydrated"
+      ],
+      "tcm": {
+        "principle": "Harmonizing Yin & Yang for Transformation",
+        "foods": [
+          "Lotus seeds - calms the heart, supports fertility",
+          "Chinese yam - strengthens spleen and kidney",
+          "Lean proteins - supports the transformation",
+          "Fresh fruits - natural cooling balance",
+          "Asparagus - clears heat and nourishes yin",
+          "Mung beans - gentle cooling properties"
+        ],
+        "avoid": [
+          "Excessive alcohol - disrupts qi flow",
+          "Very cold foods - can shock the system",
+          "Heavy, greasy meals"
+        ],
+        "tea": "Jasmine tea or lotus leaf tea"
+      }
+    },
+    "luteal": {
+      "western": [
+        "BMR increases 100-300 kcal/day - slight appetite increase is normal",
+        "Insulin resistance increases - blood sugar less stable",
+        "Complex carbs support serotonin and mood",
+        "Magnesium-rich foods (dark chocolate, nuts, leafy greens)",
+        "B-vitamins for energy and mood stability",
+        "Reduce caffeine and alcohol which can worsen symptoms"
+      ],
+      "tcm": {
+        "principle": "Warming Yang & Supporting Kidney Energy",
+        "foods": [
+          "Walnuts - warms kidney yang, supports brain",
+          "Lamb or mutton - strongly warming",
+          "Cinnamon - warms the interior, promotes circulation",
+          "Fennel seeds - warms digestive system",
+          "Sweet potato - nourishes spleen qi",
+          "Chestnuts - strengthens kidney yang"
+        ],
+        "avoid": [
+          "Cold and raw foods - depletes yang",
+          "Excessive dairy - creates dampness",
+          "Too much sugar - weakens spleen"
+        ],
+        "tea": "Cinnamon tea or longan red date tea"
+      }
+    }
+  },
+  "partnerTips": {
+    "menstrual": {
+      "understand": "She may experience cramps, fatigue, and mood changes. This is completely normal.",
+      "support": [
+        "Offer to take on extra household tasks",
+        "Bring her warm drinks or a heating pad",
+        "Give her space if she needs it",
+        "Be patient with mood fluctuations",
+        "Plan low-key activities together"
+      ],
+      "avoid": [
+        "Don't take mood changes personally",
+        "Avoid scheduling demanding activities",
+        "Don't dismiss her discomfort"
+      ]
+    },
+    "follicular": {
+      "understand": "She's feeling more energetic, social, and adventurous. Her mood is typically upbeat.",
+      "support": [
+        "Plan fun dates and adventures",
+        "Support her new projects and ideas",
+        "Engage in stimulating conversations",
+        "Be spontaneous together",
+        "Exercise or try new activities together"
+      ],
+      "avoid": [
+        "Don't hold her back from being social",
+        "Avoid being a couch potato when she wants activity"
+      ]
+    },
+    "ovulatory": {
+      "understand": "She's at her most confident, communicative, and attractive. Libido is typically highest.",
+      "support": [
+        "Compliment her - she'll receive it well",
+        "Plan romantic dates",
+        "Have meaningful conversations",
+        "Be present and attentive",
+        "This is a great time for intimacy"
+      ],
+      "avoid": [
+        "Don't be distant or distracted",
+        "Avoid bringing up heavy conflicts"
+      ]
+    },
+    "luteal": {
+      "understand": "She may experience PMS - bloating, mood swings, cravings, and sensitivity. Be extra patient.",
+      "support": [
+        "Be extra understanding and patient",
+        "Help with tasks and reduce her load",
+        "Provide healthy comfort foods",
+        "Offer physical affection without expectations",
+        "Create a calm, supportive environment"
+      ],
+      "avoid": [
+        "Don't pick fights or bring up sensitive topics",
+        "Avoid commenting on mood or body changes",
+        "Don't take irritability personally",
+        "Avoid being critical or demanding"
+      ]
+    }
+  },
   "premium": {
     "unlockFeature": "Premium Feature",
     "tapToUpgrade": "Tap to unlock with Premium",
