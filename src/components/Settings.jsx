@@ -156,7 +156,11 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
         {!isPremium && (
           <button
             onClick={() => setShowUpgradeModal(true)}
-            className="w-full mt-4 btn-primary bg-gradient-to-r from-amber-400 to-orange-400 border-none"
+            className="w-full mt-4 py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            style={{
+              background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
+              boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+            }}
           >
             {t('premium.startTrial')}
           </button>
@@ -212,7 +216,14 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             </div>
           </div>
 
-          <button onClick={handleSave} className="w-full btn-primary">
+          <button
+            onClick={handleSave}
+            className="w-full py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
+            style={{
+              background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
+              boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+            }}
+          >
             {t('settings.saveChanges')}
           </button>
         </div>

@@ -115,7 +115,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen pb-24 relative">
+    <div className="min-h-screen pb-24 relative isolate">
       {cycleInfo && <PhaseBackground phase={cycleInfo.phase} theme={theme} />}
 
       <Header
@@ -124,7 +124,7 @@ function App() {
         cycleInfo={cycleInfo}
       />
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-4xl mx-auto px-4 py-6 relative z-10">
         {activeTab === 'dashboard' && cycleInfo && (
           <Dashboard
             cycleInfo={cycleInfo}

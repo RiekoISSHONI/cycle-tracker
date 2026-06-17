@@ -62,7 +62,7 @@ function LockedFeature({ onClick }) {
 }
 
 export function UpgradeModal({ onClose, feature }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { upgradeToPremium } = useSubscription();
 
   const features = [
@@ -121,7 +121,9 @@ export function UpgradeModal({ onClose, feature }) {
         {/* Price */}
         <div className="px-5 py-4 text-center bg-washi/50">
           <div className="flex items-baseline justify-center gap-1">
-            <span className="text-4xl font-display text-bark">$4.99</span>
+            <span className="text-4xl font-display text-bark">
+              {i18n.language.startsWith('ja') ? '¥780' : '$4.99'}
+            </span>
             <span className="text-muted">/ {t('premium.month')}</span>
           </div>
           <p className="text-xs text-muted mt-1">{t('premium.cancelAnytime')}</p>
