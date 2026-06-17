@@ -38,7 +38,7 @@ function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) 
 }
 
 export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThemeChange }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isPremium, canAccess, togglePremium, subscription } = useSubscription();
   const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
   const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
@@ -102,11 +102,15 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
       {/* Quick Action */}
       <button
         onClick={handleLogNewPeriod}
-        className="w-full card p-5 bg-gradient-to-r from-rose-500 to-pink-500 border-0 text-white text-left hover:shadow-lg transition-shadow active:scale-[0.99]"
+        className="w-full p-5 rounded-2xl text-white text-left hover:shadow-lg transition-all duration-300 active:scale-[0.99]"
+        style={{
+          background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
+          boxShadow: '0 4px 16px rgba(181, 88, 47, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+        }}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
@@ -124,46 +128,83 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Subscription Status */}
       <SettingsSection title={t('premium.currentPlan')}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-              isPremium ? 'bg-gradient-to-br from-amber-400 to-orange-400' : 'bg-gray-100'
-            }`}>
-              {isPremium ? (
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+        {isPremium ? (
+          /* Premium User View */
+          <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-br from-terra/10 to-rose-100/50">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-terra to-rose-500 flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
-              ) : (
-                <svg className="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-            </div>
-            <div>
-              <div className="font-medium text-gray-800">
-                {isPremium ? t('premium.premiumPlan') : t('premium.free')}
               </div>
-              {isPremium && subscription.expiresAt && (
-                <div className="text-sm text-gray-500">
-                  {t('premium.activeUntil')} {new Date(subscription.expiresAt).toLocaleDateString()}
-                </div>
-              )}
+              <div>
+                <div className="font-semibold text-bark text-lg">{t('premium.premiumPlan')}</div>
+                {subscription.expiresAt && (
+                  <div className="text-sm text-muted">
+                    {t('premium.activeUntil')} {new Date(subscription.expiresAt).toLocaleDateString()}
+                  </div>
+                )}
+              </div>
             </div>
+            <PremiumBadge />
           </div>
-          {isPremium && <PremiumBadge />}
-        </div>
+        ) : (
+          /* Free User View - Upgrade CTA */
+          <div className="rounded-xl overflow-hidden border border-terra/20">
+            <div className="p-4 bg-gradient-to-br from-terra/5 to-rose-50">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-washi flex items-center justify-center">
+                  <svg className="w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="font-medium text-bark">{t('premium.free')}</div>
+                  <div className="text-xs text-muted">{t('premium.limitedFeatures')}</div>
+                </div>
+              </div>
 
-        {!isPremium && (
-          <button
-            onClick={() => setShowUpgradeModal(true)}
-            className="w-full mt-4 py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
-            style={{
-              background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
-              boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
-            }}
-          >
-            {t('premium.startTrial')}
-          </button>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex-1 h-px bg-terra/20" />
+                <span className="text-xs text-terra font-medium px-2">{t('premium.upgradeFor')}</span>
+                <div className="flex-1 h-px bg-terra/20" />
+              </div>
+
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-center gap-2 text-sm text-bark">
+                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {t('premium.features.pillReminders')}
+                </li>
+                <li className="flex items-center gap-2 text-sm text-bark">
+                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {t('premium.features.partnerShare')}
+                </li>
+                <li className="flex items-center gap-2 text-sm text-bark">
+                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {t('premium.features.fullInsights')}
+                </li>
+              </ul>
+            </div>
+
+            <button
+              onClick={() => setShowUpgradeModal(true)}
+              className="w-full py-4 px-6 font-medium text-white transition-all duration-300 hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-3"
+              style={{
+                background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)'
+              }}
+            >
+              <span className="text-lg">{t('premium.startTrial')}</span>
+              <span className="text-white/80 text-sm">
+                {i18n.language.startsWith('ja') ? '¥780/月' : '$4.99/mo'}
+              </span>
+            </button>
+          </div>
         )}
 
         {/* Dev toggle - remove in production */}

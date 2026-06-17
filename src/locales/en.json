@@ -99,7 +99,20 @@
   "partner": {
     "understanding": "Understanding Her Right Now",
     "howToSupport": "How to Support Her",
-    "whatToAvoid": "What to Avoid"
+    "whatToAvoid": "What to Avoid",
+    "shareWithPartner": "Share with Your Partner",
+    "shareDescription": "Choose what to share with your partner to help them understand and support you better.",
+    "whatCanShare": "What you can share:",
+    "shareItems": {
+      "phase": "Current phase",
+      "feelings": "How I'm feeling",
+      "support": "Support tips",
+      "nutrition": "Nutrition ideas",
+      "dates": "Cycle dates"
+    },
+    "customizeShare": "Customize & Share",
+    "previewLabel": "Preview of what your partner will see",
+    "more": "more"
   },
   "checkin": {
     "title": "Daily Check-in",
@@ -762,7 +775,9 @@
     "startTrial": "Start 7-Day Free Trial",
     "maybeLater": "Maybe later",
     "currentPlan": "Current Plan",
-    "free": "Free",
+    "free": "Free Plan",
+    "limitedFeatures": "Basic features only",
+    "upgradeFor": "Upgrade for",
     "premiumPlan": "Premium",
     "activeUntil": "Active until",
     "managePlan": "Manage Subscription",

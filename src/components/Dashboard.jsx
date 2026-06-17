@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { NutritionSection } from './NutritionSection';
 import { SkinSection } from './SkinSection';
 import { Workouts } from './Workouts';
+import { PartnerShare } from './PartnerShare';
+import { useSubscription } from '../contexts/SubscriptionContext';
+import { UpgradeModal } from './PremiumGate';
 
 const phaseKanji = {
   menstrual: { kanji: '静', reading: 'shizuka', meaning: 'stillness' },
@@ -139,6 +142,9 @@ function PartnerTipCard({ icon, title, description, items, variant = 'default' }
 
 export function Dashboard({ cycleInfo, viewMode }) {
   const { t, i18n } = useTranslation();
+  const { canAccess } = useSubscription();
+  const [showPartnerShare, setShowPartnerShare] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const { cycleDay, cycleLength, phaseData, daysUntilPeriod, nextPeriodDate, phase } = cycleInfo;
 
   const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
@@ -251,6 +257,30 @@ export function Dashboard({ cycleInfo, viewMode }) {
           cycleDay={cycleDay}
           cycleLength={cycleLength}
           daysUntilPeriod={daysUntilPeriod}
+          onShare={() => {
+            if (canAccess('partnerShare')) {
+              setShowPartnerShare(true);
+            } else {
+              setShowUpgradeModal(true);
+            }
+          }}
+          isPremium={canAccess('partnerShare')}
+        />
+      )}
+
+      {/* Partner Share Modal */}
+      {showPartnerShare && (
+        <PartnerShare
+          cycleInfo={cycleInfo}
+          onClose={() => setShowPartnerShare(false)}
+        />
+      )}
+
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <UpgradeModal
+          onClose={() => setShowUpgradeModal(false)}
+          feature="partnerShare"
         />
       )}
     </div>
@@ -340,11 +370,9 @@ function PersonalView({ phaseData, phase }) {
   );
 }
 
-function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod }) {
+function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod, onShare, isPremium }) {
   const { t, i18n } = useTranslation();
-  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
 
-  const understand = t(`partnerTips.${phase}.understand`);
   const support = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
   const avoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
   const energy = t(`phases.${phase}.energy`);
@@ -360,8 +388,68 @@ function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod }) {
 
   return (
     <div className="space-y-4">
-      {/* Partner Preview Card */}
+      {/* Intro Card */}
+      <div className="card p-5">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-terra/10 flex items-center justify-center flex-shrink-0">
+            <svg className="w-6 h-6 text-terra" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-bark mb-1">{t('partner.shareWithPartner')}</h3>
+            <p className="text-sm text-muted">{t('partner.shareDescription')}</p>
+          </div>
+        </div>
+
+        {/* What can be shared */}
+        <div className="mt-4 p-3 bg-washi/50 rounded-xl">
+          <p className="text-xs font-medium text-bark mb-2">{t('partner.whatCanShare')}</p>
+          <div className="flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
+              <span>📍</span> {t('partner.shareItems.phase')}
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
+              <span>💭</span> {t('partner.shareItems.feelings')}
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
+              <span>💚</span> {t('partner.shareItems.support')}
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
+              <span>🍳</span> {t('partner.shareItems.nutrition')}
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
+              <span>📅</span> {t('partner.shareItems.dates')}
+            </span>
+          </div>
+        </div>
+
+        {/* CTA Button */}
+        <button
+          onClick={onShare}
+          className="w-full mt-4 py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2"
+          style={{
+            background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
+            boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+          }}
+        >
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          {t('partner.customizeShare')}
+          {!isPremium && (
+            <span className="ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs">Premium</span>
+          )}
+        </button>
+      </div>
+
+      {/* Preview Card */}
       <div className={`card bg-gradient-to-br ${phaseColors[phase]} border overflow-hidden`}>
+        {/* Preview Label */}
+        <div className="px-4 py-2 bg-bark/5 border-b border-white/50">
+          <p className="text-xs text-center text-muted font-medium">{t('partner.previewLabel')}</p>
+        </div>
+
         {/* Header */}
         <div className="p-4 text-center border-b border-white/50">
           <div className="text-2xl font-display text-terra mb-1">巡</div>
@@ -381,43 +469,37 @@ function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod }) {
         </div>
 
         {/* Energy/Feeling */}
-        <div className="px-4 pb-4">
+        <div className="px-4 pb-3">
           <p className="text-sm text-center text-muted italic">{energy}</p>
         </div>
 
-        {/* Understanding */}
-        <div className="px-4 pb-4">
+        {/* Support Tips - Condensed */}
+        <div className="px-4 pb-3">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">💭</span>
-            <h3 className="font-medium text-bark text-sm">{t('partner.understanding')}</h3>
-          </div>
-          <p className="text-sm text-muted">{understand}</p>
-        </div>
-
-        {/* Support Tips */}
-        <div className="px-4 pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">💚</span>
+            <span className="text-base">💚</span>
             <h3 className="font-medium text-bark text-sm">{t('partner.howToSupport')}</h3>
           </div>
           <ul className="space-y-1">
-            {support.slice(0, 4).map((tip, i) => (
+            {support.slice(0, 2).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-terra mt-0.5">•</span>
                 <span>{tip}</span>
               </li>
             ))}
+            {support.length > 2 && (
+              <li className="text-xs text-terra">+{support.length - 2} {t('partner.more')}</li>
+            )}
           </ul>
         </div>
 
-        {/* What to Avoid */}
-        <div className="px-4 pb-4">
+        {/* What to Avoid - Condensed */}
+        <div className="px-4 pb-3">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-lg">🚫</span>
+            <span className="text-base">🚫</span>
             <h3 className="font-medium text-bark text-sm">{t('partner.whatToAvoid')}</h3>
           </div>
           <ul className="space-y-1">
-            {avoid.slice(0, 3).map((tip, i) => (
+            {avoid.slice(0, 2).map((tip, i) => (
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-red-400 mt-0.5">•</span>
                 <span>{tip}</span>
@@ -427,7 +509,7 @@ function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod }) {
         </div>
 
         {/* Days Until Period */}
-        <div className="px-4 pb-4 text-center">
+        <div className="px-4 pb-3 text-center">
           <p className="text-xs text-muted">
             📅 {t('partnerShare.nextPeriodIn')} ~{daysUntilPeriod} {t('insights.days')}
           </p>
@@ -435,8 +517,7 @@ function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod }) {
 
         {/* Footer */}
         <div className="p-3 bg-white/50 text-center border-t border-white/50">
-          <p className="text-xs text-muted">{t('partnerShare.sharedWithLove')}</p>
-          <p className="text-xs text-terra font-display mt-1">巡 meguri</p>
+          <p className="text-xs text-terra font-display">巡 meguri</p>
         </div>
       </div>
     </div>

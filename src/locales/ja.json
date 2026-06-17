@@ -99,7 +99,20 @@
   "partner": {
     "understanding": "今の彼女を理解する",
     "howToSupport": "サポートの仕方",
-    "whatToAvoid": "避けるべきこと"
+    "whatToAvoid": "避けるべきこと",
+    "shareWithPartner": "パートナーに共有",
+    "shareDescription": "パートナーがあなたをより理解しサポートできるよう、共有する内容を選んでください。",
+    "whatCanShare": "共有できる内容:",
+    "shareItems": {
+      "phase": "現在のフェーズ",
+      "feelings": "今の気持ち",
+      "support": "サポートのヒント",
+      "nutrition": "栄養アイデア",
+      "dates": "周期の日程"
+    },
+    "customizeShare": "カスタマイズして共有",
+    "previewLabel": "パートナーに表示されるプレビュー",
+    "more": "件以上"
   },
   "checkin": {
     "title": "毎日のチェックイン",
@@ -762,7 +775,9 @@
     "startTrial": "7日間無料トライアル開始",
     "maybeLater": "後で",
     "currentPlan": "現在のプラン",
-    "free": "無料",
+    "free": "無料プラン",
+    "limitedFeatures": "基本機能のみ",
+    "upgradeFor": "アップグレード",
     "premiumPlan": "プレミアム",
     "activeUntil": "有効期限",
     "managePlan": "サブスクリプション管理",
