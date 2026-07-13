@@ -1,307 +1,328 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { PHASES, PAPER2, CARD, INK, INK2, INK3, LINE, MINCHO, GOTHIC, phaseKeyFromLegacy } from '../utils/phases';
+import { Ambient, BrushKanji } from './Ambient';
 
-const SYMPTOMS = [
+/* ── symptom keys (unchanged for data compat) & display labels ── */
+const SYMPTOM_KEYS = [
   'cramps', 'headache', 'bloating', 'backPain',
   'breastTenderness', 'acne', 'cravings', 'nausea',
-  'fatigue', 'insomnia'
+  'fatigue', 'insomnia',
 ];
+const SYMPTOM_DISPLAY = {
+  en: { cramps: 'Cramps', headache: 'Headache', bloating: 'Bloating', backPain: 'Back pain', breastTenderness: 'Tender breasts', acne: 'Acne', cravings: 'Cravings', nausea: 'Nausea', fatigue: 'Fatigue', insomnia: 'Insomnia' },
+  ja: { cramps: '生理痛', headache: '頭痛', bloating: 'むくみ', backPain: '腰痛', breastTenderness: '胸の張り', acne: 'ニキビ', cravings: '食欲増加', nausea: '吐き気', fatigue: '倦怠感', insomnia: '不眠' },
+};
 
-const FLOW_LEVELS = ['none', 'spotting', 'light', 'medium', 'heavy'];
+const FLOW_LABELS = {
+  en: ['None', 'Spot', 'Light', 'Medium', 'Heavy'],
+  ja: ['なし', '少量', '軽い', '普通', '多い'],
+};
 
-function RatingScale({ value, onChange, max = 5 }) {
-  return (
-    <div className="flex gap-2">
-      {Array.from({ length: max }, (_, i) => i + 1).map((num) => (
-        <button
-          key={num}
-          onClick={() => onChange(num)}
-          className={`mood-btn flex-1 py-3 rounded-xl font-medium transition-all ${
-            value === num
-              ? 'active bg-pink-500 text-white shadow-lg'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-          }`}
-        >
-          {num}
-        </button>
-      ))}
-    </div>
-  );
+const MOOD_HINTS = {
+  en: { 1: 'Bad', 2: 'Low', 3: 'Okay', 4: 'Good', 5: 'Great' },
+  ja: { 1: '悪い', 2: '低い', 3: '普通', 4: '良い', 5: '最高' },
+};
+
+const ENERGY_HINTS = {
+  en: { 1: 'Exhausted', 2: 'Low', 3: 'Moderate', 4: 'Good', 5: 'High' },
+  ja: { 1: '疲労', 2: '低い', 3: '普通', 4: '良い', 5: '最高' },
+};
+
+/* ── legacy phase helper (mirrors cycleData.getPhaseForDay) ── */
+function legacyPhaseForDay(day, len = 28) {
+  const r = len / 28;
+  if (day <= Math.round(5 * r)) return 'menstrual';
+  if (day <= Math.round(13 * r)) return 'follicular';
+  if (day <= Math.round(17 * r)) return 'ovulatory';
+  return 'luteal';
 }
 
-export function DailyCheckin({ cycleDay, onSave, existingData, checkins = [], onLogPeriod, periodHistory = [] }) {
-  const { t, i18n } = useTranslation();
+/* ================================================================
+   DailyCheckin  —  Meguri check-in screen
+   ================================================================ */
+export function DailyCheckin({
+  cycleDay,
+  onSave,
+  existingData,
+  checkins = [],
+  onLogPeriod,
+  periodHistory = [],
+}) {
+  const { i18n } = useTranslation();
+  const ja = i18n.language.startsWith('ja');
+  const lang = ja ? 'ja' : 'en';
   const today = new Date().toISOString().split('T')[0];
-  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
 
+  /* phase */
+  const phaseKey = phaseKeyFromLegacy(legacyPhaseForDay(cycleDay));
+  const p = PHASES[phaseKey];
+  const sei = PHASES.sei;
+
+  /* state */
   const [mood, setMood] = useState(existingData?.mood || 3);
   const [energy, setEnergy] = useState(existingData?.energy || 3);
-  const [flow, setFlow] = useState(existingData?.flow || 'none');
+  const [flow, setFlow] = useState(existingData?.flow || 0);
   const [symptoms, setSymptoms] = useState(existingData?.symptoms || []);
-  const [notes, setNotes] = useState(existingData?.notes || '');
   const [saved, setSaved] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
-  const [periodLogged, setPeriodLogged] = useState(false);
 
-  const toggleSymptom = (symptom) => {
-    setSymptoms(prev =>
-      prev.includes(symptom)
-        ? prev.filter(s => s !== symptom)
-        : [...prev, symptom]
+  const toggleSymptom = (key) => {
+    setSymptoms((prev) =>
+      prev.includes(key) ? prev.filter((s) => s !== key) : [...prev, key],
     );
   };
 
   const handleSave = () => {
-    onSave({
-      date: today,
-      cycleDay,
-      mood,
-      energy,
-      flow,
-      symptoms,
-      notes
-    });
+    onSave({ date: today, mood, energy, flow, symptoms });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const handleLogPeriod = () => {
-    if (onLogPeriod) {
-      onLogPeriod(today);
-      setPeriodLogged(true);
-      setFlow('medium');
-      setTimeout(() => setPeriodLogged(false), 2000);
-    }
-  };
-
-  const recentCheckins = [...checkins]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 14);
-
-  const getMoodIcon = (m) => {
-    const colors = {
-      1: 'bg-red-100 text-red-500',
-      2: 'bg-orange-100 text-orange-500',
-      3: 'bg-gray-100 text-gray-500',
-      4: 'bg-emerald-100 text-emerald-500',
-      5: 'bg-green-100 text-green-500'
-    };
+  /* ── shared segment builder ── */
+  function Segments({ count, value, onChange, labels, selectedGradient, style: extraStyle }) {
+    const grad = selectedGradient || `linear-gradient(135deg, ${p.accent}, ${p.deep})`;
     return (
-      <div className={`w-8 h-8 rounded-lg ${colors[m]} flex items-center justify-center font-bold text-sm`}>
-        {m}
+      <div style={{ display: 'flex', gap: 8, ...extraStyle }}>
+        {Array.from({ length: count }, (_, i) => {
+          const active = value === (labels ? i : i + 1);
+          const idx = labels ? i : i + 1;
+          return (
+            <button
+              key={idx}
+              onClick={() => onChange(idx)}
+              style={{
+                flex: 1,
+                height: extraStyle?.height || 52,
+                borderRadius: extraStyle?.borderRadius || 14,
+                border: active ? 'none' : `1px solid ${LINE}`,
+                background: active ? grad : PAPER2,
+                color: active ? '#fff' : INK3,
+                fontFamily: GOTHIC,
+                fontSize: extraStyle?.fontSize || 15,
+                fontWeight: 600,
+                cursor: 'pointer',
+                boxShadow: active ? `0 6px 16px ${p.accent}44` : 'none',
+                transition: 'all 0.2s',
+                padding: extraStyle?.padding || 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {labels ? labels[i] : idx}
+            </button>
+          );
+        })}
       </div>
     );
-  };
+  }
 
   return (
-    <div className="space-y-6 pb-4">
-      {/* Period Log Button */}
+    <div style={{ paddingBottom: 16, display: 'flex', flexDirection: 'column', gap: 24 }}>
+
+      {/* ── 1. Period log CTA ── */}
       <button
-        onClick={handleLogPeriod}
-        disabled={periodLogged}
-        className={`w-full p-5 rounded-2xl text-left transition-all active:scale-[0.99] shadow-lg ${
-          periodLogged
-            ? 'bg-gradient-to-r from-emerald-500 to-green-500'
-            : 'bg-gradient-to-r from-rose-500 to-pink-500'
-        }`}
+        onClick={() => onLogPeriod && onLogPeriod(today)}
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          width: '100%',
+          padding: '20px 22px',
+          borderRadius: 22,
+          border: 'none',
+          background: `linear-gradient(135deg, ${sei.accent}, ${sei.deep})`,
+          boxShadow: `0 14px 30px ${sei.accent}33`,
+          cursor: 'pointer',
+          textAlign: 'left',
+          color: '#fff',
+          transition: 'transform 0.15s',
+        }}
       >
-        <div className="flex items-center justify-between text-white">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center">
-              {periodLogged ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-              )}
+        {/* brush watermark */}
+        <BrushKanji
+          char={sei.kanji}
+          size={140}
+          color="#fff"
+          opacity={0.08}
+          style={{ position: 'absolute', right: -10, top: -18, pointerEvents: 'none' }}
+        />
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            {/* icon tile */}
+            <div
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 16,
+                background: 'rgba(255,255,255,0.18)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
             </div>
             <div>
-              <div className="font-semibold text-lg">
-                {periodLogged ? t('checkin.periodLogged') : t('checkin.logPeriodStart')}
+              <div style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 700, lineHeight: 1.3 }}>
+                {ja ? '生理開始を記録' : 'Log period start'}
               </div>
-              <div className="text-white/80 text-sm">
-                {periodLogged ? t('checkin.cycleRestarted') : t('checkin.tapIfStarted')}
+              <div style={{ fontSize: 13, fontFamily: GOTHIC, opacity: 0.78, marginTop: 2 }}>
+                {ja ? '生理が始まったらタップ' : 'Tap if your period started today'}
               </div>
             </div>
           </div>
-          {!periodLogged && (
-            <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          )}
+          {/* chevron */}
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6, flexShrink: 0 }}>
+            <polyline points="9 5 16 12 9 19" />
+          </svg>
         </div>
       </button>
 
-      {/* Header */}
-      <div className="card p-5 bg-gradient-to-br from-pink-50 to-rose-50 border-pink-100">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-bold text-gray-800">{t('checkin.title')}</h2>
-            <p className="text-gray-600 mt-1">{t('checkin.howAreYou')}</p>
-          </div>
-          <button
-            onClick={() => setShowHistory(!showHistory)}
-            className="px-3 py-2 rounded-xl bg-white/80 text-pink-600 text-sm font-medium hover:bg-white transition-colors"
-          >
-            {showHistory ? t('checkin.hideHistory') : t('checkin.viewHistory')}
-          </button>
-        </div>
+      {/* ── 2. Header ── */}
+      <div>
+        <h2 style={{ fontFamily: MINCHO, fontSize: 24, fontWeight: 600, color: INK, margin: 0 }}>
+          {ja ? '毎日のチェックイン' : 'Daily check-in'}
+        </h2>
+        <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, margin: '6px 0 0' }}>
+          {ja ? '今日の調子はどうですか？' : 'How are you feeling today?'}
+        </p>
       </div>
 
-      {/* History View */}
-      {showHistory && (
-        <div className="card p-5 space-y-3">
-          <h3 className="font-semibold text-gray-800">{t('checkin.recentEntries')}</h3>
-          {recentCheckins.length === 0 ? (
-            <p className="text-sm text-gray-500">{t('checkin.noEntries')}</p>
-          ) : (
-            <div className="space-y-2 max-h-64 overflow-y-auto">
-              {recentCheckins.map((entry) => (
-                <div
-                  key={entry.date}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
-                >
-                  <div className="flex items-center gap-3">
-                    {getMoodIcon(entry.mood)}
-                    <div>
-                      <div className="text-sm font-medium text-gray-800">
-                        {new Date(entry.date).toLocaleDateString(locale, {
-                          weekday: 'short',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {t('checkin.day')} {entry.cycleDay} • {t(`checkin.flowLevels.${entry.flow}`)}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1 max-w-[120px] justify-end">
-                    {entry.symptoms?.slice(0, 3).map((s) => (
-                      <span key={s} className="px-2 py-0.5 bg-violet-100 text-violet-600 rounded-full text-xs">
-                        {t(`checkin.symptomsList.${s}`)}
-                      </span>
-                    ))}
-                    {entry.symptoms?.length > 3 && (
-                      <span className="text-xs text-gray-400">+{entry.symptoms.length - 3}</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Period History */}
-          {periodHistory.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <h4 className="text-sm font-medium text-gray-700 mb-2">{t('checkin.periodHistory')}</h4>
-              <div className="flex flex-wrap gap-2">
-                {periodHistory.slice(0, 6).map((date) => (
-                  <span key={date} className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-xs font-medium">
-                    {new Date(date).toLocaleDateString(locale, { month: 'short', day: 'numeric' })}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Mood */}
-      <div className="card p-5">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-gray-800">{t('checkin.mood')}</h3>
-          <span className="text-sm text-pink-500 font-medium">
-            {t(`checkin.moodLevels.${mood}`)}
+      {/* ── 3. Mood scale ── */}
+      <div className="card" style={{ padding: '20px 20px 22px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
+          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+            {ja ? '気分' : 'Mood'}
+          </span>
+          <span style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 700, color: p.accent }}>
+            {MOOD_HINTS[lang][mood]}
           </span>
         </div>
-        <RatingScale value={mood} onChange={setMood} />
+        <Segments count={5} value={mood} onChange={setMood} />
       </div>
 
-      {/* Energy */}
-      <div className="card p-5">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-gray-800">{t('checkin.energy')}</h3>
-          <span className="text-sm text-pink-500 font-medium">
-            {t(`checkin.energyLevels.${energy}`)}
+      {/* ── 4. Energy scale ── */}
+      <div className="card" style={{ padding: '20px 20px 22px' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
+          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+            {ja ? 'エネルギー' : 'Energy'}
+          </span>
+          <span style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 700, color: p.accent }}>
+            {ENERGY_HINTS[lang][energy]}
           </span>
         </div>
-        <RatingScale value={energy} onChange={setEnergy} />
+        <Segments count={5} value={energy} onChange={setEnergy} />
       </div>
 
-      {/* Flow */}
-      <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-3">{t('checkin.flow')}</h3>
-        <div className="flex flex-wrap gap-2">
-          {FLOW_LEVELS.map((level) => (
-            <button
-              key={level}
-              onClick={() => setFlow(level)}
-              className={`px-4 py-2 rounded-xl font-medium transition-all ${
-                flow === level
-                  ? 'bg-rose-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {t(`checkin.flowLevels.${level}`)}
-            </button>
-          ))}
+      {/* ── 5. Flow selector ── */}
+      <div className="card" style={{ padding: '20px 20px 22px' }}>
+        <div style={{ marginBottom: 14 }}>
+          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+            {ja ? '経血量' : 'Flow'}
+          </span>
         </div>
-      </div>
-
-      {/* Symptoms */}
-      <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-3">{t('checkin.symptoms')}</h3>
-        <div className="flex flex-wrap gap-2">
-          {SYMPTOMS.map((symptom) => (
-            <button
-              key={symptom}
-              onClick={() => toggleSymptom(symptom)}
-              className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                symptoms.includes(symptom)
-                  ? 'bg-violet-500 text-white shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {t(`checkin.symptomsList.${symptom}`)}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Notes / Diary */}
-      <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-3">{t('checkin.diary')}</h3>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder={t('checkin.diaryPlaceholder')}
-          rows={4}
-          className="input resize-none"
+        <Segments
+          count={5}
+          value={flow}
+          onChange={setFlow}
+          labels={FLOW_LABELS[lang]}
+          selectedGradient={`linear-gradient(135deg, ${sei.accent}, ${sei.deep})`}
+          style={{ height: 46, borderRadius: 13, fontSize: 13.5, padding: '11px 0' }}
         />
       </div>
 
-      {/* Save Button */}
+      {/* ── 6. Symptoms ── */}
+      <div className="card" style={{ padding: '20px 20px 22px' }}>
+        <div style={{ marginBottom: 14 }}>
+          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+            {ja ? '症状' : 'Symptoms'}
+          </span>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+          {SYMPTOM_KEYS.map((key) => {
+            const active = symptoms.includes(key);
+            return (
+              <button
+                key={key}
+                onClick={() => toggleSymptom(key)}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: 20,
+                  border: `1px solid ${active ? p.line : LINE}`,
+                  background: active ? p.soft : PAPER2,
+                  color: active ? p.deep : INK2,
+                  fontFamily: GOTHIC,
+                  fontSize: 13.5,
+                  fontWeight: active ? 700 : 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.18s',
+                  lineHeight: 1.3,
+                }}
+              >
+                {SYMPTOM_DISPLAY[lang][key]}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── 7. Save button ── */}
       <button
         onClick={handleSave}
-        className={`w-full btn-primary flex items-center justify-center gap-2 ${
-          saved ? 'bg-emerald-500' : ''
-        }`}
+        style={{
+          width: '100%',
+          height: 56,
+          borderRadius: 18,
+          border: 'none',
+          background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
+          color: '#fff',
+          fontFamily: MINCHO,
+          fontSize: 18,
+          fontWeight: 700,
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 10,
+          boxShadow: `0 8px 24px ${p.accent}33`,
+          transition: 'all 0.2s',
+        }}
       >
-        {saved ? (
-          <>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            {t('checkin.saved')}
-          </>
-        ) : (
-          t('checkin.save')
-        )}
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        {ja ? '今日の記録を保存' : "Save today's entry"}
       </button>
+
+      {/* ── Toast ── */}
+      {saved && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 32,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: p.deep,
+            color: '#fff',
+            fontFamily: GOTHIC,
+            fontSize: 14,
+            fontWeight: 600,
+            padding: '12px 28px',
+            borderRadius: 14,
+            boxShadow: `0 8px 28px ${p.accent}44`,
+            zIndex: 9999,
+            pointerEvents: 'none',
+            animation: 'fadeIn 0.25s ease',
+          }}
+        >
+          {ja ? '保存しました' : 'Saved!'}
+        </div>
+      )}
     </div>
   );
 }

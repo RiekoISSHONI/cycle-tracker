@@ -4,11 +4,11 @@
     "tagline": "生理周期トラッカー"
   },
   "nav": {
-    "today": "今日",
+    "today": "ホーム",
     "checkin": "記録",
     "calendar": "カレンダー",
-    "shop": "ショップ",
     "insights": "分析",
+    "care": "ケア",
     "settings": "設定"
   },
   "header": {
@@ -39,10 +39,10 @@
     },
     "luteal": {
       "name": "黄体期",
-      "description": "落ち着きと準備の時期。新しいことより完成に集中。",
+      "description": "実りと内省の季節。ゆっくりと整えてゆく。",
       "energy": "エネルギー低下中 - 完成に集中",
-      "kanji": "穏",
-      "kanjiMeaning": "穏やか"
+      "kanji": "実",
+      "kanjiMeaning": "結実"
     }
   },
   "dashboard": {

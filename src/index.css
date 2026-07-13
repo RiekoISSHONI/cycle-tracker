@@ -1,260 +1,74 @@
 @import "tailwindcss";
 
-/* Google Fonts for Meguri brand */
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+/* Meguri 巡 — Google Fonts
+   Shippori Mincho B1 (display), Zen Old Mincho (wordmark), Zen Kaku Gothic New (UI) */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@400;600;700;900&display=swap');
 
 /* ==========================================
-   Theme Variables - Meguri Brand
+   Design Tokens — Washi Paper System
    ========================================== */
 
 :root {
-  /* Meguri Deep Autumn palette (default) */
-  --cream: #f3ece0;
-  --washi: #ece3d4;
-  --bark: #3a2e26;
-  --ink: #2b231d;
-  --terra: #b5582f;
-  --ochre: #c08a2d;
-  --forest: #3f5040;
-  --muted: #8a7a68;
+  /* Neutrals */
+  --paper: #F4EEE2;
+  --paper2: #EFE7D8;
+  --card: #FCFAF4;
+  --ink: #2A2520;
+  --ink2: #766B5E;
+  --ink3: #A89C8B;
+  --line: rgba(42,37,32,0.09);
+  --line2: rgba(42,37,32,0.05);
 
-  /* Map to existing variable names */
-  --accent: var(--terra);
-  --accent-light: var(--ochre);
-  --accent-soft: #d4a574;
-  --accent-bg: var(--washi);
-  --gradient-start: var(--cream);
-  --gradient-mid: #f0e8dc;
-  --gradient-end: var(--washi);
+  /* Phase accent (set dynamically, defaults to ki/ovulation) */
+  --accent: #C18D2B;
+  --accent-deep: #8C6212;
+  --accent-soft: #F3E7C9;
+  --accent-tint: #FAF3E1;
+  --accent-line: rgba(193,141,43,0.26);
 
-  /* Phase colors - warm autumn tones */
-  --phase-menstrual: #a04030;
-  --phase-follicular: var(--terra);
-  --phase-ovulatory: var(--ochre);
-  --phase-luteal: var(--forest);
+  /* Legacy compat */
+  --cream: var(--paper);
+  --washi: var(--paper2);
+  --bark: var(--ink);
+  --terra: var(--accent);
+  --muted: var(--ink3);
 
-  /* Shadows - softer for zen aesthetic */
-  --shadow-soft: 0 2px 16px -4px rgba(43, 35, 29, 0.06);
-  --shadow-medium: 0 8px 32px -8px rgba(43, 35, 29, 0.1);
-  --shadow-glow: 0 4px 24px -4px var(--terra);
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(60,40,25,0.04), 0 10px 24px rgba(60,40,25,0.04);
+  --shadow-accent: 0 12px 26px color-mix(in srgb, var(--accent) 23%, transparent);
 }
 
-/* Meguri Theme (Deep Autumn) */
-[data-theme="meguri"] {
-  --accent: #b5582f;
-  --accent-light: #c08a2d;
-  --accent-soft: #d4a574;
-  --accent-bg: #ece3d4;
-  --gradient-start: #f3ece0;
-  --gradient-mid: #f0e8dc;
-  --gradient-end: #ece3d4;
-  --phase-menstrual: #a04030;
-  --phase-follicular: #b5582f;
-  --phase-ovulatory: #c08a2d;
-  --phase-luteal: #3f5040;
+/* Phase-specific token overrides */
+[data-phase="menstrual"], [data-phase="sei"] {
+  --accent: #9A3B50;
+  --accent-deep: #6E283A;
+  --accent-soft: #F2E2E2;
+  --accent-tint: #FBF1F0;
+  --accent-line: rgba(154,59,80,0.22);
 }
 
-/* Warm Sunset Theme */
-[data-theme="sunset"] {
-  --accent: #ff7e5f;
-  --accent-light: #feb47b;
-  --accent-soft: #ffcba4;
-  --accent-bg: #ffe5d9;
-  --gradient-start: #fff8f5;
-  --gradient-mid: #fff0e6;
-  --gradient-end: #ffe5d9;
-  --phase-menstrual: #e57373;
-  --phase-follicular: #ff7e5f;
-  --phase-ovulatory: #ffb347;
-  --phase-luteal: #ce93d8;
+[data-phase="follicular"], [data-phase="me"] {
+  --accent: #7B9A4B;
+  --accent-deep: #516B2C;
+  --accent-soft: #E7EEDA;
+  --accent-tint: #F4F7EC;
+  --accent-line: rgba(123,154,75,0.24);
 }
 
-/* Botanical Theme */
-[data-theme="botanical"] {
-  --accent: #7c9a7e;
-  --accent-light: #a8c4a9;
-  --accent-soft: #c4d4c5;
-  --accent-bg: #e8f0e8;
-  --gradient-start: #faf9f6;
-  --gradient-mid: #f5f0e6;
-  --gradient-end: #ebe5da;
-  --phase-menstrual: #c4a77d;
-  --phase-follicular: #7c9a7e;
-  --phase-ovulatory: #d4a574;
-  --phase-luteal: #9c8aa5;
+[data-phase="ovulatory"], [data-phase="ki"] {
+  --accent: #C18D2B;
+  --accent-deep: #8C6212;
+  --accent-soft: #F3E7C9;
+  --accent-tint: #FAF3E1;
+  --accent-line: rgba(193,141,43,0.26);
 }
 
-/* Dusk Theme */
-[data-theme="dusk"] {
-  --accent: #6b5b95;
-  --accent-light: #9b8cb5;
-  --accent-soft: #c4b8d4;
-  --accent-bg: #f0ebf5;
-  --gradient-start: #faf8fc;
-  --gradient-mid: #f5f0f8;
-  --gradient-end: #ebe4f0;
-  --phase-menstrual: #b8738a;
-  --phase-follicular: #8e7bb8;
-  --phase-ovulatory: #d4af37;
-  --phase-luteal: #6b5b95;
-}
-
-/* Aurora Theme */
-[data-theme="aurora"] {
-  --accent: #20b2aa;
-  --accent-light: #5ccfc9;
-  --accent-soft: #a8e6e3;
-  --accent-bg: #e0f7f6;
-  --gradient-start: #f5fdfc;
-  --gradient-mid: #e8f8f7;
-  --gradient-end: #e0f4f3;
-  --phase-menstrual: #ff6b81;
-  --phase-follicular: #20b2aa;
-  --phase-ovulatory: #ffd93d;
-  --phase-luteal: #a78bfa;
-}
-
-/* ==========================================
-   Phase-Based Color Shifts
-   Subtle accent variations per cycle phase
-   ========================================== */
-
-/* Menstrual - Deeper, warmer tones (rest & introspection) */
-[data-phase="menstrual"] {
-  --accent: var(--phase-menstrual);
-  --shadow-glow: 0 4px 24px -4px var(--phase-menstrual);
-}
-
-[data-theme="meguri"][data-phase="menstrual"] {
-  --accent: #a04030;
-  --accent-light: #c4665a;
-  --gradient-start: #f5ebe6;
-  --gradient-mid: #f0e5de;
-  --gradient-end: #ebe0d8;
-}
-
-[data-theme="sunset"][data-phase="menstrual"] {
-  --accent: #e57373;
-  --accent-light: #ffab91;
-  --gradient-start: #fff5f3;
-  --gradient-mid: #ffede8;
-}
-
-[data-theme="botanical"][data-phase="menstrual"] {
-  --accent: #c4a77d;
-  --accent-light: #d4bc96;
-}
-
-[data-theme="dusk"][data-phase="menstrual"] {
-  --accent: #b8738a;
-  --accent-light: #d4a0b5;
-}
-
-[data-theme="aurora"][data-phase="menstrual"] {
-  --accent: #ff6b81;
-  --accent-light: #ff8fa0;
-}
-
-/* Follicular - Brighter, fresher tones (rising energy) */
-[data-phase="follicular"] {
-  --accent: var(--phase-follicular);
-  --shadow-glow: 0 4px 24px -4px var(--phase-follicular);
-}
-
-[data-theme="meguri"][data-phase="follicular"] {
-  --accent: #b5582f;
-  --accent-light: #d4784f;
-  --gradient-start: #f5efe8;
-  --gradient-mid: #f2ebe2;
-  --gradient-end: #ede5da;
-}
-
-[data-theme="sunset"][data-phase="follicular"] {
-  --accent: #ff7e5f;
-  --accent-light: #ffab8f;
-}
-
-[data-theme="botanical"][data-phase="follicular"] {
-  --accent: #7c9a7e;
-  --accent-light: #a0bda2;
-}
-
-[data-theme="dusk"][data-phase="follicular"] {
-  --accent: #8e7bb8;
-  --accent-light: #b0a0d0;
-}
-
-[data-theme="aurora"][data-phase="follicular"] {
-  --accent: #20b2aa;
-  --accent-light: #5ccfc9;
-}
-
-/* Ovulatory - Vibrant, radiant tones (peak energy) */
-[data-phase="ovulatory"] {
-  --accent: var(--phase-ovulatory);
-  --shadow-glow: 0 4px 24px -4px var(--phase-ovulatory);
-}
-
-[data-theme="meguri"][data-phase="ovulatory"] {
-  --accent: #c08a2d;
-  --accent-light: #d9a84d;
-  --gradient-start: #f8f2e8;
-  --gradient-mid: #f5ede0;
-  --gradient-end: #f0e8d8;
-}
-
-[data-theme="sunset"][data-phase="ovulatory"] {
-  --accent: #ffb347;
-  --accent-light: #ffcc7a;
-}
-
-[data-theme="botanical"][data-phase="ovulatory"] {
-  --accent: #d4a574;
-  --accent-light: #e5c09a;
-}
-
-[data-theme="dusk"][data-phase="ovulatory"] {
-  --accent: #d4af37;
-  --accent-light: #e5c860;
-}
-
-[data-theme="aurora"][data-phase="ovulatory"] {
-  --accent: #ffd93d;
-  --accent-light: #ffe580;
-}
-
-/* Luteal - Softer, muted tones (winding down) */
-[data-phase="luteal"] {
-  --accent: var(--phase-luteal);
-  --shadow-glow: 0 4px 24px -4px var(--phase-luteal);
-}
-
-[data-theme="meguri"][data-phase="luteal"] {
-  --accent: #3f5040;
-  --accent-light: #5a7058;
-  --gradient-start: #f0ebe6;
-  --gradient-mid: #ebe6e0;
-  --gradient-end: #e5e0da;
-}
-
-[data-theme="sunset"][data-phase="luteal"] {
-  --accent: #ce93d8;
-  --accent-light: #e1bee7;
-}
-
-[data-theme="botanical"][data-phase="luteal"] {
-  --accent: #9c8aa5;
-  --accent-light: #b8a8c0;
-}
-
-[data-theme="dusk"][data-phase="luteal"] {
-  --accent: #6b5b95;
-  --accent-light: #9b8cb5;
-}
-
-[data-theme="aurora"][data-phase="luteal"] {
-  --accent: #a78bfa;
-  --accent-light: #c4b0fc;
+[data-phase="luteal"], [data-phase="mi"] {
+  --accent: #8A5E84;
+  --accent-deep: #5C3A57;
+  --accent-soft: #EBE0EB;
+  --accent-tint: #F5EEF4;
+  --accent-line: rgba(138,94,132,0.22);
 }
 
 /* ==========================================
@@ -274,249 +88,133 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: 'Noto Sans JP', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif;
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--ink, #2b231d);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(165deg, var(--gradient-start) 0%, var(--gradient-mid) 40%, var(--gradient-end) 100%);
-  background-attachment: fixed;
+  background: var(--paper);
   overflow-x: hidden;
 }
 
-/* Better focus states for accessibility */
 :focus-visible {
-  outline: 2px solid var(--terra);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-/* Remove default focus outline when not using keyboard */
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-/* Selection color */
 ::selection {
-  background: rgba(181, 88, 47, 0.2);
-  color: var(--bark);
+  background: rgba(42,37,32,0.12);
+  color: var(--ink);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent-soft);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-light);
-}
+::-webkit-scrollbar { width: 0; height: 0; }
 
 /* ==========================================
-   Glass & Card Effects
-   ========================================== */
-
-.glass {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  position: relative;
-  z-index: 10;
-}
-
-.card {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(16px) saturate(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border-radius: 1.5rem;
-  box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.02),
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 8px 16px rgba(0, 0, 0, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  z-index: 1;
-}
-
-.card:hover {
-  box-shadow:
-    0 2px 2px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.03),
-    0 8px 16px rgba(0, 0, 0, 0.04),
-    0 16px 32px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.card:active {
-  transform: scale(0.985);
-  transition: transform 0.1s ease-out;
-}
-
-/* Featured card style */
-.card-featured {
-  background: linear-gradient(145deg, var(--accent) 0%, var(--accent-light) 100%);
-  color: white;
-  border: none;
-  box-shadow:
-    0 4px 16px -4px rgba(181, 88, 47, 0.25),
-    0 8px 32px -8px rgba(181, 88, 47, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* Elevated card for important content */
-.card-elevated {
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.03),
-    0 10px 20px rgba(0, 0, 0, 0.04),
-    0 20px 40px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* ==========================================
-   Typography - Meguri Brand
+   Typography — Mincho + Gothic
    ========================================== */
 
 h1, h2, h3, h4 {
-  font-family: 'Shippori Mincho', 'Georgia', serif;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--bark, #3a2e26);
+  font-family: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+  font-weight: 600;
+  color: var(--ink);
   line-height: 1.3;
 }
 
-h1 { font-size: 1.75rem; }
-h2 { font-size: 1.375rem; }
-h3 { font-size: 1.125rem; }
-h4 { font-size: 1rem; }
+h1 { font-size: 26px; }
+h2 { font-size: 19px; }
+h3 { font-size: 18px; }
 
-.font-display {
-  font-family: 'Shippori Mincho', 'Georgia', serif;
+.font-mincho {
+  font-family: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
 }
 
-.font-body {
-  font-family: 'Noto Sans JP', system-ui, sans-serif;
+.font-oldmin {
+  font-family: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
 }
 
-.text-bark {
-  color: var(--bark, #3a2e26);
+.font-gothic {
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', system-ui, sans-serif;
 }
 
-.text-terra {
-  color: var(--terra, #b5582f);
+/* ==========================================
+   Card
+   ========================================== */
+
+.card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 20px;
+  border: 1px solid var(--line2);
+  box-shadow: var(--shadow-card);
 }
 
-.text-muted {
-  color: var(--muted, #8a7a68);
+.card-featured {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 23%, transparent);
 }
 
-/* Better text rendering */
-p, span, li {
-  line-height: 1.6;
-}
+/* ==========================================
+   Eyebrow label
+   ========================================== */
 
-/* Small text helper */
-.text-subtle {
-  color: var(--muted);
-  font-size: 0.8125rem;
-  letter-spacing: 0.01em;
+.eyebrow {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--ink3);
 }
 
 /* ==========================================
    Buttons
    ========================================== */
 
-.btn {
-  padding: 1rem 1.75rem;
-  border-radius: 1rem;
-  font-family: 'Noto Sans JP', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 0.9375rem;
-  letter-spacing: 0.02em;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.btn:active {
-  transform: scale(0.97);
-  transition: transform 0.1s ease-out;
-}
-
-.btn-primary {
-  background: linear-gradient(145deg, var(--terra, #b5582f) 0%, #c4664a 100%);
-  color: var(--cream, #f3ece0);
-  box-shadow:
-    0 2px 4px rgba(181, 88, 47, 0.2),
-    0 4px 12px rgba(181, 88, 47, 0.2),
-    0 8px 24px rgba(181, 88, 47, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+.btn-accent {
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 23%, transparent);
+  font-family: 'Shippori Mincho B1', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
   border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-primary:hover {
-  box-shadow:
-    0 4px 8px rgba(181, 88, 47, 0.25),
-    0 8px 16px rgba(181, 88, 47, 0.2),
-    0 12px 32px rgba(181, 88, 47, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+.btn-accent:active {
+  transform: scale(0.97);
 }
 
 .btn-secondary {
-  background: linear-gradient(145deg, #ffffff 0%, var(--cream, #f3ece0) 100%);
-  color: var(--bark, #3a2e26);
-  border: 1.5px solid var(--accent-soft);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.btn-secondary:hover {
-  border-color: var(--terra, #b5582f);
-  background: linear-gradient(145deg, var(--cream, #f3ece0) 0%, var(--washi, #ece3d4) 100%);
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-/* Ghost button */
-.btn-ghost {
-  background: transparent;
-  color: var(--terra);
-  border: none;
-  box-shadow: none;
-}
-
-.btn-ghost:hover {
-  background: rgba(181, 88, 47, 0.08);
-}
-
-/* Small button variant */
-.btn-sm {
-  padding: 0.625rem 1rem;
-  font-size: 0.8125rem;
-  border-radius: 0.75rem;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  width: 100%;
 }
 
 /* ==========================================
@@ -525,42 +223,19 @@ p, span, li {
 
 .input {
   width: 100%;
-  padding: 1rem 1.25rem;
-  background: linear-gradient(145deg, #ffffff 0%, #fafafa 100%);
-  border: 1.5px solid rgba(212, 165, 116, 0.3);
-  border-radius: 1rem;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
   outline: none;
-  font-size: 1rem;
-  font-family: inherit;
-  color: var(--bark);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.02),
-    0 1px 2px rgba(255, 255, 255, 0.8);
-  position: relative;
-  z-index: 1;
-}
-
-.input::placeholder {
-  color: var(--muted);
-  opacity: 0.7;
-}
-
-.input:hover {
-  border-color: rgba(212, 165, 116, 0.5);
+  transition: border-color 0.2s ease;
 }
 
 .input:focus {
   border-color: var(--accent);
-  box-shadow:
-    0 0 0 4px rgba(181, 88, 47, 0.08),
-    inset 0 2px 4px rgba(0, 0, 0, 0.02);
-}
-
-/* Textarea specific */
-textarea.input {
-  resize: vertical;
-  min-height: 100px;
 }
 
 /* ==========================================
@@ -572,128 +247,136 @@ textarea.input {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(32px) saturate(180%);
-  -webkit-backdrop-filter: blur(32px) saturate(180%);
-  border-top: 1px solid rgba(236, 227, 212, 0.5);
-  box-shadow:
-    0 -2px 8px rgba(0, 0, 0, 0.02),
-    0 -8px 24px rgba(0, 0, 0, 0.04);
   z-index: 50;
-}
-
-/* Nav item hover effect */
-.bottom-nav button {
-  position: relative;
-}
-
-.bottom-nav button::before {
-  content: '';
-  position: absolute;
-  inset: 4px;
-  border-radius: 12px;
-  background: transparent;
-  transition: background 0.2s ease;
-}
-
-.bottom-nav button:hover::before {
-  background: rgba(181, 88, 47, 0.06);
-}
-
-.safe-area-pb {
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-}
-
-.safe-area-pt {
-  padding-top: max(0.75rem, env(safe-area-inset-top));
+  padding-top: 12px;
+  padding-bottom: max(30px, env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(244,238,226,0) 0%, rgba(244,238,226,0.92) 36%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line2);
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 /* ==========================================
-   Cycle Ring
+   Phase pill
    ========================================== */
 
-.progress-ring {
-  transform: rotate(-90deg);
-  filter: drop-shadow(0 6px 20px rgba(181, 88, 47, 0.15));
-}
-
-.progress-ring__circle {
-  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: 50% 50%;
-}
-
-.cycle-ring-container {
-  position: relative;
-  display: flex;
+.phase-pill {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 8px;
-}
-
-.cycle-ring-container::before {
-  content: '';
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 60%, transparent 100%);
-  filter: blur(8px);
-}
-
-.cycle-ring-content {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+  gap: 9px;
+  padding: 9px 18px 9px 12px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 /* ==========================================
-   Calendar
+   Scale control (check-in)
    ========================================== */
 
-.calendar-day {
-  aspect-ratio: 1;
-  border-radius: 0.75rem;
+.scale-segment {
+  flex: 1;
+  height: 52px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8125rem;
+  font-family: 'Shippori Mincho B1', serif;
+  font-size: 19px;
   font-weight: 600;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: default;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
 }
 
-.calendar-day.today {
-  transform: scale(1.15);
-  z-index: 10;
-  font-weight: 700;
-  box-shadow: var(--shadow-medium);
-  ring: 2px;
-  ring-offset: 2px;
+.scale-segment.active {
+  background: linear-gradient(140deg, var(--accent), var(--accent-deep));
+  color: #fff;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.scale-segment:not(.active) {
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  color: var(--ink3);
 }
 
 /* ==========================================
-   Expandable Sections
+   Symptom chip
    ========================================== */
 
-.expandable-content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.symptom-chip {
+  padding: 9px 16px;
+  border-radius: 99px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
 }
 
-.expandable-content.expanded {
-  grid-template-rows: 1fr;
+.symptom-chip.active {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  color: var(--accent-deep);
+  font-weight: 700;
 }
 
-.expandable-content > div {
-  overflow: hidden;
+.symptom-chip:not(.active) {
+  background: var(--paper2);
+  border: 1px solid var(--line);
+  color: var(--ink2);
+  font-weight: 500;
 }
 
 /* ==========================================
-   Toast / Notifications
+   Prediction pill
+   ========================================== */
+
+.prediction-pill {
+  padding: 13px 16px;
+  border-radius: 15px;
+  background: var(--paper2);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+/* ==========================================
+   Icon tile
+   ========================================== */
+
+.icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================
+   Affirmation strip
+   ========================================== */
+
+.affirmation-strip {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: linear-gradient(120deg, var(--accent-tint), var(--card));
+  border: 1px solid var(--accent-line);
+}
+
+/* ==========================================
+   Toast
    ========================================== */
 
 .toast {
@@ -701,170 +384,26 @@ textarea.input {
   bottom: 6rem;
   left: 50%;
   transform: translateX(-50%);
-  padding: 1rem 1.75rem;
-  border-radius: 1rem;
-  background: linear-gradient(145deg, var(--terra, #b5582f) 0%, #c4664a 100%);
-  color: var(--cream, #f3ece0);
-  font-family: 'Noto Sans JP', system-ui, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  box-shadow:
-    0 4px 12px rgba(181, 88, 47, 0.3),
-    0 8px 24px rgba(181, 88, 47, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  animation: toast-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  padding: 12px 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 30%, transparent);
+  animation: toast-in 0.4s ease-out forwards;
   z-index: 100;
 }
 
 @keyframes toast-in {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(16px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
-}
-
-/* Success toast variant */
-.toast-success {
-  background: linear-gradient(145deg, #10b981 0%, #34d399 100%);
-  box-shadow:
-    0 4px 12px rgba(16, 185, 129, 0.3),
-    0 8px 24px rgba(16, 185, 129, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* ==========================================
-   Range Slider
+   Animations
    ========================================== */
-
-input[type="range"] {
-  width: 100%;
-  height: 8px;
-  border-radius: 9999px;
-  appearance: none;
-  cursor: pointer;
-  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--value, 50%), var(--accent-soft) var(--value, 50%), var(--accent-soft) 100%);
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  border-radius: 9999px;
-  background: white;
-  border: 3px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 24px;
-  height: 24px;
-  border-radius: 9999px;
-  background: white;
-  border: 3px solid var(--accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-}
-
-/* Date input */
-input[type="date"] {
-  color-scheme: light;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.2s ease;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
-}
-
-/* ==========================================
-   Mood Buttons / Rating Scale
-   ========================================== */
-
-.mood-btn {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  font-weight: 600;
-}
-
-.mood-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.mood-btn:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.08),
-    0 8px 16px rgba(0, 0, 0, 0.06);
-}
-
-.mood-btn:hover::before {
-  opacity: 1;
-}
-
-.mood-btn.active {
-  transform: scale(1.05);
-  box-shadow:
-    0 4px 12px rgba(236, 72, 153, 0.3),
-    0 8px 20px rgba(236, 72, 153, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.mood-btn.active::before {
-  opacity: 1;
-}
-
-/* Symptom/Flow tag buttons */
-.tag-btn {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.tag-btn:hover {
-  transform: translateY(-1px);
-}
-
-.tag-btn.active {
-  box-shadow:
-    0 2px 8px rgba(139, 92, 246, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-/* ==========================================
-   Animations - Slow & Soft (Zen aesthetic)
-   Motion: 400-600ms ease-out, no bouncy/playful easing
-   ========================================== */
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes pulse-soft {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.01); }
-}
 
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(16px); }
@@ -876,1040 +415,217 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   to { opacity: 1; }
 }
 
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse-soft {
-  animation: pulse-soft 5s ease-in-out infinite;
-}
-
 .animate-slide-up {
-  animation: slide-up 0.5s ease-out forwards;
+  animation: slide-up 0.4s ease-out forwards;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+  animation: fade-in 0.5s ease-out forwards;
 }
 
-.animate-scale-in {
-  animation: scale-in 0.5s ease-out forwards;
-}
-
-/* Stagger children - slower, more deliberate */
 .stagger-children > * {
   opacity: 0;
-  animation: slide-up 0.5s ease-out forwards;
+  animation: slide-up 0.4s ease-out forwards;
 }
-
-.stagger-children > *:nth-child(1) { animation-delay: 0.08s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.16s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.24s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.32s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.40s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.48s; }
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
 
 /* ==========================================
-   Phase Background Container
+   Expandable
    ========================================== */
 
-.phase-background-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
+.expandable-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.expandable-content.expanded {
+  grid-template-rows: 1fr;
+}
+
+.expandable-content > div {
   overflow: hidden;
-  z-index: -1;
 }
 
-/* Ensure main content stays above phase background */
-main, .main-content, [role="main"] {
+/* ==========================================
+   Reduced motion
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================
+   Calendar grid
+   ========================================== */
+
+.calendar-day {
+  aspect-ratio: 1 / 1.06;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  z-index: 1;
+  font-family: 'Shippori Mincho B1', serif;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.phase-bg {
-  position: absolute;
+/* ==========================================
+   Range slider
+   ========================================== */
+
+input[type="range"] {
   width: 100%;
-  height: 100%;
+  height: 5px;
+  border-radius: 3px;
+  appearance: none;
+  cursor: pointer;
+  background: var(--paper2);
 }
 
-/* ==========================================
-   MENSTRUAL - Embracing warmth
-   ========================================== */
-
-@keyframes embrace-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.35;
-  }
-}
-
-@keyframes warmth-pulse {
-  0%, 100% {
-    opacity: 0.15;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-  50% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
-.phase-bg.menstrual .embrace-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--phase-menstrual) 0%, transparent 70%);
-  opacity: 0.3;
-}
-
-.phase-bg.menstrual .embrace-1 {
-  width: 350px;
-  height: 350px;
-  top: 15%;
-  left: 50%;
-  animation: embrace-pulse 5s ease-in-out infinite;
-}
-
-.phase-bg.menstrual .embrace-2 {
-  width: 280px;
-  height: 280px;
-  top: 22%;
-  left: 45%;
-  animation: embrace-pulse 5s ease-in-out infinite 0.8s;
-}
-
-.phase-bg.menstrual .embrace-3 {
-  width: 220px;
-  height: 220px;
-  top: 28%;
-  left: 55%;
-  animation: embrace-pulse 5s ease-in-out infinite 1.6s;
-}
-
-.phase-bg.menstrual .warmth-glow {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  top: 40%;
-  left: 50%;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%);
-  animation: warmth-pulse 7s ease-in-out infinite;
-}
-
-/* ==========================================
-   FOLLICULAR - Rising energy
-   ========================================== */
-
-@keyframes rise {
-  0% {
-    transform: translateY(100vh) scale(0);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.7;
-  }
-  85% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(-100px) scale(1);
-    opacity: 0;
-  }
-}
-
-@keyframes rays-rotate {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.phase-bg.follicular .rising-bubble {
-  position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--phase-follicular) 0%, var(--accent-light) 100%);
-}
-
-.phase-bg.follicular .bubble-1 { width: 24px; height: 24px; left: 8%; animation: rise 9s ease-in-out infinite; }
-.phase-bg.follicular .bubble-2 { width: 36px; height: 36px; left: 22%; animation: rise 11s ease-in-out infinite 1.2s; }
-.phase-bg.follicular .bubble-3 { width: 18px; height: 18px; left: 38%; animation: rise 8s ease-in-out infinite 0.6s; }
-.phase-bg.follicular .bubble-4 { width: 30px; height: 30px; left: 52%; animation: rise 10s ease-in-out infinite 2.4s; }
-.phase-bg.follicular .bubble-5 { width: 22px; height: 22px; left: 68%; animation: rise 9s ease-in-out infinite 1.8s; }
-.phase-bg.follicular .bubble-6 { width: 28px; height: 28px; left: 82%; animation: rise 12s ease-in-out infinite 0.9s; }
-.phase-bg.follicular .bubble-7 { width: 16px; height: 16px; left: 12%; animation: rise 7s ease-in-out infinite 3.6s; }
-.phase-bg.follicular .bubble-8 { width: 34px; height: 34px; left: 62%; animation: rise 13s ease-in-out infinite 3s; }
-
-.phase-bg.follicular .growth-rays {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  width: 400px;
-  height: 400px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    var(--accent-soft) 15deg,
-    transparent 30deg
-  );
-  border-radius: 50%;
-  opacity: 0.4;
-  animation: rays-rotate 40s linear infinite;
-}
-
-/* ==========================================
-   OVULATORY - Radiant energy
-   ========================================== */
-
-@keyframes radiance-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.3);
-    opacity: 0.6;
-  }
-}
-
-@keyframes ring-expand {
-  0% {
-    transform: translate(-50%, -50%) scale(0.6);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.5);
-    opacity: 0;
-  }
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2) rotate(180deg);
-    opacity: 0.9;
-  }
-}
-
-.phase-bg.ovulatory .radiance-core {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--phase-ovulatory) 0%, var(--accent-light) 40%, transparent 70%);
-  animation: radiance-pulse 4s ease-in-out infinite;
-}
-
-.phase-bg.ovulatory .radiance-ring {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  border-radius: 50%;
-  border: 3px solid var(--phase-ovulatory);
-  opacity: 0.5;
-}
-
-.phase-bg.ovulatory .ring-1 { width: 220px; height: 220px; animation: ring-expand 4s ease-out infinite; }
-.phase-bg.ovulatory .ring-2 { width: 220px; height: 220px; animation: ring-expand 4s ease-out infinite 1.3s; }
-.phase-bg.ovulatory .ring-3 { width: 220px; height: 220px; animation: ring-expand 4s ease-out infinite 2.6s; }
-
-.phase-bg.ovulatory .sparkle {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: var(--phase-ovulatory);
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-
-.phase-bg.ovulatory .sparkle-1 { top: 12%; left: 18%; animation: sparkle 2.5s ease-in-out infinite; }
-.phase-bg.ovulatory .sparkle-2 { top: 22%; left: 78%; animation: sparkle 3s ease-in-out infinite 0.4s; }
-.phase-bg.ovulatory .sparkle-3 { top: 38%; left: 12%; animation: sparkle 2.5s ease-in-out infinite 0.8s; }
-.phase-bg.ovulatory .sparkle-4 { top: 32%; left: 88%; animation: sparkle 2.8s ease-in-out infinite 1.2s; }
-.phase-bg.ovulatory .sparkle-5 { top: 48%; left: 28%; animation: sparkle 2.6s ease-in-out infinite 1.6s; }
-.phase-bg.ovulatory .sparkle-6 { top: 42%; left: 72%; animation: sparkle 2.4s ease-in-out infinite 2s; }
-
-/* ==========================================
-   LUTEAL - Settling calm
-   ========================================== */
-
-@keyframes fall {
-  0% {
-    transform: translateY(-30px) rotate(0deg);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.6;
-  }
-  85% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes cozy-breathe {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.35; }
-}
-
-.phase-bg.luteal .falling-particle {
-  position: absolute;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--phase-luteal) 0%, var(--accent-light) 100%);
-}
-
-.phase-bg.luteal .particle-1 { width: 10px; height: 10px; left: 5%; animation: fall 14s linear infinite; }
-.phase-bg.luteal .particle-2 { width: 14px; height: 14px; left: 15%; animation: fall 17s linear infinite 1.2s; }
-.phase-bg.luteal .particle-3 { width: 8px; height: 8px; left: 25%; animation: fall 12s linear infinite 2.4s; }
-.phase-bg.luteal .particle-4 { width: 12px; height: 12px; left: 35%; animation: fall 16s linear infinite 0.6s; }
-.phase-bg.luteal .particle-5 { width: 9px; height: 9px; left: 45%; animation: fall 13s linear infinite 3.6s; }
-.phase-bg.luteal .particle-6 { width: 11px; height: 11px; left: 55%; animation: fall 15s linear infinite 1.8s; }
-.phase-bg.luteal .particle-7 { width: 13px; height: 13px; left: 65%; animation: fall 18s linear infinite 3s; }
-.phase-bg.luteal .particle-8 { width: 7px; height: 7px; left: 75%; animation: fall 11s linear infinite 4.8s; }
-.phase-bg.luteal .particle-9 { width: 10px; height: 10px; left: 85%; animation: fall 14s linear infinite 0.9s; }
-.phase-bg.luteal .particle-10 { width: 12px; height: 12px; left: 92%; animation: fall 16s linear infinite 4.2s; }
-.phase-bg.luteal .particle-11 { width: 8px; height: 8px; left: 10%; animation: fall 13s linear infinite 6s; }
-.phase-bg.luteal .particle-12 { width: 11px; height: 11px; left: 50%; animation: fall 15s linear infinite 5.4s; }
-
-.phase-bg.luteal .cozy-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, var(--accent-bg) 0%, transparent 100%);
-  animation: cozy-breathe 6s ease-in-out infinite;
-}
-
-/* ==========================================
-   SUNSET THEME ANIMATIONS
-   ========================================== */
-
-@keyframes wave-flow {
-  0%, 100% { transform: translateX(-25%) translateY(0); }
-  50% { transform: translateX(0%) translateY(-20px); }
-}
-
-@keyframes orb-float {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-  50% { transform: translate(20px, -30px) scale(1.1); opacity: 0.6; }
-}
-
-@keyframes sun-ray {
-  0% { transform: rotate(0deg) scaleY(0.8); opacity: 0.3; }
-  50% { transform: rotate(180deg) scaleY(1); opacity: 0.5; }
-  100% { transform: rotate(360deg) scaleY(0.8); opacity: 0.3; }
-}
-
-@keyframes sun-pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(20px); }
-  50% { transform: translate(-50%, -50%) scale(1.2); filter: blur(30px); }
-}
-
-@keyframes corona-expand {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-  50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.2; }
-}
-
-@keyframes cloud-drift {
-  0%, 100% { transform: translateX(0); opacity: 0.3; }
-  50% { transform: translateX(30px); opacity: 0.5; }
-}
-
-.phase-bg.sunset-menstrual .sunset-wave {
-  position: absolute;
-  width: 200%;
-  height: 300px;
-  background: linear-gradient(180deg, transparent 0%, #ff7e5f20 30%, #feb47b30 60%, transparent 100%);
-  border-radius: 40%;
-}
-
-.phase-bg.sunset-menstrual .wave-1 {
-  top: 10%;
-  left: -50%;
-  animation: wave-flow 8s ease-in-out infinite;
-}
-
-.phase-bg.sunset-menstrual .wave-2 {
-  top: 25%;
-  left: -30%;
-  animation: wave-flow 10s ease-in-out infinite 2s;
-}
-
-.phase-bg.sunset-menstrual .sunset-orb {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ff7e5f 0%, #feb47b 50%, transparent 70%);
-}
-
-.phase-bg.sunset-menstrual .orb-1 {
-  width: 200px;
-  height: 200px;
-  top: 15%;
-  right: 10%;
-  animation: orb-float 6s ease-in-out infinite;
-}
-
-.phase-bg.sunset-menstrual .orb-2 {
-  width: 150px;
-  height: 150px;
-  top: 40%;
-  left: 15%;
-  animation: orb-float 8s ease-in-out infinite 1s;
-}
-
-.phase-bg.sunset-menstrual .warmth-glow {
-  position: absolute;
-  width: 100%;
-  height: 60%;
-  bottom: 0;
-  background: linear-gradient(to top, #ffe5d950 0%, transparent 100%);
-}
-
-.phase-bg.sunset-follicular .sunset-ray {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 4px;
-  height: 150px;
-  background: linear-gradient(to bottom, #ff7e5f60 0%, transparent 100%);
-  transform-origin: bottom center;
-  border-radius: 4px;
-}
-
-.phase-bg.sunset-follicular .ray-1 { transform: rotate(-60deg); animation: sun-ray 15s linear infinite; }
-.phase-bg.sunset-follicular .ray-2 { transform: rotate(-30deg); animation: sun-ray 18s linear infinite 1s; }
-.phase-bg.sunset-follicular .ray-3 { transform: rotate(0deg); animation: sun-ray 12s linear infinite 2s; }
-.phase-bg.sunset-follicular .ray-4 { transform: rotate(30deg); animation: sun-ray 16s linear infinite 0.5s; }
-.phase-bg.sunset-follicular .ray-5 { transform: rotate(60deg); animation: sun-ray 14s linear infinite 1.5s; }
-.phase-bg.sunset-follicular .ray-6 { transform: rotate(90deg); animation: sun-ray 20s linear infinite 3s; }
-
-.phase-bg.sunset-follicular .sunrise-glow {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150%;
-  height: 200px;
-  background: radial-gradient(ellipse at bottom, #ffcba450 0%, #ff7e5f20 40%, transparent 70%);
-}
-
-.phase-bg.sunset-ovulatory .sun-core {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffb347 0%, #ff7e5f 60%, transparent 100%);
-  animation: sun-pulse 4s ease-in-out infinite;
-}
-
-.phase-bg.sunset-ovulatory .sun-corona {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  border-radius: 50%;
-  border: 2px solid #ffb34760;
-}
-
-.phase-bg.sunset-ovulatory .corona-1 {
-  width: 250px;
-  height: 250px;
-  animation: corona-expand 3s ease-in-out infinite;
-}
-
-.phase-bg.sunset-ovulatory .corona-2 {
-  width: 320px;
-  height: 320px;
-  animation: corona-expand 3s ease-in-out infinite 1.5s;
-}
-
-.phase-bg.sunset-ovulatory .sun-flare {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #ffb347;
-  border-radius: 50%;
-  filter: blur(2px);
-  animation: sparkle 3s ease-in-out infinite;
-}
-
-.phase-bg.sunset-ovulatory .flare-1 { top: 10%; left: 20%; animation-delay: 0s; }
-.phase-bg.sunset-ovulatory .flare-2 { top: 25%; left: 75%; animation-delay: 0.5s; }
-.phase-bg.sunset-ovulatory .flare-3 { top: 40%; left: 15%; animation-delay: 1s; }
-.phase-bg.sunset-ovulatory .flare-4 { top: 15%; left: 85%; animation-delay: 1.5s; }
-.phase-bg.sunset-ovulatory .flare-5 { top: 35%; left: 60%; animation-delay: 2s; }
-.phase-bg.sunset-ovulatory .flare-6 { top: 50%; left: 30%; animation-delay: 2.5s; }
-.phase-bg.sunset-ovulatory .flare-7 { top: 20%; left: 45%; animation-delay: 0.3s; }
-.phase-bg.sunset-ovulatory .flare-8 { top: 45%; left: 80%; animation-delay: 1.8s; }
-
-.phase-bg.sunset-luteal .dusk-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #feb47b10 0%, #ff7e5f15 50%, #ce93d820 100%);
-}
-
-.phase-bg.sunset-luteal .floating-cloud {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, #ffcba440 0%, transparent 70%);
-}
-
-.phase-bg.sunset-luteal .cloud-1 { width: 300px; height: 150px; top: 10%; left: 10%; animation: cloud-drift 12s ease-in-out infinite; }
-.phase-bg.sunset-luteal .cloud-2 { width: 250px; height: 120px; top: 25%; right: 15%; animation: cloud-drift 15s ease-in-out infinite 2s; }
-.phase-bg.sunset-luteal .cloud-3 { width: 200px; height: 100px; top: 45%; left: 20%; animation: cloud-drift 10s ease-in-out infinite 4s; }
-.phase-bg.sunset-luteal .cloud-4 { width: 280px; height: 140px; top: 60%; right: 10%; animation: cloud-drift 14s ease-in-out infinite 1s; }
-.phase-bg.sunset-luteal .cloud-5 { width: 220px; height: 110px; top: 35%; left: 50%; animation: cloud-drift 13s ease-in-out infinite 3s; }
-
-/* ==========================================
-   BOTANICAL THEME ANIMATIONS
-   ========================================== */
-
-@keyframes petal-fall {
-  0% { transform: translateY(-50px) rotate(0deg) translateX(0); opacity: 0; }
-  10% { opacity: 0.7; }
-  90% { opacity: 0.7; }
-  100% { transform: translateY(100vh) rotate(360deg) translateX(50px); opacity: 0; }
-}
-
-@keyframes vine-grow {
-  0%, 100% { transform: scaleY(0.8) translateY(20px); opacity: 0.3; }
-  50% { transform: scaleY(1) translateY(0); opacity: 0.5; }
-}
-
-@keyframes bloom-open {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.9) rotate(0deg); opacity: 0.4; }
-  50% { transform: translate(-50%, -50%) scale(1.1) rotate(10deg); opacity: 0.6; }
-}
-
-@keyframes leaf-fall {
-  0% { transform: translateY(-30px) rotate(-20deg); opacity: 0; }
-  15% { opacity: 0.6; }
-  85% { opacity: 0.6; }
-  100% { transform: translateY(100vh) rotate(200deg); opacity: 0; }
-}
-
-.phase-bg.botanical-menstrual .falling-petal {
-  position: absolute;
-  width: 20px;
-  height: 30px;
-  background: radial-gradient(ellipse at center, #c4a77d 0%, #c4a77d80 50%, transparent 100%);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-}
-
-.phase-bg.botanical-menstrual .petal-1 { left: 10%; animation: petal-fall 12s ease-in-out infinite; }
-.phase-bg.botanical-menstrual .petal-2 { left: 25%; animation: petal-fall 15s ease-in-out infinite 1.5s; }
-.phase-bg.botanical-menstrual .petal-3 { left: 40%; animation: petal-fall 11s ease-in-out infinite 3s; }
-.phase-bg.botanical-menstrual .petal-4 { left: 55%; animation: petal-fall 14s ease-in-out infinite 0.8s; }
-.phase-bg.botanical-menstrual .petal-5 { left: 70%; animation: petal-fall 13s ease-in-out infinite 2.2s; }
-.phase-bg.botanical-menstrual .petal-6 { left: 85%; animation: petal-fall 16s ease-in-out infinite 4s; }
-.phase-bg.botanical-menstrual .petal-7 { left: 15%; animation: petal-fall 10s ease-in-out infinite 5s; }
-.phase-bg.botanical-menstrual .petal-8 { left: 60%; animation: petal-fall 17s ease-in-out infinite 6s; }
-
-.phase-bg.botanical-menstrual .earth-glow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40%;
-  background: linear-gradient(to top, #c4a77d20 0%, transparent 100%);
-}
-
-.phase-bg.botanical-follicular .growing-vine {
-  position: absolute;
-  bottom: 0;
-  width: 8px;
-  height: 200px;
-  background: linear-gradient(to top, #7c9a7e60 0%, #7c9a7e20 80%, transparent 100%);
-  border-radius: 4px;
-  transform-origin: bottom center;
-}
-
-.phase-bg.botanical-follicular .vine-1 { left: 5%; height: 180px; animation: vine-grow 6s ease-in-out infinite; }
-.phase-bg.botanical-follicular .vine-2 { left: 20%; height: 220px; animation: vine-grow 7s ease-in-out infinite 0.5s; }
-.phase-bg.botanical-follicular .vine-3 { left: 35%; height: 160px; animation: vine-grow 5s ease-in-out infinite 1s; }
-.phase-bg.botanical-follicular .vine-4 { left: 55%; height: 240px; animation: vine-grow 8s ease-in-out infinite 1.5s; }
-.phase-bg.botanical-follicular .vine-5 { left: 75%; height: 190px; animation: vine-grow 6s ease-in-out infinite 2s; }
-.phase-bg.botanical-follicular .vine-6 { left: 90%; height: 210px; animation: vine-grow 7s ease-in-out infinite 0.8s; }
-
-.phase-bg.botanical-follicular .spring-light {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 200px;
-  background: radial-gradient(ellipse at top, #7c9a7e20 0%, transparent 70%);
-}
-
-.phase-bg.botanical-ovulatory .bloom-center {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #d4a574 0%, #c4a77d 60%, transparent 100%);
-  animation: bloom-open 5s ease-in-out infinite;
-}
-
-.phase-bg.botanical-ovulatory .bloom-petal {
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  width: 80px;
-  height: 120px;
-  background: radial-gradient(ellipse, #7c9a7e50 0%, transparent 70%);
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  transform-origin: center bottom;
-}
-
-.phase-bg.botanical-ovulatory .bloom-1 { transform: translate(-50%, -50%) rotate(0deg); animation: bloom-open 5s ease-in-out infinite; }
-.phase-bg.botanical-ovulatory .bloom-2 { transform: translate(-50%, -50%) rotate(45deg); animation: bloom-open 5s ease-in-out infinite 0.3s; }
-.phase-bg.botanical-ovulatory .bloom-3 { transform: translate(-50%, -50%) rotate(90deg); animation: bloom-open 5s ease-in-out infinite 0.6s; }
-.phase-bg.botanical-ovulatory .bloom-4 { transform: translate(-50%, -50%) rotate(135deg); animation: bloom-open 5s ease-in-out infinite 0.9s; }
-.phase-bg.botanical-ovulatory .bloom-5 { transform: translate(-50%, -50%) rotate(180deg); animation: bloom-open 5s ease-in-out infinite 1.2s; }
-.phase-bg.botanical-ovulatory .bloom-6 { transform: translate(-50%, -50%) rotate(225deg); animation: bloom-open 5s ease-in-out infinite 1.5s; }
-.phase-bg.botanical-ovulatory .bloom-7 { transform: translate(-50%, -50%) rotate(270deg); animation: bloom-open 5s ease-in-out infinite 1.8s; }
-.phase-bg.botanical-ovulatory .bloom-8 { transform: translate(-50%, -50%) rotate(315deg); animation: bloom-open 5s ease-in-out infinite 2.1s; }
-
-.phase-bg.botanical-luteal .autumn-leaf {
-  position: absolute;
-  width: 18px;
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
   height: 22px;
-  background: linear-gradient(135deg, #c4a77d 0%, #9c8aa5 100%);
-  border-radius: 50% 0% 50% 50%;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 25%, transparent);
+  cursor: pointer;
 }
 
-.phase-bg.botanical-luteal .leaf-1 { left: 8%; animation: leaf-fall 15s linear infinite; }
-.phase-bg.botanical-luteal .leaf-2 { left: 18%; animation: leaf-fall 18s linear infinite 1s; }
-.phase-bg.botanical-luteal .leaf-3 { left: 28%; animation: leaf-fall 14s linear infinite 2s; }
-.phase-bg.botanical-luteal .leaf-4 { left: 38%; animation: leaf-fall 17s linear infinite 0.5s; }
-.phase-bg.botanical-luteal .leaf-5 { left: 48%; animation: leaf-fall 16s linear infinite 3s; }
-.phase-bg.botanical-luteal .leaf-6 { left: 58%; animation: leaf-fall 19s linear infinite 1.5s; }
-.phase-bg.botanical-luteal .leaf-7 { left: 68%; animation: leaf-fall 15s linear infinite 4s; }
-.phase-bg.botanical-luteal .leaf-8 { left: 78%; animation: leaf-fall 13s linear infinite 2.5s; }
-.phase-bg.botanical-luteal .leaf-9 { left: 88%; animation: leaf-fall 18s linear infinite 0.8s; }
-.phase-bg.botanical-luteal .leaf-10 { left: 95%; animation: leaf-fall 16s linear infinite 3.5s; }
-
-.phase-bg.botanical-luteal .harvest-glow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, #e8dcc420 0%, transparent 100%);
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background: #fff;
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--accent) 25%, transparent);
+  cursor: pointer;
 }
 
 /* ==========================================
-   DUSK THEME ANIMATIONS
+   Safe areas
    ========================================== */
 
-@keyframes nebula-drift {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.2; }
-  50% { transform: translate(30px, 20px) scale(1.1); opacity: 0.35; }
+.safe-area-pb {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
-@keyframes star-twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.3); }
-}
-
-@keyframes star-rise {
-  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(-50px) scale(1); opacity: 0; }
-}
-
-@keyframes moon-glow-pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(25px); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.15); filter: blur(35px); opacity: 0.7; }
-}
-
-@keyframes halo-expand {
-  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.4; }
-  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-}
-
-@keyframes arc-swoop {
-  0%, 100% { transform: scaleX(1) translateX(0); opacity: 0.2; }
-  50% { transform: scaleX(1.1) translateX(10px); opacity: 0.4; }
-}
-
-.phase-bg.dusk-menstrual .nebula-cloud {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, #6b5b9540 0%, #b8a9c920 40%, transparent 70%);
-  filter: blur(30px);
-}
-
-.phase-bg.dusk-menstrual .nebula-1 {
-  width: 400px;
-  height: 300px;
-  top: 10%;
-  left: 20%;
-  animation: nebula-drift 15s ease-in-out infinite;
-}
-
-.phase-bg.dusk-menstrual .nebula-2 {
-  width: 350px;
-  height: 250px;
-  top: 35%;
-  right: 15%;
-  animation: nebula-drift 18s ease-in-out infinite 3s;
-}
-
-.phase-bg.dusk-menstrual .tiny-star {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: #d4af37;
-  border-radius: 50%;
-}
-
-.phase-bg.dusk-menstrual .star-1 { top: 8%; left: 15%; animation: star-twinkle 2s ease-in-out infinite; }
-.phase-bg.dusk-menstrual .star-2 { top: 12%; left: 45%; animation: star-twinkle 2.5s ease-in-out infinite 0.3s; }
-.phase-bg.dusk-menstrual .star-3 { top: 20%; left: 75%; animation: star-twinkle 1.8s ease-in-out infinite 0.6s; }
-.phase-bg.dusk-menstrual .star-4 { top: 30%; left: 25%; animation: star-twinkle 2.2s ease-in-out infinite 0.9s; }
-.phase-bg.dusk-menstrual .star-5 { top: 35%; left: 85%; animation: star-twinkle 2s ease-in-out infinite 1.2s; }
-.phase-bg.dusk-menstrual .star-6 { top: 45%; left: 10%; animation: star-twinkle 2.3s ease-in-out infinite 1.5s; }
-.phase-bg.dusk-menstrual .star-7 { top: 50%; left: 55%; animation: star-twinkle 1.9s ease-in-out infinite 0.2s; }
-.phase-bg.dusk-menstrual .star-8 { top: 15%; left: 90%; animation: star-twinkle 2.1s ease-in-out infinite 0.7s; }
-.phase-bg.dusk-menstrual .star-9 { top: 25%; left: 5%; animation: star-twinkle 2.4s ease-in-out infinite 1s; }
-.phase-bg.dusk-menstrual .star-10 { top: 40%; left: 65%; animation: star-twinkle 2s ease-in-out infinite 1.3s; }
-.phase-bg.dusk-menstrual .star-11 { top: 55%; left: 35%; animation: star-twinkle 2.2s ease-in-out infinite 0.4s; }
-.phase-bg.dusk-menstrual .star-12 { top: 18%; left: 60%; animation: star-twinkle 1.7s ease-in-out infinite 0.8s; }
-
-.phase-bg.dusk-follicular .twilight-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #1a1525 0%, #6b5b9520 50%, #b8a9c910 100%);
-  opacity: 0.3;
-}
-
-.phase-bg.dusk-follicular .rising-star {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #d4af37;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #d4af37;
-}
-
-.phase-bg.dusk-follicular .rstar-1 { left: 10%; animation: star-rise 12s ease-out infinite; }
-.phase-bg.dusk-follicular .rstar-2 { left: 25%; animation: star-rise 15s ease-out infinite 1.5s; }
-.phase-bg.dusk-follicular .rstar-3 { left: 40%; animation: star-rise 11s ease-out infinite 3s; }
-.phase-bg.dusk-follicular .rstar-4 { left: 55%; animation: star-rise 14s ease-out infinite 0.8s; }
-.phase-bg.dusk-follicular .rstar-5 { left: 70%; animation: star-rise 13s ease-out infinite 2.2s; }
-.phase-bg.dusk-follicular .rstar-6 { left: 85%; animation: star-rise 16s ease-out infinite 4s; }
-.phase-bg.dusk-follicular .rstar-7 { left: 15%; animation: star-rise 10s ease-out infinite 5s; }
-.phase-bg.dusk-follicular .rstar-8 { left: 60%; animation: star-rise 17s ease-out infinite 6s; }
-
-.phase-bg.dusk-ovulatory .moon-glow {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #d4af37 0%, #6b5b95 50%, transparent 100%);
-  animation: moon-glow-pulse 5s ease-in-out infinite;
-}
-
-.phase-bg.dusk-ovulatory .moon-halo {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  border-radius: 50%;
-  border: 2px solid #d4af3750;
-}
-
-.phase-bg.dusk-ovulatory .halo-1 {
-  width: 200px;
-  height: 200px;
-  animation: halo-expand 4s ease-out infinite;
-}
-
-.phase-bg.dusk-ovulatory .halo-2 {
-  width: 200px;
-  height: 200px;
-  animation: halo-expand 4s ease-out infinite 2s;
-}
-
-.phase-bg.dusk-ovulatory .shimmer-star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background: #d4af37;
-  border-radius: 50%;
-}
-
-.phase-bg.dusk-ovulatory .sstar-1 { top: 5%; left: 12%; animation: star-twinkle 1.5s ease-in-out infinite; }
-.phase-bg.dusk-ovulatory .sstar-2 { top: 10%; left: 35%; animation: star-twinkle 1.8s ease-in-out infinite 0.2s; }
-.phase-bg.dusk-ovulatory .sstar-3 { top: 8%; left: 58%; animation: star-twinkle 1.6s ease-in-out infinite 0.4s; }
-.phase-bg.dusk-ovulatory .sstar-4 { top: 15%; left: 80%; animation: star-twinkle 2s ease-in-out infinite 0.6s; }
-.phase-bg.dusk-ovulatory .sstar-5 { top: 25%; left: 20%; animation: star-twinkle 1.7s ease-in-out infinite 0.8s; }
-.phase-bg.dusk-ovulatory .sstar-6 { top: 35%; left: 90%; animation: star-twinkle 1.9s ease-in-out infinite 1s; }
-.phase-bg.dusk-ovulatory .sstar-7 { top: 40%; left: 5%; animation: star-twinkle 1.5s ease-in-out infinite 1.2s; }
-.phase-bg.dusk-ovulatory .sstar-8 { top: 30%; left: 70%; animation: star-twinkle 2.1s ease-in-out infinite 0.3s; }
-.phase-bg.dusk-ovulatory .sstar-9 { top: 45%; left: 45%; animation: star-twinkle 1.8s ease-in-out infinite 0.5s; }
-.phase-bg.dusk-ovulatory .sstar-10 { top: 50%; left: 25%; animation: star-twinkle 1.6s ease-in-out infinite 0.7s; }
-.phase-bg.dusk-ovulatory .sstar-11 { top: 12%; left: 92%; animation: star-twinkle 2s ease-in-out infinite 0.9s; }
-.phase-bg.dusk-ovulatory .sstar-12 { top: 55%; left: 75%; animation: star-twinkle 1.7s ease-in-out infinite 1.1s; }
-.phase-bg.dusk-ovulatory .sstar-13 { top: 20%; left: 8%; animation: star-twinkle 1.9s ease-in-out infinite 1.3s; }
-.phase-bg.dusk-ovulatory .sstar-14 { top: 38%; left: 55%; animation: star-twinkle 1.5s ease-in-out infinite 0.1s; }
-.phase-bg.dusk-ovulatory .sstar-15 { top: 48%; left: 85%; animation: star-twinkle 2.2s ease-in-out infinite 1.4s; }
-
-.phase-bg.dusk-luteal .swooping-arc {
-  position: absolute;
-  width: 300%;
-  height: 400px;
-  border: 3px solid #6b5b9530;
-  border-radius: 50%;
-  border-top-color: transparent;
-  border-left-color: transparent;
-}
-
-.phase-bg.dusk-luteal .arc-1 {
-  top: 10%;
-  left: -50%;
-  animation: arc-swoop 10s ease-in-out infinite;
-}
-
-.phase-bg.dusk-luteal .arc-2 {
-  top: 30%;
-  left: -80%;
-  animation: arc-swoop 12s ease-in-out infinite 2s;
-}
-
-.phase-bg.dusk-luteal .arc-3 {
-  top: 50%;
-  left: -60%;
-  animation: arc-swoop 14s ease-in-out infinite 4s;
-}
-
-.phase-bg.dusk-luteal .night-mist {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, #6b5b9515 0%, transparent 100%);
+.safe-area-pt {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
 }
 
 /* ==========================================
-   AURORA THEME ANIMATIONS
+   Mood / tag buttons (legacy compat)
    ========================================== */
 
-@keyframes aurora-wave {
-  0%, 100% {
-    transform: translateX(-20%) skewX(-5deg);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateX(20%) skewX(5deg);
-    opacity: 0.6;
-  }
+.mood-btn {
+  transition: all 0.2s ease;
 }
 
-@keyframes curtain-sway {
-  0%, 100% {
-    transform: scaleY(1) translateX(0);
-    opacity: 0.3;
-  }
-  33% {
-    transform: scaleY(1.1) translateX(10px);
-    opacity: 0.5;
-  }
-  66% {
-    transform: scaleY(0.95) translateX(-10px);
-    opacity: 0.4;
-  }
+.mood-btn.active {
+  transform: scale(1.05);
 }
 
-@keyframes ribbon-flow {
-  0% { transform: translateX(-100%) rotate(-5deg); opacity: 0; }
-  20% { opacity: 0.6; }
-  80% { opacity: 0.6; }
-  100% { transform: translateX(100%) rotate(5deg); opacity: 0; }
+.tag-btn {
+  transition: all 0.2s ease;
 }
 
-@keyframes aurora-burst {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: blur(40px); opacity: 0.4; }
-  50% { transform: translate(-50%, -50%) scale(1.3); filter: blur(60px); opacity: 0.6; }
+/* ==========================================
+   Glass (legacy compat for ConsentModal etc.)
+   ========================================== */
+
+.glass {
+  background: rgba(252,250,244,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
-@keyframes magic-float {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { transform: translateY(-50px) scale(1); opacity: 0; }
+/* Legacy button compat */
+.btn {
+  padding: 13px 20px;
+  border-radius: 15px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
 }
 
-@keyframes spark-fade {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 0.8; transform: scale(1.2); }
+.btn:active {
+  transform: scale(0.97);
 }
 
-.phase-bg.aurora-menstrual .aurora-curtain {
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff;
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+/* Legacy font classes */
+.font-display {
+  font-family: 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+}
+
+.font-body {
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+}
+
+.text-bark {
+  color: var(--ink);
+}
+
+.text-terra {
+  color: var(--accent);
+}
+
+.text-muted {
+  color: var(--ink3);
+}
+
+/* Progress ring legacy */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.cycle-ring-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cycle-ring-content {
   position: absolute;
-  top: 0;
-  width: 150%;
-  height: 70%;
-  background: linear-gradient(180deg,
-    #20b2aa30 0%,
-    #ff6b8120 30%,
-    #a78bfa15 60%,
-    transparent 100%
-  );
-  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.phase-bg.aurora-menstrual .curtain-1 {
-  left: -25%;
-  animation: curtain-sway 8s ease-in-out infinite;
+/* Date input */
+input[type="date"] {
+  color-scheme: light;
 }
-
-.phase-bg.aurora-menstrual .curtain-2 {
-  left: 0%;
-  animation: curtain-sway 10s ease-in-out infinite 2s;
-}
-
-.phase-bg.aurora-menstrual .curtain-3 {
-  left: 25%;
-  animation: curtain-sway 9s ease-in-out infinite 4s;
-}
-
-.phase-bg.aurora-follicular .aurora-ribbon {
-  position: absolute;
-  height: 80px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    #20b2aa40 20%,
-    #ff6b8130 50%,
-    #ffd93d20 80%,
-    transparent 100%
-  );
-  filter: blur(10px);
-}
-
-.phase-bg.aurora-follicular .ribbon-1 { top: 10%; width: 100%; animation: ribbon-flow 15s linear infinite; }
-.phase-bg.aurora-follicular .ribbon-2 { top: 25%; width: 80%; animation: ribbon-flow 18s linear infinite 3s; }
-.phase-bg.aurora-follicular .ribbon-3 { top: 40%; width: 120%; animation: ribbon-flow 12s linear infinite 6s; }
-.phase-bg.aurora-follicular .ribbon-4 { top: 55%; width: 90%; animation: ribbon-flow 16s linear infinite 9s; }
-.phase-bg.aurora-follicular .ribbon-5 { top: 70%; width: 110%; animation: ribbon-flow 20s linear infinite 1s; }
-
-.phase-bg.aurora-follicular .magic-glow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30%;
-  background: linear-gradient(to top, #20b2aa15 0%, transparent 100%);
-}
-
-.phase-bg.aurora-ovulatory .aurora-burst {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    #ffd93d 0%,
-    #20b2aa 30%,
-    #ff6b81 60%,
-    #a78bfa 80%,
-    transparent 100%
-  );
-  animation: aurora-burst 6s ease-in-out infinite;
-}
-
-.phase-bg.aurora-ovulatory .magic-particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.phase-bg.aurora-ovulatory .mparticle-1 { left: 5%; background: #20b2aa; animation: magic-float 10s ease-out infinite; }
-.phase-bg.aurora-ovulatory .mparticle-2 { left: 12%; background: #ff6b81; animation: magic-float 12s ease-out infinite 0.5s; }
-.phase-bg.aurora-ovulatory .mparticle-3 { left: 20%; background: #ffd93d; animation: magic-float 9s ease-out infinite 1s; }
-.phase-bg.aurora-ovulatory .mparticle-4 { left: 28%; background: #a78bfa; animation: magic-float 11s ease-out infinite 1.5s; }
-.phase-bg.aurora-ovulatory .mparticle-5 { left: 35%; background: #20b2aa; animation: magic-float 13s ease-out infinite 2s; }
-.phase-bg.aurora-ovulatory .mparticle-6 { left: 42%; background: #ff6b81; animation: magic-float 10s ease-out infinite 2.5s; }
-.phase-bg.aurora-ovulatory .mparticle-7 { left: 50%; background: #ffd93d; animation: magic-float 8s ease-out infinite 3s; }
-.phase-bg.aurora-ovulatory .mparticle-8 { left: 58%; background: #a78bfa; animation: magic-float 14s ease-out infinite 3.5s; }
-.phase-bg.aurora-ovulatory .mparticle-9 { left: 65%; background: #20b2aa; animation: magic-float 11s ease-out infinite 4s; }
-.phase-bg.aurora-ovulatory .mparticle-10 { left: 72%; background: #ff6b81; animation: magic-float 9s ease-out infinite 4.5s; }
-.phase-bg.aurora-ovulatory .mparticle-11 { left: 78%; background: #ffd93d; animation: magic-float 12s ease-out infinite 5s; }
-.phase-bg.aurora-ovulatory .mparticle-12 { left: 85%; background: #a78bfa; animation: magic-float 10s ease-out infinite 5.5s; }
-.phase-bg.aurora-ovulatory .mparticle-13 { left: 92%; background: #20b2aa; animation: magic-float 13s ease-out infinite 6s; }
-.phase-bg.aurora-ovulatory .mparticle-14 { left: 18%; background: #ff6b81; animation: magic-float 11s ease-out infinite 6.5s; }
-.phase-bg.aurora-ovulatory .mparticle-15 { left: 38%; background: #ffd93d; animation: magic-float 9s ease-out infinite 7s; }
-.phase-bg.aurora-ovulatory .mparticle-16 { left: 55%; background: #a78bfa; animation: magic-float 14s ease-out infinite 7.5s; }
-.phase-bg.aurora-ovulatory .mparticle-17 { left: 68%; background: #20b2aa; animation: magic-float 10s ease-out infinite 8s; }
-.phase-bg.aurora-ovulatory .mparticle-18 { left: 82%; background: #ff6b81; animation: magic-float 12s ease-out infinite 8.5s; }
-.phase-bg.aurora-ovulatory .mparticle-19 { left: 25%; background: #ffd93d; animation: magic-float 11s ease-out infinite 9s; }
-.phase-bg.aurora-ovulatory .mparticle-20 { left: 48%; background: #a78bfa; animation: magic-float 13s ease-out infinite 9.5s; }
-
-.phase-bg.aurora-luteal .aurora-wave {
-  position: absolute;
-  width: 200%;
-  height: 200px;
-  background: linear-gradient(180deg,
-    #20b2aa20 0%,
-    #a78bfa15 50%,
-    transparent 100%
-  );
-  filter: blur(20px);
-}
-
-.phase-bg.aurora-luteal .awave-1 {
-  top: 20%;
-  left: -50%;
-  animation: aurora-wave 12s ease-in-out infinite;
-}
-
-.phase-bg.aurora-luteal .awave-2 {
-  top: 45%;
-  left: -30%;
-  animation: aurora-wave 15s ease-in-out infinite 3s;
-}
-
-.phase-bg.aurora-luteal .fading-spark {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #ffd93d;
-  border-radius: 50%;
-  filter: blur(2px);
-}
-
-.phase-bg.aurora-luteal .spark-1 { top: 15%; left: 20%; animation: spark-fade 4s ease-in-out infinite; }
-.phase-bg.aurora-luteal .spark-2 { top: 30%; left: 70%; animation: spark-fade 5s ease-in-out infinite 0.5s; }
-.phase-bg.aurora-luteal .spark-3 { top: 45%; left: 35%; animation: spark-fade 4.5s ease-in-out infinite 1s; }
-.phase-bg.aurora-luteal .spark-4 { top: 60%; left: 80%; animation: spark-fade 3.5s ease-in-out infinite 1.5s; }
-.phase-bg.aurora-luteal .spark-5 { top: 25%; left: 50%; animation: spark-fade 5s ease-in-out infinite 2s; }
-.phase-bg.aurora-luteal .spark-6 { top: 50%; left: 15%; animation: spark-fade 4s ease-in-out infinite 2.5s; }
-.phase-bg.aurora-luteal .spark-7 { top: 35%; left: 90%; animation: spark-fade 4.5s ease-in-out infinite 3s; }
-.phase-bg.aurora-luteal .spark-8 { top: 55%; left: 55%; animation: spark-fade 5s ease-in-out infinite 3.5s; }

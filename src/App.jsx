@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { calculateCycleInfo, calculateCycleStats } from './utils/cycleData';
+import { phaseKeyFromLegacy } from './utils/phases';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { CycleSetup } from './components/CycleSetup';
@@ -9,16 +10,14 @@ import { CycleCalendar } from './components/CycleCalendar';
 import { Settings } from './components/Settings';
 import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
-import { PhaseBackground } from './components/PhaseBackground';
+import { Care } from './components/Care';
 import { ConsentModal } from './components/ConsentModal';
-import { Shop } from './components/Shop';
 
 function App() {
   const [hasConsented, setHasConsented] = useLocalStorage('privacyConsent', false);
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
-  const [theme, setTheme] = useLocalStorage('theme', 'meguri');
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
 
@@ -48,13 +47,12 @@ function App() {
     return checkins.find(c => c.date === today);
   }, [checkins]);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
+  // Set phase on document for CSS token switching
   useEffect(() => {
     if (cycleInfo?.phase) {
       document.documentElement.setAttribute('data-phase', cycleInfo.phase);
+      const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
+      document.documentElement.setAttribute('data-phase-key', phaseKey);
     }
   }, [cycleInfo?.phase]);
 
@@ -105,7 +103,6 @@ function App() {
     });
   };
 
-  // Early returns AFTER all hooks
   if (!hasConsented) {
     return <ConsentModal onAccept={handleAcceptConsent} />;
   }
@@ -115,16 +112,14 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen pb-24 relative isolate">
-      {cycleInfo && <PhaseBackground phase={cycleInfo.phase} theme={theme} />}
-
+    <div style={{ minHeight: '100vh', paddingBottom: 96, position: 'relative' }}>
       <Header
         viewMode={viewMode}
         setViewMode={setViewMode}
         cycleInfo={cycleInfo}
       />
 
-      <main className="max-w-4xl mx-auto px-4 py-6 relative z-10">
+      <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
           <Dashboard
             cycleInfo={cycleInfo}
@@ -156,8 +151,11 @@ function App() {
           <CycleCalendar cycleInfo={cycleInfo} />
         )}
 
-        {activeTab === 'shop' && cycleInfo && (
-          <Shop phase={cycleInfo.phase} />
+        {activeTab === 'care' && cycleInfo && (
+          <Care
+            phase={cycleInfo.phase}
+            onNavigateSettings={() => setActiveTab('settings')}
+          />
         )}
 
         {activeTab === 'settings' && (
@@ -166,8 +164,6 @@ function App() {
             cycleInfo={cycleInfo}
             onUpdate={handleUpdate}
             onReset={handleReset}
-            theme={theme}
-            onThemeChange={setTheme}
           />
         )}
       </main>

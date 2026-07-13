@@ -4,11 +4,11 @@
     "tagline": "Cycle Tracker"
   },
   "nav": {
-    "today": "Today",
-    "checkin": "Check-in",
+    "today": "Home",
+    "checkin": "Log",
     "calendar": "Calendar",
-    "shop": "Shop",
-    "insights": "Insights",
+    "insights": "Trends",
+    "care": "Care",
     "settings": "Settings"
   },
   "header": {
@@ -39,10 +39,10 @@
     },
     "luteal": {
       "name": "Luteal Phase",
-      "description": "Winding down and preparing. Focus on completion over starting.",
+      "description": "A season of ripening and reflection. Slowly, gently, restore your balance.",
       "energy": "Decreasing energy - focus on completion",
-      "kanji": "穏",
-      "kanjiMeaning": "Calm"
+      "kanji": "実",
+      "kanjiMeaning": "Ripening"
     }
   },
   "dashboard": {

@@ -1,12 +1,19 @@
 import { useState } from 'react';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE, LINE2, MINCHO, OLDMIN, GOTHIC, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
+import { Ambient, BrushKanji } from './Ambient';
 import { useTranslation } from 'react-i18next';
-import { CYCLE_PHASES } from '../utils/cycleData';
+import { CycleRing } from './CycleRing';
 import { downloadCalendarEvents } from '../utils/calendarExport';
 
 export function CycleCalendar({ cycleInfo }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isJa = i18n.language.startsWith('ja');
+  const locale = isJa ? 'ja-JP' : 'en-US';
   const { cycleDay, cycleLength, phase } = cycleInfo;
   const [calendarExported, setCalendarExported] = useState(false);
+
+  const phaseKey = phaseKeyFromLegacy(phase);
+  const p = PHASES[phaseKey];
 
   const handleExportCalendar = () => {
     downloadCalendarEvents(cycleInfo.lastPeriodStart || new Date().toISOString().split('T')[0], cycleLength, 6);
@@ -14,185 +21,293 @@ export function CycleCalendar({ cycleInfo }) {
     setTimeout(() => setCalendarExported(false), 3000);
   };
 
-  // Generate array of days for the cycle
-  const days = Array.from({ length: cycleLength }, (_, i) => i + 1);
-
-  // Calculate phase for each day
-  const getPhaseForDay = (day) => {
+  // Calculate phase for each day based on cycle length
+  const getPhaseKeyForDay = (day) => {
     const ratio = cycleLength / 28;
-    const menstrualEnd = Math.round(5 * ratio);
-    const follicularEnd = Math.round(13 * ratio);
-    const ovulatoryEnd = Math.round(17 * ratio);
-
-    if (day <= menstrualEnd) return 'menstrual';
-    if (day <= follicularEnd) return 'follicular';
-    if (day <= ovulatoryEnd) return 'ovulatory';
-    return 'luteal';
-  };
-
-  const phaseStyles = {
-    menstrual: {
-      bg: 'bg-rose-100',
-      activeBg: 'bg-rose-500',
-      text: 'text-rose-700',
-      activeText: 'text-white'
-    },
-    follicular: {
-      bg: 'bg-pink-100',
-      activeBg: 'bg-pink-500',
-      text: 'text-pink-700',
-      activeText: 'text-white'
-    },
-    ovulatory: {
-      bg: 'bg-amber-100',
-      activeBg: 'bg-amber-500',
-      text: 'text-amber-700',
-      activeText: 'text-white'
-    },
-    luteal: {
-      bg: 'bg-violet-100',
-      activeBg: 'bg-violet-500',
-      text: 'text-violet-700',
-      activeText: 'text-white'
+    let acc = 0;
+    for (const k of PHASE_ORDER) {
+      const d = Math.round(PHASES[k].days * ratio);
+      if (day <= acc + d) return k;
+      acc += d;
     }
+    return 'mi';
   };
 
-  const phaseInfo = [
-    { key: 'menstrual', name: t('phases.menstrual.name'), color: 'bg-rose-500', range: `1-${Math.round(5 * cycleLength / 28)} ${t('insights.days')}` },
-    { key: 'follicular', name: t('phases.follicular.name'), color: 'bg-pink-500', range: `${Math.round(5 * cycleLength / 28) + 1}-${Math.round(13 * cycleLength / 28)} ${t('insights.days')}` },
-    { key: 'ovulatory', name: t('phases.ovulatory.name'), color: 'bg-amber-500', range: `${Math.round(13 * cycleLength / 28) + 1}-${Math.round(17 * cycleLength / 28)} ${t('insights.days')}` },
-    { key: 'luteal', name: t('phases.luteal.name'), color: 'bg-violet-500', range: `${Math.round(17 * cycleLength / 28) + 1}-${cycleLength} ${t('insights.days')}` }
+  // Generate 28-day grid
+  const days = Array.from({ length: CYCLE_LEN }, (_, i) => i + 1);
+
+  // Upcoming events computation
+  const today = new Date();
+  const lastPeriod = cycleInfo.lastPeriodStart ? new Date(cycleInfo.lastPeriodStart) : today;
+  const daysSincePeriod = Math.floor((today - lastPeriod) / (1000 * 60 * 60 * 24));
+  const daysUntilNextPeriod = cycleLength - (daysSincePeriod % cycleLength);
+  const nextPeriodDate = new Date(today);
+  nextPeriodDate.setDate(nextPeriodDate.getDate() + daysUntilNextPeriod);
+
+  const ratio = cycleLength / 28;
+  const ovulationDay = Math.round(13 * ratio);
+  const currentCycleDay = (daysSincePeriod % cycleLength) + 1;
+  const daysUntilOvulation = ovulationDay > currentCycleDay ? ovulationDay - currentCycleDay : cycleLength - currentCycleDay + ovulationDay;
+  const nextOvulationDate = new Date(today);
+  nextOvulationDate.setDate(nextOvulationDate.getDate() + daysUntilOvulation);
+
+  const fertileStart = new Date(nextOvulationDate);
+  fertileStart.setDate(fertileStart.getDate() - 3);
+  const fertileEnd = new Date(nextOvulationDate);
+  fertileEnd.setDate(fertileEnd.getDate() + 1);
+
+  const formatRelative = (days) => {
+    if (days === 0) return isJa ? '今日' : 'Today';
+    if (days === 1) return isJa ? '明日' : 'Tomorrow';
+    return isJa ? `${days}日後` : `in ${days} days`;
+  };
+
+  const upcomingEvents = [
+    {
+      kanji: '静',
+      phaseKey: 'sei',
+      title: isJa ? '次の生理' : 'Next Period',
+      date: nextPeriodDate.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
+      relative: formatRelative(daysUntilNextPeriod),
+    },
+    {
+      kanji: '輝',
+      phaseKey: 'ki',
+      title: isJa ? '次の排卵' : 'Next Ovulation',
+      date: nextOvulationDate.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
+      relative: formatRelative(daysUntilOvulation),
+    },
+    {
+      kanji: '芽',
+      phaseKey: 'me',
+      title: isJa ? '妊娠可能期間' : 'Fertile Window',
+      date: `${fertileStart.toLocaleDateString(locale, { month: 'short', day: 'numeric' })} - ${fertileEnd.toLocaleDateString(locale, { day: 'numeric' })}`,
+      relative: formatRelative(Math.max(0, daysUntilOvulation - 3)),
+    },
   ];
 
+  const legendItems = PHASE_ORDER.map((k) => ({
+    key: k,
+    kanji: PHASES[k].kanji,
+    label: isJa
+      ? { sei: '生理', me: '卵胞期', ki: '排卵', mi: '黄体期' }[k]
+      : { sei: 'Menstrual', me: 'Follicular', ki: 'Ovulation', mi: 'Luteal' }[k],
+    accent: PHASES[k].accent,
+  }));
+
   return (
-    <div className="space-y-6 pb-4">
-      {/* Current Status */}
-      <div className="card p-5">
-        <div className="text-center">
-          <div className="text-sm text-muted mb-1">{t('dashboard.day')} {t('dashboard.ofCycle')}</div>
-          <div className="text-3xl font-display text-bark">{cycleDay}</div>
-          <div className={`inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-full ${phaseStyles[phase].bg} ${phaseStyles[phase].text}`}>
-            <div className={`w-2 h-2 rounded-full ${phaseStyles[phase].activeBg}`} />
-            <span className="text-sm font-medium">{t(`phases.${phase}.name`)}</span>
-          </div>
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
+      {/* Title */}
+      <div style={{ textAlign: 'center', padding: '0 16px' }}>
+        <h2 style={{ fontFamily: MINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+          {isJa ? '周期の暦' : 'Cycle Calendar'}
+        </h2>
+        <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, marginTop: 6 }}>
+          {isJa ? '四季のように巡る、あなたの28日。' : 'Your 28 days, cycling like the seasons.'}
+        </p>
       </div>
 
-      {/* Add to Calendar */}
-      <div className="card p-5">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-medium text-bark">{t('settings.addToCalendar')}</h3>
-            <p className="text-sm text-muted">{t('settings.calendarIncludes')}</p>
-          </div>
-        </div>
-
-        {calendarExported ? (
-          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-4 text-center">
-            <div className="flex items-center justify-center gap-2 text-emerald-600 font-medium">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              {t('settings.calendarDownloaded')}
-            </div>
-            <p className="text-sm text-emerald-600/70 mt-1">{t('settings.openIcs')}</p>
-          </div>
-        ) : (
-          <button
-            onClick={handleExportCalendar}
-            className="w-full btn-secondary flex items-center justify-center gap-2"
+      {/* Phase legend */}
+      <div style={{ display: 'flex', gap: 7, justifyContent: 'center', padding: '0 12px' }}>
+        {legendItems.map((item) => (
+          <div
+            key={item.key}
+            style={{
+              flex: 1,
+              background: CARD,
+              borderRadius: 10,
+              padding: '8px 6px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+              border: `1px solid ${LINE}`,
+            }}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            {t('settings.downloadCalendar')}
-          </button>
-        )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div
+                style={{
+                  width: 9,
+                  height: 9,
+                  borderRadius: 3,
+                  background: item.accent,
+                }}
+              />
+              <span style={{ fontFamily: MINCHO, fontSize: 14, fontWeight: 700, color: item.accent }}>
+                {item.kanji}
+              </span>
+            </div>
+            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK2, textAlign: 'center' }}>
+              {item.label}
+            </span>
+          </div>
+        ))}
       </div>
 
-      {/* Calendar Grid */}
-      <div className="card p-5">
-        <h3 className="font-medium text-bark mb-4">{t('calendar.cycleOverview')}</h3>
-
-        <div className="grid grid-cols-7 gap-2">
+      {/* 28-day grid */}
+      <div
+        className="card"
+        style={{ padding: 14 }}
+      >
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(7, 1fr)',
+            gap: 7,
+          }}
+        >
           {days.map((day) => {
-            const dayPhase = getPhaseForDay(day);
+            const dayPhaseKey = getPhaseKeyForDay(day);
+            const dp = PHASES[dayPhaseKey];
             const isToday = day === cycleDay;
-            const styles = phaseStyles[dayPhase];
 
             return (
               <div
                 key={day}
-                className={`
-                  calendar-day
-                  ${isToday ? `${styles.activeBg} ${styles.activeText} shadow-lg` : `${styles.bg} ${styles.text}`}
-                  ${isToday ? 'today' : 'hover:scale-105'}
-                `}
+                style={{
+                  position: 'relative',
+                  aspectRatio: '1',
+                  borderRadius: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background: isToday
+                    ? `linear-gradient(135deg, ${dp.accent}, ${dp.deep})`
+                    : dp.tint,
+                  border: `1px solid ${dp.line}`,
+                  color: isToday ? '#fff' : dp.deep,
+                  fontFamily: GOTHIC,
+                  fontSize: 14,
+                  fontWeight: isToday ? 700 : 600,
+                  boxShadow: isToday ? `0 4px 14px ${dp.accent}44` : 'none',
+                  transition: 'all 0.2s',
+                }}
               >
                 {day}
+                {isToday && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: 2,
+                      right: 4,
+                      fontFamily: MINCHO,
+                      fontSize: 9,
+                      opacity: 0.7,
+                      color: '#fff',
+                    }}
+                  >
+                    {dp.kanji}
+                  </span>
+                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Phase Legend */}
-      <div className="card p-5">
-        <h3 className="font-medium text-bark mb-4">{t('calendar.phaseGuide')}</h3>
-
-        <div className="space-y-3">
-          {phaseInfo.map((p) => {
-            const isCurrentPhase = p.key === phase;
-            return (
+      {/* Upcoming events */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {upcomingEvents.map((ev, i) => {
+          const ep = PHASES[ev.phaseKey];
+          return (
+            <div
+              key={i}
+              className="card"
+              style={{
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+              }}
+            >
               <div
-                key={p.key}
-                className={`flex items-center justify-between p-3 rounded-2xl transition-all ${
-                  isCurrentPhase ? 'bg-washi ring-1 ring-terra/20' : ''
-                }`}
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 12,
+                  background: ep.tint,
+                  border: `1px solid ${ep.line}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: MINCHO,
+                  fontSize: 20,
+                  fontWeight: 700,
+                  color: ep.accent,
+                  flexShrink: 0,
+                }}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-4 h-4 rounded-full ${p.color}`} />
-                  <div>
-                    <div className={`font-medium ${isCurrentPhase ? 'text-bark' : 'text-bark/80'}`}>
-                      {p.name}
-                      {isCurrentPhase && (
-                        <span className="ml-2 text-xs text-terra font-medium">{t('calendar.current')}</span>
-                      )}
-                    </div>
-                    <div className="text-sm text-muted">{p.range}</div>
-                  </div>
+                {ev.kanji}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 600, color: INK }}>
+                  {ev.title}
                 </div>
-                <div className="text-muted">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                <div style={{ fontFamily: GOTHIC, fontSize: 12.5, color: INK2, marginTop: 2 }}>
+                  {ev.date}
                 </div>
               </div>
-            );
-          })}
-        </div>
+              <div
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: 20,
+                  background: ep.soft,
+                  fontFamily: GOTHIC,
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: ep.accent,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {ev.relative}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Cycle Summary */}
-      <div className="card p-5 bg-gradient-to-br from-terra/5 to-rose-50 border-terra/10">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 rounded-xl bg-terra/10 flex items-center justify-center">
-            <span className="text-lg font-display text-terra">巡</span>
-          </div>
-          <div>
-            <h4 className="font-medium text-bark">{t('calendar.yourCycle')}</h4>
-            <p className="text-sm text-muted">{cycleLength} {t('calendar.daysAverage')}</p>
-          </div>
+      {/* Export button */}
+      {calendarExported ? (
+        <div
+          className="card"
+          style={{
+            padding: '14px 20px',
+            textAlign: 'center',
+            background: PHASES.me.tint,
+            border: `1px solid ${PHASES.me.line}`,
+          }}
+        >
+          <span style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 600, color: PHASES.me.accent }}>
+            {isJa ? 'ダウンロード完了' : 'Downloaded'}
+          </span>
         </div>
-        <p className="text-sm text-muted">
-          {t('settings.aboutDescription')}
-        </p>
-      </div>
+      ) : (
+        <button
+          onClick={handleExportCalendar}
+          style={{
+            width: '100%',
+            padding: '14px 20px',
+            borderRadius: 14,
+            border: `1px solid ${LINE}`,
+            background: CARD,
+            fontFamily: GOTHIC,
+            fontSize: 14,
+            fontWeight: 600,
+            color: INK,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 8,
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={INK2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          {isJa ? 'カレンダーに書き出す' : 'Export to calendar'}
+        </button>
+      )}
     </div>
   );
 }

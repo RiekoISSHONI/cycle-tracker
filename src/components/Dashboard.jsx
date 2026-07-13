@@ -1,524 +1,371 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NutritionSection } from './NutritionSection';
-import { SkinSection } from './SkinSection';
-import { Workouts } from './Workouts';
-import { PartnerShare } from './PartnerShare';
-import { useSubscription } from '../contexts/SubscriptionContext';
-import { UpgradeModal } from './PremiumGate';
+import { PHASES, PHASE_ORDER, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE2, MINCHO, OLDMIN, GOTHIC, phaseKeyFromLegacy } from '../utils/phases';
+import { CycleRing } from './CycleRing';
+import { Ambient, BrushKanji } from './Ambient';
 
-const phaseKanji = {
-  menstrual: { kanji: '静', reading: 'shizuka', meaning: 'stillness' },
-  follicular: { kanji: '芽', reading: 'me', meaning: 'sprout' },
-  ovulatory: { kanji: '輝', reading: 'kagayaki', meaning: 'radiance' },
-  luteal: { kanji: '穏', reading: 'odayaka', meaning: 'calm' }
+const HOME_COPY = {
+  ja: {
+    sei: { affirm: '「いまは、ただ休んでいい。めぐりは静かに始まっています。」', tip: '湯船にゆっくり浸かり、体を温めて。無理は禁物です。', hormone: 'エストロゲン・プロゲステロンともに低め。エネルギーは控えめに。', life: 'ひとりの時間を大切に。内省や記録に向く数日です。' },
+    me: { affirm: '「新しい力が芽吹いています。少しずつ、外へ。」', tip: '新しいことを始めるのに最適。軽い運動で巡りを促して。', hormone: 'エストロゲンが上昇中。気分も体力も上向きに。', life: '発想がさえる時期。計画づくりや学びがはかどります。' },
+    ki: { affirm: '「あなたは満開です。自信と魅力がピークに達しています。」', tip: 'デートナイトやパートナーとのつながりに最適な時期です。', hormone: 'エストロゲンが最高潮に。最高のエネルギー。', life: '言語能力がピーク。プレゼンや面接に最適。' },
+    mi: { affirm: '「実りの季節。ゆっくりと、自分を整えてゆきましょう。」', tip: '温かい食事と十分な睡眠を。甘いものは控えめに。', hormone: 'プロゲステロンが優勢。落ち着きと内省の時期。', life: '仕上げや片づけに向く時期。新規より整理を。' },
+  },
+  en: {
+    sei: { affirm: '"Rest is enough for now. The cycle is quietly beginning again."', tip: 'Take a long warm bath and keep cozy. Don\'t push yourself today.', hormone: 'Estrogen and progesterone are both low. Keep energy gentle.', life: 'Protect your alone time — good days for reflection and journaling.' },
+    me: { affirm: '"New energy is budding. Step outward, little by little."', tip: 'A great time to start something new. Light movement keeps things flowing.', hormone: 'Estrogen is rising. Mood and stamina are trending up.', life: 'Ideas come easily now — plan, learn, and get ahead.' },
+    ki: { affirm: '"You are in full bloom. Confidence and magnetism are at their peak."', tip: 'An ideal window for date nights and connecting with your partner.', hormone: 'Estrogen is at its peak — your highest energy of the cycle.', life: 'Verbal skills peak now. Perfect for presentations and interviews.' },
+    mi: { affirm: '"A season of ripening. Slowly, gently, tend to yourself."', tip: 'Favor warm meals and plenty of sleep. Go easy on sweets.', hormone: 'Progesterone dominates — a calmer, more inward phase.', life: 'Better for finishing and tidying than starting anew.' },
+  },
 };
 
-function CycleRing({ cycleDay, cycleLength, phase }) {
-  const size = 200;
-  const strokeWidth = 10;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = radius * 2 * Math.PI;
-  const progress = cycleDay / cycleLength;
-  const offset = circumference - (progress * circumference);
+const ROW_LABELS = {
+  ja: ['今日のヒント', 'エネルギーとホルモン', 'ライフスタイル'],
+  en: ['Today’s tip', 'Energy & hormones', 'Lifestyle'],
+};
 
+function SproutIcon({ deep }) {
   return (
-    <div className="cycle-ring-container">
-      <svg width={size} height={size} className="progress-ring">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="var(--accent-soft)"
-          strokeWidth={strokeWidth}
-          opacity="0.3"
-        />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          stroke="var(--accent)"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className="progress-ring__circle"
-        />
-      </svg>
-      <div className="cycle-ring-content">
-        <span className="text-4xl font-display font-medium text-bark">{cycleDay}</span>
-        <span className="text-muted text-sm">/ {cycleLength}</span>
-      </div>
-    </div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21v-8" />
+      <path d="M12 13c0-3.3 2.4-5.6 6-5.6-.2 3.4-2.6 5.6-6 5.6z" />
+      <path d="M12 14.5c0-2.6-1.9-4.4-4.8-4.4.2 2.7 2 4.4 4.8 4.4z" />
+    </svg>
   );
 }
 
-function CollapsibleSection({ icon, title, children, defaultExpanded = false, iconBg = 'bg-gray-100', iconColor = 'text-gray-600' }) {
-  const [expanded, setExpanded] = useState(defaultExpanded);
-
+function WaveIcon({ deep }) {
   return (
-    <div className="card overflow-hidden">
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full p-4 flex items-center justify-between text-left hover:bg-washi/50 transition-colors"
-      >
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl ${iconBg} flex items-center justify-center`}>
-            {icon}
-          </div>
-          <h3 className="font-medium text-bark">{title}</h3>
-        </div>
-        <svg
-          className={`w-5 h-5 text-muted transition-transform duration-300 ${expanded ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
-      <div className={`expandable-content ${expanded ? 'expanded' : ''}`}>
-        <div className="px-4 pb-4">
-          {children}
-        </div>
-      </div>
-    </div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 14c1.6-3 3.2-3 4.8 0s3.2 3 4.8 0 3.2-3 4.8 0" />
+      <path d="M3 9c1.6-3 3.2-3 4.8 0s3.2 3 4.8 0 3.2-3 4.8 0" opacity="0.45" />
+    </svg>
   );
 }
 
-function TipsList({ items }) {
+function SunIcon({ deep }) {
   return (
-    <ul className="space-y-2">
-      {items.map((item, index) => (
-        <li key={index} className="flex items-start gap-3 text-sm text-muted">
-          <span className="w-1.5 h-1.5 rounded-full bg-terra mt-2 flex-shrink-0" />
-          <span>{item}</span>
-        </li>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 18h18" />
+      <path d="M7.5 18a4.5 4.5 0 019 0" />
+      <path d="M12 6.5V4M6.5 8.2L5 6.7M17.5 8.2L19 6.7" />
+    </svg>
+  );
+}
+
+function SakuraIcon({ accent }) {
+  return (
+    <svg width="40" height="40" viewBox="0 0 24 24">
+      {[0, 72, 144, 216, 288].map((a) => (
+        <ellipse key={a} cx="12" cy="7.2" rx="2.7" ry="4.4" transform={`rotate(${a} 12 12)`} fill={accent} fillOpacity="0.16" />
       ))}
-    </ul>
+      <circle cx="12" cy="12" r="1.7" fill={accent} stroke="none" />
+    </svg>
   );
 }
 
-function PartnerTipCard({ icon, title, description, items, variant = 'default' }) {
-  const variants = {
-    default: 'bg-blue-50 border-blue-100',
-    success: 'bg-emerald-50 border-emerald-100',
-    warning: 'bg-amber-50 border-amber-100'
-  };
-
-  const iconBg = {
-    default: 'bg-blue-100',
-    success: 'bg-emerald-100',
-    warning: 'bg-amber-100'
-  };
-
+function CalendarIcon({ color }) {
   return (
-    <div className={`card p-4 ${variants[variant]}`}>
-      <div className="flex items-start gap-3 mb-3">
-        <div className={`w-10 h-10 rounded-xl ${iconBg[variant]} flex items-center justify-center`}>
-          {icon}
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4M8 2v4M3 10h18" />
+    </svg>
+  );
+}
+
+function ChevronRight({ color }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18l6-6-6-6" />
+    </svg>
+  );
+}
+
+function InsightRow({ icon, title, body, accent, deep, soft, line }) {
+  return (
+    <div
+      style={{
+        background: CARD,
+        borderRadius: 16,
+        padding: '14px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 14,
+        cursor: 'pointer',
+      }}
+    >
+      <div
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: 12,
+          background: soft,
+          border: `1px solid ${line}`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+      >
+        {icon}
+      </div>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily: GOTHIC, fontWeight: 700, fontSize: 14, color: INK, marginBottom: 2 }}>
+          {title}
         </div>
-        <div>
-          <h4 className="font-semibold text-gray-800">{title}</h4>
-          {description && <p className="text-sm text-gray-600 mt-0.5">{description}</p>}
+        <div style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, lineHeight: 1.45 }}>
+          {body}
         </div>
       </div>
-      {items && (
-        <ul className="space-y-2 ml-13">
-          {items.map((item, index) => (
-            <li key={index} className="flex items-start gap-2 text-sm text-gray-600">
-              <span className="text-gray-400">•</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ChevronRight color={INK3} />
     </div>
   );
 }
 
 export function Dashboard({ cycleInfo, viewMode }) {
   const { t, i18n } = useTranslation();
-  const { canAccess } = useSubscription();
-  const [showPartnerShare, setShowPartnerShare] = useState(false);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const { cycleDay, cycleLength, phaseData, daysUntilPeriod, nextPeriodDate, phase } = cycleInfo;
+  const lang = i18n.language.startsWith('ja') ? 'ja' : 'en';
 
-  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
+  const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
+  const p = PHASES[phaseKey];
+  const copy = HOME_COPY[lang][phaseKey];
+  const labels = ROW_LABELS[lang];
 
-  const formatDate = (date) => {
-    return new Date(date).toLocaleDateString(locale, {
-      weekday: 'short',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+  const seasonLabel = lang === 'ja' ? p.season : p.seasonEn;
+  const phaseName = lang === 'ja' ? p.name : p.en;
+  const clinicalName = lang === 'ja' ? p.clinical : p.clinicalEn;
+  const poem = lang === 'ja' ? p.poem : p.poemEn;
 
-  const today = new Date();
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const locale = lang === 'ja' ? 'ja-JP' : 'en-US';
+  const formattedDate = cycleInfo.nextPeriodDate
+    ? new Date(cycleInfo.nextPeriodDate).toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+    : '';
 
-  const affirmations = t(`affirmations.${phase}`, { returnObjects: true }) || [];
-  const motivationalMessage = affirmations[dayOfYear % affirmations.length] || '';
+  const daysLeft = cycleInfo.daysUntilPeriod;
+  const predictionText = lang === 'ja'
+    ? `あと${daysLeft}日 · ${formattedDate}`
+    : `In ${daysLeft} days · ${formattedDate}`;
 
-  const dailyTipsArr = t(`dailyTips.${phase}`, { returnObjects: true }) || [];
-  const dailyTip = dailyTipsArr[dayOfYear % dailyTipsArr.length] || '';
+  const dayLabel = lang === 'ja'
+    ? `/ ${CYCLE_LEN}日目`
+    : `of ${CYCLE_LEN}`;
 
-  const phaseBgLight = {
-    menstrual: 'from-rose-50/80 to-red-50/80',
-    follicular: 'from-pink-50/80 to-rose-50/80',
-    ovulatory: 'from-amber-50/80 to-orange-50/80',
-    luteal: 'from-violet-50/80 to-purple-50/80'
-  };
-
-  return (
-    <div className="space-y-4 pb-4">
-      {/* Main Phase Card - Combined with Days Until Period */}
-      <div className={`card p-6 bg-gradient-to-br ${phaseBgLight[phase]} border-0 relative overflow-hidden`}>
-        <div className="flex flex-col items-center text-center">
-          {/* Phase Kanji - Decorative */}
-          {phaseKanji[phase] && (
-            <div className="absolute top-4 right-4 opacity-10">
-              <span className="text-7xl font-display" style={{ color: 'var(--accent)' }}>
-                {phaseKanji[phase].kanji}
-              </span>
-            </div>
-          )}
-
-          {/* Cycle Ring */}
-          <CycleRing cycleDay={cycleDay} cycleLength={cycleLength} phase={phase} />
-
-          {/* Phase Name */}
-          <div className="mt-3">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-white font-medium shadow-lg" style={{ background: 'var(--accent)' }}>
-              <span className="text-lg opacity-90">{t(`phases.${phase}.kanji`)}</span>
-              {t(`phases.${phase}.name`)}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p className="text-muted mt-3 text-sm max-w-xs">
-            {t(`phases.${phase}.description`)}
-          </p>
-
-          {/* Days Until Period - Integrated */}
-          <div className="mt-4 pt-4 border-t border-white/30 w-full">
-            <div className="flex items-center justify-center gap-2">
-              <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="text-bark">
-                <span className="font-display text-xl">{daysUntilPeriod}</span>
-                <span className="text-sm text-muted ml-1">{t('dashboard.daysUntilPeriod')}</span>
-              </span>
-              <span className="text-xs text-muted">· {formatDate(nextPeriodDate)}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Affirmation */}
-      <div className="card p-4 bg-gradient-to-r from-emerald-50/50 to-teal-50/50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <p className="text-sm text-bark italic">"{motivationalMessage}"</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Today's Tip */}
-      <div className="card p-4">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-medium text-bark text-sm">{t('dailyTip.title')}</h3>
-            <p className="text-sm text-muted mt-1">{dailyTip}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Phase-specific content */}
-      {viewMode === 'personal' ? (
-        <PersonalView phaseData={phaseData} phase={phase} />
-      ) : (
-        <PartnerView
-          phase={phase}
-          cycleDay={cycleDay}
-          cycleLength={cycleLength}
-          daysUntilPeriod={daysUntilPeriod}
-          onShare={() => {
-            if (canAccess('partnerShare')) {
-              setShowPartnerShare(true);
-            } else {
-              setShowUpgradeModal(true);
-            }
-          }}
-          isPremium={canAccess('partnerShare')}
-        />
-      )}
-
-      {/* Partner Share Modal */}
-      {showPartnerShare && (
-        <PartnerShare
-          cycleInfo={cycleInfo}
-          onClose={() => setShowPartnerShare(false)}
-        />
-      )}
-
-      {/* Upgrade Modal */}
-      {showUpgradeModal && (
-        <UpgradeModal
-          onClose={() => setShowUpgradeModal(false)}
-          feature="partnerShare"
-        />
-      )}
-    </div>
-  );
-}
-
-function PersonalView({ phaseData, phase }) {
-  const { t } = useTranslation();
-  const [workoutsExpanded, setWorkoutsExpanded] = useState(false);
-
-  const lifestyleTips = t(`phaseTips.${phase}.lifestyle`, { returnObjects: true }) || [];
-  const exerciseTips = t(`phaseTips.${phase}.exercise`, { returnObjects: true }) || [];
-
-  return (
-    <div className="space-y-3">
-      {/* Energy & Hormones */}
-      <div className="card p-4">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="font-medium text-bark">{t('dashboard.energyHormones')}</h3>
-            <p className="text-sm text-muted mt-1">{t(`phases.${phase}.energy`)}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Lifestyle - Always Visible (Not Collapsible) */}
-      <div className="card p-4">
-        <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
-          </div>
-          <h3 className="font-medium text-bark pt-2">{t('tips.lifestyle')}</h3>
-        </div>
-        <TipsList items={lifestyleTips} />
-      </div>
-
-      {/* Nutrition/Recipe */}
-      <NutritionSection phaseData={phaseData} phase={phase} />
-
-      {/* Skin */}
-      <SkinSection phaseData={phaseData} phase={phase} />
-
-      {/* Exercise - Tips always visible, videos collapsible */}
-      <div className="card overflow-hidden">
-        <div className="p-4">
-          <div className="flex items-start gap-3 mb-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-100 flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="font-medium text-bark pt-2">{t('tips.exercise')}</h3>
-          </div>
-          <TipsList items={exerciseTips} />
-        </div>
-
-        {/* Collapsible Videos Section */}
-        <button
-          onClick={() => setWorkoutsExpanded(!workoutsExpanded)}
-          className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-washi/50 transition-colors border-t border-gray-100"
-        >
-          <span className="text-sm font-medium text-terra">{t('workouts.videos')}</span>
-          <svg
-            className={`w-5 h-5 text-muted transition-transform duration-300 ${workoutsExpanded ? 'rotate-180' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        <div className={`expandable-content ${workoutsExpanded ? 'expanded' : ''}`}>
-          <div className="px-4 pb-4">
-            <Workouts phase={phase} embedded />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PartnerView({ phase, cycleDay, cycleLength, daysUntilPeriod, onShare, isPremium }) {
-  const { t, i18n } = useTranslation();
-
-  const support = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
-  const avoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
-  const energy = t(`phases.${phase}.energy`);
-  const phaseName = t(`phases.${phase}.name`);
-  const kanji = t(`phases.${phase}.kanji`);
-
-  const phaseColors = {
-    menstrual: 'from-rose-50 to-red-50 border-rose-200',
-    follicular: 'from-pink-50 to-rose-50 border-pink-200',
-    ovulatory: 'from-amber-50 to-orange-50 border-amber-200',
-    luteal: 'from-violet-50 to-purple-50 border-violet-200'
-  };
-
-  return (
-    <div className="space-y-4">
-      {/* Intro Card */}
-      <div className="card p-5">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-terra/10 flex items-center justify-center flex-shrink-0">
-            <svg className="w-6 h-6 text-terra" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-bark mb-1">{t('partner.shareWithPartner')}</h3>
-            <p className="text-sm text-muted">{t('partner.shareDescription')}</p>
-          </div>
-        </div>
-
-        {/* What can be shared */}
-        <div className="mt-4 p-3 bg-washi/50 rounded-xl">
-          <p className="text-xs font-medium text-bark mb-2">{t('partner.whatCanShare')}</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
-              <span>📍</span> {t('partner.shareItems.phase')}
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
-              <span>💭</span> {t('partner.shareItems.feelings')}
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
-              <span>💚</span> {t('partner.shareItems.support')}
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
-              <span>🍳</span> {t('partner.shareItems.nutrition')}
-            </span>
-            <span className="inline-flex items-center gap-1 px-2 py-1 bg-white rounded-lg text-xs text-muted">
-              <span>📅</span> {t('partner.shareItems.dates')}
-            </span>
-          </div>
-        </div>
-
-        {/* CTA Button */}
-        <button
-          onClick={onShare}
-          className="w-full mt-4 py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] flex items-center justify-center gap-2"
+  if (viewMode === 'partner') {
+    return (
+      <div style={{ padding: '24px 0' }}>
+        <div
           style={{
-            background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
-            boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+            background: CARD,
+            borderRadius: 20,
+            padding: '40px 24px',
+            textAlign: 'center',
           }}
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
-          {t('partner.customizeShare')}
-          {!isPremium && (
-            <span className="ml-1 px-2 py-0.5 bg-white/20 rounded-full text-xs">Premium</span>
-          )}
-        </button>
+          <div style={{ fontSize: 40, marginBottom: 12 }}>
+            {p.kanji}
+          </div>
+          <div style={{ fontFamily: MINCHO, fontSize: 18, color: INK, marginBottom: 8 }}>
+            {lang === 'ja' ? 'パートナービュー' : 'Partner View'}
+          </div>
+          <div style={{ fontFamily: GOTHIC, fontSize: 14, color: INK3, lineHeight: 1.5 }}>
+            {lang === 'ja' ? 'パートナー向けの画面は近日公開予定です。' : 'Partner view is coming soon.'}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ position: 'relative', paddingBottom: 24 }}>
+      {/* Ambient glow */}
+      <Ambient phase={phaseKey} top={-60} size={320} opacity={0.5} />
+
+      {/* Hero card */}
+      <div
+        className="card"
+        style={{
+          position: 'relative',
+          borderRadius: 20,
+          overflow: 'hidden',
+          background: CARD,
+          padding: 0,
+        }}
+      >
+        {/* BrushKanji watermark */}
+        <div style={{ position: 'absolute', top: 8, right: 12, zIndex: 1 }}>
+          <BrushKanji char={p.kanji} size={150} color={p.accent} opacity={0.08} />
+        </div>
+
+        {/* Tint gradient across top */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 90,
+            background: `linear-gradient(180deg, ${p.tint}, transparent)`,
+            zIndex: 0,
+          }}
+        />
+
+        {/* Content */}
+        <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 28, paddingBottom: 24 }}>
+          {/* CycleRing with overlaid center content */}
+          <div style={{ position: 'relative', width: 244, height: 244 }}>
+            <CycleRing size={244} day={cycleInfo.cycleDay} stroke={7} />
+            {/* Center overlay */}
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                pointerEvents: 'none',
+              }}
+            >
+              {/* Eyebrow */}
+              <div style={{ fontFamily: GOTHIC, fontSize: 12, color: p.accent, letterSpacing: 0.5, marginBottom: 2 }}>
+                {seasonLabel} · {p.en}
+              </div>
+              {/* Big day number */}
+              <div style={{ fontFamily: MINCHO, fontSize: 78, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                {cycleInfo.cycleDay}
+              </div>
+              {/* Day denominator */}
+              <div style={{ fontFamily: MINCHO, fontSize: 17, color: INK3, marginTop: 2 }}>
+                {dayLabel}
+              </div>
+            </div>
+          </div>
+
+          {/* Phase pill */}
+          <div
+            style={{
+              marginTop: 18,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '8px 20px',
+              borderRadius: 999,
+              background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
+              color: '#fff',
+              boxShadow: `0 4px 14px ${p.accent}44`,
+            }}
+          >
+            <span style={{ fontFamily: MINCHO, fontSize: 18 }}>{p.kanji}</span>
+            <span style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 600 }}>{phaseName}</span>
+            <span style={{ fontFamily: GOTHIC, fontSize: 12, opacity: 0.8 }}>{clinicalName}</span>
+          </div>
+
+          {/* Poem line */}
+          <div
+            style={{
+              marginTop: 16,
+              fontFamily: MINCHO,
+              fontSize: 14,
+              color: INK2,
+              textAlign: 'center',
+              paddingLeft: 24,
+              paddingRight: 24,
+              lineHeight: 1.6,
+            }}
+          >
+            {poem}
+          </div>
+
+          {/* Prediction row */}
+          <div
+            style={{
+              marginTop: 16,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '8px 18px',
+              borderRadius: 999,
+              background: PAPER2,
+            }}
+          >
+            <CalendarIcon color={phaseKey === 'sei' ? '#9A3B50' : p.accent} />
+            <span style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 700, color: INK }}>
+              {predictionText}
+            </span>
+          </div>
+        </div>
       </div>
 
-      {/* Preview Card */}
-      <div className={`card bg-gradient-to-br ${phaseColors[phase]} border overflow-hidden`}>
-        {/* Preview Label */}
-        <div className="px-4 py-2 bg-bark/5 border-b border-white/50">
-          <p className="text-xs text-center text-muted font-medium">{t('partner.previewLabel')}</p>
+      {/* Affirmation strip */}
+      <div
+        style={{
+          marginTop: 14,
+          background: `linear-gradient(135deg, ${p.tint}, ${CARD})`,
+          borderLeft: `3px solid ${p.accent}`,
+          borderRadius: 14,
+          padding: '14px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 12,
+        }}
+      >
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
+          <SakuraIcon accent={p.accent} />
         </div>
+        <div
+          style={{
+            fontFamily: MINCHO,
+            fontSize: 14,
+            fontStyle: 'italic',
+            color: INK2,
+            lineHeight: 1.55,
+          }}
+        >
+          {copy.affirm}
+        </div>
+      </div>
 
-        {/* Header */}
-        <div className="p-4 text-center border-b border-white/50">
-          <div className="text-2xl font-display text-terra mb-1">巡</div>
-          <div className="text-xs text-muted">{t('dashboard.partnerGuide')}</div>
-        </div>
-
-        {/* Phase Info */}
-        <div className="p-4 text-center">
-          <p className="text-sm text-muted mb-1">{t('partnerShare.sheIsIn')}</p>
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <span className="text-3xl font-display">{kanji}</span>
-            <h2 className="text-xl font-display text-bark">{phaseName}</h2>
-          </div>
-          <p className="text-sm text-muted">
-            {t('dashboard.day')} {cycleDay} / {cycleLength}
-          </p>
-        </div>
-
-        {/* Energy/Feeling */}
-        <div className="px-4 pb-3">
-          <p className="text-sm text-center text-muted italic">{energy}</p>
-        </div>
-
-        {/* Support Tips - Condensed */}
-        <div className="px-4 pb-3">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-base">💚</span>
-            <h3 className="font-medium text-bark text-sm">{t('partner.howToSupport')}</h3>
-          </div>
-          <ul className="space-y-1">
-            {support.slice(0, 2).map((tip, i) => (
-              <li key={i} className="text-xs text-muted flex items-start gap-2">
-                <span className="text-terra mt-0.5">•</span>
-                <span>{tip}</span>
-              </li>
-            ))}
-            {support.length > 2 && (
-              <li className="text-xs text-terra">+{support.length - 2} {t('partner.more')}</li>
-            )}
-          </ul>
-        </div>
-
-        {/* What to Avoid - Condensed */}
-        <div className="px-4 pb-3">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-base">🚫</span>
-            <h3 className="font-medium text-bark text-sm">{t('partner.whatToAvoid')}</h3>
-          </div>
-          <ul className="space-y-1">
-            {avoid.slice(0, 2).map((tip, i) => (
-              <li key={i} className="text-xs text-muted flex items-start gap-2">
-                <span className="text-red-400 mt-0.5">•</span>
-                <span>{tip}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Days Until Period */}
-        <div className="px-4 pb-3 text-center">
-          <p className="text-xs text-muted">
-            📅 {t('partnerShare.nextPeriodIn')} ~{daysUntilPeriod} {t('insights.days')}
-          </p>
-        </div>
-
-        {/* Footer */}
-        <div className="p-3 bg-white/50 text-center border-t border-white/50">
-          <p className="text-xs text-terra font-display">巡 meguri</p>
-        </div>
+      {/* Insight rows */}
+      <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <InsightRow
+          icon={<SproutIcon deep={p.deep} />}
+          title={labels[0]}
+          body={copy.tip}
+          accent={p.accent}
+          deep={p.deep}
+          soft={p.soft}
+          line={p.line}
+        />
+        <InsightRow
+          icon={<WaveIcon deep={p.deep} />}
+          title={labels[1]}
+          body={copy.hormone}
+          accent={p.accent}
+          deep={p.deep}
+          soft={p.soft}
+          line={p.line}
+        />
+        <InsightRow
+          icon={<SunIcon deep={p.deep} />}
+          title={labels[2]}
+          body={copy.life}
+          accent={p.accent}
+          deep={p.deep}
+          soft={p.soft}
+          line={p.line}
+        />
       </div>
     </div>
   );
