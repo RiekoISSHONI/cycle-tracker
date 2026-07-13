@@ -1,300 +1,372 @@
 import { useMemo } from 'react';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE, LINE2, MINCHO, OLDMIN, GOTHIC, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
+import { Ambient, BrushKanji } from './Ambient';
 import { useTranslation } from 'react-i18next';
 
-function TrendChart({ data, color, label }) {
-  if (!data || data.length === 0) return null;
+// SVG mood wave chart
+function MoodWaveChart({ moodData, cycleLength }) {
+  if (!moodData || moodData.length < 2) return null;
 
-  const max = Math.max(...data.map(d => d.value));
-  const min = Math.min(...data.map(d => d.value));
-  const range = max - min || 1;
+  const W = 320;
+  const H = 120;
+  const padX = 10;
+  const padY = 16;
+  const chartW = W - padX * 2;
+  const chartH = H - padY * 2;
+
+  const maxVal = Math.max(...moodData.map((d) => d.value), 5);
+  const minVal = Math.min(...moodData.map((d) => d.value), 1);
+  const range = maxVal - minVal || 1;
+
+  const points = moodData.map((d, i) => {
+    const x = padX + (d.cycleDay / (cycleLength || CYCLE_LEN)) * chartW;
+    const y = padY + chartH - ((d.value - minVal) / range) * chartH;
+    return { x, y };
+  });
+
+  const lineD = points.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ');
+  const areaD = lineD + ` L ${points[points.length - 1].x} ${H - padY} L ${points[0].x} ${H - padY} Z`;
+
+  // Phase background bands
+  const phaseBands = PHASE_ORDER.map((k) => {
+    const [s, e] = PHASE_RANGES[k];
+    const x1 = padX + (s / CYCLE_LEN) * chartW;
+    const x2 = padX + (e / CYCLE_LEN) * chartW;
+    return { key: k, x: x1, width: x2 - x1, color: PHASES[k].tint };
+  });
+
+  const phaseLabels = PHASE_ORDER.map((k) => {
+    const [s, e] = PHASE_RANGES[k];
+    const mid = padX + ((s + e) / 2 / CYCLE_LEN) * chartW;
+    return { key: k, x: mid, kanji: PHASES[k].kanji, clinical: PHASES[k].clinical, accent: PHASES[k].accent };
+  });
+
+  const currentPhaseKey = phaseForDay(moodData[moodData.length - 1]?.cycleDay || 0);
+  const accent = PHASES[currentPhaseKey]?.accent || PHASES.sei.accent;
 
   return (
-    <div className="mt-3">
-      <div className="flex items-end gap-1 h-20">
-        {data.slice(-14).map((point, i) => {
-          const height = ((point.value - min) / range) * 100;
-          return (
-            <div
-              key={i}
-              className="flex-1 rounded-t-sm transition-all"
-              style={{
-                height: `${Math.max(height, 10)}%`,
-                backgroundColor: color,
-                opacity: 0.4 + (i / data.length) * 0.6
-              }}
-              title={`Day ${point.cycleDay}: ${point.value}`}
-            />
-          );
-        })}
-      </div>
-      <div className="flex justify-between text-xs text-gray-400 mt-1">
-        <span>14 days ago</span>
-        <span>Today</span>
-      </div>
-    </div>
+    <svg viewBox={`0 0 ${W} ${H + 28}`} width="100%" style={{ display: 'block' }}>
+      {phaseBands.map((band) => (
+        <rect
+          key={band.key}
+          x={band.x}
+          y={padY}
+          width={band.width}
+          height={chartH}
+          fill={band.color}
+          rx={3}
+        />
+      ))}
+      <path d={areaD} fill={`${accent}18`} />
+      <path d={lineD} fill="none" stroke={accent} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+      {points.map((pt, i) => (
+        <circle key={i} cx={pt.x} cy={pt.y} r={2.5} fill={accent} />
+      ))}
+      {phaseLabels.map((pl) => (
+        <g key={pl.key}>
+          <text x={pl.x} y={H + 4} textAnchor="middle" fontSize={13} fontWeight={700} fill={pl.accent} fontFamily="Shippori Mincho B1, serif">
+            {pl.kanji}
+          </text>
+          <text x={pl.x} y={H + 20} textAnchor="middle" fontSize={8.5} fill={INK3} fontFamily="Zen Kaku Gothic New, sans-serif">
+            {pl.clinical}
+          </text>
+        </g>
+      ))}
+    </svg>
   );
 }
 
-function SymptomBar({ symptom, count, total, t }) {
-  const percentage = (count / total) * 100;
+// SVG phase donut
+function PhaseDonut({ size = 160 }) {
+  const cx = size / 2;
+  const cy = size / 2;
+  const outerR = size / 2 - 6;
+  const innerR = outerR - 18;
+  const total = CYCLE_LEN;
+
+  let startAngle = -90;
+  const segments = PHASE_ORDER.map((k) => {
+    const days = PHASES[k].days;
+    const sweep = (days / total) * 360;
+    const seg = { key: k, startAngle, sweep, accent: PHASES[k].accent, deep: PHASES[k].deep };
+    startAngle += sweep;
+    return seg;
+  });
+
+  const polarPt = (r, angleDeg) => {
+    const a = (angleDeg * Math.PI) / 180;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+  };
+
+  const arcSeg = (r, start, sweep) => {
+    const end = start + sweep;
+    const [x1, y1] = polarPt(r, start);
+    const [x2, y2] = polarPt(r, end);
+    const large = sweep > 180 ? 1 : 0;
+    return { x1, y1, x2, y2, large };
+  };
 
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-gray-600 w-24 truncate">
-        {t(`checkin.symptomsList.${symptom}`)}
-      </span>
-      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-violet-400 rounded-full transition-all"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-      <span className="text-xs text-gray-500 w-8">{count}x</span>
-    </div>
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ display: 'block' }}>
+      {segments.map((seg) => {
+        const outer = arcSeg(outerR, seg.startAngle, seg.sweep);
+        const inner = arcSeg(innerR, seg.startAngle, seg.sweep);
+        const d = [
+          `M ${outer.x1} ${outer.y1}`,
+          `A ${outerR} ${outerR} 0 ${outer.large} 1 ${outer.x2} ${outer.y2}`,
+          `L ${inner.x2} ${inner.y2}`,
+          `A ${innerR} ${innerR} 0 ${outer.large} 0 ${inner.x1} ${inner.y1}`,
+          'Z',
+        ].join(' ');
+        return <path key={seg.key} d={d} fill={seg.accent} opacity={0.85} />;
+      })}
+      <text x={cx} y={cy - 4} textAnchor="middle" fontSize={22} fontWeight={700} fill={INK} fontFamily="Shippori Mincho B1, serif">
+        {total}
+      </text>
+      <text x={cx} y={cy + 14} textAnchor="middle" fontSize={10.5} fill={INK3} fontFamily="Zen Kaku Gothic New, sans-serif">
+        日周期
+      </text>
+    </svg>
   );
 }
 
 export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }) {
   const { t, i18n } = useTranslation();
-  const locale = i18n.language.startsWith('ja') ? 'ja-JP' : 'en-US';
+  const isJa = i18n.language.startsWith('ja');
+  const locale = isJa ? 'ja-JP' : 'en-US';
 
   const stats = useMemo(() => {
-    if (!checkins || checkins.length === 0) {
-      return null;
-    }
+    if (!checkins || checkins.length === 0) return null;
 
-    // Mood data for chart
     const moodData = checkins
-      .filter(c => c.mood)
-      .map(c => ({ cycleDay: c.cycleDay, value: c.mood }));
+      .filter((c) => c.mood)
+      .map((c) => ({ cycleDay: c.cycleDay, value: c.mood }));
 
-    // Energy data for chart
-    const energyData = checkins
-      .filter(c => c.energy)
-      .map(c => ({ cycleDay: c.cycleDay, value: c.energy }));
-
-    // Average mood and energy
     const avgMood = moodData.length > 0
       ? (moodData.reduce((sum, d) => sum + d.value, 0) / moodData.length).toFixed(1)
       : null;
 
-    const avgEnergy = energyData.length > 0
-      ? (energyData.reduce((sum, d) => sum + d.value, 0) / energyData.length).toFixed(1)
-      : null;
-
     // Symptom frequency
     const symptomCounts = {};
-    checkins.forEach(c => {
-      (c.symptoms || []).forEach(s => {
+    checkins.forEach((c) => {
+      (c.symptoms || []).forEach((s) => {
         symptomCounts[s] = (symptomCounts[s] || 0) + 1;
       });
     });
 
     const topSymptoms = Object.entries(symptomCounts)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
-
-    // Journal entries with notes
-    const journalEntries = checkins
-      .filter(c => c.notes && c.notes.trim().length > 0)
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 10);
+      .slice(0, 6);
 
     return {
       moodData,
-      energyData,
       avgMood,
-      avgEnergy,
       topSymptoms,
-      journalEntries,
-      totalCheckins: checkins.length
+      totalCheckins: checkins.length,
     };
   }, [checkins]);
 
+  const avgCycleDays = cycleStats?.averageLength || cycleData?.cycleLength || 28;
+  const avgPeriodDays = 5;
+  const variability = cycleStats?.isIrregular ? (isJa ? '不規則' : 'Irregular') : (isJa ? '安定' : 'Regular');
+
+  const headlineStats = [
+    {
+      value: avgCycleDays,
+      unit: isJa ? '日' : 'd',
+      label: isJa ? '平均周期' : 'Avg Cycle',
+      accent: PHASES.ki.accent,
+    },
+    {
+      value: avgPeriodDays,
+      unit: isJa ? '日' : 'd',
+      label: isJa ? '平均生理' : 'Avg Period',
+      accent: PHASES.sei.accent,
+    },
+    {
+      value: variability,
+      unit: '',
+      label: isJa ? '変動' : 'Variability',
+      accent: PHASES.mi.accent,
+      isText: true,
+    },
+  ];
+
+  // Pick an insight note
+  const insightPhaseKey = 'me';
+  const ip = PHASES[insightPhaseKey];
+
   if (!stats) {
     return (
-      <div className="space-y-6 pb-4">
-        <div className="card p-8 text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
+        <div style={{ textAlign: 'center', padding: '0 16px' }}>
+          <h2 style={{ fontFamily: MINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+            {isJa ? 'あなたの傾向' : 'Your Trends'}
+          </h2>
+          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, marginTop: 6 }}>
+            {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
+          </p>
+        </div>
+        <div className="card" style={{ padding: 32, textAlign: 'center' }}>
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: '50%',
+              background: PAPER2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 14px',
+            }}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={INK3} strokeWidth="2">
+              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('insights.title')}</h3>
-          <p className="text-gray-500">{t('insights.noData')}</p>
+          <h3 style={{ fontFamily: MINCHO, fontSize: 18, fontWeight: 600, color: INK, marginBottom: 6 }}>
+            {t('insights.title')}
+          </h3>
+          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK3 }}>{t('insights.noData')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 pb-4">
-      {/* Header */}
-      <div className="card p-5 bg-gradient-to-br from-violet-50 to-purple-50 border-violet-100">
-        <h2 className="text-xl font-bold text-gray-800">{t('insights.title')}</h2>
-        <p className="text-gray-600 mt-1">
-          {t('insights.lastCycles', { count: stats.totalCheckins })} check-ins
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
+      {/* Title */}
+      <div style={{ textAlign: 'center', padding: '0 16px' }}>
+        <h2 style={{ fontFamily: MINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+          {isJa ? 'あなたの傾向' : 'Your Trends'}
+        </h2>
+        <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, marginTop: 6 }}>
+          {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
         </p>
       </div>
 
-      {/* Averages */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="card p-4 text-center">
-          <div className="text-3xl font-bold text-pink-500">{stats.avgMood || '-'}</div>
-          <div className="text-sm text-gray-600 mt-1">{t('checkin.mood')}</div>
+      {/* 3 headline stat cards */}
+      <div style={{ display: 'flex', gap: 10 }}>
+        {headlineStats.map((hs, i) => (
+          <div
+            key={i}
+            className="card"
+            style={{ flex: 1, padding: '16px 10px', textAlign: 'center' }}
+          >
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 2 }}>
+              <span style={{ fontFamily: MINCHO, fontSize: hs.isText ? 16 : 28, fontWeight: 700, color: hs.accent }}>
+                {hs.value}
+              </span>
+              {hs.unit && (
+                <span style={{ fontFamily: GOTHIC, fontSize: 12, color: INK3 }}>{hs.unit}</span>
+              )}
+            </div>
+            <div style={{ fontFamily: GOTHIC, fontSize: 11, color: INK2, marginTop: 4 }}>
+              {hs.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Mood wave chart */}
+      {stats.moodData.length >= 2 && (
+        <div className="card" style={{ padding: 16 }}>
+          <h3 style={{ fontFamily: MINCHO, fontSize: 16, fontWeight: 600, color: INK, marginBottom: 12 }}>
+            {isJa ? '気分の波' : 'Mood Wave'}
+          </h3>
+          <MoodWaveChart moodData={stats.moodData} cycleLength={cycleData?.cycleLength || 28} />
         </div>
-        <div className="card p-4 text-center">
-          <div className="text-3xl font-bold text-amber-500">{stats.avgEnergy || '-'}</div>
-          <div className="text-sm text-gray-600 mt-1">{t('checkin.energy')}</div>
+      )}
+
+      {/* Phase donut */}
+      <div className="card" style={{ padding: 16 }}>
+        <h3 style={{ fontFamily: MINCHO, fontSize: 16, fontWeight: 600, color: INK, marginBottom: 12 }}>
+          {isJa ? '周期の構成' : 'Cycle Composition'}
+        </h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20, justifyContent: 'center' }}>
+          <PhaseDonut size={140} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {PHASE_ORDER.map((k) => (
+              <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                <div style={{ width: 10, height: 10, borderRadius: 3, background: PHASES[k].accent }} />
+                <span style={{ fontFamily: MINCHO, fontSize: 14, fontWeight: 700, color: PHASES[k].accent }}>
+                  {PHASES[k].kanji}
+                </span>
+                <span style={{ fontFamily: GOTHIC, fontSize: 11, color: INK2 }}>
+                  {PHASES[k].days}{isJa ? '日' : 'd'}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Mood Trends */}
-      {stats.moodData.length > 0 && (
-        <div className="card p-5">
-          <h3 className="font-semibold text-gray-800">{t('insights.moodTrends')}</h3>
-          <TrendChart data={stats.moodData} color="#ec4899" label="Mood" />
-        </div>
-      )}
-
-      {/* Energy Trends */}
-      {stats.energyData.length > 0 && (
-        <div className="card p-5">
-          <h3 className="font-semibold text-gray-800">{t('insights.energyPatterns')}</h3>
-          <TrendChart data={stats.energyData} color="#f59e0b" label="Energy" />
-        </div>
-      )}
-
-      {/* Symptom Patterns */}
+      {/* Symptom frequency bars */}
       {stats.topSymptoms.length > 0 && (
-        <div className="card p-5">
-          <h3 className="font-semibold text-gray-800 mb-4">{t('insights.symptomPatterns')}</h3>
-          <div className="space-y-3">
-            {stats.topSymptoms.map(([symptom, count]) => (
-              <SymptomBar
-                key={symptom}
-                symptom={symptom}
-                count={count}
-                total={stats.totalCheckins}
-                t={t}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Journal Entries */}
-      {stats.journalEntries && stats.journalEntries.length > 0 && (
-        <div className="card p-5">
-          <h3 className="font-semibold text-gray-800 mb-4">{t('insights.journalEntries')}</h3>
-          <div className="space-y-3 max-h-80 overflow-y-auto">
-            {stats.journalEntries.map((entry) => (
-              <div key={entry.date} className="p-3 bg-gray-50 rounded-xl">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">
-                    {new Date(entry.date).toLocaleDateString(locale, {
-                      weekday: 'short',
-                      month: 'short',
-                      day: 'numeric'
-                    })}
+        <div className="card" style={{ padding: 16 }}>
+          <h3 style={{ fontFamily: MINCHO, fontSize: 16, fontWeight: 600, color: INK, marginBottom: 14 }}>
+            {isJa ? '症状の頻度' : 'Symptom Frequency'}
+          </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {stats.topSymptoms.map(([symptom, count]) => {
+              const maxCount = stats.topSymptoms[0][1];
+              const pct = (count / maxCount) * 100;
+              return (
+                <div key={symptom} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <span
+                    style={{
+                      fontFamily: GOTHIC,
+                      fontSize: 12.5,
+                      color: INK2,
+                      width: 80,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {t(`checkin.symptomsList.${symptom}`)}
                   </span>
-                  <span className="text-xs text-gray-500">{t('checkin.day')} {entry.cycleDay}</span>
+                  <div style={{ flex: 1, height: 8, borderRadius: 4, background: PAPER2, overflow: 'hidden' }}>
+                    <div
+                      style={{
+                        height: '100%',
+                        borderRadius: 4,
+                        width: `${pct}%`,
+                        background: `linear-gradient(90deg, ${PHASES.mi.accent}, ${PHASES.mi.deep})`,
+                        transition: 'width 0.5s',
+                      }}
+                    />
+                  </div>
+                  <span style={{ fontFamily: GOTHIC, fontSize: 11, color: INK3, width: 28, textAlign: 'right', flexShrink: 0 }}>
+                    {count}x
+                  </span>
                 </div>
-                <p className="text-sm text-gray-600">{entry.notes}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Cycle Info */}
-      <div className="card p-5">
-        <h3 className="font-semibold text-gray-800 mb-3">{t('insights.cycleHistory')}</h3>
-
-        {cycleStats && periodHistory.length >= 2 ? (
-          <div className="space-y-4">
-            {/* Average with range */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center">
-                <svg className="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-gray-800">
-                  {cycleStats.averageLength} {t('insights.days')}
-                </div>
-                <div className="text-sm text-gray-500">{t('insights.averageCycle')}</div>
-              </div>
-            </div>
-
-            {/* Cycle range for irregular periods */}
-            {cycleStats.isIrregular && (
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-100">
-                <div className="flex items-center gap-2 text-amber-700">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="font-medium text-sm">{t('insights.irregularCycle')}</span>
-                </div>
-                <p className="text-sm text-amber-600 mt-1">
-                  {t('insights.cycleRange', { min: cycleStats.minLength, max: cycleStats.maxLength })}
-                </p>
-              </div>
-            )}
-
-            {/* Recent cycle lengths */}
-            {cycleStats.cycleLengths.length > 0 && (
-              <div>
-                <div className="text-sm text-gray-600 mb-2">{t('insights.recentCycles')}</div>
-                <div className="flex flex-wrap gap-2">
-                  {cycleStats.cycleLengths.slice(-6).map((len, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-sm font-medium"
-                    >
-                      {len} {t('insights.days')}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Period history */}
-            {periodHistory.length > 0 && (
-              <div>
-                <div className="text-sm text-gray-600 mb-2">{t('insights.periodDates')}</div>
-                <div className="flex flex-wrap gap-2">
-                  {periodHistory.slice(0, 6).map((date) => (
-                    <span
-                      key={date}
-                      className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-sm font-medium"
-                    >
-                      {new Date(date).toLocaleDateString(locale, { month: 'short', day: 'numeric' })}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-pink-100 flex items-center justify-center">
-              <svg className="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-gray-800">
-                {cycleData.cycleLength} {t('insights.days')}
-              </div>
-              <div className="text-sm text-gray-500">{t('insights.averageCycle')}</div>
-              {periodHistory.length < 2 && (
-                <div className="text-xs text-gray-400 mt-1">{t('insights.logMorePeriods')}</div>
-              )}
-            </div>
-          </div>
-        )}
+      {/* Insight note */}
+      <div
+        className="card"
+        style={{
+          padding: 18,
+          background: `linear-gradient(135deg, ${ip.tint}, ${CARD})`,
+          border: `1px solid ${ip.line}`,
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+          <span style={{ fontFamily: MINCHO, fontSize: 28, fontWeight: 700, color: ip.accent, lineHeight: 1 }}>
+            {ip.kanji}
+          </span>
+          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, lineHeight: 1.6, margin: 0 }}>
+            {isJa
+              ? '周期のリズムを知ることで、自分に合ったケアが見えてきます。'
+              : 'Understanding your cycle rhythm helps you find the care that suits you best.'}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,511 +1,458 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE, LINE2, MINCHO, OLDMIN, GOTHIC, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
+import { Ambient, BrushKanji } from './Ambient';
 import { useTranslation } from 'react-i18next';
-import { generateShareCode } from '../utils/cycleData';
-import { downloadCalendarEvents } from '../utils/calendarExport';
-import { isCalmModeEnabled, setCalmMode } from '../utils/commerce';
 import { useSubscription } from '../contexts/SubscriptionContext';
-import { LanguageSwitcher } from './LanguageSwitcher';
-import { SocialShare } from './SocialShare';
-import { ThemePicker } from './ThemePicker';
-import { OBGYNFinder } from './OBGYNFinder';
-import { PartnerShare } from './PartnerShare';
-import { PremiumBadge, UpgradeModal } from './PremiumGate';
-
-function SettingsSection({ title, children }) {
-  return (
-    <div className="card p-5">
-      <h3 className="font-semibold text-gray-800 mb-4">{title}</h3>
-      {children}
-    </div>
-  );
-}
-
-function SettingsRow({ icon, iconBg, title, subtitle, action, danger = false }) {
-  return (
-    <div className="flex items-center justify-between py-3">
-      <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-xl ${iconBg} flex items-center justify-center`}>
-          {icon}
-        </div>
-        <div>
-          <div className={`font-medium ${danger ? 'text-red-600' : 'text-gray-800'}`}>{title}</div>
-          {subtitle && <div className="text-sm text-gray-500">{subtitle}</div>}
-        </div>
-      </div>
-      {action}
-    </div>
-  );
-}
 
 export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThemeChange }) {
   const { t, i18n } = useTranslation();
-  const { isPremium, canAccess, togglePremium, subscription } = useSubscription();
-  const [lastPeriod, setLastPeriod] = useState(cycleData.lastPeriodStart);
-  const [cycleLength, setCycleLength] = useState(cycleData.cycleLength);
-  const [showShareCode, setShowShareCode] = useState(false);
-  const [shareCode, setShareCode] = useState(cycleData.shareCode || '');
-  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const isJa = i18n.language.startsWith('ja');
+  const locale = isJa ? 'ja-JP' : 'en-US';
+  const { isPremium, subscription } = useSubscription();
+
+  const [lastPeriodStart, setLastPeriodStart] = useState(cycleData?.lastPeriodStart || '');
+  const [cycleLength, setCycleLength] = useState(cycleData?.cycleLength || 28);
   const [showSaved, setShowSaved] = useState(false);
-  const [calendarExported, setCalendarExported] = useState(false);
-  const [calmMode, setCalmModeState] = useState(isCalmModeEnabled());
-  const [showPartnerShare, setShowPartnerShare] = useState(false);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const today = new Date().toISOString().split('T')[0];
   const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
 
+  const ki = PHASES.ki;
+
   const handleSave = () => {
     onUpdate({
       ...cycleData,
-      lastPeriodStart: lastPeriod,
-      cycleLength: parseInt(cycleLength)
+      lastPeriodStart,
+      cycleLength: parseInt(cycleLength),
     });
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2000);
   };
 
-  const handleGenerateCode = () => {
-    const code = generateShareCode();
-    setShareCode(code);
-    onUpdate({
-      ...cycleData,
-      shareCode: code
-    });
-    setShowShareCode(true);
+  const handleLanguageChange = (lang) => {
+    i18n.changeLanguage(lang);
   };
 
-  const handleLogNewPeriod = () => {
-    const newDate = new Date().toISOString().split('T')[0];
-    setLastPeriod(newDate);
-    onUpdate({
-      ...cycleData,
-      lastPeriodStart: newDate
-    });
-    setShowSaved(true);
-    setTimeout(() => setShowSaved(false), 2000);
-  };
+  const currentLang = i18n.language.startsWith('ja') ? 'ja' : 'en';
 
-  const handleExportCalendar = () => {
-    downloadCalendarEvents(cycleData.lastPeriodStart, cycleData.cycleLength, 6);
-    setCalendarExported(true);
-    setTimeout(() => setCalendarExported(false), 3000);
-  };
+  // Use the current phase for accent coloring on the save button
+  const phaseKey = cycleInfo?.phase ? phaseKeyFromLegacy(cycleInfo.phase) : 'ki';
+  const currentP = PHASES[phaseKey];
 
-  const handleCalmModeToggle = () => {
-    const newValue = !calmMode;
-    setCalmModeState(newValue);
-    setCalmMode(newValue);
-  };
+  const miscRows = [
+    {
+      titleJa: '通知',
+      titleEn: 'Notifications',
+      subtitleJa: '周期リマインダーとアラート',
+      subtitleEn: 'Cycle reminders and alerts',
+    },
+    {
+      titleJa: 'プライバシー',
+      titleEn: 'Privacy',
+      subtitleJa: 'データはデバイスに保存されます',
+      subtitleEn: 'Data stays on your device',
+    },
+    {
+      titleJa: 'ヘルプ',
+      titleEn: 'Help',
+      subtitleJa: 'よくある質問とサポート',
+      subtitleEn: 'FAQ and support',
+    },
+  ];
 
   return (
-    <div className="space-y-6 pb-4">
-      {/* Quick Action */}
-      <button
-        onClick={handleLogNewPeriod}
-        className="w-full p-5 rounded-2xl text-white text-left hover:shadow-lg transition-all duration-300 active:scale-[0.99]"
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
+      {/* Title */}
+      <div style={{ textAlign: 'center', padding: '0 16px' }}>
+        <h2 style={{ fontFamily: MINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+          {isJa ? '設定' : 'Settings'}
+        </h2>
+      </div>
+
+      {/* Plan card */}
+      <div
+        className="card"
         style={{
-          background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
-          boxShadow: '0 4px 16px rgba(181, 88, 47, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
+          padding: '18px 20px',
+          background: `linear-gradient(135deg, ${ki.tint}, ${ki.soft})`,
+          border: `1px solid ${ki.line}`,
         }}
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </div>
-            <div>
-              <div className="font-semibold text-lg">{t('settings.logPeriod')}</div>
-              <div className="text-white/80 text-sm">{t('settings.markToday')}</div>
-            </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          {/* Star icon tile */}
+          <div
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 15,
+              background: `linear-gradient(135deg, ${ki.accent}, ${ki.deep})`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
           </div>
-          <svg className="w-6 h-6 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-      </button>
 
-      {/* Subscription Status */}
-      <SettingsSection title={t('premium.currentPlan')}>
-        {isPremium ? (
-          /* Premium User View */
-          <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-br from-terra/10 to-rose-100/50">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-terra to-rose-500 flex items-center justify-center shadow-lg">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-semibold text-bark text-lg">{t('premium.premiumPlan')}</div>
-                {subscription.expiresAt && (
-                  <div className="text-sm text-muted">
-                    {t('premium.activeUntil')} {new Date(subscription.expiresAt).toLocaleDateString()}
-                  </div>
-                )}
-              </div>
+          <div style={{ flex: 1 }}>
+            {/* Eyebrow */}
+            <div style={{ fontFamily: GOTHIC, fontSize: 11, color: ki.accent, fontWeight: 600, marginBottom: 2 }}>
+              {isJa ? '現在のプラン' : 'Current Plan'}
             </div>
-            <PremiumBadge />
+            {/* Plan name */}
+            <div style={{ fontFamily: MINCHO, fontSize: 21, fontWeight: 600, color: INK }}>
+              {isPremium ? (isJa ? 'プレミアム' : 'Premium') : (isJa ? '無料' : 'Free')}
+            </div>
+            {/* Expiry */}
+            {isPremium && subscription?.expiresAt && (
+              <div style={{ fontFamily: GOTHIC, fontSize: 11.5, color: INK2, marginTop: 2 }}>
+                {isJa ? '有効期限: ' : 'Active until '}
+                {new Date(subscription.expiresAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}
+              </div>
+            )}
           </div>
-        ) : (
-          /* Free User View - Upgrade CTA */
-          <div className="rounded-xl overflow-hidden border border-terra/20">
-            <div className="p-4 bg-gradient-to-br from-terra/5 to-rose-50">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl bg-washi flex items-center justify-center">
-                  <svg className="w-5 h-5 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="font-medium text-bark">{t('premium.free')}</div>
-                  <div className="text-xs text-muted">{t('premium.limitedFeatures')}</div>
-                </div>
-              </div>
 
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex-1 h-px bg-terra/20" />
-                <span className="text-xs text-terra font-medium px-2">{t('premium.upgradeFor')}</span>
-                <div className="flex-1 h-px bg-terra/20" />
-              </div>
-
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-center gap-2 text-sm text-bark">
-                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  {t('premium.features.pillReminders')}
-                </li>
-                <li className="flex items-center gap-2 text-sm text-bark">
-                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  {t('premium.features.partnerShare')}
-                </li>
-                <li className="flex items-center gap-2 text-sm text-bark">
-                  <svg className="w-4 h-4 text-terra" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  {t('premium.features.fullInsights')}
-                </li>
-              </ul>
-            </div>
-
-            <button
-              onClick={() => setShowUpgradeModal(true)}
-              className="w-full py-4 px-6 font-medium text-white transition-all duration-300 hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-3"
+          {/* Premium badge pill */}
+          {isPremium && (
+            <div
               style={{
-                background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)'
+                padding: '4px 10px',
+                borderRadius: 20,
+                background: `${ki.accent}22`,
+                border: `1px solid ${ki.accent}44`,
+                fontFamily: GOTHIC,
+                fontSize: 10.5,
+                fontWeight: 700,
+                color: ki.accent,
               }}
             >
-              <span className="text-lg">{t('premium.startTrial')}</span>
-              <span className="text-white/80 text-sm">
-                {i18n.language.startsWith('ja') ? '¥780/月' : '$4.99/mo'}
-              </span>
-            </button>
-          </div>
-        )}
+              PRO
+            </div>
+          )}
+        </div>
+      </div>
 
-        {/* Dev toggle - remove in production */}
-        {process.env.NODE_ENV === 'development' && (
-          <button
-            onClick={togglePremium}
-            className="w-full mt-2 text-xs text-gray-400 hover:text-gray-600"
-          >
-            [Dev] Toggle Premium
-          </button>
-        )}
-      </SettingsSection>
+      {/* Cycle settings card */}
+      <div className="card" style={{ padding: '18px 20px' }}>
+        <h3 style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 16 }}>
+          {isJa ? '周期設定' : 'Cycle Settings'}
+        </h3>
 
-      {/* Cycle Settings */}
-      <SettingsSection title={t('settings.cycleSettings')}>
-        <div className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('settings.lastPeriod')}
-            </label>
+        {/* Last period date input */}
+        <div style={{ marginBottom: 18 }}>
+          <label style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 600, color: INK2, display: 'block', marginBottom: 6 }}>
+            {isJa ? '最終生理開始日' : 'Last period start'}
+          </label>
+          <div style={{ position: 'relative' }}>
             <input
               type="date"
-              value={lastPeriod}
-              onChange={(e) => setLastPeriod(e.target.value)}
+              value={lastPeriodStart}
+              onChange={(e) => setLastPeriodStart(e.target.value)}
               max={today}
-              className="input"
+              style={{
+                width: '100%',
+                padding: '12px 14px',
+                borderRadius: 12,
+                border: `1px solid ${LINE}`,
+                background: CARD,
+                fontFamily: GOTHIC,
+                fontSize: 14,
+                color: INK,
+                outline: 'none',
+                boxSizing: 'border-box',
+              }}
             />
           </div>
+        </div>
 
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label className="text-sm font-medium text-gray-700">
-                {t('settings.cycleLength')}
-              </label>
-              <span className="text-lg font-bold text-pink-500">{cycleLength} {t('insights.days')}</span>
-            </div>
+        {/* Cycle length slider */}
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+            <label style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 600, color: INK2 }}>
+              {isJa ? '周期の長さ' : 'Cycle Length'}
+            </label>
+            <span style={{ fontFamily: MINCHO, fontSize: 20, fontWeight: 700, color: currentP.accent }}>
+              {cycleLength} {isJa ? '日' : 'days'}
+            </span>
+          </div>
+          <div style={{ position: 'relative', height: 28, display: 'flex', alignItems: 'center' }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                height: 6,
+                borderRadius: 3,
+                background: PAPER2,
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                width: `${sliderPercent}%`,
+                height: 6,
+                borderRadius: 3,
+                background: `linear-gradient(90deg, ${currentP.accent}, ${currentP.deep})`,
+              }}
+            />
             <input
               type="range"
               min="21"
               max="35"
               value={cycleLength}
-              onChange={(e) => setCycleLength(e.target.value)}
-              style={{ '--value': `${sliderPercent}%` }}
-              className="w-full"
+              onChange={(e) => setCycleLength(Number(e.target.value))}
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: 28,
+                margin: 0,
+                opacity: 0,
+                cursor: 'pointer',
+                zIndex: 1,
+              }}
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-1">
-              <span>21</span>
-              <span>28 (avg)</span>
-              <span>35</span>
-            </div>
-          </div>
-
-          <button
-            onClick={handleSave}
-            className="w-full py-3.5 px-6 rounded-xl font-medium text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
-            style={{
-              background: 'linear-gradient(145deg, var(--terra) 0%, #c4664a 100%)',
-              boxShadow: '0 4px 12px rgba(181, 88, 47, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15)'
-            }}
-          >
-            {t('settings.saveChanges')}
-          </button>
-        </div>
-      </SettingsSection>
-
-      {/* Language Switcher */}
-      <LanguageSwitcher />
-
-      {/* Theme Picker */}
-      <ThemePicker currentTheme={theme} onChange={onThemeChange} />
-
-      {/* Calm Mode */}
-      <SettingsSection title={t('commerce.calmMode')}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
-              <svg className="w-5 h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </div>
-            <div>
-              <div className="font-medium text-gray-800">{t('commerce.calmMode')}</div>
-              <div className="text-sm text-gray-500">{t('commerce.calmModeDesc')}</div>
-            </div>
-          </div>
-          <button
-            onClick={handleCalmModeToggle}
-            className={`relative w-12 h-7 rounded-full transition-colors ${
-              calmMode ? 'bg-forest' : 'bg-gray-300'
-            }`}
-          >
             <div
-              className={`absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform ${
-                calmMode ? 'translate-x-6' : 'translate-x-1'
-              }`}
+              style={{
+                position: 'absolute',
+                left: `${sliderPercent}%`,
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 20,
+                height: 20,
+                borderRadius: '50%',
+                background: currentP.accent,
+                border: '3px solid #fff',
+                boxShadow: `0 2px 8px ${currentP.accent}44`,
+                pointerEvents: 'none',
+              }}
             />
-          </button>
-        </div>
-        {calmMode && (
-          <div className="mt-3 p-3 bg-forest/10 rounded-xl flex items-center gap-2">
-            <svg className="w-4 h-4 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            <span className="text-sm text-forest font-medium">{t('commerce.calmModeEnabled')}</span>
           </div>
-        )}
-      </SettingsSection>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
+            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>21</span>
+            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>28</span>
+            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>35</span>
+          </div>
+        </div>
 
-      {/* OBGYN Finder */}
-      <OBGYNFinder />
+        {/* Save button */}
+        <button
+          onClick={handleSave}
+          style={{
+            width: '100%',
+            padding: '14px 20px',
+            borderRadius: 14,
+            border: 'none',
+            background: `linear-gradient(135deg, ${currentP.accent}, ${currentP.deep})`,
+            fontFamily: GOTHIC,
+            fontSize: 15,
+            fontWeight: 600,
+            color: '#fff',
+            cursor: 'pointer',
+            boxShadow: `0 4px 14px ${currentP.accent}33`,
+          }}
+        >
+          {isJa ? '変更を保存' : 'Save Changes'}
+        </button>
+      </div>
 
-      {/* Partner Sharing */}
-      <SettingsSection title={t('settings.sharePartner')}>
-        <p className="text-sm text-muted mb-4">{t('settings.shareDescription')}</p>
+      {/* Language card */}
+      <div className="card" style={{ padding: '18px 20px' }}>
+        <h3 style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
+          {isJa ? '言語' : 'Language'}
+        </h3>
 
-        {/* New Partner Share Button - Premium Feature */}
-        {cycleInfo && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {[
+            { code: 'en', label: 'EN', name: 'English' },
+            { code: 'ja', label: '日', name: '日本語' },
+          ].map((lang) => {
+            const selected = currentLang === lang.code;
+            const sp = PHASES[phaseKey];
+            return (
+              <button
+                key={lang.code}
+                onClick={() => handleLanguageChange(lang.code)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                  padding: '12px 14px',
+                  borderRadius: 14,
+                  border: selected ? `1px solid ${sp.line}` : `1px solid ${LINE}`,
+                  background: selected ? sp.tint : PAPER2,
+                  cursor: 'pointer',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
+              >
+                {/* Code tile */}
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: 11,
+                    background: selected ? sp.accent : INK3 + '33',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: GOTHIC,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    color: selected ? '#fff' : INK3,
+                  }}
+                >
+                  {lang.label}
+                </div>
+
+                {/* Name */}
+                <span style={{ fontFamily: GOTHIC, fontSize: 15, fontWeight: 600, color: selected ? INK : INK2, flex: 1 }}>
+                  {lang.name}
+                </span>
+
+                {/* Checkmark */}
+                {selected && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={sp.accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Misc list */}
+      <div className="card" style={{ padding: 6 }}>
+        {miscRows.map((row, i) => (
           <button
-            onClick={() => {
-              if (canAccess('partnerShare')) {
-                setShowPartnerShare(true);
-              } else {
-                setShowUpgradeModal(true);
-              }
+            key={i}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              padding: '14px 14px',
+              borderRadius: 12,
+              border: 'none',
+              background: 'transparent',
+              cursor: 'pointer',
+              borderBottom: i < miscRows.length - 1 ? `1px solid ${LINE2}` : 'none',
             }}
-            className="w-full btn-primary flex items-center justify-center gap-2 mb-4"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            {t('partnerShare.title')}
-            {!canAccess('partnerShare') && <PremiumBadge className="ml-1" />}
-          </button>
-        )}
-
-        {showShareCode && shareCode ? (
-          <div className="bg-gradient-to-br from-terra/10 to-rose-100/50 rounded-2xl p-5 text-center">
-            <div className="text-sm text-muted mb-2">{t('settings.yourCode')}</div>
-            <div className="text-4xl font-display text-terra tracking-widest mb-3">{shareCode}</div>
-            <button
-              onClick={() => navigator.clipboard?.writeText(shareCode)}
-              className="text-sm text-terra font-medium hover:text-terra/80"
-            >
-              {t('settings.tapToCopy')}
-            </button>
-          </div>
-        ) : (
-          <button
-            onClick={handleGenerateCode}
-            className="w-full btn-secondary flex items-center justify-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-            </svg>
-            {t('settings.generateCode')}
-          </button>
-        )}
-      </SettingsSection>
-
-      {/* Social Share */}
-      <SocialShare
-        title="Meguri Cycle Tracker"
-        text="Check out this cycle tracker app - it helps me understand my body better!"
-      />
-
-      {/* Calendar Integration */}
-      <SettingsSection title={t('settings.addToCalendar')}>
-        <div className="flex items-start gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-sm text-gray-600">{t('settings.calendarDescription')}</p>
-            <p className="text-xs text-gray-400 mt-1">{t('settings.calendarIncludes')}</p>
-          </div>
-        </div>
-
-        {calendarExported ? (
-          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl p-4 text-center">
-            <div className="flex items-center justify-center gap-2 text-emerald-600 font-medium">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              {t('settings.calendarDownloaded')}
-            </div>
-            <p className="text-sm text-emerald-600/70 mt-1">{t('settings.openIcs')}</p>
-          </div>
-        ) : (
-          <button
-            onClick={handleExportCalendar}
-            className="w-full btn-secondary flex items-center justify-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
-            {t('settings.downloadCalendar')}
-          </button>
-        )}
-
-        <div className="mt-4 p-3 bg-gray-50 rounded-xl">
-          <p className="text-xs text-gray-500">
-            <span className="font-medium">Tip:</span> {t('settings.calendarTip')}
-          </p>
-        </div>
-      </SettingsSection>
-
-      {/* About */}
-      <SettingsSection title={t('settings.about')}>
-        <div className="flex items-center gap-3 py-3">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-terra to-rose-600 flex items-center justify-center">
-            <span className="text-xl font-display text-white">巡</span>
-          </div>
-          <div>
-            <div className="font-display text-bark">Meguri</div>
-            <div className="text-sm text-muted">{t('settings.version')} 2.0.0</div>
-          </div>
-        </div>
-        <div className="border-t border-washi mt-2 pt-4">
-          <p className="text-sm text-muted">{t('settings.aboutDescription')}</p>
-        </div>
-      </SettingsSection>
-
-      {/* Privacy */}
-      <SettingsSection title={t('settings.privacy')}>
-        <SettingsRow
-          icon={
-            <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          }
-          iconBg="bg-emerald-100"
-          title={t('settings.localStorage')}
-          subtitle={t('settings.dataLocal')}
-        />
-
-        <div className="border-t border-gray-100 mt-2 pt-2">
-          <SettingsRow
-            icon={
-              <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-              </svg>
-            }
-            iconBg="bg-red-100"
-            title={t('settings.deleteData')}
-            subtitle={t('settings.deleteWarning')}
-            danger
-            action={
-              !showResetConfirm ? (
-                <button
-                  onClick={() => setShowResetConfirm(true)}
-                  className="text-red-500 text-sm font-medium hover:text-red-600"
-                >
-                  {t('settings.yesDelete').split(',')[0]}
-                </button>
-              ) : null
-            }
-          />
-
-          {showResetConfirm && (
-            <div className="mt-3 p-4 bg-red-50 rounded-2xl">
-              <p className="text-sm text-red-600 mb-3">{t('settings.confirmDelete')}</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => { onReset(); setShowResetConfirm(false); }}
-                  className="flex-1 py-2 px-4 bg-red-500 text-white rounded-xl font-medium hover:bg-red-600 transition-colors"
-                >
-                  {t('settings.yesDelete')}
-                </button>
-                <button
-                  onClick={() => setShowResetConfirm(false)}
-                  className="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-xl font-medium hover:bg-gray-300 transition-colors"
-                >
-                  {t('settings.cancel')}
-                </button>
+            <div>
+              <div style={{ fontFamily: GOTHIC, fontSize: 15, fontWeight: 600, color: INK, textAlign: 'left' }}>
+                {isJa ? row.titleJa : row.titleEn}
+              </div>
+              <div style={{ fontFamily: GOTHIC, fontSize: 12, color: INK3, textAlign: 'left', marginTop: 2 }}>
+                {isJa ? row.subtitleJa : row.subtitleEn}
               </div>
             </div>
-          )}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        ))}
+      </div>
+
+      {/* Delete data button */}
+      {!showDeleteConfirm ? (
+        <button
+          onClick={() => setShowDeleteConfirm(true)}
+          style={{
+            width: '100%',
+            padding: '14px 20px',
+            borderRadius: 14,
+            border: '1px solid #E8C4C4',
+            background: '#FDF2F2',
+            fontFamily: GOTHIC,
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#B91C1C',
+            cursor: 'pointer',
+          }}
+        >
+          {isJa ? 'すべてのデータを削除' : 'Delete All Data'}
+        </button>
+      ) : (
+        <div
+          className="card"
+          style={{
+            padding: 18,
+            background: '#FDF2F2',
+            border: '1px solid #E8C4C4',
+          }}
+        >
+          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: '#B91C1C', marginBottom: 14 }}>
+            {isJa ? 'すべてのデータが完全に削除されます。この操作は取り消せません。' : 'All data will be permanently deleted. This action cannot be undone.'}
+          </p>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button
+              onClick={() => {
+                onReset();
+                setShowDeleteConfirm(false);
+              }}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                borderRadius: 12,
+                border: 'none',
+                background: '#B91C1C',
+                fontFamily: GOTHIC,
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#fff',
+                cursor: 'pointer',
+              }}
+            >
+              {isJa ? 'はい、削除する' : 'Yes, Delete'}
+            </button>
+            <button
+              onClick={() => setShowDeleteConfirm(false)}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                borderRadius: 12,
+                border: `1px solid ${LINE}`,
+                background: CARD,
+                fontFamily: GOTHIC,
+                fontSize: 14,
+                fontWeight: 600,
+                color: INK2,
+                cursor: 'pointer',
+              }}
+            >
+              {isJa ? 'キャンセル' : 'Cancel'}
+            </button>
+          </div>
         </div>
-      </SettingsSection>
+      )}
 
       {/* Toast */}
       {showSaved && (
-        <div className="toast">{t('settings.saved')}</div>
-      )}
-
-      {/* Partner Share Modal */}
-      {showPartnerShare && cycleInfo && (
-        <PartnerShare
-          cycleInfo={cycleInfo}
-          onClose={() => setShowPartnerShare(false)}
-        />
-      )}
-
-      {/* Upgrade Modal */}
-      {showUpgradeModal && (
-        <UpgradeModal
-          onClose={() => setShowUpgradeModal(false)}
-          feature="partnerShare"
-        />
+        <div
+          style={{
+            position: 'fixed',
+            bottom: 80,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '10px 24px',
+            borderRadius: 20,
+            background: INK,
+            color: '#fff',
+            fontFamily: GOTHIC,
+            fontSize: 13,
+            fontWeight: 600,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+            zIndex: 1000,
+          }}
+        >
+          {isJa ? '保存しました' : 'Saved'}
+        </div>
       )}
     </div>
   );
