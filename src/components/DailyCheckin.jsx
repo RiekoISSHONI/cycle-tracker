@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASES, PAPER2, CARD, INK, INK2, INK3, LINE, MINCHO, GOTHIC, phaseKeyFromLegacy } from '../utils/phases';
-import { Ambient, BrushKanji } from './Ambient';
+import { PHASES, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, LINE2, phaseKeyFromLegacy } from '../utils/phases';
 
 /* ── symptom keys (unchanged for data compat) & display labels ── */
 const SYMPTOM_KEYS = [
@@ -29,6 +28,8 @@ const ENERGY_HINTS = {
   ja: { 1: '疲労', 2: '低い', 3: '普通', 4: '良い', 5: '最高' },
 };
 
+const CARD_SHADOW = '0 8px 22px rgba(120,70,40,0.06)';
+
 /* ── legacy phase helper (mirrors cycleData.getPhaseForDay) ── */
 function legacyPhaseForDay(day, len = 28) {
   const r = len / 28;
@@ -39,7 +40,7 @@ function legacyPhaseForDay(day, len = 28) {
 }
 
 /* ================================================================
-   DailyCheckin  —  Meguri check-in screen
+   DailyCheckin  —  Peanut-flavored playful check-in screen
    ================================================================ */
 export function DailyCheckin({
   cycleDay,
@@ -95,9 +96,9 @@ export function DailyCheckin({
                 height: extraStyle?.height || 52,
                 borderRadius: extraStyle?.borderRadius || 14,
                 border: active ? 'none' : `1px solid ${LINE}`,
-                background: active ? grad : PAPER2,
+                background: active ? grad : CARD,
                 color: active ? '#fff' : INK3,
-                fontFamily: GOTHIC,
+                fontFamily: MARU,
                 fontSize: extraStyle?.fontSize || 15,
                 fontWeight: 600,
                 cursor: 'pointer',
@@ -118,7 +119,24 @@ export function DailyCheckin({
   }
 
   return (
-    <div style={{ paddingBottom: 16, display: 'flex', flexDirection: 'column', gap: 24 }}>
+    <div style={{ position: 'relative', paddingBottom: 16, display: 'flex', flexDirection: 'column', gap: 24 }}>
+
+      {/* ── 0. Blobby radial gradient wash ── */}
+      <div
+        style={{
+          position: 'absolute',
+          top: -80,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 420,
+          height: 420,
+          borderRadius: '50%',
+          background: `radial-gradient(closest-side, ${sei.accent}20, ${sei.soft}18 45%, transparent 70%)`,
+          filter: 'blur(30px)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
 
       {/* ── 1. Period log CTA ── */}
       <button
@@ -136,16 +154,27 @@ export function DailyCheckin({
           textAlign: 'left',
           color: '#fff',
           transition: 'transform 0.15s',
+          zIndex: 1,
         }}
       >
-        {/* brush watermark */}
-        <BrushKanji
-          char={sei.kanji}
-          size={140}
-          color="#fff"
-          opacity={0.08}
-          style={{ position: 'absolute', right: -10, top: -18, pointerEvents: 'none' }}
-        />
+        {/* large translucent kanji watermark */}
+        <span
+          style={{
+            position: 'absolute',
+            right: -10,
+            top: -18,
+            fontFamily: PMINCHO,
+            fontWeight: 800,
+            fontSize: 140,
+            lineHeight: 1,
+            color: '#fff',
+            opacity: 0.08,
+            userSelect: 'none',
+            pointerEvents: 'none',
+          }}
+        >
+          {sei.kanji}
+        </span>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -168,10 +197,10 @@ export function DailyCheckin({
               </svg>
             </div>
             <div>
-              <div style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 700, lineHeight: 1.3 }}>
+              <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, lineHeight: 1.3 }}>
                 {ja ? '生理開始を記録' : 'Log period start'}
               </div>
-              <div style={{ fontSize: 13, fontFamily: GOTHIC, opacity: 0.78, marginTop: 2 }}>
+              <div style={{ fontSize: 13, fontFamily: MARU, opacity: 0.78, marginTop: 2 }}>
                 {ja ? '生理が始まったらタップ' : 'Tap if your period started today'}
               </div>
             </div>
@@ -184,22 +213,22 @@ export function DailyCheckin({
       </button>
 
       {/* ── 2. Header ── */}
-      <div>
-        <h2 style={{ fontFamily: MINCHO, fontSize: 24, fontWeight: 600, color: INK, margin: 0 }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 24, fontWeight: 900, color: INK, margin: 0 }}>
           {ja ? '毎日のチェックイン' : 'Daily check-in'}
         </h2>
-        <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, margin: '6px 0 0' }}>
+        <p style={{ fontFamily: MARU, fontSize: 13, color: INK2, margin: '6px 0 0' }}>
           {ja ? '今日の調子はどうですか？' : 'How are you feeling today?'}
         </p>
       </div>
 
       {/* ── 3. Mood scale ── */}
-      <div className="card" style={{ padding: '20px 20px 22px' }}>
+      <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
             {ja ? '気分' : 'Mood'}
           </span>
-          <span style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 700, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.accent }}>
             {MOOD_HINTS[lang][mood]}
           </span>
         </div>
@@ -207,12 +236,12 @@ export function DailyCheckin({
       </div>
 
       {/* ── 4. Energy scale ── */}
-      <div className="card" style={{ padding: '20px 20px 22px' }}>
+      <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
             {ja ? 'エネルギー' : 'Energy'}
           </span>
-          <span style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 700, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.accent }}>
             {ENERGY_HINTS[lang][energy]}
           </span>
         </div>
@@ -220,9 +249,9 @@ export function DailyCheckin({
       </div>
 
       {/* ── 5. Flow selector ── */}
-      <div className="card" style={{ padding: '20px 20px 22px' }}>
+      <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
             {ja ? '経血量' : 'Flow'}
           </span>
         </div>
@@ -237,9 +266,9 @@ export function DailyCheckin({
       </div>
 
       {/* ── 6. Symptoms ── */}
-      <div className="card" style={{ padding: '20px 20px 22px' }}>
+      <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MINCHO, fontSize: 19, fontWeight: 600, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
             {ja ? '症状' : 'Symptoms'}
           </span>
         </div>
@@ -252,11 +281,11 @@ export function DailyCheckin({
                 onClick={() => toggleSymptom(key)}
                 style={{
                   padding: '8px 16px',
-                  borderRadius: 20,
+                  borderRadius: 99,
                   border: `1px solid ${active ? p.line : LINE}`,
-                  background: active ? p.soft : PAPER2,
+                  background: active ? p.soft : CARD,
                   color: active ? p.deep : INK2,
-                  fontFamily: GOTHIC,
+                  fontFamily: MARU,
                   fontSize: 13.5,
                   fontWeight: active ? 700 : 500,
                   cursor: 'pointer',
@@ -275,15 +304,17 @@ export function DailyCheckin({
       <button
         onClick={handleSave}
         style={{
+          position: 'relative',
+          zIndex: 1,
           width: '100%',
           height: 56,
           borderRadius: 18,
           border: 'none',
           background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
           color: '#fff',
-          fontFamily: MINCHO,
-          fontSize: 18,
-          fontWeight: 700,
+          fontFamily: MARU,
+          fontSize: 16,
+          fontWeight: 800,
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
@@ -309,7 +340,7 @@ export function DailyCheckin({
             transform: 'translateX(-50%)',
             background: p.deep,
             color: '#fff',
-            fontFamily: GOTHIC,
+            fontFamily: MARU,
             fontSize: 14,
             fontWeight: 600,
             padding: '12px 28px',

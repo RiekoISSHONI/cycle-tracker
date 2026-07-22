@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE, LINE2, MINCHO, OLDMIN, GOTHIC, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
-import { Ambient, BrushKanji } from './Ambient';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CREAM2, CARD, INK, INK2, INK3, LINE, LINE2, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
 
@@ -62,10 +61,28 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16, position: 'relative' }}>
+      {/* Blobby radial gradient wash at top */}
+      <div
+        style={{
+          position: 'absolute',
+          top: -40,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 340,
+          height: 200,
+          borderRadius: '50%',
+          background: `radial-gradient(ellipse 70% 55% at 50% 30%, ${ki.soft}, ${ki.tint} 55%, transparent 75%)`,
+          filter: 'blur(16px)',
+          opacity: 0.7,
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+
       {/* Title */}
-      <div style={{ textAlign: 'center', padding: '0 16px' }}>
-        <h2 style={{ fontFamily: MINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+      <div style={{ textAlign: 'center', padding: '0 16px', position: 'relative', zIndex: 1 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK, margin: 0 }}>
           {isJa ? '設定' : 'Settings'}
         </h2>
       </div>
@@ -77,6 +94,8 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
           padding: '18px 20px',
           background: `linear-gradient(135deg, ${ki.tint}, ${ki.soft})`,
           border: `1px solid ${ki.line}`,
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -100,16 +119,16 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
           <div style={{ flex: 1 }}>
             {/* Eyebrow */}
-            <div style={{ fontFamily: GOTHIC, fontSize: 11, color: ki.accent, fontWeight: 600, marginBottom: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 11, color: ki.accent, fontWeight: 700, marginBottom: 2 }}>
               {isJa ? '現在のプラン' : 'Current Plan'}
             </div>
             {/* Plan name */}
-            <div style={{ fontFamily: MINCHO, fontSize: 21, fontWeight: 600, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 21, fontWeight: 900, color: INK }}>
               {isPremium ? (isJa ? 'プレミアム' : 'Premium') : (isJa ? '無料' : 'Free')}
             </div>
             {/* Expiry */}
             {isPremium && subscription?.expiresAt && (
-              <div style={{ fontFamily: GOTHIC, fontSize: 11.5, color: INK2, marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 11.5, color: INK2, marginTop: 2 }}>
                 {isJa ? '有効期限: ' : 'Active until '}
                 {new Date(subscription.expiresAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
@@ -124,7 +143,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 borderRadius: 20,
                 background: `${ki.accent}22`,
                 border: `1px solid ${ki.accent}44`,
-                fontFamily: GOTHIC,
+                fontFamily: MARU,
                 fontSize: 10.5,
                 fontWeight: 700,
                 color: ki.accent,
@@ -137,14 +156,14 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
       </div>
 
       {/* Cycle settings card */}
-      <div className="card" style={{ padding: '18px 20px' }}>
-        <h3 style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 16 }}>
+      <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 16 }}>
           {isJa ? '周期設定' : 'Cycle Settings'}
         </h3>
 
         {/* Last period date input */}
         <div style={{ marginBottom: 18 }}>
-          <label style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 600, color: INK2, display: 'block', marginBottom: 6 }}>
+          <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK2, display: 'block', marginBottom: 6 }}>
             {isJa ? '最終生理開始日' : 'Last period start'}
           </label>
           <div style={{ position: 'relative' }}>
@@ -159,7 +178,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 borderRadius: 12,
                 border: `1px solid ${LINE}`,
                 background: CARD,
-                fontFamily: GOTHIC,
+                fontFamily: MARU,
                 fontSize: 14,
                 color: INK,
                 outline: 'none',
@@ -172,10 +191,10 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
         {/* Cycle length slider */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <label style={{ fontFamily: GOTHIC, fontSize: 13, fontWeight: 600, color: INK2 }}>
+            <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK2 }}>
               {isJa ? '周期の長さ' : 'Cycle Length'}
             </label>
-            <span style={{ fontFamily: MINCHO, fontSize: 20, fontWeight: 700, color: currentP.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 900, color: currentP.accent }}>
               {cycleLength} {isJa ? '日' : 'days'}
             </span>
           </div>
@@ -187,7 +206,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 right: 0,
                 height: 6,
                 borderRadius: 3,
-                background: PAPER2,
+                background: CREAM2,
               }}
             />
             <div
@@ -233,9 +252,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>21</span>
-            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>28</span>
-            <span style={{ fontFamily: GOTHIC, fontSize: 10.5, color: INK3 }}>35</span>
+            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>21</span>
+            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>28</span>
+            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>35</span>
           </div>
         </div>
 
@@ -248,9 +267,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             borderRadius: 14,
             border: 'none',
             background: `linear-gradient(135deg, ${currentP.accent}, ${currentP.deep})`,
-            fontFamily: GOTHIC,
+            fontFamily: MARU,
             fontSize: 15,
-            fontWeight: 600,
+            fontWeight: 800,
             color: '#fff',
             cursor: 'pointer',
             boxShadow: `0 4px 14px ${currentP.accent}33`,
@@ -261,8 +280,8 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
       </div>
 
       {/* Language card */}
-      <div className="card" style={{ padding: '18px 20px' }}>
-        <h3 style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
+      <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 14 }}>
           {isJa ? '言語' : 'Language'}
         </h3>
 
@@ -284,7 +303,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                   padding: '12px 14px',
                   borderRadius: 14,
                   border: selected ? `1px solid ${sp.line}` : `1px solid ${LINE}`,
-                  background: selected ? sp.tint : PAPER2,
+                  background: selected ? sp.tint : CREAM2,
                   cursor: 'pointer',
                   width: '100%',
                   textAlign: 'left',
@@ -300,7 +319,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontFamily: GOTHIC,
+                    fontFamily: MARU,
                     fontSize: 13,
                     fontWeight: 700,
                     color: selected ? '#fff' : INK3,
@@ -310,7 +329,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 </div>
 
                 {/* Name */}
-                <span style={{ fontFamily: GOTHIC, fontSize: 15, fontWeight: 600, color: selected ? INK : INK2, flex: 1 }}>
+                <span style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: selected ? INK : INK2, flex: 1 }}>
                   {lang.name}
                 </span>
 
@@ -327,7 +346,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
       </div>
 
       {/* Misc list */}
-      <div className="card" style={{ padding: 6 }}>
+      <div className="card" style={{ padding: 6, position: 'relative', zIndex: 1 }}>
         {miscRows.map((row, i) => (
           <button
             key={i}
@@ -345,10 +364,10 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             }}
           >
             <div>
-              <div style={{ fontFamily: GOTHIC, fontSize: 15, fontWeight: 600, color: INK, textAlign: 'left' }}>
+              <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK, textAlign: 'left' }}>
                 {isJa ? row.titleJa : row.titleEn}
               </div>
-              <div style={{ fontFamily: GOTHIC, fontSize: 12, color: INK3, textAlign: 'left', marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 12, color: INK3, textAlign: 'left', marginTop: 2 }}>
                 {isJa ? row.subtitleJa : row.subtitleEn}
               </div>
             </div>
@@ -369,11 +388,13 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             borderRadius: 14,
             border: '1px solid #E8C4C4',
             background: '#FDF2F2',
-            fontFamily: GOTHIC,
+            fontFamily: MARU,
             fontSize: 14,
-            fontWeight: 600,
+            fontWeight: 700,
             color: '#B91C1C',
             cursor: 'pointer',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           {isJa ? 'すべてのデータを削除' : 'Delete All Data'}
@@ -385,9 +406,11 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             padding: 18,
             background: '#FDF2F2',
             border: '1px solid #E8C4C4',
+            position: 'relative',
+            zIndex: 1,
           }}
         >
-          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: '#B91C1C', marginBottom: 14 }}>
+          <p style={{ fontFamily: MARU, fontSize: 13, color: '#B91C1C', marginBottom: 14 }}>
             {isJa ? 'すべてのデータが完全に削除されます。この操作は取り消せません。' : 'All data will be permanently deleted. This action cannot be undone.'}
           </p>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -402,9 +425,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 borderRadius: 12,
                 border: 'none',
                 background: '#B91C1C',
-                fontFamily: GOTHIC,
+                fontFamily: MARU,
                 fontSize: 14,
-                fontWeight: 600,
+                fontWeight: 800,
                 color: '#fff',
                 cursor: 'pointer',
               }}
@@ -419,9 +442,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 borderRadius: 12,
                 border: `1px solid ${LINE}`,
                 background: CARD,
-                fontFamily: GOTHIC,
+                fontFamily: MARU,
                 fontSize: 14,
-                fontWeight: 600,
+                fontWeight: 700,
                 color: INK2,
                 cursor: 'pointer',
               }}
@@ -444,9 +467,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             borderRadius: 20,
             background: INK,
             color: '#fff',
-            fontFamily: GOTHIC,
+            fontFamily: MARU,
             fontSize: 13,
-            fontWeight: 600,
+            fontWeight: 700,
             boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
             zIndex: 1000,
           }}

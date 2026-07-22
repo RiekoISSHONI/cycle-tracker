@@ -1,371 +1,287 @@
 import { useTranslation } from 'react-i18next';
-import { PHASES, PHASE_ORDER, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE2, MINCHO, OLDMIN, GOTHIC, phaseKeyFromLegacy } from '../utils/phases';
+import { PHASES, PHASE_ORDER, CYCLE_LEN, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy } from '../utils/phases';
 import { CycleRing } from './CycleRing';
-import { Ambient, BrushKanji } from './Ambient';
+import { PhaseSticker } from './PhaseSticker';
 
-const HOME_COPY = {
-  ja: {
-    sei: { affirm: '「いまは、ただ休んでいい。めぐりは静かに始まっています。」', tip: '湯船にゆっくり浸かり、体を温めて。無理は禁物です。', hormone: 'エストロゲン・プロゲステロンともに低め。エネルギーは控えめに。', life: 'ひとりの時間を大切に。内省や記録に向く数日です。' },
-    me: { affirm: '「新しい力が芽吹いています。少しずつ、外へ。」', tip: '新しいことを始めるのに最適。軽い運動で巡りを促して。', hormone: 'エストロゲンが上昇中。気分も体力も上向きに。', life: '発想がさえる時期。計画づくりや学びがはかどります。' },
-    ki: { affirm: '「あなたは満開です。自信と魅力がピークに達しています。」', tip: 'デートナイトやパートナーとのつながりに最適な時期です。', hormone: 'エストロゲンが最高潮に。最高のエネルギー。', life: '言語能力がピーク。プレゼンや面接に最適。' },
-    mi: { affirm: '「実りの季節。ゆっくりと、自分を整えてゆきましょう。」', tip: '温かい食事と十分な睡眠を。甘いものは控えめに。', hormone: 'プロゲステロンが優勢。落ち着きと内省の時期。', life: '仕上げや片づけに向く時期。新規より整理を。' },
+/* ── copy table ─────────────────────────────────────────────── */
+const PLAY_COPY = {
+  ki: {
+    ja: { hi: 'こんにちは、さくらさん！', vibe: '今日は絶好調の予感 ✨', affirm: '満開のあなた。今日は自信を持って前へ！', tip: '気になるあの人を誘うなら今日！', pods: '同じ「輝」フェーズの3人が話してるよ' },
+    en: { hi: 'Hi Sakura!', vibe: 'Feeling unstoppable today ✨', affirm: "You're in full bloom — go get it today!", tip: "Ask out your crush — today's the day!", pods: '3 peers in your Radiance phase are chatting' },
   },
-  en: {
-    sei: { affirm: '"Rest is enough for now. The cycle is quietly beginning again."', tip: 'Take a long warm bath and keep cozy. Don\'t push yourself today.', hormone: 'Estrogen and progesterone are both low. Keep energy gentle.', life: 'Protect your alone time — good days for reflection and journaling.' },
-    me: { affirm: '"New energy is budding. Step outward, little by little."', tip: 'A great time to start something new. Light movement keeps things flowing.', hormone: 'Estrogen is rising. Mood and stamina are trending up.', life: 'Ideas come easily now — plan, learn, and get ahead.' },
-    ki: { affirm: '"You are in full bloom. Confidence and magnetism are at their peak."', tip: 'An ideal window for date nights and connecting with your partner.', hormone: 'Estrogen is at its peak — your highest energy of the cycle.', life: 'Verbal skills peak now. Perfect for presentations and interviews.' },
-    mi: { affirm: '"A season of ripening. Slowly, gently, tend to yourself."', tip: 'Favor warm meals and plenty of sleep. Go easy on sweets.', hormone: 'Progesterone dominates — a calmer, more inward phase.', life: 'Better for finishing and tidying than starting anew.' },
+  sei: {
+    ja: { hi: 'おかえり、さくらさん', vibe: '今日はゆっくりいこう 🌙', affirm: '休むのも大切な巡り。無理しないでね。', tip: 'あったかいお茶でひと息つこう', pods: '「静」フェーズの2人がケアを共有中' },
+    en: { hi: 'Welcome back, Sakura', vibe: "Let's take it slow today 🌙", affirm: 'Resting is part of the cycle too. Be gentle.', tip: 'Warm tea and a cozy break sound perfect', pods: '2 peers in Stillness are sharing care tips' },
+  },
+  me: {
+    ja: { hi: 'やっほー、さくらさん！', vibe: 'エネルギー上昇中 🌱', affirm: '新しいことを始めるのにぴったりの日！', tip: '軽いおさんぽで気分もすっきり', pods: '「芽」フェーズの4人が計画をシェア' },
+    en: { hi: 'Hey Sakura!', vibe: 'Energy on the rise 🌱', affirm: 'A perfect day to start something new!', tip: 'A light walk will lift your mood', pods: '4 peers in Budding are sharing plans' },
+  },
+  mi: {
+    ja: { hi: 'おつかれさま、さくらさん', vibe: 'そろそろ整えるとき 🍂', affirm: '実りの季節。自分をいたわってあげて。', tip: '甘いものは控えめに、睡眠たっぷり', pods: '「実」フェーズの3人がまったり中' },
+    en: { hi: 'Hi there, Sakura', vibe: 'Time to wind down 🍂', affirm: 'Ripening season — treat yourself kindly.', tip: 'Go easy on sweets, get plenty of sleep', pods: '3 peers in Ripening are taking it easy' },
   },
 };
 
-const ROW_LABELS = {
-  ja: ['今日のヒント', 'エネルギーとホルモン', 'ライフスタイル'],
-  en: ['Today’s tip', 'Energy & hormones', 'Lifestyle'],
-};
-
-function SproutIcon({ deep }) {
+/* ── sakura icon (5-petal) ──────────────────────────────────── */
+function SakuraIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 21v-8" />
-      <path d="M12 13c0-3.3 2.4-5.6 6-5.6-.2 3.4-2.6 5.6-6 5.6z" />
-      <path d="M12 14.5c0-2.6-1.9-4.4-4.8-4.4.2 2.7 2 4.4 4.8 4.4z" />
-    </svg>
-  );
-}
-
-function WaveIcon({ deep }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 14c1.6-3 3.2-3 4.8 0s3.2 3 4.8 0 3.2-3 4.8 0" />
-      <path d="M3 9c1.6-3 3.2-3 4.8 0s3.2 3 4.8 0 3.2-3 4.8 0" opacity="0.45" />
-    </svg>
-  );
-}
-
-function SunIcon({ deep }) {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={deep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 18h18" />
-      <path d="M7.5 18a4.5 4.5 0 019 0" />
-      <path d="M12 6.5V4M6.5 8.2L5 6.7M17.5 8.2L19 6.7" />
-    </svg>
-  );
-}
-
-function SakuraIcon({ accent }) {
-  return (
-    <svg width="40" height="40" viewBox="0 0 24 24">
+    <svg width="36" height="36" viewBox="0 0 36 36">
       {[0, 72, 144, 216, 288].map((a) => (
-        <ellipse key={a} cx="12" cy="7.2" rx="2.7" ry="4.4" transform={`rotate(${a} 12 12)`} fill={accent} fillOpacity="0.16" />
+        <ellipse key={a} cx="18" cy="10" rx="3.5" ry="6" transform={`rotate(${a} 18 18)`} fill="#fff" fillOpacity="0.85" />
       ))}
-      <circle cx="12" cy="12" r="1.7" fill={accent} stroke="none" />
     </svg>
   );
 }
 
-function CalendarIcon({ color }) {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="4" width="18" height="18" rx="2" />
-      <path d="M16 2v4M8 2v4M3 10h18" />
-    </svg>
-  );
-}
-
-function ChevronRight({ color }) {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18l6-6-6-6" />
-    </svg>
-  );
-}
-
-function InsightRow({ icon, title, body, accent, deep, soft, line }) {
-  return (
-    <div
-      style={{
-        background: CARD,
-        borderRadius: 16,
-        padding: '14px 16px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 14,
-        cursor: 'pointer',
-      }}
-    >
-      <div
-        style={{
-          width: 44,
-          height: 44,
-          borderRadius: 12,
-          background: soft,
-          border: `1px solid ${line}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: 0,
-        }}
-      >
-        {icon}
-      </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: GOTHIC, fontWeight: 700, fontSize: 14, color: INK, marginBottom: 2 }}>
-          {title}
-        </div>
-        <div style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, lineHeight: 1.45 }}>
-          {body}
-        </div>
-      </div>
-      <ChevronRight color={INK3} />
-    </div>
-  );
-}
-
+/* ── component ──────────────────────────────────────────────── */
 export function Dashboard({ cycleInfo, viewMode }) {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language.startsWith('ja') ? 'ja' : 'en';
-
+  const { i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
+  const day = cycleInfo.cycleDay;
+  const isJa = i18n.language.startsWith('ja');
+  const lang = isJa ? 'ja' : 'en';
+
   const p = PHASES[phaseKey];
-  const copy = HOME_COPY[lang][phaseKey];
-  const labels = ROW_LABELS[lang];
+  const copy = PLAY_COPY[phaseKey][lang];
+  const phaseName = isJa ? p.name : p.en;
 
-  const seasonLabel = lang === 'ja' ? p.season : p.seasonEn;
-  const phaseName = lang === 'ja' ? p.name : p.en;
-  const clinicalName = lang === 'ja' ? p.clinical : p.clinicalEn;
-  const poem = lang === 'ja' ? p.poem : p.poemEn;
-
-  const locale = lang === 'ja' ? 'ja-JP' : 'en-US';
-  const formattedDate = cycleInfo.nextPeriodDate
-    ? new Date(cycleInfo.nextPeriodDate).toLocaleDateString(locale, { month: 'short', day: 'numeric' })
-    : '';
-
-  const daysLeft = cycleInfo.daysUntilPeriod;
-  const predictionText = lang === 'ja'
-    ? `あと${daysLeft}日 · ${formattedDate}`
-    : `In ${daysLeft} days · ${formattedDate}`;
-
-  const dayLabel = lang === 'ja'
-    ? `/ ${CYCLE_LEN}日目`
-    : `of ${CYCLE_LEN}`;
-
+  /* ── partner view ── */
   if (viewMode === 'partner') {
     return (
-      <div style={{ padding: '24px 0' }}>
-        <div
-          style={{
-            background: CARD,
-            borderRadius: 20,
-            padding: '40px 24px',
-            textAlign: 'center',
-          }}
-        >
-          <div style={{ fontSize: 40, marginBottom: 12 }}>
-            {p.kanji}
+      <div style={{ padding: '24px 0', paddingBottom: 130 }}>
+        <div style={{
+          background: CARD,
+          borderRadius: 26,
+          padding: '48px 24px',
+          textAlign: 'center',
+          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+        }}>
+          <div style={{ fontSize: 44, marginBottom: 14 }}>{p.emoji}</div>
+          <div style={{ fontFamily: MARU, fontSize: 20, fontWeight: 800, color: INK, marginBottom: 8 }}>
+            {isJa ? 'パートナービュー' : 'Partner View'}
           </div>
-          <div style={{ fontFamily: MINCHO, fontSize: 18, color: INK, marginBottom: 8 }}>
-            {lang === 'ja' ? 'パートナービュー' : 'Partner View'}
-          </div>
-          <div style={{ fontFamily: GOTHIC, fontSize: 14, color: INK3, lineHeight: 1.5 }}>
-            {lang === 'ja' ? 'パートナー向けの画面は近日公開予定です。' : 'Partner view is coming soon.'}
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, lineHeight: 1.6 }}>
+            {isJa ? 'パートナー向けの画面は近日公開予定です。' : 'Partner view is coming soon.'}
           </div>
         </div>
       </div>
     );
   }
 
+  /* ── main view ── */
   return (
-    <div style={{ position: 'relative', paddingBottom: 24 }}>
-      {/* Ambient glow */}
-      <Ambient phase={phaseKey} top={-60} size={320} opacity={0.5} />
+    <div style={{ position: 'relative', paddingBottom: 130 }}>
 
-      {/* Hero card */}
-      <div
-        className="card"
-        style={{
-          position: 'relative',
-          borderRadius: 20,
-          overflow: 'hidden',
-          background: CARD,
-          padding: 0,
-        }}
-      >
-        {/* BrushKanji watermark */}
-        <div style={{ position: 'absolute', top: 8, right: 12, zIndex: 1 }}>
-          <BrushKanji char={p.kanji} size={150} color={p.accent} opacity={0.08} />
+      {/* 1 ── blobby radial gradient wash */}
+      <div style={{
+        position: 'absolute',
+        top: -80,
+        left: 0,
+        right: 0,
+        height: 380,
+        background: `radial-gradient(60% 70% at 50% 30%, ${p.soft}, transparent)`,
+        pointerEvents: 'none',
+        zIndex: 0,
+      }} />
+
+      {/* relative wrapper for z-stacking above the wash */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+
+        {/* 2 ── greeting */}
+        <div style={{ marginBottom: 18 }}>
+          <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK }}>
+            {copy.hi}
+          </div>
+          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: INK2, marginTop: 4 }}>
+            {copy.vibe}
+          </div>
         </div>
 
-        {/* Tint gradient across top */}
-        <div
-          style={{
+        {/* 3 ── hero card */}
+        <div style={{
+          background: CARD,
+          borderRadius: 30,
+          padding: '26px 22px',
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 10px 30px rgba(120,70,40,0.08)',
+        }}>
+          {/* tint gradient band */}
+          <div style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 90,
+            top: 0, left: 0, right: 0,
+            height: 96,
             background: `linear-gradient(180deg, ${p.tint}, transparent)`,
             zIndex: 0,
-          }}
-        />
+          }} />
 
-        {/* Content */}
-        <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 28, paddingBottom: 24 }}>
-          {/* CycleRing with overlaid center content */}
-          <div style={{ position: 'relative', width: 244, height: 244 }}>
-            <CycleRing size={244} day={cycleInfo.cycleDay} stroke={7} />
-            {/* Center overlay */}
-            <div
-              style={{
+          {/* content row */}
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 18,
+          }}>
+            {/* left: ring + sticker */}
+            <div style={{ position: 'relative', width: 150, height: 150, flexShrink: 0 }}>
+              <CycleRing size={150} day={day} stroke={9} />
+              <div style={{
                 position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: 'flex',
-                flexDirection: 'column',
+                top: '50%', left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}>
+                <PhaseSticker phase={phaseKey} size={74} />
+              </div>
+            </div>
+
+            {/* right: info stack */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              {/* phase chip */}
+              <div style={{
+                display: 'inline-flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                pointerEvents: 'none',
-              }}
-            >
-              {/* Eyebrow */}
-              <div style={{ fontFamily: GOTHIC, fontSize: 12, color: p.accent, letterSpacing: 0.5, marginBottom: 2 }}>
-                {seasonLabel} · {p.en}
+                gap: 6,
+                padding: '5px 14px',
+                borderRadius: 999,
+                background: p.soft,
+                marginBottom: 8,
+              }}>
+                <span style={{ fontSize: 16 }}>{p.emoji}</span>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
+                  {phaseName}
+                </span>
               </div>
-              {/* Big day number */}
-              <div style={{ fontFamily: MINCHO, fontSize: 78, fontWeight: 600, color: INK, lineHeight: 1 }}>
-                {cycleInfo.cycleDay}
+
+              {/* big day number */}
+              <div style={{ fontFamily: MARU, fontSize: 46, fontWeight: 900, color: INK, lineHeight: 1 }}>
+                {isJa ? `${day}日目` : `Day ${day}`}
               </div>
-              {/* Day denominator */}
-              <div style={{ fontFamily: MINCHO, fontSize: 17, color: INK3, marginTop: 2 }}>
-                {dayLabel}
+
+              {/* tip text */}
+              <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.45 }}>
+                {copy.tip}
               </div>
             </div>
           </div>
-
-          {/* Phase pill */}
-          <div
-            style={{
-              marginTop: 18,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 20px',
-              borderRadius: 999,
-              background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
-              color: '#fff',
-              boxShadow: `0 4px 14px ${p.accent}44`,
-            }}
-          >
-            <span style={{ fontFamily: MINCHO, fontSize: 18 }}>{p.kanji}</span>
-            <span style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 600 }}>{phaseName}</span>
-            <span style={{ fontFamily: GOTHIC, fontSize: 12, opacity: 0.8 }}>{clinicalName}</span>
-          </div>
-
-          {/* Poem line */}
-          <div
-            style={{
-              marginTop: 16,
-              fontFamily: MINCHO,
-              fontSize: 14,
-              color: INK2,
-              textAlign: 'center',
-              paddingLeft: 24,
-              paddingRight: 24,
-              lineHeight: 1.6,
-            }}
-          >
-            {poem}
-          </div>
-
-          {/* Prediction row */}
-          <div
-            style={{
-              marginTop: 16,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 18px',
-              borderRadius: 999,
-              background: PAPER2,
-            }}
-          >
-            <CalendarIcon color={phaseKey === 'sei' ? '#9A3B50' : p.accent} />
-            <span style={{ fontFamily: GOTHIC, fontSize: 14, fontWeight: 700, color: INK }}>
-              {predictionText}
-            </span>
-          </div>
         </div>
-      </div>
 
-      {/* Affirmation strip */}
-      <div
-        style={{
-          marginTop: 14,
-          background: `linear-gradient(135deg, ${p.tint}, ${CARD})`,
-          borderLeft: `3px solid ${p.accent}`,
-          borderRadius: 14,
-          padding: '14px 16px',
+        {/* 4 ── affirmation bubble */}
+        <div style={{
+          marginTop: 16,
+          background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
+          borderRadius: 26,
+          padding: '20px 22px',
           display: 'flex',
           alignItems: 'center',
-          gap: 12,
-        }}
-      >
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
+          gap: 14,
+          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+        }}>
+          {/* sakura tile */}
+          <div style={{
+            width: 50, height: 50,
+            borderRadius: 14,
+            background: 'rgba(255,255,255,0.18)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-          }}
-        >
-          <SakuraIcon accent={p.accent} />
+          }}>
+            <SakuraIcon />
+          </div>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: '#fff', lineHeight: 1.55 }}>
+            {copy.affirm}
+          </div>
         </div>
-        <div
-          style={{
-            fontFamily: MINCHO,
-            fontSize: 14,
-            fontStyle: 'italic',
-            color: INK2,
-            lineHeight: 1.55,
-          }}
-        >
-          {copy.affirm}
-        </div>
-      </div>
 
-      {/* Insight rows */}
-      <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <InsightRow
-          icon={<SproutIcon deep={p.deep} />}
-          title={labels[0]}
-          body={copy.tip}
-          accent={p.accent}
-          deep={p.deep}
-          soft={p.soft}
-          line={p.line}
-        />
-        <InsightRow
-          icon={<WaveIcon deep={p.deep} />}
-          title={labels[1]}
-          body={copy.hormone}
-          accent={p.accent}
-          deep={p.deep}
-          soft={p.soft}
-          line={p.line}
-        />
-        <InsightRow
-          icon={<SunIcon deep={p.deep} />}
-          title={labels[2]}
-          body={copy.life}
-          accent={p.accent}
-          deep={p.deep}
-          soft={p.soft}
-          line={p.line}
-        />
+        {/* 5 ── social pod strip */}
+        <div style={{
+          marginTop: 16,
+          background: CARD,
+          borderRadius: 24,
+          padding: '18px 20px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+        }}>
+          {/* overlapping avatar stack */}
+          <div style={{ display: 'flex', flexShrink: 0 }}>
+            {['M', 'A', 'R'].map((letter, i) => {
+              const colors = [p.accent, p.deep, p.soft];
+              const textColors = i === 2 ? p.deep : '#fff';
+              return (
+                <div key={letter} style={{
+                  width: 36, height: 36,
+                  borderRadius: '50%',
+                  background: colors[i],
+                  border: '2.5px solid #fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: i > 0 ? -10 : 0,
+                  zIndex: 3 - i,
+                  position: 'relative',
+                }}>
+                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 800, color: textColors }}>
+                    {letter}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* pods text */}
+          <div style={{ flex: 1, fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.4 }}>
+            {copy.pods}
+          </div>
+
+          {/* join button */}
+          <div style={{
+            padding: '7px 18px',
+            borderRadius: 999,
+            background: p.soft,
+            cursor: 'pointer',
+            flexShrink: 0,
+          }}>
+            <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 800, color: p.deep }}>
+              {isJa ? '参加' : 'Join'}
+            </span>
+          </div>
+        </div>
+
+        {/* 6 ── quick chips row */}
+        <div style={{
+          marginTop: 16,
+          display: 'flex',
+          gap: 10,
+        }}>
+          {[
+            { emoji: '💧', ja: '経血を記録', en: 'Log flow' },
+            { emoji: '💭', ja: '気分', en: 'Mood' },
+            { emoji: '📝', ja: 'メモ', en: 'Note' },
+          ].map((chip) => (
+            <div key={chip.en} style={{
+              flex: 1,
+              background: CARD,
+              borderRadius: 24,
+              padding: '18px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 6,
+              cursor: 'pointer',
+              boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            }}>
+              <span style={{ fontSize: 22 }}>{chip.emoji}</span>
+              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK2 }}>
+                {isJa ? chip.ja : chip.en}
+              </span>
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   );

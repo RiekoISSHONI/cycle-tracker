@@ -11,6 +11,7 @@ import { Settings } from './components/Settings';
 import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
 import { Care } from './components/Care';
+import { Peers } from './components/Peers';
 import { ConsentModal } from './components/ConsentModal';
 
 function App() {
@@ -47,7 +48,6 @@ function App() {
     return checkins.find(c => c.date === today);
   }, [checkins]);
 
-  // Set phase on document for CSS token switching
   useEffect(() => {
     if (cycleInfo?.phase) {
       document.documentElement.setAttribute('data-phase', cycleInfo.phase);
@@ -56,9 +56,7 @@ function App() {
     }
   }, [cycleInfo?.phase]);
 
-  const handleAcceptConsent = () => {
-    setHasConsented(true);
-  };
+  const handleAcceptConsent = () => setHasConsented(true);
 
   const handleSetup = (data) => {
     setCycleData(data);
@@ -67,9 +65,7 @@ function App() {
     }
   };
 
-  const handleUpdate = (data) => {
-    setCycleData(data);
-  };
+  const handleUpdate = (data) => setCycleData(data);
 
   const handleReset = () => {
     setCycleData(null);
@@ -80,10 +76,7 @@ function App() {
   };
 
   const handleLogPeriod = (date) => {
-    setCycleData(prev => ({
-      ...prev,
-      lastPeriodStart: date
-    }));
+    setCycleData(prev => ({ ...prev, lastPeriodStart: date }));
     setPeriodHistory(prev => {
       if (prev.includes(date)) return prev;
       const updated = [...prev, date].sort((a, b) => new Date(b) - new Date(a));
@@ -103,28 +96,18 @@ function App() {
     });
   };
 
-  if (!hasConsented) {
-    return <ConsentModal onAccept={handleAcceptConsent} />;
-  }
+  if (!hasConsented) return <ConsentModal onAccept={handleAcceptConsent} />;
+  if (!cycleData) return <CycleSetup onSave={handleSetup} />;
 
-  if (!cycleData) {
-    return <CycleSetup onSave={handleSetup} />;
-  }
+  const phaseKey = cycleInfo?.phase ? phaseKeyFromLegacy(cycleInfo.phase) : 'ki';
 
   return (
-    <div style={{ minHeight: '100vh', paddingBottom: 96, position: 'relative' }}>
-      <Header
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        cycleInfo={cycleInfo}
-      />
+    <div style={{ minHeight: '100vh', paddingBottom: 110, position: 'relative' }}>
+      <Header cycleInfo={cycleInfo} />
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
-          <Dashboard
-            cycleInfo={cycleInfo}
-            viewMode={viewMode}
-          />
+          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (
@@ -136,6 +119,10 @@ function App() {
             onLogPeriod={handleLogPeriod}
             periodHistory={periodHistory}
           />
+        )}
+
+        {activeTab === 'community' && cycleInfo && (
+          <Peers phase={phaseKey} />
         )}
 
         {activeTab === 'insights' && (

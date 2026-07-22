@@ -1,131 +1,36 @@
-import { useTranslation } from 'react-i18next';
-import {
-  PHASES,
-  CARD,
-  INK,
-  INK3,
-  LINE,
-  PAPER2,
-  MINCHO,
-  OLDMIN,
-  GOTHIC,
-  phaseKeyFromLegacy,
-} from '../utils/phases';
+import { PHASES, CORAL, CORAL_D, PMINCHO, MARU, INK, INK2, CARD, LINE, phaseKeyFromLegacy } from '../utils/phases';
 
-export function Header({ viewMode, setViewMode, cycleInfo }) {
-  const { i18n } = useTranslation();
-  const isJa = i18n.language.startsWith('ja');
-
+export function Header({ cycleInfo }) {
   const phaseKey = cycleInfo?.phase ? phaseKeyFromLegacy(cycleInfo.phase) : 'ki';
-  const phase = PHASES[phaseKey];
-
-  const selfLabel = isJa ? '自分用' : 'For me';
-  const partnerLabel = isJa ? 'パートナー' : 'Partner';
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        background: 'transparent',
-        padding: '14px 22px 12px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      {/* Logo */}
+    <header style={{
+      position: 'sticky', top: 0, zIndex: 20,
+      background: 'transparent',
+      padding: '14px 22px 0',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div
-          style={{
-            width: 38,
-            height: 38,
-            borderRadius: 12,
-            background: `linear-gradient(135deg, ${phase.soft} 0%, ${CARD} 100%)`,
-            border: `1px solid ${phase.line}`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: MINCHO,
-              fontSize: 21,
-              fontWeight: 700,
-              color: phase.accent,
-              lineHeight: 1,
-            }}
-          >
-            巡
-          </span>
-        </div>
-        <span
-          style={{
-            fontFamily: OLDMIN,
-            fontSize: 25,
-            fontWeight: 600,
-            color: INK,
-            lineHeight: 1,
-          }}
-        >
-          Meguri
-        </span>
+        <div style={{
+          width: 40, height: 40, borderRadius: 14,
+          background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: PMINCHO, fontSize: 22, fontWeight: 800, color: '#fff',
+          boxShadow: `0 6px 14px ${CORAL}55`,
+        }}>巡</div>
+        <span style={{
+          fontFamily: MARU, fontSize: 24, fontWeight: 900,
+          letterSpacing: -0.5, color: INK,
+        }}>meguri</span>
       </div>
-
-      {/* Segmented toggle */}
-      <div
-        style={{
-          display: 'flex',
-          borderRadius: 13,
-          background: PAPER2,
-          border: `1px solid ${LINE}`,
-          padding: 3,
-        }}
-      >
-        <button
-          onClick={() => setViewMode('personal')}
-          style={{
-            fontFamily: GOTHIC,
-            fontSize: 13,
-            fontWeight: viewMode === 'personal' ? 700 : 500,
-            color: viewMode === 'personal' ? INK : INK3,
-            background: viewMode === 'personal' ? CARD : 'transparent',
-            borderRadius: viewMode === 'personal' ? 10 : 10,
-            boxShadow:
-              viewMode === 'personal'
-                ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)'
-                : 'none',
-            border: 'none',
-            padding: '6px 14px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-          }}
-        >
-          {selfLabel}
-        </button>
-        <button
-          onClick={() => setViewMode('partner')}
-          style={{
-            fontFamily: GOTHIC,
-            fontSize: 13,
-            fontWeight: viewMode === 'partner' ? 700 : 500,
-            color: viewMode === 'partner' ? INK : INK3,
-            background: viewMode === 'partner' ? CARD : 'transparent',
-            borderRadius: 10,
-            boxShadow:
-              viewMode === 'partner'
-                ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)'
-                : 'none',
-            border: 'none',
-            padding: '6px 14px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-          }}
-        >
-          {partnerLabel}
-        </button>
+      <div style={{
+        width: 40, height: 40, borderRadius: '50%',
+        background: CARD, border: `2px solid ${LINE}`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={INK2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 8a6 6 0 10-12 0c0 7-2 8-2 8h16s-2-1-2-8M10.5 20a1.5 1.5 0 003 0"/>
+        </svg>
       </div>
     </header>
   );

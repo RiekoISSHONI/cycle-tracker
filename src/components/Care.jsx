@@ -1,5 +1,4 @@
-import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, PAPER2, CARD, INK, INK2, INK3, LINE, LINE2, MINCHO, OLDMIN, GOTHIC, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
-import { Ambient, BrushKanji } from './Ambient';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 
 const RECOMMENDATIONS = {
@@ -69,7 +68,7 @@ const RECOMMENDATIONS = {
   ],
 };
 
-export function Care({ phase }) {
+export function Care({ phase, onNavigateSettings }) {
   const { t, i18n } = useTranslation();
   const isJa = i18n.language.startsWith('ja');
 
@@ -103,27 +102,41 @@ export function Care({ phase }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
       {/* Header card */}
       <div
-        className="card"
         style={{
+          background: CARD,
+          borderRadius: 24,
+          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
           padding: 0,
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* BrushKanji watermark */}
-        <div style={{ position: 'absolute', top: -30, right: -20, zIndex: 0 }}>
-          <BrushKanji char={p.kanji} size={200} color={p.accent} opacity={0.06} />
-        </div>
-
-        {/* Tint gradient top */}
+        {/* Blobby radial gradient wash at top */}
         <div
           style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 80,
-            background: `linear-gradient(180deg, ${p.tint}, transparent)`,
+            top: -50,
+            right: -40,
+            width: 220,
+            height: 220,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${p.soft} 0%, transparent 70%)`,
+            opacity: 0.8,
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: -30,
+            left: -30,
+            width: 160,
+            height: 160,
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${PHASES.ki.tint} 0%, transparent 70%)`,
+            opacity: 0.5,
+            pointerEvents: 'none',
             zIndex: 0,
           }}
         />
@@ -132,26 +145,26 @@ export function Care({ phase }) {
         <div style={{ position: 'relative', zIndex: 1, padding: '24px 20px 20px' }}>
           {/* Kanji + Season/Clinical eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <span style={{ fontFamily: MINCHO, fontSize: 32, fontWeight: 700, color: p.accent, lineHeight: 1 }}>
+            <span style={{ fontFamily: PMINCHO, fontSize: 32, fontWeight: 700, color: p.accent, lineHeight: 1 }}>
               {p.kanji}
             </span>
             <div>
-              <span style={{ fontFamily: GOTHIC, fontSize: 11, color: p.accent, fontWeight: 600 }}>
+              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 800, color: p.accent }}>
                 {isJa ? p.season : p.seasonEn}
               </span>
-              <span style={{ fontFamily: GOTHIC, fontSize: 11, color: INK3, marginLeft: 6 }}>
+              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginLeft: 6 }}>
                 {isJa ? p.clinical : p.clinicalEn}
               </span>
             </div>
           </div>
 
           {/* Title */}
-          <h2 style={{ fontFamily: MINCHO, fontSize: 25, fontWeight: 600, color: INK, margin: '0 0 10px' }}>
+          <h2 style={{ fontFamily: MARU, fontSize: 25, fontWeight: 900, color: INK, margin: '0 0 10px' }}>
             {isJa ? '今週の養生' : "This Week's Care"}
           </h2>
 
           {/* Phase intro text */}
-          <p style={{ fontFamily: GOTHIC, fontSize: 13, color: INK2, lineHeight: 1.65, margin: '0 0 14px' }}>
+          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.65, margin: '0 0 14px' }}>
             {isJa ? p.poem : p.poemEn}
           </p>
 
@@ -164,13 +177,13 @@ export function Care({ phase }) {
               padding: '5px 12px',
               borderRadius: 20,
               background: mePhase.soft,
-              border: `1px solid ${mePhase.line}`,
+              border: 'none',
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={mePhase.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span style={{ fontFamily: GOTHIC, fontSize: 11.5, color: mePhase.accent, fontWeight: 600 }}>
+            <span style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 800, color: mePhase.accent }}>
               {isJa ? '周期データは非公開のまま' : 'Your cycle data stays private'}
             </span>
           </div>
@@ -186,7 +199,7 @@ export function Care({ phase }) {
               style={{
                 width: 28,
                 height: 28,
-                borderRadius: 8,
+                borderRadius: 10,
                 background: mePhase.soft,
                 display: 'flex',
                 alignItems: 'center',
@@ -195,7 +208,7 @@ export function Care({ phase }) {
             >
               {groupIcon[group.key](mePhase.accent)}
             </div>
-            <h3 style={{ fontFamily: MINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
+            <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 900, color: INK, margin: 0 }}>
               {isJa ? group.titleJa : group.titleEn}
             </h3>
           </div>
@@ -204,8 +217,10 @@ export function Care({ phase }) {
           {group.items.map((item, idx) => (
             <div
               key={idx}
-              className="card"
               style={{
+                background: CARD,
+                borderRadius: 24,
+                boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
                 padding: '14px 16px',
                 display: 'flex',
                 alignItems: 'center',
@@ -217,9 +232,8 @@ export function Care({ phase }) {
                 style={{
                   width: 48,
                   height: 48,
-                  borderRadius: 13,
+                  borderRadius: 16,
                   background: mePhase.soft,
-                  border: `1px solid ${mePhase.line}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -231,13 +245,13 @@ export function Care({ phase }) {
 
               {/* Text */}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: GOTHIC, fontSize: 15.5, fontWeight: 700, color: INK }}>
+                <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 800, color: INK }}>
                   {isJa ? item.nameJa : item.nameEn}
                 </div>
-                <div style={{ fontFamily: OLDMIN, fontSize: 12, color: INK3, marginTop: 1 }}>
+                <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
                   {isJa ? item.nameEn : item.nameJa}
                 </div>
-                <div style={{ fontFamily: GOTHIC, fontSize: 12, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
+                <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
                   {isJa ? item.noteJa : item.noteEn}
                 </div>
               </div>
@@ -247,11 +261,11 @@ export function Care({ phase }) {
                 style={{
                   padding: '6px 14px',
                   borderRadius: 20,
-                  border: `1px solid ${mePhase.line}`,
+                  border: 'none',
                   background: mePhase.tint,
-                  fontFamily: GOTHIC,
+                  fontFamily: MARU,
                   fontSize: 12,
-                  fontWeight: 600,
+                  fontWeight: 800,
                   color: mePhase.accent,
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
@@ -269,17 +283,18 @@ export function Care({ phase }) {
       <button
         onClick={() => {
           // Navigate to Settings tab - dispatch a custom event that App.jsx can listen to
-          window.dispatchEvent(new CustomEvent('navigate-tab', { detail: 'settings' }));
+          if (onNavigateSettings) onNavigateSettings();
         }}
         style={{
           width: '100%',
           padding: '14px 20px',
-          borderRadius: 14,
-          border: `1px solid ${LINE}`,
+          borderRadius: 24,
+          border: 'none',
           background: CARD,
-          fontFamily: GOTHIC,
+          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          fontFamily: MARU,
           fontSize: 14,
-          fontWeight: 600,
+          fontWeight: 800,
           color: INK2,
           cursor: 'pointer',
           display: 'flex',
