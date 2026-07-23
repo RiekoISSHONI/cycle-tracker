@@ -28,7 +28,7 @@ const ENERGY_HINTS = {
   ja: { 1: '疲労', 2: '低い', 3: '普通', 4: '良い', 5: '最高' },
 };
 
-const CARD_SHADOW = '0 8px 22px rgba(120,70,40,0.06)';
+const CARD_SHADOW = '0 8px 22px rgba(60,50,55,0.06)';
 
 /* ── legacy phase helper (mirrors cycleData.getPhaseForDay) ── */
 function legacyPhaseForDay(day, len = 28) {
@@ -164,7 +164,7 @@ export function DailyCheckin({
             right: -10,
             top: -18,
             fontFamily: PMINCHO,
-            fontWeight: 800,
+            fontWeight: 700,
             fontSize: 140,
             lineHeight: 1,
             color: '#fff',
@@ -197,7 +197,7 @@ export function DailyCheckin({
               </svg>
             </div>
             <div>
-              <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, lineHeight: 1.3 }}>
+              <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, lineHeight: 1.3 }}>
                 {ja ? '生理開始を記録' : 'Log period start'}
               </div>
               <div style={{ fontSize: 13, fontFamily: MARU, opacity: 0.78, marginTop: 2 }}>
@@ -214,7 +214,7 @@ export function DailyCheckin({
 
       {/* ── 2. Header ── */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 24, fontWeight: 900, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 24, fontWeight: 800, color: INK, margin: 0 }}>
           {ja ? '毎日のチェックイン' : 'Daily check-in'}
         </h2>
         <p style={{ fontFamily: MARU, fontSize: 13, color: INK2, margin: '6px 0 0' }}>
@@ -225,10 +225,10 @@ export function DailyCheckin({
       {/* ── 3. Mood scale ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
             {ja ? '気分' : 'Mood'}
           </span>
-          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
             {MOOD_HINTS[lang][mood]}
           </span>
         </div>
@@ -238,10 +238,10 @@ export function DailyCheckin({
       {/* ── 4. Energy scale ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
             {ja ? 'エネルギー' : 'Energy'}
           </span>
-          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
             {ENERGY_HINTS[lang][energy]}
           </span>
         </div>
@@ -251,7 +251,7 @@ export function DailyCheckin({
       {/* ── 5. Flow selector ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
             {ja ? '経血量' : 'Flow'}
           </span>
         </div>
@@ -268,7 +268,7 @@ export function DailyCheckin({
       {/* ── 6. Symptoms ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 800, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
             {ja ? '症状' : 'Symptoms'}
           </span>
         </div>
@@ -314,7 +314,7 @@ export function DailyCheckin({
           color: '#fff',
           fontFamily: MARU,
           fontSize: 16,
-          fontWeight: 800,
+          fontWeight: 700,
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',

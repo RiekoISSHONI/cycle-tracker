@@ -56,7 +56,7 @@ function PhaseChip({ phaseKey, isAll, selected, onClick, isJa }) {
         style={{
           fontFamily: MARU,
           fontSize: 13,
-          fontWeight: 800,
+          fontWeight: 700,
           padding: '6px 16px',
           borderRadius: 999,
           border: 'none',
@@ -80,7 +80,7 @@ function PhaseChip({ phaseKey, isAll, selected, onClick, isJa }) {
       style={{
         fontFamily: MARU,
         fontSize: 13,
-        fontWeight: 800,
+        fontWeight: 700,
         padding: '6px 14px',
         borderRadius: 999,
         border: 'none',
@@ -110,7 +110,7 @@ function PostCard({ post, isJa }) {
         background: CARD,
         borderRadius: 24,
         padding: '18px 20px',
-        boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
       }}
     >
       {/* header row */}
@@ -132,7 +132,7 @@ function PostCard({ post, isJa }) {
             style={{
               fontFamily: MARU,
               fontSize: 17,
-              fontWeight: 800,
+              fontWeight: 700,
               color: '#fff',
               lineHeight: 1,
             }}
@@ -147,7 +147,7 @@ function PostCard({ post, isJa }) {
             style={{
               fontFamily: MARU,
               fontSize: 15,
-              fontWeight: 800,
+              fontWeight: 700,
               color: INK,
             }}
           >
@@ -178,7 +178,7 @@ function PostCard({ post, isJa }) {
                 fontFamily: MARU,
                 fontSize: 11,
                 color: p.deep,
-                fontWeight: 700,
+                fontWeight: 600,
                 marginLeft: 3,
               }}
             >
@@ -223,7 +223,7 @@ function PostCard({ post, isJa }) {
             style={{
               fontFamily: MARU,
               fontSize: 13,
-              fontWeight: 700,
+              fontWeight: 600,
               color: INK2,
             }}
           >
@@ -238,7 +238,7 @@ function PostCard({ post, isJa }) {
             style={{
               fontFamily: MARU,
               fontSize: 13,
-              fontWeight: 700,
+              fontWeight: 600,
               color: INK2,
             }}
           >
@@ -284,7 +284,7 @@ export function Peers({ phase = 'ki' }) {
           <h2
             style={{
               fontFamily: MARU,
-              fontWeight: 900,
+              fontWeight: 800,
               fontSize: 26,
               color: INK,
               margin: '0 0 6px 0',

@@ -63,7 +63,7 @@ function MoodWaveChart({ moodData, cycleLength }) {
       ))}
       {phaseLabels.map((pl) => (
         <g key={pl.key}>
-          <text x={pl.x} y={H + 4} textAnchor="middle" fontSize={13} fontWeight={700} fill={pl.accent} fontFamily={PMINCHO}>
+          <text x={pl.x} y={H + 4} textAnchor="middle" fontSize={13} fontWeight={600} fill={pl.accent} fontFamily={PMINCHO}>
             {pl.kanji}
           </text>
           <text x={pl.x} y={H + 20} textAnchor="middle" fontSize={8.5} fontWeight={600} fill={INK3} fontFamily={MARU}>
@@ -119,7 +119,7 @@ function PhaseDonut({ size = 160 }) {
         ].join(' ');
         return <path key={seg.key} d={d} fill={seg.accent} opacity={0.85} />;
       })}
-      <text x={cx} y={cy - 4} textAnchor="middle" fontSize={22} fontWeight={900} fill={INK} fontFamily={MARU}>
+      <text x={cx} y={cy - 4} textAnchor="middle" fontSize={22} fontWeight={800} fill={INK} fontFamily={MARU}>
         {total}
       </text>
       <text x={cx} y={cy + 14} textAnchor="middle" fontSize={10.5} fontWeight={600} fill={INK3} fontFamily={MARU}>
@@ -199,7 +199,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
         <div style={{ textAlign: 'center', padding: '0 16px' }}>
-          <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK, margin: 0 }}>
+          <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
             {isJa ? 'あなたの傾向' : 'Your Trends'}
           </h2>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6 }}>
@@ -210,7 +210,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           style={{
             background: CARD,
             borderRadius: 24,
-            boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             padding: 32,
             textAlign: 'center',
             position: 'relative',
@@ -248,7 +248,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
               <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 style={{ fontFamily: MARU, fontSize: 18, fontWeight: 900, color: INK, marginBottom: 6 }}>
+          <h3 style={{ fontFamily: MARU, fontSize: 18, fontWeight: 800, color: INK, marginBottom: 6 }}>
             {t('insights.title')}
           </h3>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3 }}>{t('insights.noData')}</p>
@@ -261,7 +261,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px' }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
           {isJa ? 'あなたの傾向' : 'Your Trends'}
         </h2>
         <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6 }}>
@@ -278,13 +278,13 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
               flex: 1,
               background: CARD,
               borderRadius: 24,
-              boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
               padding: '16px 10px',
               textAlign: 'center',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 2 }}>
-              <span style={{ fontFamily: MARU, fontSize: hs.isText ? 16 : 28, fontWeight: 900, color: hs.accent }}>
+              <span style={{ fontFamily: MARU, fontSize: hs.isText ? 16 : 28, fontWeight: 800, color: hs.accent }}>
                 {hs.value}
               </span>
               {hs.unit && (
@@ -306,7 +306,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
             overflow: 'hidden',
             background: CARD,
             borderRadius: 24,
-            boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             padding: 16,
           }}
         >
@@ -324,7 +324,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
               pointerEvents: 'none',
             }}
           />
-          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 900, color: INK, marginBottom: 12, position: 'relative' }}>
+          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 12, position: 'relative' }}>
             {isJa ? '気分の波' : 'Mood Wave'}
           </h3>
           <div style={{ position: 'relative' }}>
@@ -338,11 +338,11 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
         style={{
           background: CARD,
           borderRadius: 24,
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
           padding: 16,
         }}
       >
-        <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 900, color: INK, marginBottom: 12 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 12 }}>
           {isJa ? '周期の構成' : 'Cycle Composition'}
         </h3>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20, justifyContent: 'center' }}>
@@ -351,7 +351,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
             {PHASE_ORDER.map((k) => (
               <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                 <div style={{ width: 10, height: 10, borderRadius: '50%', background: PHASES[k].accent }} />
-                <span style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 700, color: PHASES[k].accent }}>
+                <span style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: PHASES[k].accent }}>
                   {PHASES[k].kanji}
                 </span>
                 <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK2 }}>
@@ -369,11 +369,11 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           style={{
             background: CARD,
             borderRadius: 24,
-            boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             padding: 16,
           }}
         >
-          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 900, color: INK, marginBottom: 14 }}>
+          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 14 }}>
             {isJa ? '症状の頻度' : 'Symptom Frequency'}
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -408,7 +408,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                       }}
                     />
                   </div>
-                  <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 800, color: INK3, width: 28, textAlign: 'right', flexShrink: 0 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: INK3, width: 28, textAlign: 'right', flexShrink: 0 }}>
                     {count}x
                   </span>
                 </div>
@@ -422,14 +422,14 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
       <div
         style={{
           borderRadius: 24,
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
           padding: 18,
           background: `linear-gradient(135deg, ${ip.tint}, ${CARD})`,
           border: 'none',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-          <span style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 700, color: ip.accent, lineHeight: 1 }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: ip.accent, lineHeight: 1 }}>
             {ip.kanji}
           </span>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.6, margin: 0 }}>

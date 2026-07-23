@@ -106,7 +106,7 @@ export function Navigation({ activeTab, setActiveTab }) {
               {tab.icon(color, sw)}
               <span style={{
                 fontFamily: MARU, fontSize: 10.5,
-                fontWeight: active ? 800 : 600, color,
+                fontWeight: active ? 700 : 600, color,
               }}>{label}</span>
             </button>
           );

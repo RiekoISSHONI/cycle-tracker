@@ -1,12 +1,12 @@
-// Phase system — Japanese seasonal journey (Playful / Peanut-flavored skin)
-// Four phases, each with a kanji, season, and candy-bright colour.
+// Phase system — Japanese seasonal journey (Calm pastel skin)
+// Four phases, each with a kanji, season, and soft muted colour.
 
 export const PHASES = {
   sei: {
     key: 'sei', kanji: '静', name: '静寂', reading: 'せいじゃく', en: 'Stillness',
     clinical: '生理期', clinicalEn: 'Menstrual', season: '冬', seasonEn: 'Winter', days: 5,
-    accent: '#F2668A', deep: '#D8436B', soft: '#FDE4EC', tint: '#FEF3F7',
-    line: 'rgba(242,102,138,0.22)', emoji: '🌙',
+    accent: '#D4899F', deep: '#B56B82', soft: '#F5E1E8', tint: '#FAF0F4',
+    line: 'rgba(212,137,159,0.20)', emoji: '🌙',
     poem: 'めぐりの始まり。内に還り、静かに養う時。',
     poemEn: 'The cycle begins again. A time to turn inward and quietly restore.',
     energy: '低い · 休息のとき',
@@ -14,8 +14,8 @@ export const PHASES = {
   me: {
     key: 'me', kanji: '芽', name: '萌芽', reading: 'ほうが', en: 'Budding',
     clinical: '卵胞期', clinicalEn: 'Follicular', season: '春', seasonEn: 'Spring', days: 8,
-    accent: '#8FC15A', deep: '#67A034', soft: '#E9F5D8', tint: '#F5FBEC',
-    line: 'rgba(143,193,90,0.24)', emoji: '🌱',
+    accent: '#8BAF8E', deep: '#5E8A62', soft: '#E4EFE5', tint: '#F2F8F3',
+    line: 'rgba(139,175,142,0.22)', emoji: '🌱',
     poem: '芽吹きの季節。新しい力が静かに満ちてゆく。',
     poemEn: 'The season of budding. New energy quietly rises within.',
     energy: '上昇 · 芽吹きのとき',
@@ -23,8 +23,8 @@ export const PHASES = {
   ki: {
     key: 'ki', kanji: '輝', name: '輝き', reading: 'かがやき', en: 'Radiance',
     clinical: '排卵期', clinicalEn: 'Ovulation', season: '夏', seasonEn: 'Summer', days: 3,
-    accent: '#F4B63C', deep: '#E09310', soft: '#FDF0CF', tint: '#FEF8E8',
-    line: 'rgba(244,182,60,0.26)', emoji: '☀️',
+    accent: '#C9A96E', deep: '#A68B4B', soft: '#F2EBD9', tint: '#F9F5EC',
+    line: 'rgba(201,169,110,0.24)', emoji: '☀️',
     poem: 'エネルギーと自信がピーク。最も輝いている時期。',
     poemEn: 'Energy and confidence peak. Your most radiant days.',
     energy: '最高 · 輝きのとき',
@@ -32,8 +32,8 @@ export const PHASES = {
   mi: {
     key: 'mi', kanji: '実', name: '結実', reading: 'けつじつ', en: 'Ripening',
     clinical: '黄体期', clinicalEn: 'Luteal', season: '秋', seasonEn: 'Autumn', days: 12,
-    accent: '#B07CD6', deep: '#8E56BE', soft: '#F0E6FA', tint: '#F8F2FD',
-    line: 'rgba(176,124,214,0.22)', emoji: '🍂',
+    accent: '#9B89B5', deep: '#7A6699', soft: '#EBE5F1', tint: '#F5F2F9',
+    line: 'rgba(155,137,181,0.20)', emoji: '🍂',
     poem: '実りと内省の季節。ゆっくりと整えてゆく。',
     poemEn: 'A season of ripening and reflection. Slowly, gently, restore your balance.',
     energy: '下降 · 整えるとき',
@@ -43,23 +43,23 @@ export const PHASES = {
 export const PHASE_ORDER = ['sei', 'me', 'ki', 'mi'];
 export const CYCLE_LEN = 28;
 
-// Neutrals — playful palette
-export const CREAM  = '#FBF3E9';
-export const CREAM2 = '#F4E8D8';
+// Neutrals — calm palette
+export const CREAM  = '#FAF8F5';
+export const CREAM2 = '#F0ECE6';
 export const CARD   = '#FFFFFF';
-export const INK    = '#3B2E2A';
-export const INK2   = '#8B7A70';
-export const INK3   = '#B9A99C';
-export const LINE   = 'rgba(59,46,42,0.08)';
-export const LINE2  = 'rgba(59,46,42,0.05)';
+export const INK    = '#3B3335';
+export const INK2   = '#8A7E82';
+export const INK3   = '#B8ADB1';
+export const LINE   = 'rgba(59,51,53,0.08)';
+export const LINE2  = 'rgba(59,51,53,0.05)';
 
 // Legacy aliases
 export const PAPER  = CREAM;
 export const PAPER2 = CREAM2;
 
 // Brand chrome (logo only — not a phase colour)
-export const CORAL  = '#F06A4D';
-export const CORAL_D = '#D64F35';
+export const CORAL  = '#D4897A';
+export const CORAL_D = '#B8705F';
 
 // Font stacks
 export const MARU    = '"Zen Maru Gothic", "Hiragino Maru Gothic ProN", system-ui, sans-serif';

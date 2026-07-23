@@ -82,7 +82,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px', position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
           {isJa ? '設定' : 'Settings'}
         </h2>
       </div>
@@ -119,11 +119,11 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
           <div style={{ flex: 1 }}>
             {/* Eyebrow */}
-            <div style={{ fontFamily: MARU, fontSize: 11, color: ki.accent, fontWeight: 700, marginBottom: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 11, color: ki.accent, fontWeight: 600, marginBottom: 2 }}>
               {isJa ? '現在のプラン' : 'Current Plan'}
             </div>
             {/* Plan name */}
-            <div style={{ fontFamily: MARU, fontSize: 21, fontWeight: 900, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 21, fontWeight: 800, color: INK }}>
               {isPremium ? (isJa ? 'プレミアム' : 'Premium') : (isJa ? '無料' : 'Free')}
             </div>
             {/* Expiry */}
@@ -145,7 +145,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 border: `1px solid ${ki.accent}44`,
                 fontFamily: MARU,
                 fontSize: 10.5,
-                fontWeight: 700,
+                fontWeight: 600,
                 color: ki.accent,
               }}
             >
@@ -157,13 +157,13 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Cycle settings card */}
       <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 16 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 16 }}>
           {isJa ? '周期設定' : 'Cycle Settings'}
         </h3>
 
         {/* Last period date input */}
         <div style={{ marginBottom: 18 }}>
-          <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK2, display: 'block', marginBottom: 6 }}>
+          <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, display: 'block', marginBottom: 6 }}>
             {isJa ? '最終生理開始日' : 'Last period start'}
           </label>
           <div style={{ position: 'relative' }}>
@@ -191,10 +191,10 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
         {/* Cycle length slider */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK2 }}>
+            <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2 }}>
               {isJa ? '周期の長さ' : 'Cycle Length'}
             </label>
-            <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 900, color: currentP.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 800, color: currentP.accent }}>
               {cycleLength} {isJa ? '日' : 'days'}
             </span>
           </div>
@@ -269,7 +269,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             background: `linear-gradient(135deg, ${currentP.accent}, ${currentP.deep})`,
             fontFamily: MARU,
             fontSize: 15,
-            fontWeight: 800,
+            fontWeight: 700,
             color: '#fff',
             cursor: 'pointer',
             boxShadow: `0 4px 14px ${currentP.accent}33`,
@@ -281,7 +281,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Language card */}
       <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 14 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
           {isJa ? '言語' : 'Language'}
         </h3>
 
@@ -321,7 +321,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                     justifyContent: 'center',
                     fontFamily: MARU,
                     fontSize: 13,
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: selected ? '#fff' : INK3,
                   }}
                 >
@@ -329,7 +329,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 </div>
 
                 {/* Name */}
-                <span style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: selected ? INK : INK2, flex: 1 }}>
+                <span style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: selected ? INK : INK2, flex: 1 }}>
                   {lang.name}
                 </span>
 
@@ -364,7 +364,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             }}
           >
             <div>
-              <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK, textAlign: 'left' }}>
+              <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: INK, textAlign: 'left' }}>
                 {isJa ? row.titleJa : row.titleEn}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 12, color: INK3, textAlign: 'left', marginTop: 2 }}>
@@ -390,7 +390,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             background: '#FDF2F2',
             fontFamily: MARU,
             fontSize: 14,
-            fontWeight: 700,
+            fontWeight: 600,
             color: '#B91C1C',
             cursor: 'pointer',
             position: 'relative',
@@ -427,7 +427,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 background: '#B91C1C',
                 fontFamily: MARU,
                 fontSize: 14,
-                fontWeight: 800,
+                fontWeight: 700,
                 color: '#fff',
                 cursor: 'pointer',
               }}
@@ -444,7 +444,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 background: CARD,
                 fontFamily: MARU,
                 fontSize: 14,
-                fontWeight: 700,
+                fontWeight: 600,
                 color: INK2,
                 cursor: 'pointer',
               }}
@@ -469,7 +469,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             color: '#fff',
             fontFamily: MARU,
             fontSize: 13,
-            fontWeight: 700,
+            fontWeight: 600,
             boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
             zIndex: 1000,
           }}

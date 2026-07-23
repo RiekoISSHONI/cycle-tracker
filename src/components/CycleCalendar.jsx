@@ -98,7 +98,7 @@ export function CycleCalendar({ cycleInfo }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px' }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
           {isJa ? '周期の暦' : 'Cycle Calendar'}
         </h2>
         <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6 }}>
@@ -120,7 +120,7 @@ export function CycleCalendar({ cycleInfo }) {
               flexDirection: 'column',
               alignItems: 'center',
               gap: 4,
-              boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
               border: 'none',
             }}
           >
@@ -133,7 +133,7 @@ export function CycleCalendar({ cycleInfo }) {
                   background: item.accent,
                 }}
               />
-              <span style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 700, color: item.accent }}>
+              <span style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: item.accent }}>
                 {item.kanji}
               </span>
             </div>
@@ -151,7 +151,7 @@ export function CycleCalendar({ cycleInfo }) {
           overflow: 'hidden',
           background: CARD,
           borderRadius: 24,
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
           padding: 14,
         }}
       >
@@ -217,7 +217,7 @@ export function CycleCalendar({ cycleInfo }) {
                   color: isToday ? '#fff' : dp.deep,
                   fontFamily: MARU,
                   fontSize: 14,
-                  fontWeight: isToday ? 800 : 600,
+                  fontWeight: isToday ? 700 : 600,
                   boxShadow: isToday ? `0 4px 14px ${dp.accent}44` : 'none',
                   transition: 'all 0.2s',
                 }}
@@ -254,7 +254,7 @@ export function CycleCalendar({ cycleInfo }) {
               style={{
                 background: CARD,
                 borderRadius: 24,
-                boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+                boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
                 padding: '14px 16px',
                 display: 'flex',
                 alignItems: 'center',
@@ -272,7 +272,7 @@ export function CycleCalendar({ cycleInfo }) {
                   justifyContent: 'center',
                   fontFamily: PMINCHO,
                   fontSize: 20,
-                  fontWeight: 700,
+                  fontWeight: 600,
                   color: ep.accent,
                   flexShrink: 0,
                 }}
@@ -280,7 +280,7 @@ export function CycleCalendar({ cycleInfo }) {
                 {ev.kanji}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 800, color: INK }}>
+                <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                   {ev.title}
                 </div>
                 <div style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, marginTop: 2 }}>
@@ -294,7 +294,7 @@ export function CycleCalendar({ cycleInfo }) {
                   background: ep.soft,
                   fontFamily: MARU,
                   fontSize: 11,
-                  fontWeight: 800,
+                  fontWeight: 700,
                   color: ep.accent,
                   whiteSpace: 'nowrap',
                 }}
@@ -312,12 +312,12 @@ export function CycleCalendar({ cycleInfo }) {
           style={{
             background: PHASES.me.tint,
             borderRadius: 24,
-            boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             padding: '14px 20px',
             textAlign: 'center',
           }}
         >
-          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 800, color: PHASES.me.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: PHASES.me.accent }}>
             {isJa ? 'ダウンロード完了' : 'Downloaded'}
           </span>
         </div>
@@ -330,10 +330,10 @@ export function CycleCalendar({ cycleInfo }) {
             borderRadius: 24,
             border: 'none',
             background: CARD,
-            boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             fontFamily: MARU,
             fontSize: 14,
-            fontWeight: 800,
+            fontWeight: 700,
             color: INK,
             cursor: 'pointer',
             display: 'flex',

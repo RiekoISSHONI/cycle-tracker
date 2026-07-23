@@ -55,10 +55,10 @@ export function Dashboard({ cycleInfo, viewMode }) {
           borderRadius: 26,
           padding: '48px 24px',
           textAlign: 'center',
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
         }}>
           <div style={{ fontSize: 44, marginBottom: 14 }}>{p.emoji}</div>
-          <div style={{ fontFamily: MARU, fontSize: 20, fontWeight: 800, color: INK, marginBottom: 8 }}>
+          <div style={{ fontFamily: MARU, fontSize: 20, fontWeight: 700, color: INK, marginBottom: 8 }}>
             {isJa ? 'パートナービュー' : 'Partner View'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, lineHeight: 1.6 }}>
@@ -90,7 +90,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
 
         {/* 2 ── greeting */}
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 900, color: INK }}>
+          <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK }}>
             {copy.hi}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: INK2, marginTop: 4 }}>
@@ -105,7 +105,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
           padding: '26px 22px',
           position: 'relative',
           overflow: 'hidden',
-          boxShadow: '0 10px 30px rgba(120,70,40,0.08)',
+          boxShadow: '0 10px 30px rgba(60,50,55,0.08)',
         }}>
           {/* tint gradient band */}
           <div style={{
@@ -149,13 +149,13 @@ export function Dashboard({ cycleInfo, viewMode }) {
                 marginBottom: 8,
               }}>
                 <span style={{ fontSize: 16 }}>{p.emoji}</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep }}>
                   {phaseName}
                 </span>
               </div>
 
               {/* big day number */}
-              <div style={{ fontFamily: MARU, fontSize: 46, fontWeight: 900, color: INK, lineHeight: 1 }}>
+              <div style={{ fontFamily: MARU, fontSize: 46, fontWeight: 800, color: INK, lineHeight: 1 }}>
                 {isJa ? `${day}日目` : `Day ${day}`}
               </div>
 
@@ -176,7 +176,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
           display: 'flex',
           alignItems: 'center',
           gap: 14,
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
         }}>
           {/* sakura tile */}
           <div style={{
@@ -190,7 +190,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
           }}>
             <SakuraIcon />
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: '#fff', lineHeight: 1.55 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: '#fff', lineHeight: 1.55 }}>
             {copy.affirm}
           </div>
         </div>
@@ -204,7 +204,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
           display: 'flex',
           alignItems: 'center',
           gap: 14,
-          boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
         }}>
           {/* overlapping avatar stack */}
           <div style={{ display: 'flex', flexShrink: 0 }}>
@@ -224,7 +224,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
                   zIndex: 3 - i,
                   position: 'relative',
                 }}>
-                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 800, color: textColors }}>
+                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: textColors }}>
                     {letter}
                   </span>
                 </div>
@@ -245,7 +245,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
             cursor: 'pointer',
             flexShrink: 0,
           }}>
-            <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 800, color: p.deep }}>
+            <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
               {isJa ? '参加' : 'Join'}
             </span>
           </div>
@@ -272,10 +272,10 @@ export function Dashboard({ cycleInfo, viewMode }) {
               alignItems: 'center',
               gap: 6,
               cursor: 'pointer',
-              boxShadow: '0 8px 22px rgba(120,70,40,0.06)',
+              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
             }}>
               <span style={{ fontSize: 22 }}>{chip.emoji}</span>
-              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK2 }}>
+              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2 }}>
                 {isJa ? chip.ja : chip.en}
               </span>
             </div>

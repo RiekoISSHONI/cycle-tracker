@@ -15,11 +15,11 @@ export function Header({ cycleInfo }) {
           width: 40, height: 40, borderRadius: 14,
           background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: PMINCHO, fontSize: 22, fontWeight: 800, color: '#fff',
+          fontFamily: PMINCHO, fontSize: 22, fontWeight: 700, color: '#fff',
           boxShadow: `0 6px 14px ${CORAL}55`,
         }}>巡</div>
         <span style={{
-          fontFamily: MARU, fontSize: 24, fontWeight: 900,
+          fontFamily: MARU, fontSize: 24, fontWeight: 800,
           letterSpacing: -0.5, color: INK,
         }}>meguri</span>
       </div>
