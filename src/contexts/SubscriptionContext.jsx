@@ -3,35 +3,37 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const SubscriptionContext = createContext(null);
 
-// Feature flags for each tier
+export const PLANS = {
+  monthly: { id: 'monthly', priceUSD: '$4.99', priceJPY: '¥780', months: 1 },
+  annual: { id: 'annual', priceUSD: '$39.99', priceJPY: '¥5,800', months: 12 },
+};
+
 export const FEATURES = {
-  // Free features
   phaseTracking: 'free',
   basicCheckin: 'free',
   phaseTips: 'free',
   calendar: 'free',
   shop: 'free',
 
-  // Premium features
   pillReminders: 'premium',
   unlimitedHistory: 'premium',
   journalExport: 'premium',
   partnerShare: 'premium',
   fullInsights: 'premium',
-  supplyAlerts: 'premium'
+  supplyAlerts: 'premium',
 };
 
-// Free tier limits
 export const FREE_LIMITS = {
   checkinHistoryDays: 7,
-  pillReminders: 1
+  pillReminders: 1,
 };
 
 export function SubscriptionProvider({ children }) {
   const [subscription, setSubscription] = useLocalStorage('subscription', {
     tier: 'free',
+    plan: null,
     startDate: null,
-    expiresAt: null
+    expiresAt: null,
   });
 
   const isPremium = useMemo(() => {
@@ -51,33 +53,34 @@ export function SubscriptionProvider({ children }) {
     return FREE_LIMITS[limitKey] || 0;
   };
 
-  const upgradeToPremium = () => {
-    // In production, this would integrate with Stripe/RevenueCat
-    // For now, simulate a subscription
+  const upgradeToPremium = (planId = 'monthly') => {
+    const plan = PLANS[planId] || PLANS.monthly;
     const now = new Date();
-    const expiresAt = new Date(now.setMonth(now.getMonth() + 1));
+    const expiresAt = new Date(now);
+    expiresAt.setMonth(expiresAt.getMonth() + plan.months);
 
     setSubscription({
       tier: 'premium',
+      plan: plan.id,
       startDate: new Date().toISOString(),
-      expiresAt: expiresAt.toISOString()
+      expiresAt: expiresAt.toISOString(),
     });
   };
 
   const cancelSubscription = () => {
     setSubscription({
       tier: 'free',
+      plan: null,
       startDate: null,
-      expiresAt: null
+      expiresAt: null,
     });
   };
 
-  // For testing - remove in production
   const togglePremium = () => {
     if (isPremium) {
       cancelSubscription();
     } else {
-      upgradeToPremium();
+      upgradeToPremium('monthly');
     }
   };
 
@@ -88,7 +91,7 @@ export function SubscriptionProvider({ children }) {
     getLimit,
     upgradeToPremium,
     cancelSubscription,
-    togglePremium
+    togglePremium,
   };
 
   return (
