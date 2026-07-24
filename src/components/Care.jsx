@@ -1,5 +1,8 @@
-import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
+import { useState } from 'react';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, MARU, PMINCHO, CREAM2, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
+
+const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
 
 const RECOMMENDATIONS = {
   teas: [
@@ -67,6 +70,226 @@ const RECOMMENDATIONS = {
     },
   ],
 };
+
+/* ── nutrition section ─────────────────────────────────────── */
+function NutritionSection({ phaseKey, isJa, t }) {
+  const [showTcm, setShowTcm] = useState(false);
+  const legacyPhase = PHASE_TO_LEGACY[phaseKey];
+  const p = PHASES[phaseKey];
+
+  const westernTips = t(`nutritionContent.${legacyPhase}.western`, { returnObjects: true }) || [];
+  const tcm = t(`nutritionContent.${legacyPhase}.tcm`, { returnObjects: true }) || {};
+  const tcmFoods = tcm.foods || [];
+  const tcmAvoid = tcm.avoid || [];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 10,
+          background: PHASES.ki.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.ki.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+          </svg>
+        </div>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+          {isJa ? '栄養' : 'Nutrition'}
+        </h3>
+      </div>
+
+      <div style={{
+        background: CARD, borderRadius: 24,
+        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+        padding: '18px 18px',
+      }}>
+        {/* Toggle between modern/TCM */}
+        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+          <button
+            onClick={() => setShowTcm(false)}
+            style={{
+              padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
+              background: !showTcm ? p.soft : CREAM2,
+              fontFamily: MARU, fontSize: 12, fontWeight: 700,
+              color: !showTcm ? p.deep : INK3,
+            }}
+          >
+            {isJa ? '科学' : 'Science'}
+          </button>
+          <button
+            onClick={() => setShowTcm(true)}
+            style={{
+              padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
+              background: showTcm ? p.soft : CREAM2,
+              fontFamily: MARU, fontSize: 12, fontWeight: 700,
+              color: showTcm ? p.deep : INK3,
+            }}
+          >
+            {isJa ? '漢方' : 'TCM'}
+          </button>
+        </div>
+
+        {!showTcm ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {westernTips.slice(0, 4).map((tip, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <div style={{
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: PHASES.ki.accent, flexShrink: 0, marginTop: 6,
+                }} />
+                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                  {tip}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            {/* TCM principle */}
+            <div style={{
+              padding: '10px 14px', borderRadius: 14,
+              background: p.tint, marginBottom: 12,
+            }}>
+              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent }}>
+                {isJa ? '原則' : 'Principle'}
+              </span>
+              <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep, margin: '4px 0 0', lineHeight: 1.5 }}>
+                {tcm.principle}
+              </p>
+            </div>
+
+            {/* Recommended foods */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+              <span style={{ fontSize: 13 }}>🍲</span>
+              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                {isJa ? 'おすすめ食材' : 'Recommended Foods'}
+              </span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+              {tcmFoods.slice(0, 4).map((food, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <div style={{
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
+                  }} />
+                  <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                    {food}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Avoid */}
+            {tcmAvoid.length > 0 && (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
+                  <span style={{ fontSize: 13 }}>🚫</span>
+                  <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                    {isJa ? '控えたい食材' : 'Foods to Avoid'}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {tcmAvoid.map((food, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                      <div style={{
+                        width: 6, height: 6, borderRadius: '50%',
+                        background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
+                      }} />
+                      <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                        {food}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Tea recommendation */}
+            {tcm.tea && (
+              <div style={{
+                marginTop: 12, padding: '10px 14px', borderRadius: 14,
+                background: PHASES.me.tint,
+                display: 'flex', alignItems: 'center', gap: 8,
+              }}>
+                <span style={{ fontSize: 16 }}>🍵</span>
+                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: PHASES.me.deep, lineHeight: 1.4 }}>
+                  {tcm.tea}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ── exercise section ─────────────────────────────────────── */
+function ExerciseSection({ phaseKey, isJa, t }) {
+  const legacyPhase = PHASE_TO_LEGACY[phaseKey];
+  const p = PHASES[phaseKey];
+
+  const exerciseTips = t(`phaseTips.${legacyPhase}.exercise`, { returnObjects: true }) || [];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 10,
+          background: PHASES.me.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.me.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="5" r="2" />
+            <path d="M5 22l3-9 4 3 4-3 3 9" />
+            <path d="M6.5 13L12 15l5.5-2" />
+          </svg>
+        </div>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+          {isJa ? '運動' : 'Exercise'}
+        </h3>
+      </div>
+
+      <div style={{
+        background: CARD, borderRadius: 24,
+        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+        padding: '18px 18px',
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {exerciseTips.map((tip, i) => {
+            const isWarning = tip.startsWith('CAUTION');
+            return (
+              <div key={i} style={{
+                display: 'flex', alignItems: 'flex-start', gap: 8,
+                ...(isWarning ? {
+                  padding: '10px 12px', borderRadius: 14,
+                  background: PHASES.sei.tint,
+                  margin: '4px 0',
+                } : {}),
+              }}>
+                {isWarning ? (
+                  <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>⚠️</span>
+                ) : (
+                  <div style={{
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
+                  }} />
+                )}
+                <span style={{
+                  fontFamily: MARU, fontSize: 12.5, fontWeight: isWarning ? 700 : 600,
+                  color: isWarning ? PHASES.sei.deep : INK2, lineHeight: 1.5,
+                }}>
+                  {tip}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function Care({ phase, onNavigateSettings }) {
   const { t, i18n } = useTranslation();
@@ -278,6 +501,12 @@ export function Care({ phase, onNavigateSettings }) {
           ))}
         </div>
       ))}
+
+      {/* Nutrition section */}
+      <NutritionSection phaseKey={phaseKey} isJa={isJa} t={t} />
+
+      {/* Exercise section */}
+      <ExerciseSection phaseKey={phaseKey} isJa={isJa} t={t} />
 
       {/* Settings link */}
       <button

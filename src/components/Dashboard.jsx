@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PHASES, PHASE_ORDER, CYCLE_LEN, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy, phaseForDay } from '../utils/phases';
 import { CycleRing } from './CycleRing';
@@ -307,10 +307,10 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
   );
 }
 
-/* ── partner guide card ───────────────────────────────────── */
+/* ── partner guide card (collapsed by default) ────────────── */
 function PartnerGuideCard({ phaseKey, isJa, t }) {
+  const [open, setOpen] = useState(false);
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
-  const p = PHASES[phaseKey];
 
   const understand = t(`partnerTips.${legacyPhase}.understand`) || '';
   const supportTips = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
@@ -321,76 +321,72 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
       marginTop: 16,
       background: CARD,
       borderRadius: 24,
-      padding: '20px 20px',
       boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+      overflow: 'hidden',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+      {/* Tap-to-expand header */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          width: '100%', padding: '16px 20px',
+          background: 'none', border: 'none', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: 10,
+        }}
+      >
         <div style={{
           width: 36, height: 36, borderRadius: 12,
           background: PHASES.mi.soft,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
         }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.mi.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
           </svg>
         </div>
-        <div>
-          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+        <div style={{ flex: 1, textAlign: 'left' }}>
+          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK }}>
             {isJa ? 'パートナーガイド' : 'Partner Guide'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
             {isJa ? '大切な人に伝えたいこと' : 'What your partner should know'}
           </div>
         </div>
-      </div>
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
 
-      {/* Understanding */}
-      <div style={{
-        padding: '12px 14px', borderRadius: 16,
-        background: PHASES.mi.tint,
-        marginBottom: 12,
-      }}>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
-          {understand}
-        </p>
-      </div>
-
-      {/* Support tips */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-        <span style={{ fontSize: 14 }}>💚</span>
-        <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
-          {isJa ? 'サポート方法' : 'How to Support'}
-        </span>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
-        {supportTips.slice(0, 3).map((tip, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-            <div style={{
-              width: 6, height: 6, borderRadius: '50%',
-              background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
-            }} />
-            <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
-              {tip}
-            </span>
+      {/* Expandable content */}
+      {open && (
+        <div style={{ padding: '0 20px 20px' }}>
+          {/* Understanding */}
+          <div style={{
+            padding: '12px 14px', borderRadius: 16,
+            background: PHASES.mi.tint,
+            marginBottom: 12,
+          }}>
+            <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
+              {understand}
+            </p>
           </div>
-        ))}
-      </div>
 
-      {/* Avoid tips */}
-      {avoidTips.length > 0 && (
-        <>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
-            <span style={{ fontSize: 14 }}>⚠️</span>
+          {/* Support tips */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+            <span style={{ fontSize: 14 }}>💚</span>
             <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
-              {isJa ? '避けた方がいいこと' : 'What to Avoid'}
+              {isJa ? 'サポート方法' : 'How to Support'}
             </span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            {avoidTips.slice(0, 2).map((tip, i) => (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+            {supportTips.slice(0, 3).map((tip, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                 <div style={{
                   width: 6, height: 6, borderRadius: '50%',
-                  background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
+                  background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
                 }} />
                 <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                   {tip}
@@ -398,14 +394,39 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
               </div>
             ))}
           </div>
-        </>
+
+          {/* Avoid tips */}
+          {avoidTips.length > 0 && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
+                <span style={{ fontSize: 14 }}>⚠️</span>
+                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                  {isJa ? '避けた方がいいこと' : 'What to Avoid'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {avoidTips.slice(0, 2).map((tip, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <div style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
+                    }} />
+                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                      {tip}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       )}
     </div>
   );
 }
 
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [] }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateCheckin }) {
   const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
@@ -650,7 +671,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             { emoji: '💭', ja: '気分', en: 'Mood' },
             { emoji: '📝', ja: 'メモ', en: 'Note' },
           ].map((chip) => (
-            <div key={chip.en} style={{
+            <div key={chip.en} onClick={onNavigateCheckin} style={{
               flex: 1,
               background: CARD,
               borderRadius: 24,
