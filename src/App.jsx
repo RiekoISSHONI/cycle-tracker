@@ -103,11 +103,11 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', paddingBottom: 110, position: 'relative' }}>
-      <Header cycleInfo={cycleInfo} />
+      <Header cycleInfo={cycleInfo} viewMode={viewMode} setViewMode={setViewMode} />
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
-          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateCheckin={() => setActiveTab('checkin')} />
+          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (

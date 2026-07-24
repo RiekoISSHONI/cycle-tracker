@@ -426,7 +426,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
 }
 
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateCheckin }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [] }) {
   const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
@@ -660,36 +660,6 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           </div>
         </div>
 
-        {/* 9 ── quick chips row */}
-        <div style={{
-          marginTop: 16,
-          display: 'flex',
-          gap: 10,
-        }}>
-          {[
-            { emoji: '💧', ja: '経血を記録', en: 'Log flow' },
-            { emoji: '💭', ja: '気分', en: 'Mood' },
-            { emoji: '📝', ja: 'メモ', en: 'Note' },
-          ].map((chip) => (
-            <div key={chip.en} onClick={onNavigateCheckin} style={{
-              flex: 1,
-              background: CARD,
-              borderRadius: 24,
-              padding: '18px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 6,
-              cursor: 'pointer',
-              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
-            }}>
-              <span style={{ fontSize: 22 }}>{chip.emoji}</span>
-              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2 }}>
-                {isJa ? chip.ja : chip.en}
-              </span>
-            </div>
-          ))}
-        </div>
 
       </div>
     </div>
