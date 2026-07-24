@@ -74,7 +74,7 @@ export function DailyCheckin({
   };
 
   const handleSave = () => {
-    onSave({ date: today, mood, energy, flow, symptoms });
+    onSave({ date: today, mood, energy, flow, symptoms, cycleDay });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };

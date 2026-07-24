@@ -202,7 +202,12 @@
     "logMore": "予測を改善するにはもっとチェックインを記録してください",
     "highConfidence": "高い信頼度",
     "mediumConfidence": "中程度の信頼度",
-    "learning": "パターンを学習中"
+    "learning": "パターンを学習中",
+    "forecastTitle": "今週の予測",
+    "forecastSubtitle": "チェックインのパターンに基づく",
+    "needMoreData": "予測を見るには2周期以上のチェックインが必要です",
+    "moodLabel": "気分",
+    "energyLabel": "活力"
   },
   "workouts": {
     "title": "おすすめワークアウト",

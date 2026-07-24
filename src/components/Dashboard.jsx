@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASES, PHASE_ORDER, CYCLE_LEN, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy } from '../utils/phases';
+import { PHASES, PHASE_ORDER, CYCLE_LEN, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy, phaseForDay } from '../utils/phases';
 import { CycleRing } from './CycleRing';
 import { PhaseSticker } from './PhaseSticker';
+import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predictions';
 
 /* ── copy table ─────────────────────────────────────────────── */
 const PLAY_COPY = {
@@ -34,9 +36,178 @@ function SakuraIcon() {
   );
 }
 
+/* ── forecast helpers ──────────────────────────────────────── */
+const MOOD_EMOJI = ['', '😔', '😕', '😐', '😊', '😄'];
+const ENERGY_BARS = [0, 1, 2, 3, 4, 5];
+
+function enrichCheckins(checkins, periodHistory, cycleLength) {
+  if (!checkins?.length || !periodHistory?.length) return checkins || [];
+  const sortedPeriods = [...periodHistory].sort((a, b) => new Date(a) - new Date(b));
+  return checkins.map(c => {
+    if (c.cycleDay) return c;
+    const date = new Date(c.date);
+    let cycleDay = null;
+    for (let i = sortedPeriods.length - 1; i >= 0; i--) {
+      const periodStart = new Date(sortedPeriods[i]);
+      if (date >= periodStart) {
+        cycleDay = Math.floor((date - periodStart) / (1000 * 60 * 60 * 24)) + 1;
+        if (cycleDay > cycleLength) cycleDay = ((cycleDay - 1) % cycleLength) + 1;
+        break;
+      }
+    }
+    return cycleDay ? { ...c, cycleDay } : c;
+  });
+}
+
+function ForecastCard({ forecast, cycleLength, isJa, t }) {
+  if (!forecast) {
+    return (
+      <div style={{
+        marginTop: 16,
+        background: CARD,
+        borderRadius: 24,
+        padding: '20px 20px',
+        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+          <span style={{ fontSize: 20 }}>🔮</span>
+          <span style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+            {t('predictions.forecastTitle')}
+          </span>
+        </div>
+        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
+          {t('predictions.needMoreData')}
+        </p>
+      </div>
+    );
+  }
+
+  const dayLabels = forecast.map((f) => {
+    if (f.dayOffset === 0) return isJa ? '今日' : 'Today';
+    if (f.dayOffset === 1) return isJa ? '明日' : 'Tmrw';
+    const d = new Date();
+    d.setDate(d.getDate() + f.dayOffset);
+    return isJa
+      ? `${d.getMonth() + 1}/${d.getDate()}`
+      : d.toLocaleDateString('en', { weekday: 'short' });
+  });
+
+  return (
+    <div style={{
+      marginTop: 16,
+      background: CARD,
+      borderRadius: 24,
+      padding: '20px 16px 16px',
+      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, padding: '0 4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ fontSize: 20 }}>🔮</span>
+          <div>
+            <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+              {t('predictions.forecastTitle')}
+            </div>
+            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+              {t('predictions.forecastSubtitle')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{
+        display: 'flex',
+        gap: 8,
+        overflowX: 'auto',
+        paddingBottom: 4,
+        scrollbarWidth: 'none',
+      }}>
+        {forecast.map((f, i) => {
+          const pk = phaseForDay(f.cycleDay);
+          const phase = PHASES[pk];
+          const isToday = f.dayOffset === 0;
+          return (
+            <div
+              key={i}
+              style={{
+                minWidth: 72,
+                flex: '0 0 auto',
+                background: isToday ? phase.soft : CREAM2,
+                border: isToday ? `2px solid ${phase.accent}` : '2px solid transparent',
+                borderRadius: 18,
+                padding: '12px 8px 10px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <span style={{
+                fontFamily: MARU,
+                fontSize: 11,
+                fontWeight: isToday ? 700 : 600,
+                color: isToday ? phase.accent : INK3,
+              }}>
+                {dayLabels[i]}
+              </span>
+
+              <span style={{ fontSize: 22, lineHeight: 1 }}>
+                {MOOD_EMOJI[Math.round(f.mood || 3)]}
+              </span>
+
+              <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 14 }}>
+                {ENERGY_BARS.slice(1).map((lvl) => (
+                  <div
+                    key={lvl}
+                    style={{
+                      width: 4,
+                      height: 3 + lvl * 2,
+                      borderRadius: 2,
+                      background: lvl <= Math.round(f.energy || 3) ? phase.accent : LINE,
+                      opacity: lvl <= Math.round(f.energy || 3) ? 1 : 0.4,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <span style={{
+                fontFamily: MARU,
+                fontSize: 9,
+                fontWeight: 600,
+                color: phase.deep,
+                padding: '1px 6px',
+                borderRadius: 6,
+                background: phase.tint,
+              }}>
+                {isJa ? phase.name : phase.en}
+              </span>
+
+              {f.symptoms?.length > 0 && (
+                <span style={{
+                  fontFamily: MARU,
+                  fontSize: 9,
+                  fontWeight: 600,
+                  color: INK3,
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                  maxWidth: 64,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {f.symptoms[0]}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode }) {
-  const { i18n } = useTranslation();
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [] }) {
+  const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
   const isJa = i18n.language.startsWith('ja');
@@ -45,6 +216,15 @@ export function Dashboard({ cycleInfo, viewMode }) {
   const p = PHASES[phaseKey];
   const copy = PLAY_COPY[phaseKey][lang];
   const phaseName = isJa ? p.name : p.en;
+
+  const forecast = useMemo(() => {
+    const enriched = enrichCheckins(checkins, periodHistory, cycleLength);
+    const withDay = enriched.filter(c => c.cycleDay);
+    if (withDay.length < 5) return null;
+    const patterns = analyzeCycleDayPatterns(withDay);
+    if (!patterns) return null;
+    return getWeeklyPredictions(day, patterns, cycleLength);
+  }, [checkins, periodHistory, cycleLength, day]);
 
   /* ── partner view ── */
   if (viewMode === 'partner') {
@@ -195,7 +375,10 @@ export function Dashboard({ cycleInfo, viewMode }) {
           </div>
         </div>
 
-        {/* 5 ── social pod strip */}
+        {/* 5 ── forecast card */}
+        <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
+
+        {/* 6 ── social pod strip */}
         <div style={{
           marginTop: 16,
           background: CARD,
@@ -251,7 +434,7 @@ export function Dashboard({ cycleInfo, viewMode }) {
           </div>
         </div>
 
-        {/* 6 ── quick chips row */}
+        {/* 7 ── quick chips row */}
         <div style={{
           marginTop: 16,
           display: 'flex',

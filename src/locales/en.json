@@ -202,7 +202,12 @@
     "logMore": "Log more check-ins to improve predictions",
     "highConfidence": "High confidence",
     "mediumConfidence": "Medium confidence",
-    "learning": "Still learning your patterns"
+    "learning": "Still learning your patterns",
+    "forecastTitle": "Your Week Ahead",
+    "forecastSubtitle": "Based on your check-in patterns",
+    "needMoreData": "Log check-ins for 2+ cycles to see predictions",
+    "moodLabel": "Mood",
+    "energyLabel": "Energy"
   },
   "workouts": {
     "title": "Recommended Workouts",
