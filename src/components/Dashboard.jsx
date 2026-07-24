@@ -205,6 +205,205 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
   );
 }
 
+/* ── phase key → legacy (for locale lookups) ──────────────── */
+const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
+
+/* ── today's focus card ───────────────────────────────────── */
+function TodaysFocusCard({ phaseKey, isJa, t }) {
+  const legacyPhase = PHASE_TO_LEGACY[phaseKey];
+  const p = PHASES[phaseKey];
+
+  const lifestyleTips = t(`phaseTips.${legacyPhase}.lifestyle`, { returnObjects: true }) || [];
+  const exerciseTips = t(`phaseTips.${legacyPhase}.exercise`, { returnObjects: true }) || [];
+
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const dailyTip = t(`dailyTips.${legacyPhase}`, { returnObjects: true })?.[dayOfYear % 5] || '';
+
+  const showLifestyle = lifestyleTips.slice(0, 3);
+  const showExercise = exerciseTips.slice(0, 2);
+
+  return (
+    <div style={{
+      marginTop: 16,
+      background: CARD,
+      borderRadius: 24,
+      padding: '20px 20px',
+      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: 12,
+          background: p.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <div>
+          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+            {isJa ? '今日のフォーカス' : "Today's Focus"}
+          </div>
+          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+            {isJa ? p.season : p.seasonEn}
+          </div>
+        </div>
+      </div>
+
+      {/* Daily tip highlight */}
+      {dailyTip && (
+        <div style={{
+          padding: '12px 14px', borderRadius: 16,
+          background: p.tint,
+          marginBottom: 12,
+        }}>
+          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.55 }}>
+            {dailyTip}
+          </p>
+        </div>
+      )}
+
+      {/* Lifestyle tips */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {showLifestyle.map((tip, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: p.accent, flexShrink: 0, marginTop: 6,
+            }} />
+            <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+              {tip}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Exercise section */}
+      {showExercise.length > 0 && (
+        <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${LINE}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
+            </svg>
+            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+              {isJa ? '運動' : 'Exercise'}
+            </span>
+          </div>
+          {showExercise.map((tip, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 4 }}>
+              <div style={{
+                width: 6, height: 6, borderRadius: '50%',
+                background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
+              }} />
+              <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                {tip}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── partner guide card ───────────────────────────────────── */
+function PartnerGuideCard({ phaseKey, isJa, t }) {
+  const legacyPhase = PHASE_TO_LEGACY[phaseKey];
+  const p = PHASES[phaseKey];
+
+  const understand = t(`partnerTips.${legacyPhase}.understand`) || '';
+  const supportTips = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
+  const avoidTips = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+
+  return (
+    <div style={{
+      marginTop: 16,
+      background: CARD,
+      borderRadius: 24,
+      padding: '20px 20px',
+      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: 12,
+          background: PHASES.mi.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.mi.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+          </svg>
+        </div>
+        <div>
+          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+            {isJa ? 'パートナーガイド' : 'Partner Guide'}
+          </div>
+          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+            {isJa ? '大切な人に伝えたいこと' : 'What your partner should know'}
+          </div>
+        </div>
+      </div>
+
+      {/* Understanding */}
+      <div style={{
+        padding: '12px 14px', borderRadius: 16,
+        background: PHASES.mi.tint,
+        marginBottom: 12,
+      }}>
+        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
+          {understand}
+        </p>
+      </div>
+
+      {/* Support tips */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+        <span style={{ fontSize: 14 }}>💚</span>
+        <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+          {isJa ? 'サポート方法' : 'How to Support'}
+        </span>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+        {supportTips.slice(0, 3).map((tip, i) => (
+          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
+            }} />
+            <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+              {tip}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Avoid tips */}
+      {avoidTips.length > 0 && (
+        <>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
+            <span style={{ fontSize: 14 }}>⚠️</span>
+            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+              {isJa ? '避けた方がいいこと' : 'What to Avoid'}
+            </span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {avoidTips.slice(0, 2).map((tip, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                <div style={{
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
+                }} />
+                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                  {tip}
+                </span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 /* ── component ──────────────────────────────────────────────── */
 export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [] }) {
   const { t, i18n } = useTranslation();
@@ -378,7 +577,13 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 5 ── forecast card */}
         <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
 
-        {/* 6 ── social pod strip */}
+        {/* 6 ── today's focus */}
+        <TodaysFocusCard phaseKey={phaseKey} isJa={isJa} t={t} />
+
+        {/* 7 ── partner guide */}
+        <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
+
+        {/* 8 ── social pod strip */}
         <div style={{
           marginTop: 16,
           background: CARD,
@@ -434,7 +639,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           </div>
         </div>
 
-        {/* 7 ── quick chips row */}
+        {/* 9 ── quick chips row */}
         <div style={{
           marginTop: 16,
           display: 'flex',
