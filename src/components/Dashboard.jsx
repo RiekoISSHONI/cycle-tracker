@@ -25,13 +25,13 @@ const PLAY_COPY = {
   },
 };
 
-/* ── sakura icon (5-petal) ──────────────────────────────────── */
-function SakuraIcon({ color = '#D4899F' }) {
+/* ── week icon (soft calendar sparkle) ─────────────────────── */
+function WeekIcon({ color }) {
   return (
-    <svg width="36" height="36" viewBox="0 0 36 36">
-      {[0, 72, 144, 216, 288].map((a) => (
-        <ellipse key={a} cx="18" cy="10" rx="3.5" ry="6" transform={`rotate(${a} 18 18)`} fill={color} fillOpacity="0.45" />
-      ))}
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="3" />
+      <path d="M16 2v4" /><path d="M8 2v4" /><path d="M3 10h18" />
+      <path d="M12 16l1.5-3 1.5 3" /><path d="M9 16l1.5-3L12 16" />
     </svg>
   );
 }
@@ -77,7 +77,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
         padding: '20px 20px',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-          <span style={{ fontSize: 20 }}>🔮</span>
+          <WeekIcon color={INK3} />
           <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {t('predictions.forecastTitle')}
           </span>
@@ -108,7 +108,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, padding: '0 4px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 20 }}>🔮</span>
+          <WeekIcon color={INK3} />
           <div>
             <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
               {t('predictions.forecastTitle')}
@@ -615,13 +615,15 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           <div style={{
             width: 50, height: 50,
             borderRadius: 14,
-            background: `${p.accent}22`,
+            background: `${p.accent}18`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
           }}>
-            <SakuraIcon color={p.accent} />
+            <span style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: p.accent, opacity: 0.7, lineHeight: 1 }}>
+              {p.kanji}
+            </span>
           </div>
           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, lineHeight: 1.55 }}>
             {copy.affirm}
