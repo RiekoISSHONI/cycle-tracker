@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* Meguri 巡 — Calm pastel direction
-   Zen Maru Gothic (rounded, everything), Shippori Mincho B1 (kanji stamps only) */
-@import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;800&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap');
+   Zen Kaku Gothic New (clean body), Shippori Mincho B1 (elegant display/headings) */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================
    Design Tokens — Calm Palette

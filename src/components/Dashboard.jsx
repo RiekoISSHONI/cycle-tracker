@@ -78,7 +78,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
           <span style={{ fontSize: 20 }}>🔮</span>
-          <span style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {t('predictions.forecastTitle')}
           </span>
         </div>
@@ -110,7 +110,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontSize: 20 }}>🔮</span>
           <div>
-            <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
               {t('predictions.forecastTitle')}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -247,7 +247,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
           </svg>
         </div>
         <div>
-          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+          <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {isJa ? '今日のフォーカス' : "Today's Focus"}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -362,7 +362,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
           </svg>
         </div>
         <div style={{ flex: 1, textAlign: 'left' }}>
-          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK }}>
+          <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK }}>
             {isJa ? 'パートナーガイド' : 'Partner Guide'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -520,10 +520,10 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
 
         {/* 2 ── greeting */}
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK }}>
+          <div style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK }}>
             {copy.hi}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: INK2, marginTop: 4 }}>
+          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 500, color: INK2, marginTop: 4 }}>
             {copy.vibe}
           </div>
         </div>
@@ -588,7 +588,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
               </div>
 
               {/* big day number */}
-              <div style={{ fontFamily: MARU, fontSize: 46, fontWeight: 800, color: INK, lineHeight: 1 }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 46, fontWeight: 600, color: INK, lineHeight: 1 }}>
                 {isJa ? `${day}日目` : `Day ${day}`}
               </div>
 

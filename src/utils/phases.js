@@ -62,9 +62,9 @@ export const CORAL  = '#D4897A';
 export const CORAL_D = '#B8705F';
 
 // Font stacks
-export const MARU    = '"Zen Maru Gothic", "Hiragino Maru Gothic ProN", system-ui, sans-serif';
+export const MARU    = '"Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", system-ui, sans-serif';
 export const PMINCHO = '"Shippori Mincho B1", serif';
-export const GOTHIC  = MARU; // alias for backward compat
+export const GOTHIC  = MARU;
 export const MINCHO  = PMINCHO;
 export const OLDMIN  = PMINCHO;
 
