@@ -487,14 +487,20 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
   return (
     <div style={{ position: 'relative', paddingBottom: 130 }}>
 
-      {/* 1 ── blobby radial gradient wash */}
+      {/* 1 ── soft pastel rainbow wash */}
       <div style={{
         position: 'absolute',
-        top: -80,
-        left: 0,
-        right: 0,
-        height: 380,
-        background: `radial-gradient(60% 70% at 50% 30%, ${p.soft}, transparent)`,
+        top: -100,
+        left: -40,
+        right: -40,
+        height: 480,
+        background: `
+          radial-gradient(ellipse 50% 40% at 15% 25%, rgba(212,137,159,0.18), transparent 70%),
+          radial-gradient(ellipse 45% 35% at 40% 15%, rgba(201,169,110,0.15), transparent 70%),
+          radial-gradient(ellipse 50% 40% at 65% 30%, rgba(139,175,142,0.18), transparent 70%),
+          radial-gradient(ellipse 45% 35% at 85% 20%, rgba(155,137,181,0.16), transparent 70%),
+          radial-gradient(ellipse 60% 50% at 50% 50%, ${p.soft}66, transparent 80%)
+        `,
         pointerEvents: 'none',
         zIndex: 0,
       }} />

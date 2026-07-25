@@ -1,7 +1,173 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CREAM2, CARD, INK, INK2, INK3, LINE, LINE2, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
+import { getEngagementSummary } from '../utils/analytics';
+
+const CATEGORY_META = {
+  tea:      { labelJa: 'お茶',         labelEn: 'Teas',     color: '#8BAF8E' },
+  skincare: { labelJa: 'スキンケア',    labelEn: 'Skincare', color: '#9B89B5' },
+  video:    { labelJa: '動画',         labelEn: 'Videos',   color: '#C9A96E' },
+};
+
+function EngagementCard({ isJa, phaseKey }) {
+  const [open, setOpen] = useState(false);
+  const summary = useMemo(() => getEngagementSummary(), [open]);
+  const p = PHASES[phaseKey];
+
+  const cats = Object.entries(summary.categories).map(([key, data]) => {
+    const meta = CATEGORY_META[key] || { labelJa: key, labelEn: key, color: INK3 };
+    return { key, ...meta, ...data };
+  });
+
+  return (
+    <div className="card" style={{ padding: 0, position: 'relative', zIndex: 1, overflow: 'hidden' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          width: '100%', padding: '16px 20px',
+          background: 'none', border: 'none', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: 12,
+        }}
+      >
+        <div style={{
+          width: 42, height: 42, borderRadius: 13,
+          background: `linear-gradient(135deg, ${PHASES.ki.tint}, ${PHASES.me.tint})`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
+        }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={PHASES.ki.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 20V10" /><path d="M12 20V4" /><path d="M6 20v-6" />
+          </svg>
+        </div>
+        <div style={{ flex: 1, textAlign: 'left' }}>
+          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+            {isJa ? 'エンゲージメント' : 'Engagement'}
+          </div>
+          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+            {isJa ? 'コンテンツのパフォーマンス' : 'Content performance data'}
+          </div>
+        </div>
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div style={{ padding: '0 20px 20px' }}>
+          {/* Summary row */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+            {[
+              { labelJa: '表示', labelEn: 'Views', value: summary.totalImpressions, color: PHASES.me.accent },
+              { labelJa: 'クリック', labelEn: 'Clicks', value: summary.totalClicks, color: PHASES.ki.accent },
+              { labelJa: '日数', labelEn: 'Days', value: summary.activeDays, color: PHASES.mi.accent },
+            ].map((stat) => (
+              <div key={stat.labelEn} style={{
+                flex: 1, padding: '12px 8px', borderRadius: 14,
+                background: CREAM2, textAlign: 'center',
+              }}>
+                <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 800, color: stat.color }}>
+                  {stat.value}
+                </div>
+                <div style={{ fontFamily: MARU, fontSize: 10, fontWeight: 600, color: INK3, marginTop: 2 }}>
+                  {isJa ? stat.labelJa : stat.labelEn}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Per-category breakdown */}
+          {cats.length > 0 ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {cats.map((cat) => (
+                <div key={cat.key} style={{
+                  padding: '12px 14px', borderRadius: 14,
+                  border: `1px solid ${LINE}`,
+                  display: 'flex', alignItems: 'center', gap: 12,
+                }}>
+                  <div style={{
+                    width: 8, height: 32, borderRadius: 4,
+                    background: cat.color, flexShrink: 0,
+                  }} />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
+                      {isJa ? cat.labelJa : cat.labelEn}
+                    </div>
+                    <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 2 }}>
+                      {cat.impressions} {isJa ? '表示' : 'views'} · {cat.clicks} {isJa ? 'クリック' : 'clicks'}
+                    </div>
+                  </div>
+                  <div style={{
+                    padding: '4px 10px', borderRadius: 10,
+                    background: cat.ctr > 0 ? `${cat.color}18` : CREAM2,
+                  }}>
+                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: cat.ctr > 0 ? cat.color : INK3 }}>
+                      {cat.ctr}%
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{
+              padding: '16px', borderRadius: 14,
+              background: CREAM2, textAlign: 'center',
+            }}>
+              <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3 }}>
+                {isJa ? 'まだデータがありません。Careタブを利用するとデータが蓄積されます。' : 'No data yet. Browse the Care tab to start collecting engagement data.'}
+              </div>
+            </div>
+          )}
+
+          {/* Top items */}
+          {cats.some(c => Object.keys(c.items || {}).length > 0) && (
+            <div style={{ marginTop: 14 }}>
+              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK2, marginBottom: 8 }}>
+                {isJa ? '人気アイテム' : 'Top Items'}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {cats.flatMap(c =>
+                  Object.entries(c.items || {}).map(([itemKey, data]) => ({
+                    itemKey,
+                    ...data,
+                    catColor: c.color,
+                  }))
+                )
+                  .sort((a, b) => b.clicks - a.clicks)
+                  .slice(0, 5)
+                  .map((item) => {
+                    const [, itemId] = item.itemKey.split(':');
+                    return (
+                      <div key={item.itemKey} style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        padding: '8px 10px', borderRadius: 10,
+                        background: CREAM2,
+                      }}>
+                        <div style={{
+                          width: 6, height: 6, borderRadius: '50%',
+                          background: item.catColor, flexShrink: 0,
+                        }} />
+                        <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, flex: 1 }}>
+                          {itemId}
+                        </span>
+                        <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+                          {item.impressions}i · {item.clicks}c
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThemeChange }) {
   const { t, i18n } = useTranslation();
@@ -154,6 +320,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
           )}
         </div>
       </div>
+
+      {/* Engagement analytics card */}
+      <EngagementCard isJa={isJa} phaseKey={phaseKey} />
 
       {/* Cycle settings card */}
       <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
