@@ -26,15 +26,23 @@ const PLAY_COPY = {
 };
 
 /* ── sakura icon (5-petal) ──────────────────────────────────── */
-function SakuraIcon() {
+function SakuraIcon({ color = '#D4899F' }) {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36">
       {[0, 72, 144, 216, 288].map((a) => (
-        <ellipse key={a} cx="18" cy="10" rx="3.5" ry="6" transform={`rotate(${a} 18 18)`} fill="#fff" fillOpacity="0.85" />
+        <ellipse key={a} cx="18" cy="10" rx="3.5" ry="6" transform={`rotate(${a} 18 18)`} fill={color} fillOpacity="0.45" />
       ))}
     </svg>
   );
 }
+
+const GLASS = {
+  background: 'rgba(255,255,255,0.70)',
+  backdropFilter: 'blur(10px)',
+  WebkitBackdropFilter: 'blur(10px)',
+  boxShadow: '0 4px 18px rgba(60,50,55,0.04)',
+  border: '1px solid rgba(255,255,255,0.5)',
+};
 
 /* ── forecast helpers ──────────────────────────────────────── */
 const MOOD_EMOJI = ['', '😔', '😕', '😐', '😊', '😄'];
@@ -64,10 +72,9 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
     return (
       <div style={{
         marginTop: 16,
-        background: CARD,
+        ...GLASS,
         borderRadius: 24,
         padding: '20px 20px',
-        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
           <span style={{ fontSize: 20 }}>🔮</span>
@@ -95,10 +102,9 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
   return (
     <div style={{
       marginTop: 16,
-      background: CARD,
+      ...GLASS,
       borderRadius: 24,
       padding: '20px 16px 16px',
-      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, padding: '0 4px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -226,10 +232,9 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
   return (
     <div style={{
       marginTop: 16,
-      background: CARD,
+      ...GLASS,
       borderRadius: 24,
       padding: '20px 20px',
-      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <div style={{
@@ -333,9 +338,8 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
   return (
     <div style={{
       marginTop: 16,
-      background: CARD,
+      ...GLASS,
       borderRadius: 24,
-      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
       overflow: 'hidden',
     }}>
       {/* Tap-to-expand header */}
@@ -487,19 +491,25 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
   return (
     <div style={{ position: 'relative', paddingBottom: 130 }}>
 
-      {/* 1 ── soft pastel rainbow wash */}
+      {/* 1 ── full-screen soft pastel rainbow wash */}
       <div style={{
-        position: 'absolute',
-        top: -100,
-        left: -40,
-        right: -40,
-        height: 480,
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         background: `
-          radial-gradient(ellipse 50% 40% at 15% 25%, rgba(212,137,159,0.18), transparent 70%),
-          radial-gradient(ellipse 45% 35% at 40% 15%, rgba(201,169,110,0.15), transparent 70%),
-          radial-gradient(ellipse 50% 40% at 65% 30%, rgba(139,175,142,0.18), transparent 70%),
-          radial-gradient(ellipse 45% 35% at 85% 20%, rgba(155,137,181,0.16), transparent 70%),
-          radial-gradient(ellipse 60% 50% at 50% 50%, ${p.soft}66, transparent 80%)
+          radial-gradient(ellipse 60% 30% at 10% 15%, rgba(237,194,210,0.30), transparent 70%),
+          radial-gradient(ellipse 50% 25% at 35% 8%, rgba(240,220,180,0.25), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 70% 20%, rgba(195,220,198,0.28), transparent 70%),
+          radial-gradient(ellipse 50% 25% at 90% 10%, rgba(210,198,225,0.24), transparent 70%),
+          radial-gradient(ellipse 60% 35% at 80% 50%, rgba(237,194,210,0.18), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 20% 55%, rgba(195,220,198,0.20), transparent 70%),
+          radial-gradient(ellipse 50% 30% at 50% 45%, rgba(240,220,180,0.16), transparent 70%),
+          radial-gradient(ellipse 60% 35% at 40% 80%, rgba(210,198,225,0.22), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 75% 85%, rgba(237,194,210,0.16), transparent 70%),
+          radial-gradient(ellipse 50% 25% at 15% 90%, rgba(240,220,180,0.18), transparent 70%),
+          linear-gradient(180deg, #FDFBF9, #FBF8F5)
         `,
         pointerEvents: 'none',
         zIndex: 0,
@@ -520,12 +530,15 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
 
         {/* 3 ── hero card */}
         <div style={{
-          background: CARD,
+          background: 'rgba(255,255,255,0.75)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           borderRadius: 30,
           padding: '26px 22px',
           position: 'relative',
           overflow: 'hidden',
-          boxShadow: '0 10px 30px rgba(60,50,55,0.08)',
+          boxShadow: '0 6px 24px rgba(60,50,55,0.05)',
+          border: '1px solid rgba(255,255,255,0.6)',
         }}>
           {/* tint gradient band */}
           <div style={{
@@ -590,27 +603,27 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 4 ── affirmation bubble */}
         <div style={{
           marginTop: 16,
-          background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
+          background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
+          border: `1px solid ${p.line}`,
           borderRadius: 26,
           padding: '20px 22px',
           display: 'flex',
           alignItems: 'center',
           gap: 14,
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+          boxShadow: '0 4px 16px rgba(60,50,55,0.04)',
         }}>
-          {/* sakura tile */}
           <div style={{
             width: 50, height: 50,
             borderRadius: 14,
-            background: 'rgba(255,255,255,0.18)',
+            background: `${p.accent}22`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
           }}>
-            <SakuraIcon />
+            <SakuraIcon color={p.accent} />
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: '#fff', lineHeight: 1.55 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, lineHeight: 1.55 }}>
             {copy.affirm}
           </div>
         </div>
@@ -627,13 +640,12 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 8 ── social pod strip */}
         <div style={{
           marginTop: 16,
-          background: CARD,
+          ...GLASS,
           borderRadius: 24,
           padding: '18px 20px',
           display: 'flex',
           alignItems: 'center',
           gap: 14,
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
         }}>
           {/* overlapping avatar stack */}
           <div style={{ display: 'flex', flexShrink: 0 }}>
