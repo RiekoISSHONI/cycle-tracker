@@ -5,8 +5,8 @@ export const PHASES = {
   sei: {
     key: 'sei', kanji: '静', name: '静寂', reading: 'せいじゃく', en: 'Stillness',
     clinical: '生理期', clinicalEn: 'Menstrual', season: '冬', seasonEn: 'Winter', days: 5,
-    accent: '#D4899F', deep: '#B56B82', soft: '#F5E1E8', tint: '#FAF0F4',
-    line: 'rgba(212,137,159,0.20)', emoji: '🌙',
+    accent: '#E4A0B0', deep: '#C47E8E', soft: '#FCEAEF', tint: '#FEF4F7',
+    line: 'rgba(228,160,176,0.18)', emoji: '🌙',
     poem: 'めぐりの始まり。内に還り、静かに養う時。',
     poemEn: 'The cycle begins again. A time to turn inward and quietly restore.',
     energy: '低い · 休息のとき',
@@ -14,8 +14,8 @@ export const PHASES = {
   me: {
     key: 'me', kanji: '芽', name: '萌芽', reading: 'ほうが', en: 'Budding',
     clinical: '卵胞期', clinicalEn: 'Follicular', season: '春', seasonEn: 'Spring', days: 8,
-    accent: '#8BAF8E', deep: '#5E8A62', soft: '#E4EFE5', tint: '#F2F8F3',
-    line: 'rgba(139,175,142,0.22)', emoji: '🌱',
+    accent: '#8EBE90', deep: '#6A9E6C', soft: '#E6F4E7', tint: '#F2FAF3',
+    line: 'rgba(142,190,144,0.18)', emoji: '🌱',
     poem: '芽吹きの季節。新しい力が静かに満ちてゆく。',
     poemEn: 'The season of budding. New energy quietly rises within.',
     energy: '上昇 · 芽吹きのとき',
@@ -23,8 +23,8 @@ export const PHASES = {
   ki: {
     key: 'ki', kanji: '輝', name: '輝き', reading: 'かがやき', en: 'Radiance',
     clinical: '排卵期', clinicalEn: 'Ovulation', season: '夏', seasonEn: 'Summer', days: 3,
-    accent: '#C9A96E', deep: '#A68B4B', soft: '#F2EBD9', tint: '#F9F5EC',
-    line: 'rgba(201,169,110,0.24)', emoji: '☀️',
+    accent: '#D4C07A', deep: '#B8A45E', soft: '#FBF4DC', tint: '#FDFAEE',
+    line: 'rgba(212,192,122,0.20)', emoji: '☀️',
     poem: 'エネルギーと自信がピーク。最も輝いている時期。',
     poemEn: 'Energy and confidence peak. Your most radiant days.',
     energy: '最高 · 輝きのとき',
@@ -32,8 +32,8 @@ export const PHASES = {
   mi: {
     key: 'mi', kanji: '実', name: '結実', reading: 'けつじつ', en: 'Ripening',
     clinical: '黄体期', clinicalEn: 'Luteal', season: '秋', seasonEn: 'Autumn', days: 12,
-    accent: '#9B89B5', deep: '#7A6699', soft: '#EBE5F1', tint: '#F5F2F9',
-    line: 'rgba(155,137,181,0.20)', emoji: '🍂',
+    accent: '#D4A890', deep: '#B88A72', soft: '#F8ECE4', tint: '#FCF5F0',
+    line: 'rgba(212,168,144,0.18)', emoji: '🍂',
     poem: '実りと内省の季節。ゆっくりと整えてゆく。',
     poemEn: 'A season of ripening and reflection. Slowly, gently, restore your balance.',
     energy: '下降 · 整えるとき',
