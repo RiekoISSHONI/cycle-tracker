@@ -307,14 +307,28 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
   );
 }
 
+/* ── rotate array: pick `count` items starting at a day-based offset ── */
+function rotateSlice(arr, count, seed) {
+  if (!arr || arr.length <= count) return arr || [];
+  const start = seed % arr.length;
+  const result = [];
+  for (let i = 0; i < count; i++) result.push(arr[(start + i) % arr.length]);
+  return result;
+}
+
 /* ── partner guide card (collapsed by default) ────────────── */
 function PartnerGuideCard({ phaseKey, isJa, t }) {
   const [open, setOpen] = useState(false);
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
 
   const understand = t(`partnerTips.${legacyPhase}.understand`) || '';
-  const supportTips = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
-  const avoidTips = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+  const allSupport = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
+  const allAvoid = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const supportTips = rotateSlice(allSupport, 3, dayOfYear);
+  const avoidTips = rotateSlice(allAvoid, 2, dayOfYear + 7);
 
   return (
     <div style={{
@@ -382,7 +396,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
             </span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
-            {supportTips.slice(0, 3).map((tip, i) => (
+            {supportTips.map((tip, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                 <div style={{
                   width: 6, height: 6, borderRadius: '50%',
@@ -405,7 +419,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                 </span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {avoidTips.slice(0, 2).map((tip, i) => (
+                {avoidTips.map((tip, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                     <div style={{
                       width: 6, height: 6, borderRadius: '50%',

@@ -225,12 +225,33 @@ function NutritionSection({ phaseKey, isJa, t }) {
   );
 }
 
+/* ── exercise videos by phase ─────────────────────────────── */
+const WORKOUT_VIDEOS = {
+  sei: [
+    { nameJa: 'やさしいヨガストレッチ', nameEn: 'Gentle Yoga Stretch', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=sTANio_2E0Q' },
+    { nameJa: 'リラックス瞑想ウォーク', nameEn: 'Calming Walk & Breathwork', duration: '20 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=swMKPacBMbU' },
+  ],
+  me: [
+    { nameJa: '全身エネルギーワークアウト', nameEn: 'Full Body Energy Boost', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
+    { nameJa: '初心者向け筋トレ', nameEn: 'Beginner Strength Training', duration: '25 min', channel: 'Sydney Cummings', url: 'https://www.youtube.com/watch?v=UItWltVZZmE' },
+  ],
+  ki: [
+    { nameJa: 'HIIT有酸素トレーニング', nameEn: 'HIIT Cardio Blast', duration: '25 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
+    { nameJa: 'ダンスワークアウト', nameEn: 'Dance Workout', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ZWk19OVon2k' },
+  ],
+  mi: [
+    { nameJa: 'やさしいピラティス', nameEn: 'Gentle Pilates Flow', duration: '20 min', channel: 'Move With Nicole', url: 'https://www.youtube.com/watch?v=K56Z12XNQ5c' },
+    { nameJa: 'ストレス解消ストレッチ', nameEn: 'Stress Relief Stretching', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=hJbRpHZr_d0' },
+  ],
+};
+
 /* ── exercise section ─────────────────────────────────────── */
 function ExerciseSection({ phaseKey, isJa, t }) {
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
   const p = PHASES[phaseKey];
 
   const exerciseTips = t(`phaseTips.${legacyPhase}.exercise`, { returnObjects: true }) || [];
+  const videos = WORKOUT_VIDEOS[phaseKey] || [];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -251,6 +272,7 @@ function ExerciseSection({ phaseKey, isJa, t }) {
         </h3>
       </div>
 
+      {/* Tips card */}
       <div style={{
         background: CARD, borderRadius: 24,
         boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
@@ -287,6 +309,55 @@ function ExerciseSection({ phaseKey, isJa, t }) {
           })}
         </div>
       </div>
+
+      {/* Workout videos */}
+      {videos.map((video, i) => (
+        <a
+          key={i}
+          href={video.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            background: CARD, borderRadius: 24,
+            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+            padding: '14px 16px',
+            display: 'flex', alignItems: 'center', gap: 12,
+            textDecoration: 'none', cursor: 'pointer',
+          }}
+        >
+          {/* Play button icon */}
+          <div style={{
+            width: 48, height: 48, borderRadius: 16,
+            background: PHASES.me.soft,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
+          }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill={PHASES.me.accent} stroke="none">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+
+          {/* Text */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 700, color: INK }}>
+              {isJa ? video.nameJa : video.nameEn}
+            </div>
+            <div style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 600, color: INK3, marginTop: 2 }}>
+              {video.channel} · {video.duration}
+            </div>
+          </div>
+
+          {/* Watch pill */}
+          <div style={{
+            padding: '6px 14px', borderRadius: 20, border: 'none',
+            background: PHASES.me.tint,
+            fontFamily: MARU, fontSize: 12, fontWeight: 700, color: PHASES.me.accent,
+            whiteSpace: 'nowrap', flexShrink: 0,
+          }}>
+            {isJa ? '再生' : 'Watch'}
+          </div>
+        </a>
+      ))}
     </div>
   );
 }
