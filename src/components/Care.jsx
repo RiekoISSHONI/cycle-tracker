@@ -1,75 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, MARU, PMINCHO, CREAM2, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
+import { trackImpression, trackClick, rotatePool, getDayOfYear } from '../utils/analytics';
 
 const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
 
-const RECOMMENDATIONS = {
-  teas: [
-    {
-      nameJa: 'ペパーミントティー',
-      nameEn: 'Peppermint Tea',
-      noteJa: '消化を助け、気持ちをリフレッシュ。',
-      noteEn: 'Aids digestion and refreshes the mind.',
-      icon: (color) => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17 8h1a4 4 0 010 8h-1" />
-          <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
-          <path d="M6 2v3" /><path d="M10 2v3" /><path d="M14 2v3" />
-        </svg>
-      ),
-    },
-    {
-      nameJa: 'ジャスミン緑茶',
-      nameEn: 'Jasmine Green Tea',
-      noteJa: '穏やかな香りで心を落ち着かせる。',
-      noteEn: 'A gentle fragrance to calm and soothe.',
-      icon: (color) => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17 8h1a4 4 0 010 8h-1" />
-          <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
-          <path d="M6 2v3" /><path d="M10 2v3" /><path d="M14 2v3" />
-        </svg>
-      ),
-    },
-  ],
-  skincare: [
-    {
-      nameJa: 'ミネラル日焼け止め SPF50',
-      nameEn: 'Mineral Sunscreen',
-      noteJa: '肌に優しいミネラルベースの紫外線対策。',
-      noteEn: 'Gentle mineral-based UV protection for sensitive skin.',
-      icon: (color) => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7z" />
-          <circle cx="12" cy="9" r="2.5" />
-        </svg>
-      ),
-    },
-    {
-      nameJa: 'ローズウォーターミスト',
-      nameEn: 'Rosewater Mist',
-      noteJa: 'いつでも潤いと爽やかさを。',
-      noteEn: 'Instant hydration and freshness anytime.',
-      icon: (color) => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 22c4.97 0 9-3.58 9-8s-9-12-9-12S3 9.58 3 14s4.03 8 9 8z" />
-        </svg>
-      ),
-    },
-    {
-      nameJa: 'ジェル保湿クリーム',
-      nameEn: 'Light Gel Moisturizer',
-      noteJa: '軽いテクスチャーで毎日の保湿に。',
-      noteEn: 'Lightweight texture for everyday moisture.',
-      icon: (color) => (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 22c4.97 0 9-3.58 9-8s-9-12-9-12S3 9.58 3 14s4.03 8 9 8z" />
-        </svg>
-      ),
-    },
-  ],
-};
+const TeaIcon = (color) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17 8h1a4 4 0 010 8h-1" />
+    <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" />
+    <path d="M6 2v3" /><path d="M10 2v3" /><path d="M14 2v3" />
+  </svg>
+);
+const DropIcon = (color) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22c4.97 0 9-3.58 9-8s-9-12-9-12S3 9.58 3 14s4.03 8 9 8z" />
+  </svg>
+);
+const ShieldIcon = (color) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7z" />
+    <circle cx="12" cy="9" r="2.5" />
+  </svg>
+);
+
+const TEA_POOL = [
+  { id: 'peppermint', nameJa: 'ペパーミントティー', nameEn: 'Peppermint Tea', noteJa: '消化を助け、気持ちをリフレッシュ。', noteEn: 'Aids digestion and refreshes the mind.', icon: TeaIcon },
+  { id: 'jasmine', nameJa: 'ジャスミン緑茶', nameEn: 'Jasmine Green Tea', noteJa: '穏やかな香りで心を落ち着かせる。', noteEn: 'A gentle fragrance to calm and soothe.', icon: TeaIcon },
+  { id: 'chamomile', nameJa: 'カモミールティー', nameEn: 'Chamomile Tea', noteJa: '緊張をほぐし、安眠を促す。', noteEn: 'Relieves tension and promotes restful sleep.', icon: TeaIcon },
+  { id: 'ginger', nameJa: 'ジンジャーティー', nameEn: 'Ginger Tea', noteJa: '体を温め、冷えを改善。', noteEn: 'Warms the body and improves circulation.', icon: TeaIcon },
+  { id: 'rooibos', nameJa: 'ルイボスティー', nameEn: 'Rooibos Tea', noteJa: 'ノンカフェインでミネラル豊富。', noteEn: 'Caffeine-free and rich in minerals.', icon: TeaIcon },
+  { id: 'rosebud', nameJa: 'ローズバッドティー', nameEn: 'Rose Bud Tea', noteJa: '血行を促進し、肌の調子を整える。', noteEn: 'Promotes circulation and supports clear skin.', icon: TeaIcon },
+  { id: 'matcha', nameJa: '抹茶ラテ', nameEn: 'Matcha Latte', noteJa: '穏やかなカフェインで集中力アップ。', noteEn: 'Gentle caffeine boost for sustained focus.', icon: TeaIcon },
+  { id: 'chrysanthemum', nameJa: '菊花茶', nameEn: 'Chrysanthemum Tea', noteJa: '目の疲れを癒し、のぼせを和らげる。', noteEn: 'Soothes tired eyes and clears excess heat.', icon: TeaIcon },
+];
+
+const SKINCARE_POOL = [
+  { id: 'sunscreen', nameJa: 'ミネラル日焼け止め', nameEn: 'Mineral Sunscreen SPF50', noteJa: '肌に優しいミネラルベースの紫外線対策。', noteEn: 'Gentle mineral-based UV protection.', icon: ShieldIcon },
+  { id: 'rosewater', nameJa: 'ローズウォーターミスト', nameEn: 'Rosewater Mist', noteJa: 'いつでも潤いと爽やかさを。', noteEn: 'Instant hydration and freshness anytime.', icon: DropIcon },
+  { id: 'gel-moist', nameJa: 'ジェル保湿クリーム', nameEn: 'Light Gel Moisturizer', noteJa: '軽いテクスチャーで毎日の保湿に。', noteEn: 'Lightweight texture for everyday moisture.', icon: DropIcon },
+  { id: 'vitamin-c', nameJa: 'ビタミンCセラム', nameEn: 'Vitamin C Serum', noteJa: 'くすみを改善し、明るい肌へ。', noteEn: 'Brightens skin and evens complexion.', icon: DropIcon },
+  { id: 'hyaluronic', nameJa: 'ヒアルロン酸マスク', nameEn: 'Hyaluronic Acid Mask', noteJa: '深い保湿で弾力のある肌に。', noteEn: 'Deep hydration for plump, bouncy skin.', icon: DropIcon },
+  { id: 'clay-mask', nameJa: 'クレイマスク', nameEn: 'Purifying Clay Mask', noteJa: '毛穴の汚れを吸着し、すっきり。', noteEn: 'Draws out impurities and refines pores.', icon: DropIcon },
+  { id: 'facial-oil', nameJa: 'ローズヒップオイル', nameEn: 'Rosehip Facial Oil', noteJa: '肌の再生を促し、ツヤを与える。', noteEn: 'Promotes skin renewal and radiance.', icon: DropIcon },
+  { id: 'eye-cream', nameJa: 'アイクリーム', nameEn: 'Peptide Eye Cream', noteJa: '目元のむくみとクマに。', noteEn: 'Reduces puffiness and dark circles.', icon: DropIcon },
+];
 
 /* ── nutrition section ─────────────────────────────────────── */
 function NutritionSection({ phaseKey, isJa, t }) {
@@ -225,33 +200,50 @@ function NutritionSection({ phaseKey, isJa, t }) {
   );
 }
 
-/* ── exercise videos by phase ─────────────────────────────── */
+/* ── exercise video pool by phase ──────────────────────────── */
 const WORKOUT_VIDEOS = {
   sei: [
-    { nameJa: 'やさしいヨガストレッチ', nameEn: 'Gentle Yoga Stretch', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=sTANio_2E0Q' },
-    { nameJa: 'リラックス瞑想ウォーク', nameEn: 'Calming Walk & Breathwork', duration: '20 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=swMKPacBMbU' },
+    { id: 'sei-yoga', nameJa: 'やさしいヨガストレッチ', nameEn: 'Gentle Yoga Stretch', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=sTANio_2E0Q' },
+    { id: 'sei-walk', nameJa: 'リラックス瞑想ウォーク', nameEn: 'Calming Walk & Breathwork', duration: '20 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=swMKPacBMbU' },
+    { id: 'sei-restorative', nameJa: 'リストラティブヨガ', nameEn: 'Restorative Yoga', duration: '20 min', channel: 'Yoga With Kassandra', url: 'https://www.youtube.com/watch?v=MO8z3i02OBQ' },
+    { id: 'sei-yin', nameJa: '陰ヨガ（下半身）', nameEn: 'Yin Yoga for Lower Body', duration: '25 min', channel: 'Boho Beautiful', url: 'https://www.youtube.com/watch?v=SxQj30KkTYo' },
+    { id: 'sei-stretch', nameJa: '寝る前ストレッチ', nameEn: 'Bedtime Stretch Routine', duration: '10 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=g_tea8ZNk5A' },
   ],
   me: [
-    { nameJa: '全身エネルギーワークアウト', nameEn: 'Full Body Energy Boost', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
-    { nameJa: '初心者向け筋トレ', nameEn: 'Beginner Strength Training', duration: '25 min', channel: 'Sydney Cummings', url: 'https://www.youtube.com/watch?v=UItWltVZZmE' },
+    { id: 'me-fullbody', nameJa: '全身エネルギーワークアウト', nameEn: 'Full Body Energy Boost', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
+    { id: 'me-strength', nameJa: '初心者向け筋トレ', nameEn: 'Beginner Strength Training', duration: '25 min', channel: 'Sydney Cummings', url: 'https://www.youtube.com/watch?v=UItWltVZZmE' },
+    { id: 'me-power', nameJa: 'パワーヨガフロー', nameEn: 'Power Yoga Flow', duration: '30 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=9kOCY0KNByw' },
+    { id: 'me-dumbbell', nameJa: 'ダンベルワークアウト', nameEn: 'Dumbbell Full Body', duration: '30 min', channel: 'Caroline Girvan', url: 'https://www.youtube.com/watch?v=pHmDC2lVhPo' },
+    { id: 'me-run', nameJa: 'ランニングガイド', nameEn: 'Couch to 5K Run', duration: '30 min', channel: 'The Run Experience', url: 'https://www.youtube.com/watch?v=eFg8iXI0mYE' },
   ],
   ki: [
-    { nameJa: 'HIIT有酸素トレーニング', nameEn: 'HIIT Cardio Blast', duration: '25 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
-    { nameJa: 'ダンスワークアウト', nameEn: 'Dance Workout', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ZWk19OVon2k' },
+    { id: 'ki-hiit', nameJa: 'HIIT有酸素トレーニング', nameEn: 'HIIT Cardio Blast', duration: '25 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
+    { id: 'ki-dance', nameJa: 'ダンスワークアウト', nameEn: 'Dance Workout', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ZWk19OVon2k' },
+    { id: 'ki-tabata', nameJa: 'タバタトレーニング', nameEn: 'Tabata Challenge', duration: '20 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=XIeCMhNWFQQ' },
+    { id: 'ki-boxing', nameJa: 'キックボクシング', nameEn: 'Kickboxing Cardio', duration: '25 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=nQqzZqLqhMA' },
+    { id: 'ki-spin', nameJa: 'サイクリングワークアウト', nameEn: 'Indoor Cycling Ride', duration: '30 min', channel: 'The Fitness Marshall', url: 'https://www.youtube.com/watch?v=dSw_p4ezb5k' },
   ],
   mi: [
-    { nameJa: 'やさしいピラティス', nameEn: 'Gentle Pilates Flow', duration: '20 min', channel: 'Move With Nicole', url: 'https://www.youtube.com/watch?v=K56Z12XNQ5c' },
-    { nameJa: 'ストレス解消ストレッチ', nameEn: 'Stress Relief Stretching', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=hJbRpHZr_d0' },
+    { id: 'mi-pilates', nameJa: 'やさしいピラティス', nameEn: 'Gentle Pilates Flow', duration: '20 min', channel: 'Move With Nicole', url: 'https://www.youtube.com/watch?v=K56Z12XNQ5c' },
+    { id: 'mi-stretch', nameJa: 'ストレス解消ストレッチ', nameEn: 'Stress Relief Stretching', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=hJbRpHZr_d0' },
+    { id: 'mi-barre', nameJa: 'バレエバー', nameEn: 'Low Impact Barre', duration: '25 min', channel: 'Barre3', url: 'https://www.youtube.com/watch?v=76lIRIjbMaY' },
+    { id: 'mi-swim', nameJa: '水泳ガイド', nameEn: 'Swimming Techniques', duration: '15 min', channel: 'Swim England', url: 'https://www.youtube.com/watch?v=gh5V0saf1UU' },
+    { id: 'mi-walk', nameJa: 'パワーウォーキング', nameEn: 'Power Walking', duration: '30 min', channel: 'Walk at Home', url: 'https://www.youtube.com/watch?v=JOe-BgYEfMo' },
   ],
 };
 
 /* ── exercise section ─────────────────────────────────────── */
-function ExerciseSection({ phaseKey, isJa, t }) {
+function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
   const p = PHASES[phaseKey];
 
   const exerciseTips = t(`phaseTips.${legacyPhase}.exercise`, { returnObjects: true }) || [];
-  const videos = WORKOUT_VIDEOS[phaseKey] || [];
+  const allVideos = WORKOUT_VIDEOS[phaseKey] || [];
+  const videos = rotatePool(allVideos, 2, dayOfYear + 13);
+
+  useEffect(() => {
+    videos.forEach(v => trackImpression('video', v.id));
+  }, [videos.map(v => v.id).join(',')]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -311,12 +303,13 @@ function ExerciseSection({ phaseKey, isJa, t }) {
       </div>
 
       {/* Workout videos */}
-      {videos.map((video, i) => (
+      {videos.map((video) => (
         <a
-          key={i}
+          key={video.id}
           href={video.url}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackClick('video', video.id)}
           style={{
             background: CARD, borderRadius: 24,
             boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
@@ -325,7 +318,6 @@ function ExerciseSection({ phaseKey, isJa, t }) {
             textDecoration: 'none', cursor: 'pointer',
           }}
         >
-          {/* Play button icon */}
           <div style={{
             width: 48, height: 48, borderRadius: 16,
             background: PHASES.me.soft,
@@ -337,7 +329,6 @@ function ExerciseSection({ phaseKey, isJa, t }) {
             </svg>
           </div>
 
-          {/* Text */}
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 700, color: INK }}>
               {isJa ? video.nameJa : video.nameEn}
@@ -347,7 +338,6 @@ function ExerciseSection({ phaseKey, isJa, t }) {
             </div>
           </div>
 
-          {/* Watch pill */}
           <div style={{
             padding: '6px 14px', borderRadius: 20, border: 'none',
             background: PHASES.me.tint,
@@ -368,6 +358,15 @@ export function Care({ phase, onNavigateSettings }) {
 
   const phaseKey = phaseKeyFromLegacy(phase);
   const p = PHASES[phaseKey];
+  const dayOfYear = getDayOfYear();
+
+  const rotatedTeas = rotatePool(TEA_POOL, 2, dayOfYear);
+  const rotatedSkincare = rotatePool(SKINCARE_POOL, 3, dayOfYear + 5);
+
+  useEffect(() => {
+    rotatedTeas.forEach(item => trackImpression('tea', item.id));
+    rotatedSkincare.forEach(item => trackImpression('skincare', item.id));
+  }, [rotatedTeas.map(i => i.id).join(','), rotatedSkincare.map(i => i.id).join(',')]);
 
   const groupIcon = {
     teas: (color) => (
@@ -385,11 +384,10 @@ export function Care({ phase, onNavigateSettings }) {
   };
 
   const groups = [
-    { key: 'teas', titleJa: 'お茶', titleEn: 'Teas', items: RECOMMENDATIONS.teas },
-    { key: 'skincare', titleJa: 'スキンケア', titleEn: 'Skincare', items: RECOMMENDATIONS.skincare },
+    { key: 'teas', titleJa: 'お茶', titleEn: 'Teas', items: rotatedTeas },
+    { key: 'skincare', titleJa: 'スキンケア', titleEn: 'Skincare', items: rotatedSkincare },
   ];
 
-  // Use me (spring green) colors for icons as specified
   const mePhase = PHASES.me;
 
   return (
@@ -405,7 +403,6 @@ export function Care({ phase, onNavigateSettings }) {
           overflow: 'hidden',
         }}
       >
-        {/* Blobby radial gradient wash at top */}
         <div
           style={{
             position: 'absolute',
@@ -435,9 +432,7 @@ export function Care({ phase, onNavigateSettings }) {
           }}
         />
 
-        {/* Content */}
         <div style={{ position: 'relative', zIndex: 1, padding: '24px 20px 20px' }}>
-          {/* Kanji + Season/Clinical eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
             <span style={{ fontFamily: PMINCHO, fontSize: 32, fontWeight: 600, color: p.accent, lineHeight: 1 }}>
               {p.kanji}
@@ -452,17 +447,14 @@ export function Care({ phase, onNavigateSettings }) {
             </div>
           </div>
 
-          {/* Title */}
           <h2 style={{ fontFamily: MARU, fontSize: 25, fontWeight: 800, color: INK, margin: '0 0 10px' }}>
             {isJa ? '今週の養生' : "This Week's Care"}
           </h2>
 
-          {/* Phase intro text */}
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.65, margin: '0 0 14px' }}>
             {isJa ? p.poem : p.poemEn}
           </p>
 
-          {/* Privacy pill */}
           <div
             style={{
               display: 'inline-flex',
@@ -487,7 +479,6 @@ export function Care({ phase, onNavigateSettings }) {
       {/* Grouped recommendations */}
       {groups.map((group) => (
         <div key={group.key} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {/* Group title */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
             <div
               style={{
@@ -507,10 +498,9 @@ export function Care({ phase, onNavigateSettings }) {
             </h3>
           </div>
 
-          {/* Items */}
-          {group.items.map((item, idx) => (
+          {group.items.map((item) => (
             <div
-              key={idx}
+              key={item.id}
               style={{
                 background: CARD,
                 borderRadius: 24,
@@ -521,7 +511,6 @@ export function Care({ phase, onNavigateSettings }) {
                 gap: 12,
               }}
             >
-              {/* Icon tile */}
               <div
                 style={{
                   width: 48,
@@ -537,7 +526,6 @@ export function Care({ phase, onNavigateSettings }) {
                 {item.icon(mePhase.accent)}
               </div>
 
-              {/* Text */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 700, color: INK }}>
                   {isJa ? item.nameJa : item.nameEn}
@@ -550,8 +538,8 @@ export function Care({ phase, onNavigateSettings }) {
                 </div>
               </div>
 
-              {/* View pill button */}
               <button
+                onClick={() => trackClick(group.key === 'teas' ? 'tea' : 'skincare', item.id)}
                 style={{
                   padding: '6px 14px',
                   borderRadius: 20,
@@ -577,7 +565,7 @@ export function Care({ phase, onNavigateSettings }) {
       <NutritionSection phaseKey={phaseKey} isJa={isJa} t={t} />
 
       {/* Exercise section */}
-      <ExerciseSection phaseKey={phaseKey} isJa={isJa} t={t} />
+      <ExerciseSection phaseKey={phaseKey} isJa={isJa} t={t} dayOfYear={dayOfYear} />
 
       {/* Settings link */}
       <button
