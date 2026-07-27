@@ -290,7 +290,7 @@ export function Peers({ phase = 'ki' }) {
               margin: '0 0 6px 0',
             }}
           >
-            {isJa ? 'なかまの巡り' : 'Your Peers'}
+            {isJa ? '巡りの輪' : 'Your Circle'}
           </h2>
           <p
             style={{
@@ -302,7 +302,7 @@ export function Peers({ phase = 'ki' }) {
           >
             {isJa
               ? '同じ季節をめぐる仲間たち'
-              : 'People moving through the seasons with you'}
+              : 'Connect with others on the same journey'}
           </p>
         </div>
 

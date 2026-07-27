@@ -14,8 +14,8 @@ const TABS = [
   },
   {
     id: 'community',
-    labelJa: 'なかま',
-    labelEn: 'Peers',
+    labelJa: 'サークル',
+    labelEn: 'Circle',
     icon: (color, sw) => (
       <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round">
         <circle cx="9" cy="9" r="3"/>

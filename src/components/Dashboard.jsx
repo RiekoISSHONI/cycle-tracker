@@ -8,20 +8,20 @@ import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predicti
 /* ── copy table ─────────────────────────────────────────────── */
 const PLAY_COPY = {
   ki: {
-    ja: { hi: 'こんにちは、さくらさん！', vibe: '今日は絶好調の予感 ✨', affirm: '満開のあなた。今日は自信を持って前へ！', tip: '気になるあの人を誘うなら今日！', pods: '同じ「輝」フェーズの3人が話してるよ' },
-    en: { hi: 'Hi Sakura!', vibe: 'Feeling unstoppable today ✨', affirm: "You're in full bloom — go get it today!", tip: "Ask out your crush — today's the day!", pods: '3 peers in your Radiance phase are chatting' },
+    ja: { hi: 'こんにちは、さくらさん！', vibe: '今日は絶好調の予感 ✨', affirm: '満開のあなた。今日は自信を持って前へ！', tip: '気になるあの人を誘うなら今日！', pods: '「輝」の仲間3人がシェア中' },
+    en: { hi: 'Hi Sakura!', vibe: 'Feeling unstoppable today ✨', affirm: "You're in full bloom — go get it today!", tip: "Ask out your crush — today's the day!", pods: '3 in your Radiance circle are sharing' },
   },
   sei: {
-    ja: { hi: 'おかえり、さくらさん', vibe: '今日はゆっくりいこう 🌙', affirm: '休むのも大切な巡り。無理しないでね。', tip: 'あったかいお茶でひと息つこう', pods: '「静」フェーズの2人がケアを共有中' },
-    en: { hi: 'Welcome back, Sakura', vibe: "Let's take it slow today 🌙", affirm: 'Resting is part of the cycle too. Be gentle.', tip: 'Warm tea and a cozy break sound perfect', pods: '2 peers in Stillness are sharing care tips' },
+    ja: { hi: 'おかえり、さくらさん', vibe: '今日はゆっくりいこう 🌙', affirm: '休むのも大切な巡り。無理しないでね。', tip: 'あったかいお茶でひと息つこう', pods: '「静」の仲間2人がケアを共有中' },
+    en: { hi: 'Welcome back, Sakura', vibe: "Let's take it slow today 🌙", affirm: 'Resting is part of the cycle too. Be gentle.', tip: 'Warm tea and a cozy break sound perfect', pods: '2 in Stillness circle are sharing care tips' },
   },
   me: {
-    ja: { hi: 'やっほー、さくらさん！', vibe: 'エネルギー上昇中 🌱', affirm: '新しいことを始めるのにぴったりの日！', tip: '軽いおさんぽで気分もすっきり', pods: '「芽」フェーズの4人が計画をシェア' },
-    en: { hi: 'Hey Sakura!', vibe: 'Energy on the rise 🌱', affirm: 'A perfect day to start something new!', tip: 'A light walk will lift your mood', pods: '4 peers in Budding are sharing plans' },
+    ja: { hi: 'やっほー、さくらさん！', vibe: 'エネルギー上昇中 🌱', affirm: '新しいことを始めるのにぴったりの日！', tip: '軽いおさんぽで気分もすっきり', pods: '「芽」の仲間4人が計画をシェア中' },
+    en: { hi: 'Hey Sakura!', vibe: 'Energy on the rise 🌱', affirm: 'A perfect day to start something new!', tip: 'A light walk will lift your mood', pods: '4 in Budding circle are sharing plans' },
   },
   mi: {
-    ja: { hi: 'おつかれさま、さくらさん', vibe: 'そろそろ整えるとき 🍂', affirm: '実りの季節。自分をいたわってあげて。', tip: '甘いものは控えめに、睡眠たっぷり', pods: '「実」フェーズの3人がまったり中' },
-    en: { hi: 'Hi there, Sakura', vibe: 'Time to wind down 🍂', affirm: 'Ripening season — treat yourself kindly.', tip: 'Go easy on sweets, get plenty of sleep', pods: '3 peers in Ripening are taking it easy' },
+    ja: { hi: 'おつかれさま、さくらさん', vibe: 'そろそろ整えるとき 🍂', affirm: '実りの季節。自分をいたわってあげて。', tip: '甘いものは控えめに、睡眠たっぷり', pods: '「実」の仲間3人がまったり中' },
+    en: { hi: 'Hi there, Sakura', vibe: 'Time to wind down 🍂', affirm: 'Ripening season — treat yourself kindly.', tip: 'Go easy on sweets, get plenty of sleep', pods: '3 in Ripening circle are winding down' },
   },
 };
 
@@ -444,7 +444,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
 }
 
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [] }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateCommunity }) {
   const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
@@ -466,21 +466,140 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
 
   /* ── partner view ── */
   if (viewMode === 'partner') {
+    const legacyPhase = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' }[phaseKey];
+    const partnerUnderstand = t(`partnerTips.${legacyPhase}.understand`) || '';
+    const partnerSupport = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
+    const partnerAvoid = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+
     return (
-      <div style={{ padding: '24px 0', paddingBottom: 130 }}>
+      <div style={{ position: 'relative', paddingBottom: 130 }}>
+        {/* rainbow wash */}
         <div style={{
-          background: CARD,
-          borderRadius: 26,
-          padding: '48px 24px',
-          textAlign: 'center',
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
-        }}>
-          <div style={{ fontSize: 44, marginBottom: 14 }}>{p.emoji}</div>
-          <div style={{ fontFamily: MARU, fontSize: 20, fontWeight: 700, color: INK, marginBottom: 8 }}>
-            {isJa ? 'パートナービュー' : 'Partner View'}
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: `
+            radial-gradient(ellipse 60% 30% at 10% 12%, rgba(228,160,176,0.25), transparent 70%),
+            radial-gradient(ellipse 55% 28% at 40% 6%, rgba(212,192,122,0.22), transparent 70%),
+            radial-gradient(ellipse 55% 30% at 75% 18%, rgba(142,190,144,0.25), transparent 70%),
+            linear-gradient(180deg, #FFFCFA, #FDF9F6)
+          `,
+          pointerEvents: 'none', zIndex: 0,
+        }} />
+
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 20 }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 36, fontWeight: 600, color: p.accent, lineHeight: 1 }}>
+              {p.kanji}
+            </div>
+            <div style={{ fontFamily: PMINCHO, fontSize: 22, fontWeight: 600, color: INK, marginTop: 8 }}>
+              {isJa ? 'パートナーガイド' : 'Partner Guide'}
+            </div>
+            <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
+              {isJa ? `${p.season} · ${p.name}` : `${p.seasonEn} · ${p.en}`}
+            </div>
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, lineHeight: 1.6 }}>
-            {isJa ? 'パートナー向けの画面は近日公開予定です。' : 'Partner view is coming soon.'}
+
+          {/* Phase status card */}
+          <div style={{
+            ...GLASS, borderRadius: 24, padding: '20px 20px', marginBottom: 14,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{ position: 'relative', width: 80, height: 80, flexShrink: 0 }}>
+                <CycleRing size={80} day={day} stroke={6} />
+                <div style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}>
+                  <PhaseSticker phase={phaseKey} size={40} />
+                </div>
+              </div>
+              <div>
+                <div style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                  {isJa ? `${day}日目` : `Day ${day}`}
+                </div>
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 5,
+                  padding: '3px 10px', borderRadius: 99, background: p.soft, marginTop: 6,
+                }}>
+                  <span style={{ fontSize: 13 }}>{p.emoji}</span>
+                  <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: p.deep }}>
+                    {isJa ? p.name : p.en}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Understanding */}
+          <div style={{
+            ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
+          }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: INK, marginBottom: 10 }}>
+              {isJa ? '今の気持ち' : 'How she may feel'}
+            </div>
+            <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: 0, lineHeight: 1.6 }}>
+              {partnerUnderstand}
+            </p>
+          </div>
+
+          {/* How to support */}
+          <div style={{
+            ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
+          }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.me.deep, marginBottom: 10 }}>
+              {isJa ? 'サポート方法' : 'How to support'}
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {partnerSupport.slice(0, 4).map((tip, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <div style={{
+                    width: 6, height: 6, borderRadius: '50%',
+                    background: PHASES.me.accent, flexShrink: 0, marginTop: 7,
+                  }} />
+                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                    {tip}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* What to avoid */}
+          {partnerAvoid.length > 0 && (
+            <div style={{
+              ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
+            }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.sei.deep, marginBottom: 10 }}>
+                {isJa ? '避けた方がいいこと' : 'What to avoid'}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {partnerAvoid.slice(0, 3).map((tip, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <div style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: PHASES.sei.accent, flexShrink: 0, marginTop: 7,
+                    }} />
+                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                      {tip}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Tip of the day */}
+          <div style={{
+            background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
+            border: `1px solid ${p.line}`,
+            borderRadius: 24, padding: '18px 20px',
+          }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: p.deep, marginBottom: 6 }}>
+              {isJa ? '今日のヒント' : "Today's tip"}
+            </div>
+            <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: p.deep, margin: 0, lineHeight: 1.55 }}>
+              {copy.tip}
+            </p>
           </div>
         </div>
       </div>
@@ -681,17 +800,21 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           </div>
 
           {/* join button */}
-          <div style={{
-            padding: '7px 18px',
-            borderRadius: 999,
-            background: p.soft,
-            cursor: 'pointer',
-            flexShrink: 0,
-          }}>
+          <button
+            onClick={() => onNavigateCommunity?.()}
+            style={{
+              padding: '7px 18px',
+              borderRadius: 999,
+              background: p.soft,
+              border: 'none',
+              cursor: 'pointer',
+              flexShrink: 0,
+            }}
+          >
             <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
               {isJa ? '参加' : 'Join'}
             </span>
-          </div>
+          </button>
         </div>
 
 
