@@ -361,12 +361,19 @@ export function Care({ phase, onNavigateSettings }) {
   const dayOfYear = getDayOfYear();
 
   const rotatedTeas = rotatePool(TEA_POOL, 2, dayOfYear);
-  const rotatedSkincare = rotatePool(SKINCARE_POOL, 3, dayOfYear + 5);
+  const rotatedSkincare = rotatePool(SKINCARE_POOL, 2, dayOfYear + 5);
 
   useEffect(() => {
     rotatedTeas.forEach(item => trackImpression('tea', item.id));
     rotatedSkincare.forEach(item => trackImpression('skincare', item.id));
   }, [rotatedTeas.map(i => i.id).join(','), rotatedSkincare.map(i => i.id).join(',')]);
+
+  const TOPIC_COLORS = {
+    teas: PHASES.sei,
+    skincare: PHASES.mi,
+    nutrition: PHASES.ki,
+    exercise: PHASES.me,
+  };
 
   const groupIcon = {
     teas: (color) => (
@@ -387,8 +394,6 @@ export function Care({ phase, onNavigateSettings }) {
     { key: 'teas', titleJa: 'お茶', titleEn: 'Teas', items: rotatedTeas },
     { key: 'skincare', titleJa: 'スキンケア', titleEn: 'Skincare', items: rotatedSkincare },
   ];
-
-  const mePhase = PHASES.me;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
@@ -462,14 +467,14 @@ export function Care({ phase, onNavigateSettings }) {
               gap: 6,
               padding: '5px 12px',
               borderRadius: 20,
-              background: mePhase.soft,
+              background: PHASES.me.soft,
               border: 'none',
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={mePhase.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={PHASES.me.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 700, color: mePhase.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 700, color: PHASES.me.accent }}>
               {isJa ? '周期データは非公開のまま' : 'Your cycle data stays private'}
             </span>
           </div>
@@ -477,89 +482,92 @@ export function Care({ phase, onNavigateSettings }) {
       </div>
 
       {/* Grouped recommendations */}
-      {groups.map((group) => (
-        <div key={group.key} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
-            <div
-              style={{
-                width: 28,
-                height: 28,
-                borderRadius: 10,
-                background: mePhase.soft,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              {groupIcon[group.key](mePhase.accent)}
-            </div>
-            <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
-              {isJa ? group.titleJa : group.titleEn}
-            </h3>
-          </div>
-
-          {group.items.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                background: CARD,
-                borderRadius: 24,
-                boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
-                padding: '14px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-              }}
-            >
+      {groups.map((group) => {
+        const tc = TOPIC_COLORS[group.key];
+        return (
+          <div key={group.key} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
               <div
                 style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 16,
-                  background: mePhase.soft,
+                  width: 28,
+                  height: 28,
+                  borderRadius: 10,
+                  background: tc.soft,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexShrink: 0,
                 }}
               >
-                {item.icon(mePhase.accent)}
+                {groupIcon[group.key](tc.accent)}
               </div>
-
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 700, color: INK }}>
-                  {isJa ? item.nameJa : item.nameEn}
-                </div>
-                <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
-                  {isJa ? item.nameEn : item.nameJa}
-                </div>
-                <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
-                  {isJa ? item.noteJa : item.noteEn}
-                </div>
-              </div>
-
-              <button
-                onClick={() => trackClick(group.key === 'teas' ? 'tea' : 'skincare', item.id)}
-                style={{
-                  padding: '6px 14px',
-                  borderRadius: 20,
-                  border: 'none',
-                  background: mePhase.tint,
-                  fontFamily: MARU,
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: mePhase.accent,
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
-                }}
-              >
-                {isJa ? '見る' : 'View'}
-              </button>
+              <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+                {isJa ? group.titleJa : group.titleEn}
+              </h3>
             </div>
-          ))}
-        </div>
-      ))}
+
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                style={{
+                  background: CARD,
+                  borderRadius: 24,
+                  boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+                  padding: '14px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                }}
+              >
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 16,
+                    background: tc.soft,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  {item.icon(tc.accent)}
+                </div>
+
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 700, color: INK }}>
+                    {isJa ? item.nameJa : item.nameEn}
+                  </div>
+                  <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
+                    {isJa ? item.nameEn : item.nameJa}
+                  </div>
+                  <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
+                    {isJa ? item.noteJa : item.noteEn}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => trackClick(group.key === 'teas' ? 'tea' : 'skincare', item.id)}
+                  style={{
+                    padding: '6px 14px',
+                    borderRadius: 20,
+                    border: 'none',
+                    background: tc.tint,
+                    fontFamily: MARU,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: tc.accent,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                  }}
+                >
+                  {isJa ? '見る' : 'View'}
+                </button>
+              </div>
+            ))}
+          </div>
+        );
+      })}
 
       {/* Nutrition section */}
       <NutritionSection phaseKey={phaseKey} isJa={isJa} t={t} />
