@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { calculateCycleInfo, calculateCycleStats } from './utils/cycleData';
 import { phaseKeyFromLegacy } from './utils/phases';
+import { trackPageView, trackFeature, trackEvent } from './utils/telemetry';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { CycleSetup } from './components/CycleSetup';
@@ -56,7 +57,19 @@ function App() {
     }
   }, [cycleInfo?.phase]);
 
-  const handleAcceptConsent = () => setHasConsented(true);
+  useEffect(() => {
+    trackEvent('app_open', { locale: navigator.language?.slice(0, 2) });
+  }, []);
+
+  useEffect(() => {
+    const phase = cycleInfo?.phase ? phaseKeyFromLegacy(cycleInfo.phase) : undefined;
+    trackPageView(activeTab, { phase, mode: viewMode });
+  }, [activeTab]);
+
+  const handleAcceptConsent = () => {
+    setHasConsented(true);
+    trackEvent('consent_accept');
+  };
 
   const handleSetup = (data) => {
     setCycleData(data);
@@ -76,6 +89,7 @@ function App() {
   };
 
   const handleLogPeriod = (date) => {
+    trackEvent('period_log');
     setCycleData(prev => ({ ...prev, lastPeriodStart: date }));
     setPeriodHistory(prev => {
       if (prev.includes(date)) return prev;
@@ -85,6 +99,7 @@ function App() {
   };
 
   const handleCheckinSave = (checkinData) => {
+    trackEvent('checkin_save');
     setCheckins(prev => {
       const existing = prev.findIndex(c => c.date === checkinData.date);
       if (existing >= 0) {

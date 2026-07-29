@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, MARU, PMINCHO, CREAM2, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 import { trackImpression, trackClick, rotatePool, getDayOfYear } from '../utils/analytics';
+import { trackContent } from '../utils/telemetry';
 
 const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
 
@@ -242,7 +243,10 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
   const videos = rotatePool(allVideos, 2, dayOfYear + 13);
 
   useEffect(() => {
-    videos.forEach(v => trackImpression('video', v.id));
+    videos.forEach(v => {
+      trackImpression('video', v.id);
+      trackContent('impression', 'video', v.id);
+    });
   }, [videos.map(v => v.id).join(',')]);
 
   return (
@@ -309,7 +313,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
           href={video.url}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackClick('video', video.id)}
+          onClick={() => { trackClick('video', video.id); trackContent('click', 'video', video.id); }}
           style={{
             background: CARD, borderRadius: 24,
             boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
@@ -364,8 +368,8 @@ export function Care({ phase, onNavigateSettings }) {
   const rotatedSkincare = rotatePool(SKINCARE_POOL, 2, dayOfYear + 5);
 
   useEffect(() => {
-    rotatedTeas.forEach(item => trackImpression('tea', item.id));
-    rotatedSkincare.forEach(item => trackImpression('skincare', item.id));
+    rotatedTeas.forEach(item => { trackImpression('tea', item.id); trackContent('impression', 'tea', item.id); });
+    rotatedSkincare.forEach(item => { trackImpression('skincare', item.id); trackContent('impression', 'skincare', item.id); });
   }, [rotatedTeas.map(i => i.id).join(','), rotatedSkincare.map(i => i.id).join(',')]);
 
   const TOPIC_COLORS = {
@@ -546,7 +550,7 @@ export function Care({ phase, onNavigateSettings }) {
                 </div>
 
                 <button
-                  onClick={() => trackClick(group.key === 'teas' ? 'tea' : 'skincare', item.id)}
+                  onClick={() => { const cat = group.key === 'teas' ? 'tea' : 'skincare'; trackClick(cat, item.id); trackContent('click', cat, item.id); }}
                   style={{
                     padding: '6px 14px',
                     borderRadius: 20,
