@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
-import { PLANS } from '../contexts/SubscriptionContext';
+import { PLANS, isStripeConfigured } from '../contexts/SubscriptionContext';
 import { PHASES, CORAL, CORAL_D, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM, CREAM2, LINE } from '../utils/phases';
 
 export function PremiumBadge() {
@@ -68,9 +68,10 @@ function LockedFeature({ onClick }) {
 
 export function UpgradeModal({ onClose, feature }) {
   const { t, i18n } = useTranslation();
-  const { upgradeToPremium } = useSubscription();
+  const { upgradeToPremium, redirectToStripe } = useSubscription();
   const isJa = i18n.language?.startsWith('ja');
   const [selectedPlan, setSelectedPlan] = useState('annual');
+  const stripeReady = isStripeConfigured();
 
   const features = [
     { key: 'pillReminders', icon: '💊', label: t('premium.features.pillReminders') },
@@ -81,8 +82,10 @@ export function UpgradeModal({ onClose, feature }) {
   ];
 
   const handleUpgrade = () => {
-    upgradeToPremium(selectedPlan);
-    onClose();
+    if (!redirectToStripe(selectedPlan)) {
+      upgradeToPremium(selectedPlan);
+      onClose();
+    }
   };
 
   const monthlyPrice = isJa ? PLANS.monthly.priceJPY : PLANS.monthly.priceUSD;
@@ -232,8 +235,22 @@ export function UpgradeModal({ onClose, feature }) {
               cursor: 'pointer',
             }}
           >
-            {t('premium.startTrial')}
+            {stripeReady
+              ? (isJa ? 'プレミアムを始める' : 'Start Premium')
+              : t('premium.startTrial')}
           </button>
+          {stripeReady && (
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+              fontFamily: MARU, fontSize: 11, color: INK3,
+            }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="7" width="18" height="12" rx="2"/>
+                <path d="M3 11h18"/>
+              </svg>
+              {isJa ? 'Stripeで安全にお支払い' : 'Secure payment via Stripe'}
+            </div>
+          )}
           <button
             onClick={onClose}
             style={{

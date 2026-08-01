@@ -3,6 +3,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { calculateCycleInfo, calculateCycleStats } from './utils/cycleData';
 import { phaseKeyFromLegacy } from './utils/phases';
 import { trackPageView, trackFeature, trackEvent } from './utils/telemetry';
+import { useSubscription } from './contexts/SubscriptionContext';
 import { Header } from './components/Header';
 import { Navigation } from './components/Navigation';
 import { CycleSetup } from './components/CycleSetup';
@@ -14,6 +15,7 @@ import { Insights } from './components/Insights';
 import { Care } from './components/Care';
 import { Peers } from './components/Peers';
 import { ConsentModal } from './components/ConsentModal';
+import { UpgradeSuccessBanner } from './components/UpgradeSuccessBanner';
 
 function App() {
   const [hasConsented, setHasConsented] = useLocalStorage('privacyConsent', false);
@@ -111,6 +113,8 @@ function App() {
     });
   };
 
+  const { justUpgraded, dismissUpgraded } = useSubscription();
+
   if (!hasConsented) return <ConsentModal onAccept={handleAcceptConsent} />;
   if (!cycleData) return <CycleSetup onSave={handleSetup} />;
 
@@ -119,6 +123,7 @@ function App() {
   return (
     <div style={{ minHeight: '100vh', paddingBottom: 110, position: 'relative' }}>
       <Header cycleInfo={cycleInfo} viewMode={viewMode} setViewMode={setViewMode} />
+      {justUpgraded && <UpgradeSuccessBanner onDismiss={dismissUpgraded} />}
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (

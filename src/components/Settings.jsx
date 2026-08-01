@@ -1,7 +1,8 @@
 import { useState, useMemo } from 'react';
-import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CREAM2, CARD, INK, INK2, INK3, LINE, LINE2, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
+import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CREAM2, CARD, INK, INK2, INK3, LINE, LINE2, MARU, PMINCHO, CORAL, CORAL_D, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
+import { UpgradeModal } from './PremiumGate';
 import { getEngagementSummary } from '../utils/analytics';
 
 const CATEGORY_META = {
@@ -174,6 +175,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
   const isJa = i18n.language.startsWith('ja');
   const locale = isJa ? 'ja-JP' : 'en-US';
   const { isPremium, subscription } = useSubscription();
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
   const [lastPeriodStart, setLastPeriodStart] = useState(cycleData?.lastPeriodStart || '');
   const [cycleLength, setCycleLength] = useState(cycleData?.cycleLength || 28);
@@ -301,8 +303,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             )}
           </div>
 
-          {/* Premium badge pill */}
-          {isPremium && (
+          {isPremium ? (
             <div
               style={{
                 padding: '4px 10px',
@@ -317,9 +318,28 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             >
               PRO
             </div>
+          ) : (
+            <button
+              onClick={() => setShowUpgradeModal(true)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: 12,
+                border: 'none',
+                background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+                fontFamily: MARU,
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#fff',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(212,137,122,0.3)',
+              }}
+            >
+              {isJa ? 'アップグレード' : 'Upgrade'}
+            </button>
           )}
         </div>
       </div>
+      {showUpgradeModal && <UpgradeModal onClose={() => setShowUpgradeModal(false)} />}
 
       {/* Engagement analytics card */}
       <EngagementCard isJa={isJa} phaseKey={phaseKey} />
