@@ -3,6 +3,8 @@ import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LI
 import { useTranslation } from 'react-i18next';
 import { trackImpression, trackClick, rotatePool, getDayOfYear } from '../utils/analytics';
 import { trackContent } from '../utils/telemetry';
+import { getCleanAffiliateUrl, openAffiliateLink, isCalmModeEnabled } from '../utils/commerce';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
 
@@ -233,6 +235,42 @@ const WORKOUT_VIDEOS = {
   ],
 };
 
+/* ── shopping product pool ────────────────────────────────── */
+const SHOP_PRODUCTS = {
+  sei: [
+    { id: 'sei-heat', nameJa: 'あずき温熱パッド', nameEn: 'Azuki Heat Pad', priceJa: '¥1,980', priceEn: '$15', asin: 'B08GY3LW5M', cat: 'wellness' },
+    { id: 'sei-iron', nameJa: '鉄分サプリ（ヘム鉄）', nameEn: 'Heme Iron Supplement', priceJa: '¥1,480', priceEn: '$12', asin: 'B07TVCFNZ6', cat: 'supplement' },
+    { id: 'sei-ginger', nameJa: '有機ジンジャーティー', nameEn: 'Organic Ginger Tea', priceJa: '¥890', priceEn: '$8', asin: 'B003D4F2US', cat: 'tea' },
+    { id: 'sei-blanket', nameJa: 'ぬくぬくブランケット', nameEn: 'Cozy Weighted Blanket', priceJa: '¥4,980', priceEn: '$35', asin: 'B082WR6DBP', cat: 'comfort' },
+    { id: 'sei-mag', nameJa: 'マグネシウムオイル', nameEn: 'Magnesium Spray', priceJa: '¥1,290', priceEn: '$10', asin: 'B00BPUY3W0', cat: 'wellness' },
+    { id: 'sei-choco', nameJa: 'オーガニック高カカオチョコ', nameEn: 'Organic Dark Chocolate 85%', priceJa: '¥680', priceEn: '$6', asin: 'B003XNTJSA', cat: 'food' },
+  ],
+  me: [
+    { id: 'me-band', nameJa: 'トレーニングバンドセット', nameEn: 'Resistance Band Set', priceJa: '¥1,680', priceEn: '$13', asin: 'B07149YC8P', cat: 'fitness' },
+    { id: 'me-matcha', nameJa: '有機抹茶パウダー', nameEn: 'Organic Matcha Powder', priceJa: '¥1,580', priceEn: '$14', asin: 'B00DDT116M', cat: 'tea' },
+    { id: 'me-vitc', nameJa: 'ビタミンCセラム', nameEn: 'Vitamin C Serum', priceJa: '¥1,980', priceEn: '$16', asin: 'B01M4MCUAF', cat: 'skincare' },
+    { id: 'me-journal', nameJa: 'セルフケアジャーナル', nameEn: 'Self-Care Journal', priceJa: '¥1,280', priceEn: '$11', asin: 'B09DFGZFMJ', cat: 'stationery' },
+    { id: 'me-probiotic', nameJa: 'プロバイオティクス', nameEn: 'Women\'s Probiotic', priceJa: '¥2,380', priceEn: '$18', asin: 'B078GRLKR4', cat: 'supplement' },
+    { id: 'me-bottle', nameJa: '保温ボトル', nameEn: 'Insulated Water Bottle', priceJa: '¥2,180', priceEn: '$17', asin: 'B08LDG4V9V', cat: 'fitness' },
+  ],
+  ki: [
+    { id: 'ki-spf', nameJa: 'ミネラル日焼け止め', nameEn: 'Mineral Sunscreen SPF50', priceJa: '¥1,680', priceEn: '$14', asin: 'B00Y21TWWU', cat: 'skincare' },
+    { id: 'ki-electro', nameJa: '電解質パウダー', nameEn: 'Electrolyte Powder', priceJa: '¥1,980', priceEn: '$15', asin: 'B082X4M9PL', cat: 'supplement' },
+    { id: 'ki-jasmine', nameJa: 'ジャスミン緑茶', nameEn: 'Jasmine Green Tea', priceJa: '¥980', priceEn: '$9', asin: 'B000WG7SJC', cat: 'tea' },
+    { id: 'ki-yoga', nameJa: 'ヨガマット', nameEn: 'Non-Slip Yoga Mat', priceJa: '¥3,280', priceEn: '$25', asin: 'B01LP0V1AI', cat: 'fitness' },
+    { id: 'ki-mist', nameJa: 'ローズウォーターミスト', nameEn: 'Rosewater Face Mist', priceJa: '¥1,180', priceEn: '$10', asin: 'B00UGJ5FMU', cat: 'skincare' },
+    { id: 'ki-nuts', nameJa: 'ミックスナッツ', nameEn: 'Organic Trail Mix', priceJa: '¥1,280', priceEn: '$11', asin: 'B071Z9WGB2', cat: 'food' },
+  ],
+  mi: [
+    { id: 'mi-lavender', nameJa: 'ラベンダーオイル', nameEn: 'Lavender Essential Oil', priceJa: '¥980', priceEn: '$9', asin: 'B06Y2GZ8FN', cat: 'wellness' },
+    { id: 'mi-epsom', nameJa: 'エプソムソルト', nameEn: 'Epsom Salt Bath Soak', priceJa: '¥1,280', priceEn: '$10', asin: 'B004N762WS', cat: 'wellness' },
+    { id: 'mi-cinnamon', nameJa: 'シナモンティー', nameEn: 'Cinnamon Spice Tea', priceJa: '¥780', priceEn: '$7', asin: 'B0014AVG2Q', cat: 'tea' },
+    { id: 'mi-mask', nameJa: 'シートマスク（保湿）', nameEn: 'Hydrating Sheet Masks', priceJa: '¥1,480', priceEn: '$12', asin: 'B00JEV544S', cat: 'skincare' },
+    { id: 'mi-b6', nameJa: 'ビタミンB6', nameEn: 'Vitamin B6 Supplement', priceJa: '¥890', priceEn: '$8', asin: 'B0019LTGOU', cat: 'supplement' },
+    { id: 'mi-candle', nameJa: 'ソイキャンドル', nameEn: 'Soy Wax Candle', priceJa: '¥1,580', priceEn: '$13', asin: 'B07FSFKJPC', cat: 'comfort' },
+  ],
+};
+
 /* ── exercise section ─────────────────────────────────────── */
 function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
@@ -352,6 +390,230 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
           </div>
         </a>
       ))}
+    </div>
+  );
+}
+
+const CAT_LABELS = {
+  wellness: { ja: '健康', en: 'Wellness' },
+  supplement: { ja: 'サプリ', en: 'Supplement' },
+  tea: { ja: 'お茶', en: 'Tea' },
+  comfort: { ja: '癒し', en: 'Comfort' },
+  food: { ja: '食品', en: 'Food' },
+  fitness: { ja: '運動', en: 'Fitness' },
+  skincare: { ja: 'スキン', en: 'Skin' },
+  stationery: { ja: '文具', en: 'Stationery' },
+};
+
+function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
+  const [savedItems, setSavedItems] = useLocalStorage('meguri_shoplist', []);
+  const [showList, setShowList] = useState(false);
+
+  const allProducts = SHOP_PRODUCTS[phaseKey] || [];
+  const products = rotatePool(allProducts, 3, dayOfYear + 21);
+  const p = PHASES[phaseKey];
+
+  useEffect(() => {
+    products.forEach(item => {
+      trackImpression('shop', item.id);
+      trackContent('impression', 'shop', item.id);
+    });
+  }, [products.map(i => i.id).join(',')]);
+
+  const toggleSave = (product) => {
+    setSavedItems(prev => {
+      const exists = prev.find(i => i.id === product.id);
+      if (exists) return prev.filter(i => i.id !== product.id);
+      return [...prev, { id: product.id, name: isJa ? product.nameJa : product.nameEn, asin: product.asin, addedAt: Date.now() }];
+    });
+  };
+
+  const isSaved = (id) => savedItems.some(i => i.id === id);
+
+  const handleBuy = (product) => {
+    trackClick('shop', product.id);
+    trackContent('click', 'shop', product.id);
+    openAffiliateLink(product);
+  };
+
+  const removeFromList = (id) => {
+    setSavedItems(prev => prev.filter(i => i.id !== id));
+  };
+
+  if (isCalmModeEnabled()) return null;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 4px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{
+            width: 28, height: 28, borderRadius: 10,
+            background: PHASES.ki.soft,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.ki.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <path d="M3 6h18" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+          </div>
+          <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+            {isJa ? 'おすすめアイテム' : 'Phase Picks'}
+          </h3>
+        </div>
+
+        {savedItems.length > 0 && (
+          <button
+            onClick={() => setShowList(!showList)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 5,
+              padding: '5px 12px', borderRadius: 20, border: 'none',
+              background: showList ? p.soft : CREAM2, cursor: 'pointer',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={showList ? p.deep : INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: showList ? p.deep : INK3 }}>
+              {savedItems.length}
+            </span>
+          </button>
+        )}
+      </div>
+
+      {/* Saved list (collapsible) */}
+      {showList && savedItems.length > 0 && (
+        <div style={{
+          background: CARD, borderRadius: 24,
+          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+          padding: '16px 16px',
+        }}>
+          <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK, marginBottom: 10 }}>
+            {isJa ? '買い物リスト' : 'Shopping List'}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {savedItems.map((item) => (
+              <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button
+                  onClick={() => removeFromList(item.id)}
+                  style={{
+                    width: 20, height: 20, borderRadius: 6, border: `1.5px solid ${p.accent}`,
+                    background: p.soft, cursor: 'pointer', display: 'flex',
+                    alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0,
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={p.deep} strokeWidth="3" strokeLinecap="round">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </button>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, flex: 1 }}>
+                  {item.name}
+                </span>
+                <a
+                  href={`https://www.amazon.co.jp/dp/${item.asin}?tag=meguri-22`}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  referrerPolicy="no-referrer"
+                  onClick={() => { trackClick('shop', item.id); trackContent('click', 'shop', item.id); }}
+                  style={{
+                    fontFamily: MARU, fontSize: 11, fontWeight: 700,
+                    color: PHASES.ki.accent, textDecoration: 'none',
+                  }}
+                >
+                  {isJa ? '購入' : 'Buy'}
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Product cards */}
+      {products.map((product) => {
+        const saved = isSaved(product.id);
+        const catLabel = CAT_LABELS[product.cat] || { ja: product.cat, en: product.cat };
+        return (
+          <div
+            key={product.id}
+            style={{
+              background: CARD, borderRadius: 24,
+              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+              padding: '14px 16px',
+              display: 'flex', alignItems: 'center', gap: 12,
+            }}
+          >
+            {/* Save button */}
+            <button
+              onClick={() => toggleSave(product)}
+              style={{
+                width: 40, height: 40, borderRadius: 12,
+                background: saved ? p.soft : CREAM2,
+                border: saved ? `1.5px solid ${p.accent}` : `1.5px solid transparent`,
+                cursor: 'pointer', display: 'flex',
+                alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0,
+              }}
+            >
+              {saved ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill={p.accent} stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              )}
+            </button>
+
+            {/* Product info */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
+                <span style={{
+                  fontFamily: MARU, fontSize: 10, fontWeight: 700,
+                  padding: '1px 7px', borderRadius: 99,
+                  background: PHASES.ki.soft, color: PHASES.ki.deep,
+                }}>
+                  {isJa ? catLabel.ja : catLabel.en}
+                </span>
+              </div>
+              <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 700, color: INK }}>
+                {isJa ? product.nameJa : product.nameEn}
+              </div>
+              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
+                {isJa ? product.priceJa : product.priceEn}
+              </div>
+            </div>
+
+            {/* Buy button */}
+            <a
+              href={`https://www.amazon.co.jp/dp/${product.asin}?tag=meguri-22`}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              referrerPolicy="no-referrer"
+              onClick={() => handleBuy(product)}
+              style={{
+                padding: '6px 14px', borderRadius: 20, border: 'none',
+                background: PHASES.ki.tint,
+                fontFamily: MARU, fontSize: 12, fontWeight: 700,
+                color: PHASES.ki.accent, textDecoration: 'none',
+                whiteSpace: 'nowrap', flexShrink: 0,
+              }}
+            >
+              Amazon
+            </a>
+          </div>
+        );
+      })}
+
+      {/* Affiliate disclosure */}
+      <div style={{
+        fontFamily: MARU, fontSize: 10.5, fontWeight: 500,
+        color: INK3, textAlign: 'center', padding: '4px 12px', lineHeight: 1.5,
+      }}>
+        {isJa
+          ? '※ リンクにはアフィリエイトが含まれます。購入費用の一部が運営に充てられます。'
+          : 'Links include affiliate tags. A small portion of purchases supports Meguri.'}
+      </div>
     </div>
   );
 }
@@ -578,6 +840,9 @@ export function Care({ phase, onNavigateSettings }) {
           </div>
         );
       })}
+
+      {/* Shopping list */}
+      <ShoppingSection phaseKey={phaseKey} isJa={isJa} dayOfYear={dayOfYear} />
 
       {/* Settings link */}
       <button
