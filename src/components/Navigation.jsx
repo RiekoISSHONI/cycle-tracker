@@ -13,6 +13,21 @@ const TABS = [
     ),
   },
   {
+    id: 'care',
+    labelJa: 'ケア',
+    labelEn: 'Care',
+    icon: (color, sw) => (
+      <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/>
+        <path d="M5 19c2-4.5 5.5-7.5 9.5-9"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'checkin',
+    center: true,
+  },
+  {
     id: 'community',
     labelJa: 'サークル',
     labelEn: 'Circle',
@@ -25,10 +40,6 @@ const TABS = [
     ),
   },
   {
-    id: 'checkin',
-    center: true,
-  },
-  {
     id: 'calendar',
     labelJa: 'こよみ',
     labelEn: 'Cal',
@@ -36,17 +47,6 @@ const TABS = [
       <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
         <rect x="3.5" y="5" width="17" height="15.5" rx="4"/>
         <path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/>
-      </svg>
-    ),
-  },
-  {
-    id: 'care',
-    labelJa: 'ケア',
-    labelEn: 'Care',
-    icon: (color, sw) => (
-      <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/>
-        <path d="M5 19c2-4.5 5.5-7.5 9.5-9"/>
       </svg>
     ),
   },

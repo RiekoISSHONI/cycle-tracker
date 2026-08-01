@@ -485,7 +485,13 @@ export function Care({ phase, onNavigateSettings }) {
         </div>
       </div>
 
-      {/* Grouped recommendations */}
+      {/* Nutrition section */}
+      <NutritionSection phaseKey={phaseKey} isJa={isJa} t={t} />
+
+      {/* Exercise section */}
+      <ExerciseSection phaseKey={phaseKey} isJa={isJa} t={t} dayOfYear={dayOfYear} />
+
+      {/* Product recommendations */}
       {groups.map((group) => {
         const tc = TOPIC_COLORS[group.key];
         return (
@@ -572,12 +578,6 @@ export function Care({ phase, onNavigateSettings }) {
           </div>
         );
       })}
-
-      {/* Nutrition section */}
-      <NutritionSection phaseKey={phaseKey} isJa={isJa} t={t} />
-
-      {/* Exercise section */}
-      <ExerciseSection phaseKey={phaseKey} isJa={isJa} t={t} dayOfYear={dayOfYear} />
 
       {/* Settings link */}
       <button
