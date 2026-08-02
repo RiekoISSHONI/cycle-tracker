@@ -715,6 +715,19 @@
         "Don't take mood changes personally",
         "Avoid scheduling demanding activities",
         "Don't dismiss her discomfort"
+      ],
+      "sayThis": [
+        "I'll handle dinner tonight — you just rest.",
+        "Want me to grab you a hot water bottle?",
+        "We don't have to go out. Let's stay in and watch something.",
+        "I know today's rough. I'm right here if you need anything.",
+        "You don't have to explain — I get it."
+      ],
+      "offer": [
+        "Run her a warm bath or bring a blanket",
+        "Pick up her favourite comfort snack on the way home",
+        "Handle the dishes or laundry without being asked",
+        "Sit quietly together — presence without pressure"
       ]
     },
     "follicular": {
@@ -729,6 +742,19 @@
       "avoid": [
         "Don't hold her back from being social",
         "Avoid being a couch potato when she wants activity"
+      ],
+      "sayThis": [
+        "Let's try that new place you mentioned!",
+        "I love how excited you are about this — tell me more.",
+        "Want to go for a walk after dinner?",
+        "That idea sounds amazing. How can I help?",
+        "You seem really in your element today."
+      ],
+      "offer": [
+        "Suggest a spontaneous date or outing",
+        "Ask about her latest project and listen closely",
+        "Cook something new together",
+        "Join her for a workout or run"
       ]
     },
     "ovulatory": {
@@ -743,6 +769,19 @@
       "avoid": [
         "Don't be distant or distracted",
         "Avoid bringing up heavy conflicts"
+      ],
+      "sayThis": [
+        "You look incredible today.",
+        "I really love being around you.",
+        "I've been thinking about us — we're a great team.",
+        "Let me plan something special this weekend.",
+        "You're glowing. Seriously."
+      ],
+      "offer": [
+        "Plan a surprise dinner or date night",
+        "Put your phone down and be fully present",
+        "Write her a short note or send a meaningful text",
+        "Make eye contact and really listen when she talks"
       ]
     },
     "luteal": {
@@ -759,6 +798,19 @@
         "Avoid commenting on mood or body changes",
         "Don't take irritability personally",
         "Avoid being critical or demanding"
+      ],
+      "sayThis": [
+        "What do you need from me right now?",
+        "I made you some tea — it's on the counter.",
+        "You're doing great, even if it doesn't feel like it.",
+        "I'm not going anywhere. Take your time.",
+        "Want chocolate? I'll go grab some."
+      ],
+      "offer": [
+        "Bring home her favourite treat without being asked",
+        "Take something off her to-do list quietly",
+        "Offer a back or foot rub with zero expectations",
+        "Keep the evening calm — no big plans, no surprises"
       ]
     }
   },

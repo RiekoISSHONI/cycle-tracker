@@ -329,11 +329,15 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
   const understand = t(`partnerTips.${legacyPhase}.understand`) || '';
   const allSupport = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
   const allAvoid = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+  const allSayThis = t(`partnerTips.${legacyPhase}.sayThis`, { returnObjects: true }) || [];
+  const allOffer = t(`partnerTips.${legacyPhase}.offer`, { returnObjects: true }) || [];
 
   const today = new Date();
   const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
   const supportTips = rotateSlice(allSupport, 3, dayOfYear);
   const avoidTips = rotateSlice(allAvoid, 2, dayOfYear + 7);
+  const sayThisTips = rotateSlice(allSayThis, 2, dayOfYear + 13);
+  const offerTips = rotateSlice(allOffer, 2, dayOfYear + 19);
 
   return (
     <div style={{
@@ -437,6 +441,56 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
               </div>
             </>
           )}
+
+          {/* Say this */}
+          {sayThisTips.length > 0 && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 12, borderTop: `1px solid ${LINE}` }}>
+                <span style={{ fontSize: 14 }}>💬</span>
+                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                  {isJa ? 'こう言ってあげて' : 'Try saying this'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+                {sayThisTips.map((phrase, i) => (
+                  <div key={i} style={{
+                    padding: '8px 12px', borderRadius: 12,
+                    background: PHASES.ki.tint,
+                    border: `1px solid ${PHASES.ki.line}`,
+                  }}>
+                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
+                      "{phrase}"
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Things to offer */}
+          {offerTips.length > 0 && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
+                <span style={{ fontSize: 14 }}>🤲</span>
+                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                  {isJa ? '今日できること' : 'Things you can do'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {offerTips.map((item, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <div style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: PHASES.mi.accent, flexShrink: 0, marginTop: 6,
+                    }} />
+                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -470,6 +524,8 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
     const partnerUnderstand = t(`partnerTips.${legacyPhase}.understand`) || '';
     const partnerSupport = t(`partnerTips.${legacyPhase}.support`, { returnObjects: true }) || [];
     const partnerAvoid = t(`partnerTips.${legacyPhase}.avoid`, { returnObjects: true }) || [];
+    const partnerSayThis = t(`partnerTips.${legacyPhase}.sayThis`, { returnObjects: true }) || [];
+    const partnerOffer = t(`partnerTips.${legacyPhase}.offer`, { returnObjects: true }) || [];
 
     return (
       <div style={{ position: 'relative', paddingBottom: 130 }}>
@@ -581,6 +637,57 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                     }} />
                     <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                       {tip}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Words that help */}
+          {partnerSayThis.length > 0 && (
+            <div style={{
+              ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
+            }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.ki.deep, marginBottom: 12 }}>
+                {isJa ? 'こう言ってあげて' : 'Words that help'}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {partnerSayThis.slice(0, 3).map((phrase, i) => (
+                  <div key={i} style={{
+                    padding: '10px 14px', borderRadius: 14,
+                    background: PHASES.ki.tint,
+                    border: `1px solid ${PHASES.ki.line}`,
+                  }}>
+                    <span style={{
+                      fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                      color: INK, lineHeight: 1.55, fontStyle: 'italic',
+                    }}>
+                      "{phrase}"
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Things you can do */}
+          {partnerOffer.length > 0 && (
+            <div style={{
+              ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
+            }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.mi.deep, marginBottom: 10 }}>
+                {isJa ? '今日できること' : 'Things you can do'}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {partnerOffer.slice(0, 3).map((item, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                    <div style={{
+                      width: 6, height: 6, borderRadius: '50%',
+                      background: PHASES.mi.accent, flexShrink: 0, marginTop: 7,
+                    }} />
+                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                      {item}
                     </span>
                   </div>
                 ))}
