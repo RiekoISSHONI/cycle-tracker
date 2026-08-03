@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASES, PHASE_ORDER, CYCLE_LEN, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy, phaseForDay } from '../utils/phases';
+import { PHASES, PHASE_ORDER, CYCLE_LEN, CORAL, CORAL_D, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, phaseKeyFromLegacy, phaseForDay } from '../utils/phases';
 import { CycleRing } from './CycleRing';
 import { PhaseSticker } from './PhaseSticker';
+import { PartnerShare } from './PartnerShare';
 import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predictions';
 
 /* ── copy table ─────────────────────────────────────────────── */
@@ -518,6 +519,8 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
     return getWeeklyPredictions(day, patterns, cycleLength);
   }, [checkins, periodHistory, cycleLength, day]);
 
+  const [showShareModal, setShowShareModal] = useState(false);
+
   /* ── partner view ── */
   if (viewMode === 'partner') {
     const legacyPhase = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' }[phaseKey];
@@ -700,6 +703,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
             border: `1px solid ${p.line}`,
             borderRadius: 24, padding: '18px 20px',
+            marginBottom: 14,
           }}>
             <div style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: p.deep, marginBottom: 6 }}>
               {isJa ? '今日のヒント' : "Today's tip"}
@@ -708,7 +712,34 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
               {copy.tip}
             </p>
           </div>
+
+          {/* Share with partner */}
+          <button
+            onClick={() => setShowShareModal(true)}
+            style={{
+              width: '100%', padding: '15px 20px',
+              borderRadius: 18, border: 'none',
+              background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+              boxShadow: `0 6px 18px ${CORAL}44`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+              cursor: 'pointer',
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <span style={{
+              fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#fff',
+            }}>
+              {isJa ? 'パートナーに送る' : 'Share with Partner'}
+            </span>
+          </button>
         </div>
+
+        {showShareModal && (
+          <PartnerShare cycleInfo={cycleInfo} onClose={() => setShowShareModal(false)} />
+        )}
       </div>
     );
   }

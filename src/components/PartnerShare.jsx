@@ -110,6 +110,8 @@ function ShareCard({ cycleInfo, options, lang }) {
   const energy = t(`phases.${phase}.energy`);
   const partnerSupport = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
   const partnerAvoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
+  const partnerSayThis = t(`partnerTips.${phase}.sayThis`, { returnObjects: true }) || [];
+  const partnerOffer = t(`partnerTips.${phase}.offer`, { returnObjects: true }) || [];
   const nutritionTips = t(`phaseTips.${phase}.lifestyle`, { returnObjects: true }) || [];
   const exerciseTips = t(`phaseTips.${phase}.exercise`, { returnObjects: true }) || [];
 
@@ -192,6 +194,41 @@ function ShareCard({ cycleInfo, options, lang }) {
               <li key={i} className="text-xs text-muted flex items-start gap-2">
                 <span className="text-red-400 mt-0.5">•</span>
                 <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* Words that help */}
+      {options.sayThis && partnerSayThis.length > 0 && (
+        <div className="px-4 pb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">💬</span>
+            <h3 className="font-medium text-bark text-sm">{lang === 'ja' ? 'こう言ってあげて' : 'Try saying this'}</h3>
+          </div>
+          <div className="space-y-1">
+            {partnerSayThis.slice(0, 3).map((phrase, i) => (
+              <p key={i} className="text-xs text-muted italic pl-2 border-l-2 border-amber-200 py-0.5">
+                "{phrase}"
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Things you can do */}
+      {options.offer && partnerOffer.length > 0 && (
+        <div className="px-4 pb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">🤲</span>
+            <h3 className="font-medium text-bark text-sm">{lang === 'ja' ? '今日できること' : 'Things you can do'}</h3>
+          </div>
+          <ul className="space-y-1">
+            {partnerOffer.slice(0, 3).map((item, i) => (
+              <li key={i} className="text-xs text-muted flex items-start gap-2">
+                <span className="text-orange-400 mt-0.5">•</span>
+                <span>{item}</span>
               </li>
             ))}
           </ul>
@@ -291,6 +328,8 @@ export function PartnerShare({ cycleInfo, onClose }) {
     feeling: true,
     support: true,
     avoid: true,
+    sayThis: true,
+    offer: false,
     nutrition: false,
     exercise: false,
     daysUntil: false,
@@ -325,6 +364,8 @@ export function PartnerShare({ cycleInfo, onClose }) {
     const energy = t(`phases.${phase}.energy`);
     const partnerSupport = t(`partnerTips.${phase}.support`, { returnObjects: true }) || [];
     const partnerAvoid = t(`partnerTips.${phase}.avoid`, { returnObjects: true }) || [];
+    const sayThisPhrases = t(`partnerTips.${phase}.sayThis`, { returnObjects: true }) || [];
+    const offerItems = t(`partnerTips.${phase}.offer`, { returnObjects: true }) || [];
     const lifestyleTips = t(`phaseTips.${phase}.lifestyle`, { returnObjects: true }) || [];
     const exerciseTipsArr = t(`phaseTips.${phase}.exercise`, { returnObjects: true }) || [];
 
@@ -349,6 +390,22 @@ export function PartnerShare({ cycleInfo, onClose }) {
       text += `🚫 ${t('partnerShare.whatToAvoid')}\n`;
       partnerAvoid.slice(0, 3).forEach(tip => {
         text += `• ${tip}\n`;
+      });
+      text += `\n`;
+    }
+
+    if (options.sayThis && sayThisPhrases.length > 0) {
+      text += `💬 ${lang === 'ja' ? 'こう言ってあげて' : 'Try saying this'}\n`;
+      sayThisPhrases.slice(0, 3).forEach(phrase => {
+        text += `"${phrase}"\n`;
+      });
+      text += `\n`;
+    }
+
+    if (options.offer && offerItems.length > 0) {
+      text += `🤲 ${lang === 'ja' ? '今日できること' : 'Things you can do'}\n`;
+      offerItems.slice(0, 3).forEach(item => {
+        text += `• ${item}\n`;
       });
       text += `\n`;
     }
@@ -513,6 +570,8 @@ export function PartnerShare({ cycleInfo, onClose }) {
                       {entry.options.feeling && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">💭 {t('partnerShare.howImFeeling')}</span>}
                       {entry.options.support && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">💚 {t('partnerShare.supportTips')}</span>}
                       {entry.options.avoid && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🚫 {t('partnerShare.avoidTips')}</span>}
+                      {entry.options.sayThis && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">💬 Words</span>}
+                      {entry.options.offer && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🤲 Actions</span>}
                       {entry.options.nutrition && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🍳 {t('partnerShare.nutritionIdeas')}</span>}
                       {entry.options.exercise && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🏃 {t('partnerShare.exerciseTogether')}</span>}
                       {entry.options.gifts && <span className="text-xs bg-cream px-2 py-0.5 rounded-full">🎁 {t('partnerShare.giftHerToggle')}</span>}
@@ -549,6 +608,16 @@ export function PartnerShare({ cycleInfo, onClose }) {
               checked={options.avoid}
               onChange={() => toggleOption('avoid')}
               label={t('partnerShare.avoidTips')}
+            />
+            <Toggle
+              checked={options.sayThis}
+              onChange={() => toggleOption('sayThis')}
+              label={lang === 'ja' ? '💬 こう言ってあげて' : '💬 Words that help'}
+            />
+            <Toggle
+              checked={options.offer}
+              onChange={() => toggleOption('offer')}
+              label={lang === 'ja' ? '🤲 今日できること' : '🤲 Things you can do'}
             />
             <Toggle
               checked={options.nutrition}
