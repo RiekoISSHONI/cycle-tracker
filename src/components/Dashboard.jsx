@@ -4,6 +4,7 @@ import { PHASES, PHASE_ORDER, CYCLE_LEN, CORAL, CORAL_D, MARU, PMINCHO, INK, INK
 import { CycleRing } from './CycleRing';
 import { PhaseSticker } from './PhaseSticker';
 import { PartnerShare } from './PartnerShare';
+import { getDailyQuote } from '../utils/quotes';
 import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predictions';
 
 /* ── copy table ─────────────────────────────────────────────── */
@@ -278,7 +279,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
               width: 6, height: 6, borderRadius: '50%',
               background: p.accent, flexShrink: 0, marginTop: 6,
             }} />
-            <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
               {tip}
             </span>
           </div>
@@ -302,7 +303,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
                 width: 6, height: 6, borderRadius: '50%',
                 background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
               }} />
-              <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                 {tip}
               </span>
             </div>
@@ -411,7 +412,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                   width: 6, height: 6, borderRadius: '50%',
                   background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
                 }} />
-                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                   {tip}
                 </span>
               </div>
@@ -434,7 +435,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                       {tip}
                     </span>
                   </div>
@@ -484,7 +485,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.mi.accent, flexShrink: 0, marginTop: 6,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                       {item}
                     </span>
                   </div>
@@ -550,10 +551,10 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             <div style={{ fontFamily: PMINCHO, fontSize: 36, fontWeight: 600, color: p.accent, lineHeight: 1 }}>
               {p.kanji}
             </div>
-            <div style={{ fontFamily: PMINCHO, fontSize: 22, fontWeight: 600, color: INK, marginTop: 8 }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 24, fontWeight: 600, color: INK, marginTop: 8 }}>
               {isJa ? 'パートナーガイド' : 'Partner Guide'}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
               {isJa ? `${p.season} · ${p.name}` : `${p.seasonEn} · ${p.en}`}
             </div>
           </div>
@@ -593,7 +594,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           <div style={{
             ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
           }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: INK, marginBottom: 10 }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 10 }}>
               {isJa ? '今の気持ち' : 'How she may feel'}
             </div>
             <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: 0, lineHeight: 1.6 }}>
@@ -605,7 +606,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           <div style={{
             ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
           }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.me.deep, marginBottom: 10 }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.me.deep, marginBottom: 10 }}>
               {isJa ? 'サポート方法' : 'How to support'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -615,7 +616,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.me.accent, flexShrink: 0, marginTop: 7,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                     {tip}
                   </span>
                 </div>
@@ -628,7 +629,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             <div style={{
               ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
             }}>
-              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.sei.deep, marginBottom: 10 }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.sei.deep, marginBottom: 10 }}>
                 {isJa ? '避けた方がいいこと' : 'What to avoid'}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -638,7 +639,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.sei.accent, flexShrink: 0, marginTop: 7,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                       {tip}
                     </span>
                   </div>
@@ -652,7 +653,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             <div style={{
               ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
             }}>
-              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.ki.deep, marginBottom: 12 }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.ki.deep, marginBottom: 12 }}>
                 {isJa ? 'こう言ってあげて' : 'Words that help'}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -663,7 +664,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                     border: `1px solid ${PHASES.ki.line}`,
                   }}>
                     <span style={{
-                      fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                      fontFamily: MARU, fontSize: 14.5, fontWeight: 500,
                       color: INK, lineHeight: 1.55, fontStyle: 'italic',
                     }}>
                       "{phrase}"
@@ -679,7 +680,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             <div style={{
               ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
             }}>
-              <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: PHASES.mi.deep, marginBottom: 10 }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.mi.deep, marginBottom: 10 }}>
                 {isJa ? '今日できること' : 'Things you can do'}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -689,7 +690,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.mi.accent, flexShrink: 0, marginTop: 7,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                       {item}
                     </span>
                   </div>
@@ -777,10 +778,10 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
 
         {/* 2 ── greeting */}
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK }}>
+          <div style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: INK }}>
             {copy.hi}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 500, color: INK2, marginTop: 4 }}>
+          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 500, color: INK2, marginTop: 4 }}>
             {copy.vibe}
           </div>
         </div>
@@ -839,18 +840,18 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                 marginBottom: 8,
               }}>
                 <span style={{ fontSize: 16 }}>{p.emoji}</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep }}>
                   {phaseName}
                 </span>
               </div>
 
               {/* big day number */}
-              <div style={{ fontFamily: PMINCHO, fontSize: 46, fontWeight: 600, color: INK, lineHeight: 1 }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 48, fontWeight: 600, color: INK, lineHeight: 1 }}>
                 {isJa ? `${day}日目` : `Day ${day}`}
               </div>
 
               {/* tip text */}
-              <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.45 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
                 {copy.tip}
               </div>
             </div>
@@ -882,21 +883,63 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
               {p.kanji}
             </span>
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, lineHeight: 1.55 }}>
+          <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 600, color: p.deep, lineHeight: 1.55 }}>
             {copy.affirm}
           </div>
         </div>
 
-        {/* 5 ── forecast card */}
+        {/* 5 ── daily quote */}
+        {(() => {
+          const quote = getDailyQuote(isJa ? 'ja' : 'en');
+          return (
+            <div style={{
+              marginTop: 16,
+              ...GLASS,
+              borderRadius: 24,
+              padding: '20px 22px',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 14,
+            }}>
+              <div style={{
+                width: 40, height: 40,
+                borderRadius: 12,
+                background: p.tint,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <span style={{ fontFamily: PMINCHO, fontSize: 22, color: p.accent, lineHeight: 1 }}>❝</span>
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{
+                  fontFamily: PMINCHO, fontSize: 15, fontWeight: 500,
+                  color: INK, lineHeight: 1.65, margin: 0,
+                }}>
+                  {quote.text}
+                </p>
+                {quote.author && (
+                  <p style={{
+                    fontFamily: MARU, fontSize: 12, fontWeight: 600,
+                    color: INK3, marginTop: 6, margin: 0,
+                  }}>
+                    — {quote.author}
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* 6 ── forecast card */}
         <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
 
-        {/* 6 ── today's focus */}
+        {/* 7 ── today's focus */}
         <TodaysFocusCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 7 ── partner guide */}
+        {/* 8 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 8 ── social pod strip */}
+        {/* 9 ── social pod strip */}
         <div style={{
           marginTop: 16,
           ...GLASS,
@@ -933,7 +976,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           </div>
 
           {/* pods text */}
-          <div style={{ flex: 1, fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.4 }}>
+          <div style={{ flex: 1, fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.4 }}>
             {copy.pods}
           </div>
 

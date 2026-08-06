@@ -90,7 +90,7 @@ body {
   min-height: 100dvh;
   font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
@@ -124,9 +124,9 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 
-h1 { font-size: 26px; }
-h2 { font-size: 19px; }
-h3 { font-size: 18px; }
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 20px; }
 
 .font-maru {
   font-family: 'Zen Maru Gothic', system-ui, sans-serif;
