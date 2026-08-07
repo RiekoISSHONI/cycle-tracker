@@ -5,6 +5,7 @@ import { CycleRing } from './CycleRing';
 import { PhaseSticker } from './PhaseSticker';
 import { PartnerShare } from './PartnerShare';
 import { getDailyQuote } from '../utils/quotes';
+import { CardPopup } from './CardPopup';
 import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predictions';
 
 /* ── copy table ─────────────────────────────────────────────── */
@@ -323,9 +324,8 @@ function rotateSlice(arr, count, seed) {
   return result;
 }
 
-/* ── partner guide card (collapsed by default) ────────────── */
+/* ── partner guide card (popup on tap) ────────────────────── */
 function PartnerGuideCard({ phaseKey, isJa, t }) {
-  const [open, setOpen] = useState(false);
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
 
   const understand = t(`partnerTips.${legacyPhase}.understand`) || '';
@@ -342,57 +342,46 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
   const offerTips = rotateSlice(allOffer, 2, dayOfYear + 19);
 
   return (
-    <div style={{
-      marginTop: 16,
-      ...GLASS,
-      borderRadius: 24,
-      overflow: 'hidden',
-    }}>
-      {/* Tap-to-expand header */}
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: '100%', padding: '16px 20px',
-          background: 'none', border: 'none', cursor: 'pointer',
-          display: 'flex', alignItems: 'center', gap: 10,
-        }}
-      >
-        <div style={{
-          width: 36, height: 36, borderRadius: 12,
-          background: PHASES.mi.soft,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0,
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.mi.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-          </svg>
-        </div>
-        <div style={{ flex: 1, textAlign: 'left' }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK }}>
-            {isJa ? 'パートナーガイド' : 'Partner Guide'}
-          </div>
-          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
-            {isJa ? '大切な人に伝えたいこと' : 'What your partner should know'}
-          </div>
-        </div>
-        <svg
-          width="16" height="16" viewBox="0 0 24 24" fill="none"
-          stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
-        >
-          <path d="M6 9l6 6 6-6" />
-        </svg>
-      </button>
-
-      {/* Expandable content */}
-      {open && (
-        <div style={{ padding: '0 20px 20px' }}>
-          {/* Understanding */}
+    <CardPopup
+      title={isJa ? 'パートナーガイド' : 'Partner Guide'}
+      accentBg={PHASES.mi.tint}
+      style={{ marginTop: 16 }}
+      preview={
+        <div style={{ ...GLASS, borderRadius: 24, overflow: 'hidden' }}>
           <div style={{
-            padding: '12px 14px', borderRadius: 16,
-            background: PHASES.mi.tint,
-            marginBottom: 12,
+            width: '100%', padding: '16px 20px',
+            display: 'flex', alignItems: 'center', gap: 10,
           }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: 12,
+              background: PHASES.mi.soft,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={PHASES.mi.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+              </svg>
+            </div>
+            <div style={{ flex: 1, textAlign: 'left' }}>
+              <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK }}>
+                {isJa ? 'パートナーガイド' : 'Partner Guide'}
+              </div>
+              <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+                {isJa ? '大切な人に伝えたいこと' : 'What your partner should know'}
+              </div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke={INK3} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              style={{ flexShrink: 0 }}>
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </div>
+        </div>
+      }
+      detail={
+        <div>
+          {/* Understanding */}
+          <div style={{ padding: '12px 14px', borderRadius: 16, background: PHASES.mi.tint, marginBottom: 12 }}>
             <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
               {understand}
             </p>
@@ -408,13 +397,8 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
             {supportTips.map((tip, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                <div style={{
-                  width: 6, height: 6, borderRadius: '50%',
-                  background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
-                }} />
-                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
-                  {tip}
-                </span>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: PHASES.me.accent, flexShrink: 0, marginTop: 6 }} />
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>{tip}</span>
               </div>
             ))}
           </div>
@@ -428,16 +412,11 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                   {isJa ? '避けた方がいいこと' : 'What to Avoid'}
                 </span>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
                 {avoidTips.map((tip, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                    <div style={{
-                      width: 6, height: 6, borderRadius: '50%',
-                      background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
-                    }} />
-                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
-                      {tip}
-                    </span>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: PHASES.sei.accent, flexShrink: 0, marginTop: 6 }} />
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>{tip}</span>
                   </div>
                 ))}
               </div>
@@ -447,7 +426,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
           {/* Say this */}
           {sayThisTips.length > 0 && (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 12, borderTop: `1px solid ${LINE}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
                 <span style={{ fontSize: 14 }}>💬</span>
                 <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
                   {isJa ? 'こう言ってあげて' : 'Try saying this'}
@@ -457,8 +436,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                 {sayThisTips.map((phrase, i) => (
                   <div key={i} style={{
                     padding: '8px 12px', borderRadius: 12,
-                    background: PHASES.ki.tint,
-                    border: `1px solid ${PHASES.ki.line}`,
+                    background: PHASES.ki.tint, border: `1px solid ${PHASES.ki.line}`,
                   }}>
                     <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
                       "{phrase}"
@@ -481,21 +459,16 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                 {offerTips.map((item, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                    <div style={{
-                      width: 6, height: 6, borderRadius: '50%',
-                      background: PHASES.mi.accent, flexShrink: 0, marginTop: 6,
-                    }} />
-                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
-                      {item}
-                    </span>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: PHASES.mi.accent, flexShrink: 0, marginTop: 6 }} />
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </>
           )}
         </div>
-      )}
-    </div>
+      }
+    />
   );
 }
 
@@ -745,6 +718,9 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
     );
   }
 
+  const legacyPhaseKey = PHASE_TO_LEGACY[phaseKey];
+  const dailyQuote = getDailyQuote(isJa ? 'ja' : 'en');
+
   /* ── main view ── */
   return (
     <div style={{ position: 'relative', paddingBottom: 130 }}>
@@ -787,83 +763,119 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         </div>
 
         {/* 3 ── hero card */}
-        <div style={{
-          background: 'rgba(255,255,255,0.75)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          borderRadius: 30,
-          padding: '26px 22px',
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 6px 24px rgba(60,50,55,0.05)',
-          border: '1px solid rgba(255,255,255,0.6)',
-        }}>
-          {/* tint gradient band */}
-          <div style={{
-            position: 'absolute',
-            top: 0, left: 0, right: 0,
-            height: 96,
-            background: `linear-gradient(180deg, ${p.tint}, transparent)`,
-            zIndex: 0,
-          }} />
-
-          {/* content row */}
-          <div style={{
-            position: 'relative',
-            zIndex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 18,
-          }}>
-            {/* left: ring + sticker */}
-            <div style={{ position: 'relative', width: 150, height: 150, flexShrink: 0 }}>
-              <CycleRing size={150} day={day} stroke={9} />
+        <CardPopup
+          title={isJa ? phaseName : `${phaseName} Phase`}
+          accentBg={p.tint}
+          preview={
+            <div style={{
+              background: 'rgba(255,255,255,0.75)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              borderRadius: 30,
+              padding: '26px 22px',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 6px 24px rgba(60,50,55,0.05)',
+              border: '1px solid rgba(255,255,255,0.6)',
+            }}>
               <div style={{
-                position: 'absolute',
-                top: '50%', left: '50%',
-                transform: 'translate(-50%, -50%)',
+                position: 'absolute', top: 0, left: 0, right: 0, height: 96,
+                background: `linear-gradient(180deg, ${p.tint}, transparent)`, zIndex: 0,
+              }} />
+              <div style={{
+                position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 18,
               }}>
-                <PhaseSticker phase={phaseKey} size={74} />
+                <div style={{ position: 'relative', width: 150, height: 150, flexShrink: 0 }}>
+                  <CycleRing size={150} day={day} stroke={9} />
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    <PhaseSticker phase={phaseKey} size={74} />
+                  </div>
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    padding: '5px 14px', borderRadius: 999, background: p.soft, marginBottom: 8,
+                  }}>
+                    <span style={{ fontSize: 16 }}>{p.emoji}</span>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep }}>{phaseName}</span>
+                  </div>
+                  <div style={{ fontFamily: PMINCHO, fontSize: 48, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                    {isJa ? `${day}日目` : `Day ${day}`}
+                  </div>
+                  <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
+                    {copy.tip}
+                  </div>
+                </div>
               </div>
             </div>
+          }
+          detail={
+            <div>
+              {/* Phase header */}
+              <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ fontFamily: PMINCHO, fontSize: 56, color: p.accent, lineHeight: 1 }}>{p.kanji}</div>
+                <div style={{ fontFamily: PMINCHO, fontSize: 22, fontWeight: 600, color: INK, marginTop: 8 }}>
+                  {isJa ? `${p.name} · ${p.reading}` : `${p.en} Phase`}
+                </div>
+                <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
+                  {isJa ? `${p.season} · ${p.clinical}` : `${p.seasonEn} · ${p.clinicalEn}`}
+                </div>
+              </div>
 
-            {/* right: info stack */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              {/* phase chip */}
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '5px 14px',
-                borderRadius: 999,
-                background: p.soft,
-                marginBottom: 8,
-              }}>
-                <span style={{ fontSize: 16 }}>{p.emoji}</span>
-                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep }}>
-                  {phaseName}
+              {/* Larger ring */}
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+                <div style={{ position: 'relative', width: 180, height: 180 }}>
+                  <CycleRing size={180} day={day} stroke={10} />
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    <PhaseSticker phase={phaseKey} size={90} />
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ fontFamily: PMINCHO, fontSize: 42, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                  {isJa ? `${day}日目` : `Day ${day}`}
+                </div>
+              </div>
+
+              {/* Phase poem */}
+              <div style={{ padding: '16px 18px', borderRadius: 18, background: p.tint, border: `1px solid ${p.line}`, marginBottom: 16 }}>
+                <p style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.65 }}>
+                  {isJa ? p.poem : p.poemEn}
+                </p>
+              </div>
+
+              {/* Phase description */}
+              <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, margin: '0 0 16px', lineHeight: 1.6 }}>
+                {t(`phases.${legacyPhaseKey}.description`)}
+              </p>
+
+              {/* Energy */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', borderRadius: 14, background: CREAM2, marginBottom: 12 }}>
+                <span style={{ fontSize: 16 }}>⚡</span>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2 }}>
+                  {t(`phases.${legacyPhaseKey}.energy`)}
                 </span>
               </div>
 
-              {/* big day number */}
-              <div style={{ fontFamily: PMINCHO, fontSize: 48, fontWeight: 600, color: INK, lineHeight: 1 }}>
-                {isJa ? `${day}日目` : `Day ${day}`}
-              </div>
-
-              {/* tip text */}
-              <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
-                {copy.tip}
+              {/* Tip */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 16px', borderRadius: 14, background: CREAM2 }}>
+                <span style={{ fontSize: 16 }}>💡</span>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                  {copy.tip}
+                </span>
               </div>
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* 4 ── daily quote */}
-        {(() => {
-          const quote = getDailyQuote(isJa ? 'ja' : 'en');
-          return (
+        <CardPopup
+          title={isJa ? '今日のことば' : "Today's Words"}
+          accentBg={p.tint}
+          style={{ marginTop: 16 }}
+          preview={
             <div style={{
-              marginTop: 16,
               background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
               border: `1px solid ${p.line}`,
               borderRadius: 26,
@@ -874,14 +886,105 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                 fontFamily: MARU, fontSize: 15, fontWeight: 600,
                 color: p.deep, lineHeight: 1.65, margin: 0,
               }}>
-                {quote.text}
+                {dailyQuote.text}
               </p>
             </div>
-          );
-        })()}
+          }
+          detail={
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 28, color: p.accent, lineHeight: 1, marginBottom: 20 }}>✦</div>
+              <p style={{
+                fontFamily: MARU, fontSize: 20, fontWeight: 600,
+                color: p.deep, lineHeight: 1.7, margin: '0 0 28px',
+              }}>
+                {dailyQuote.text}
+              </p>
+              <div style={{
+                padding: '16px 18px', borderRadius: 18,
+                background: p.tint, border: `1px solid ${p.line}`,
+              }}>
+                <div style={{
+                  fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent,
+                  textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6,
+                }}>
+                  {isJa ? '今日のアファメーション' : "Today's Affirmation"}
+                </div>
+                <p style={{
+                  fontFamily: MARU, fontSize: 15, fontWeight: 600,
+                  color: p.deep, margin: 0, lineHeight: 1.6,
+                }}>
+                  {copy.affirm}
+                </p>
+              </div>
+            </div>
+          }
+        />
 
         {/* 5 ── forecast card */}
-        <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
+        <CardPopup
+          title={t('predictions.forecastTitle')}
+          disabled={!forecast}
+          style={{ marginTop: 0 }}
+          preview={
+            <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
+          }
+          detail={
+            forecast ? (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {forecast.map((f, i) => {
+                  const pk = phaseForDay(f.cycleDay);
+                  const phase = PHASES[pk];
+                  const isToday = f.dayOffset === 0;
+                  const d = new Date();
+                  d.setDate(d.getDate() + f.dayOffset);
+                  const lbl = isToday ? (isJa ? '今日' : 'Today')
+                    : f.dayOffset === 1 ? (isJa ? '明日' : 'Tomorrow')
+                    : isJa ? `${d.getMonth()+1}/${d.getDate()}` : d.toLocaleDateString('en', { weekday: 'long' });
+                  return (
+                    <div key={i} style={{
+                      display: 'flex', alignItems: 'center', gap: 12,
+                      padding: isToday ? '14px 10px' : '14px 4px',
+                      borderBottom: i < forecast.length - 1 ? `1px solid ${LINE}` : 'none',
+                      background: isToday ? phase.tint : 'transparent',
+                      borderRadius: isToday ? 14 : 0,
+                    }}>
+                      <div style={{ width: 56, flexShrink: 0 }}>
+                        <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
+                          {lbl}
+                        </div>
+                      </div>
+                      <span style={{ fontSize: 24, lineHeight: 1 }}>{MOOD_EMOJI[Math.round(f.mood || 3)]}</span>
+                      <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 18 }}>
+                        {ENERGY_BARS.slice(1).map(lvl => (
+                          <div key={lvl} style={{
+                            width: 5, height: 3 + lvl * 2.5, borderRadius: 2,
+                            background: lvl <= Math.round(f.energy || 3) ? phase.accent : LINE,
+                            opacity: lvl <= Math.round(f.energy || 3) ? 1 : 0.4,
+                          }} />
+                        ))}
+                      </div>
+                      <span style={{
+                        fontFamily: MARU, fontSize: 11, fontWeight: 600,
+                        color: phase.deep, padding: '2px 10px',
+                        borderRadius: 8, background: isToday ? 'rgba(255,255,255,0.7)' : phase.tint, flexShrink: 0,
+                      }}>
+                        {isJa ? phase.name : phase.en}
+                      </span>
+                      {f.symptoms?.length > 0 && (
+                        <span style={{
+                          fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3,
+                          flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                        }}>
+                          {f.symptoms.join(', ')}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null
+          }
+        />
 
         {/* 6 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
