@@ -923,7 +923,6 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 5 ── forecast card */}
         <CardPopup
           title={t('predictions.forecastTitle')}
-          disabled={!forecast}
           style={{ marginTop: 0 }}
           preview={
             <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
@@ -982,7 +981,64 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                   );
                 })}
               </div>
-            ) : null
+            ) : (
+              <div>
+                {/* Phase-based week preview (no check-in data needed) */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {Array.from({ length: 7 }, (_, i) => {
+                    const futureDay = ((day - 1 + i) % cycleLength) + 1;
+                    const pk = phaseForDay(futureDay);
+                    const phase = PHASES[pk];
+                    const isToday = i === 0;
+                    const d = new Date();
+                    d.setDate(d.getDate() + i);
+                    const lbl = isToday ? (isJa ? '今日' : 'Today')
+                      : i === 1 ? (isJa ? '明日' : 'Tomorrow')
+                      : isJa ? `${d.getMonth()+1}/${d.getDate()}` : d.toLocaleDateString('en', { weekday: 'long' });
+                    return (
+                      <div key={i} style={{
+                        display: 'flex', alignItems: 'center', gap: 12,
+                        padding: isToday ? '14px 10px' : '14px 4px',
+                        borderBottom: i < 6 ? `1px solid ${LINE}` : 'none',
+                        background: isToday ? phase.tint : 'transparent',
+                        borderRadius: isToday ? 14 : 0,
+                      }}>
+                        <div style={{ width: 56, flexShrink: 0 }}>
+                          <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
+                            {lbl}
+                          </div>
+                        </div>
+                        <span style={{ fontSize: 18, lineHeight: 1 }}>{phase.emoji}</span>
+                        <div style={{ flex: 1 }}>
+                          <span style={{
+                            fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2,
+                          }}>
+                            {isJa ? `${phase.name} · ${phase.season}` : `${phase.en} · ${phase.seasonEn}`}
+                          </span>
+                        </div>
+                        <span style={{
+                          fontFamily: MARU, fontSize: 11, fontWeight: 600,
+                          color: phase.deep, padding: '2px 10px',
+                          borderRadius: 8, background: isToday ? 'rgba(255,255,255,0.7)' : phase.tint, flexShrink: 0,
+                        }}>
+                          {isJa ? `${futureDay}日目` : `Day ${futureDay}`}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div style={{
+                  marginTop: 16, padding: '12px 14px', borderRadius: 14,
+                  background: CREAM2,
+                }}>
+                  <p style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
+                    {isJa
+                      ? '💡 チェックインを5回以上すると、気分やエネルギーの予測が表示されます'
+                      : '💡 Log 5+ check-ins to unlock mood & energy predictions'}
+                  </p>
+                </div>
+              </div>
+            )
           }
         />
 
