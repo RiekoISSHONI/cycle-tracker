@@ -858,88 +858,35 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           </div>
         </div>
 
-        {/* 4 ── affirmation bubble */}
-        <div style={{
-          marginTop: 16,
-          background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
-          border: `1px solid ${p.line}`,
-          borderRadius: 26,
-          padding: '20px 22px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 14,
-          boxShadow: '0 4px 16px rgba(60,50,55,0.04)',
-        }}>
-          <div style={{
-            width: 50, height: 50,
-            borderRadius: 14,
-            background: `${p.accent}18`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <span style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: p.accent, opacity: 0.7, lineHeight: 1 }}>
-              {p.kanji}
-            </span>
-          </div>
-          <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 600, color: p.deep, lineHeight: 1.55 }}>
-            {copy.affirm}
-          </div>
-        </div>
-
-        {/* 5 ── daily quote */}
+        {/* 4 ── daily quote */}
         {(() => {
           const quote = getDailyQuote(isJa ? 'ja' : 'en');
           return (
             <div style={{
               marginTop: 16,
-              ...GLASS,
-              borderRadius: 24,
+              background: `linear-gradient(135deg, ${p.soft}, ${p.tint})`,
+              border: `1px solid ${p.line}`,
+              borderRadius: 26,
               padding: '20px 22px',
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: 14,
+              boxShadow: '0 4px 16px rgba(60,50,55,0.04)',
             }}>
-              <div style={{
-                width: 40, height: 40,
-                borderRadius: 12,
-                background: p.tint,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
+              <p style={{
+                fontFamily: MARU, fontSize: 15, fontWeight: 600,
+                color: p.deep, lineHeight: 1.65, margin: 0,
               }}>
-                <span style={{ fontFamily: PMINCHO, fontSize: 22, color: p.accent, lineHeight: 1 }}>❝</span>
-              </div>
-              <div style={{ flex: 1 }}>
-                <p style={{
-                  fontFamily: PMINCHO, fontSize: 15, fontWeight: 500,
-                  color: INK, lineHeight: 1.65, margin: 0,
-                }}>
-                  {quote.text}
-                </p>
-                {quote.author && (
-                  <p style={{
-                    fontFamily: MARU, fontSize: 12, fontWeight: 600,
-                    color: INK3, marginTop: 6, margin: 0,
-                  }}>
-                    — {quote.author}
-                  </p>
-                )}
-              </div>
+                {quote.text}
+              </p>
             </div>
           );
         })()}
 
-        {/* 6 ── forecast card */}
+        {/* 5 ── forecast card */}
         <ForecastCard forecast={forecast} cycleLength={cycleLength} isJa={isJa} t={t} />
 
-        {/* 7 ── today's focus */}
-        <TodaysFocusCard phaseKey={phaseKey} isJa={isJa} t={t} />
-
-        {/* 8 ── partner guide */}
+        {/* 6 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 9 ── social pod strip */}
+        {/* 7 ── social pod strip */}
         <div style={{
           marginTop: 16,
           ...GLASS,
