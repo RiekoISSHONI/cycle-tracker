@@ -13,7 +13,7 @@ import { Settings } from './components/Settings';
 import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
 import { Care } from './components/Care';
-import { Learn } from './components/Learn';
+import { Journal } from './components/Journal';
 import { ConsentModal } from './components/ConsentModal';
 import { UpgradeSuccessBanner } from './components/UpgradeSuccessBanner';
 
@@ -22,6 +22,7 @@ function App() {
   const [cycleData, setCycleData] = useLocalStorage('cycleData', null);
   const [checkins, setCheckins] = useLocalStorage('checkins', []);
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
+  const [journalEntries, setJournalEntries] = useLocalStorage('journalEntries', []);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [viewMode, setViewMode] = useState('personal');
 
@@ -86,6 +87,7 @@ function App() {
     setCycleData(null);
     setCheckins([]);
     setPeriodHistory([]);
+    setJournalEntries([]);
     setActiveTab('dashboard');
     setViewMode('personal');
   };
@@ -111,6 +113,24 @@ function App() {
       }
       return [...prev, checkinData];
     });
+  };
+
+  const handleJournalSave = (entryData) => {
+    trackEvent('journal_save');
+    setJournalEntries(prev => {
+      const existing = prev.findIndex(e => e.date === entryData.date);
+      if (existing >= 0) {
+        const updated = [...prev];
+        updated[existing] = entryData;
+        return updated;
+      }
+      return [...prev, entryData];
+    });
+  };
+
+  const handleJournalDelete = (date) => {
+    trackEvent('journal_delete');
+    setJournalEntries(prev => prev.filter(e => e.date !== date));
   };
 
   const { justUpgraded, dismissUpgraded } = useSubscription();
@@ -142,7 +162,13 @@ function App() {
         )}
 
         {activeTab === 'diary' && cycleInfo && (
-          <Learn phase={phaseKey} />
+          <Journal
+            phase={phaseKey}
+            cycleDay={cycleInfo.cycleDay}
+            entries={journalEntries}
+            onSaveEntry={handleJournalSave}
+            onDeleteEntry={handleJournalDelete}
+          />
         )}
 
         {activeTab === 'insights' && (

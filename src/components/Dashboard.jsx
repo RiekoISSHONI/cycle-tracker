@@ -1045,7 +1045,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 6 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 7 ── learn card */}
+        {/* 7 ── journal card */}
         <div
           onClick={() => onNavigateDiary?.()}
           style={{
@@ -1059,30 +1059,21 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             cursor: 'pointer',
           }}
         >
-          <div style={{ display: 'flex', flexShrink: 0 }}>
-            {['📖', '🧬', '🌿'].map((emoji, i) => {
-              const bgs = [p.accent, PHASES.me.accent, PHASES.sei.accent];
-              return (
-                <div key={emoji} style={{
-                  width: 36, height: 36,
-                  borderRadius: '50%',
-                  background: bgs[i],
-                  border: '2.5px solid #fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: i > 0 ? -10 : 0,
-                  zIndex: 3 - i,
-                  position: 'relative',
-                  fontSize: 16,
-                }}>
-                  {emoji}
-                </div>
-              );
-            })}
+          <div style={{
+            width: 44, height: 44, borderRadius: 14,
+            background: p.soft,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0, fontSize: 22,
+          }}>
+            📝
           </div>
-          <div style={{ flex: 1, fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.4 }}>
-            {isJa ? 'カラダの変化を学ぼう' : 'Learn what your body is doing and why'}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
+              {isJa ? '今日の気持ちを書こう' : "Write about today"}
+            </div>
+            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 2 }}>
+              {isJa ? 'ジャーナルで自分のリズムを知る' : 'Journal to understand your rhythm'}
+            </div>
           </div>
           <button
             onClick={(e) => { e.stopPropagation(); onNavigateDiary?.(); }}
@@ -1096,7 +1087,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             }}
           >
             <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
-              {isJa ? '学ぶ' : 'Explore'}
+              {isJa ? '書く' : 'Write'}
             </span>
           </button>
         </div>
