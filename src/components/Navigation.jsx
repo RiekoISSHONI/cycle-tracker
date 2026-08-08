@@ -14,8 +14,8 @@ const TABS = [
   },
   {
     id: 'diary',
-    labelJa: '日記',
-    labelEn: 'Diary',
+    labelJa: 'ジャーナル',
+    labelEn: 'Journal',
     icon: (color, sw) => (
       <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
