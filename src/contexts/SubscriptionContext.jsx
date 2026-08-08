@@ -34,6 +34,7 @@ export const FEATURES = {
 
 export const FREE_LIMITS = {
   checkinHistoryDays: 7,
+  journalHistoryDays: 7,
   pillReminders: 1,
 };
 

@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LINE, CREAM, CREAM2, MARU, PMINCHO, phaseForDay, phaseKeyFromLegacy } from '../utils/phases';
 import { useTranslation } from 'react-i18next';
 import { CycleRing } from './CycleRing';
 import { downloadCalendarEvents } from '../utils/calendarExport';
+import { useSubscription, FREE_LIMITS, STRIPE_LINKS, isStripeConfigured } from '../contexts/SubscriptionContext';
+import { CardPopup } from './CardPopup';
 
-export function CycleCalendar({ cycleInfo }) {
+const MOOD_EMOJI = ['', '😔', '😕', '😐', '😊', '😄'];
+
+export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
   const { t, i18n } = useTranslation();
   const isJa = i18n.language.startsWith('ja');
   const locale = isJa ? 'ja-JP' : 'en-US';
   const { cycleDay, cycleLength, phase } = cycleInfo;
   const [calendarExported, setCalendarExported] = useState(false);
+  const { isPremium, canAccess, redirectToStripe } = useSubscription();
 
   const phaseKey = phaseKeyFromLegacy(phase);
   const p = PHASES[phaseKey];
@@ -31,6 +36,39 @@ export function CycleCalendar({ cycleInfo }) {
     }
     return 'mi';
   };
+
+  // Map journal entries to cycle days for the current cycle
+  const journalByCycleDay = useMemo(() => {
+    if (!journalEntries.length || !cycleInfo.lastPeriodStart) return {};
+    const lastPeriod = new Date(cycleInfo.lastPeriodStart);
+    const today = new Date();
+    const map = {};
+    journalEntries.forEach(entry => {
+      const entryDate = new Date(entry.date + 'T00:00:00');
+      const daysSincePeriod = Math.floor((entryDate - lastPeriod) / (1000 * 60 * 60 * 24));
+      const cd = (daysSincePeriod % cycleLength) + 1;
+      if (cd >= 1 && cd <= CYCLE_LEN) {
+        map[cd] = entry;
+      }
+    });
+    return map;
+  }, [journalEntries, cycleInfo.lastPeriodStart, cycleLength]);
+
+  // Journal history: sorted newest first, gated by subscription
+  const sortedJournal = useMemo(() => {
+    return [...journalEntries].sort((a, b) => b.date.localeCompare(a.date));
+  }, [journalEntries]);
+
+  const visibleJournal = useMemo(() => {
+    if (isPremium) return sortedJournal;
+    // Free tier: only entries from the last N days
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - FREE_LIMITS.journalHistoryDays);
+    const cutoffStr = cutoff.toISOString().split('T')[0];
+    return sortedJournal.filter(e => e.date >= cutoffStr);
+  }, [sortedJournal, isPremium]);
+
+  const lockedCount = sortedJournal.length - visibleJournal.length;
 
   // Generate 28-day grid
   const days = Array.from({ length: CYCLE_LEN }, (_, i) => i + 1);
@@ -93,6 +131,15 @@ export function CycleCalendar({ cycleInfo }) {
       : { sei: 'Menstrual', me: 'Follicular', ki: 'Ovulation', mi: 'Luteal' }[k],
     accent: PHASES[k].accent,
   }));
+
+  const formatEntryDate = (dateStr) => {
+    const d = new Date(dateStr + 'T00:00:00');
+    if (isJa) {
+      const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+      return `${d.getMonth() + 1}/${d.getDate()} (${weekdays[d.getDay()]})`;
+    }
+    return d.toLocaleDateString('en', { month: 'short', day: 'numeric', weekday: 'short' });
+  };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
@@ -185,6 +232,23 @@ export function CycleCalendar({ cycleInfo }) {
           }}
         />
 
+        {/* Journal indicator legend */}
+        {Object.keys(journalByCycleDay).length > 0 && (
+          <div style={{
+            position: 'relative', zIndex: 1,
+            display: 'flex', alignItems: 'center', gap: 6,
+            marginBottom: 10, paddingLeft: 2,
+          }}>
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: INK2,
+            }} />
+            <span style={{ fontFamily: MARU, fontSize: 10, fontWeight: 600, color: INK3 }}>
+              {isJa ? 'ジャーナル記録あり' : 'Journal entry'}
+            </span>
+          </div>
+        )}
+
         <div
           style={{
             position: 'relative',
@@ -198,6 +262,7 @@ export function CycleCalendar({ cycleInfo }) {
             const dayPhaseKey = getPhaseKeyForDay(day);
             const dp = PHASES[dayPhaseKey];
             const isToday = day === cycleDay;
+            const hasJournal = !!journalByCycleDay[day];
 
             return (
               <div
@@ -237,6 +302,19 @@ export function CycleCalendar({ cycleInfo }) {
                   >
                     {dp.kanji}
                   </span>
+                )}
+                {/* Journal dot indicator */}
+                {hasJournal && (
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 3,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: 5,
+                    height: 5,
+                    borderRadius: '50%',
+                    background: isToday ? 'rgba(255,255,255,0.8)' : INK2,
+                  }} />
                 )}
               </div>
             );
@@ -305,6 +383,192 @@ export function CycleCalendar({ cycleInfo }) {
           );
         })}
       </div>
+
+      {/* ── Journal History ──────────────────────────────────── */}
+      {sortedJournal.length > 0 && (
+        <div>
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            marginBottom: 12,
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 16 }}>📝</span>
+              <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+                {isJa ? 'ジャーナル履歴' : 'Journal History'}
+              </span>
+            </div>
+            <span style={{
+              fontFamily: MARU, fontSize: 11, fontWeight: 600,
+              color: isPremium ? p.accent : INK3,
+              padding: '2px 10px', borderRadius: 8,
+              background: isPremium ? p.tint : CREAM2,
+            }}>
+              {isPremium
+                ? (isJa ? `全${sortedJournal.length}件` : `All ${sortedJournal.length}`)
+                : (isJa ? `直近${FREE_LIMITS.journalHistoryDays}日間` : `Last ${FREE_LIMITS.journalHistoryDays} days`)}
+            </span>
+          </div>
+
+          {/* Visible entries */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {visibleJournal.map(entry => {
+              const ePk = entry.phase || 'ki';
+              const ep = PHASES[ePk];
+              const todayStr = new Date().toISOString().split('T')[0];
+              const isEntryToday = entry.date === todayStr;
+
+              return (
+                <CardPopup
+                  key={entry.date}
+                  title={formatEntryDate(entry.date)}
+                  accentBg={ep.tint}
+                  preview={
+                    <div style={{
+                      background: CARD,
+                      borderRadius: 20,
+                      boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+                      padding: '14px 16px',
+                      borderLeft: `3px solid ${ep.accent}`,
+                    }}>
+                      <div style={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                        marginBottom: entry.text ? 8 : 0,
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{ fontSize: 13 }}>{ep.emoji}</span>
+                          <span style={{
+                            fontFamily: MARU, fontSize: 12.5, fontWeight: 700,
+                            color: isEntryToday ? ep.accent : INK2,
+                          }}>
+                            {formatEntryDate(entry.date)}
+                          </span>
+                          {isEntryToday && (
+                            <span style={{
+                              fontFamily: MARU, fontSize: 9, fontWeight: 700,
+                              color: '#fff', background: ep.accent,
+                              padding: '1px 7px', borderRadius: 5,
+                            }}>
+                              {isJa ? '今日' : 'Today'}
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          {entry.mood > 0 && (
+                            <span style={{ fontSize: 14 }}>{MOOD_EMOJI[entry.mood]}</span>
+                          )}
+                          <span style={{
+                            fontFamily: MARU, fontSize: 10, fontWeight: 600,
+                            color: ep.deep, padding: '2px 8px', borderRadius: 6, background: ep.tint,
+                          }}>
+                            {isJa ? `${entry.cycleDay}日目` : `Day ${entry.cycleDay}`}
+                          </span>
+                        </div>
+                      </div>
+                      {entry.text && (
+                        <p style={{
+                          fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                          color: INK, margin: 0, lineHeight: 1.5,
+                          display: '-webkit-box', WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical', overflow: 'hidden',
+                        }}>
+                          {entry.text}
+                        </p>
+                      )}
+                    </div>
+                  }
+                  detail={
+                    <div>
+                      {/* Phase & day info */}
+                      <div style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        padding: '12px 14px', borderRadius: 14, background: ep.tint,
+                        marginBottom: 16,
+                      }}>
+                        <span style={{ fontSize: 22 }}>{ep.emoji}</span>
+                        <div>
+                          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: ep.deep }}>
+                            {isJa ? `${ep.name} · ${entry.cycleDay}日目` : `${ep.en} · Day ${entry.cycleDay}`}
+                          </div>
+                          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+                            {isJa ? ep.season : ep.seasonEn}
+                          </div>
+                        </div>
+                        {entry.mood > 0 && (
+                          <span style={{ fontSize: 28, marginLeft: 'auto' }}>{MOOD_EMOJI[entry.mood]}</span>
+                        )}
+                      </div>
+
+                      {/* Full journal text */}
+                      {entry.text && (
+                        <p style={{
+                          fontFamily: MARU, fontSize: 15, fontWeight: 500,
+                          color: INK, margin: 0, lineHeight: 1.75,
+                          whiteSpace: 'pre-wrap', wordBreak: 'break-word',
+                        }}>
+                          {entry.text}
+                        </p>
+                      )}
+
+                      {!entry.text && entry.mood > 0 && (
+                        <p style={{
+                          fontFamily: MARU, fontSize: 14, fontWeight: 500,
+                          color: INK3, margin: 0, textAlign: 'center',
+                          padding: '20px 0',
+                        }}>
+                          {isJa ? '気分だけ記録しました' : 'Mood logged, no written entry'}
+                        </p>
+                      )}
+                    </div>
+                  }
+                />
+              );
+            })}
+          </div>
+
+          {/* Premium upsell for locked entries */}
+          {lockedCount > 0 && (
+            <div style={{
+              marginTop: 14,
+              background: CARD,
+              borderRadius: 20,
+              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+              padding: '18px 20px',
+              textAlign: 'center',
+            }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>🔒</div>
+              <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK, marginBottom: 6 }}>
+                {isJa
+                  ? `${lockedCount}件のジャーナルがロックされています`
+                  : `${lockedCount} journal ${lockedCount === 1 ? 'entry' : 'entries'} locked`}
+              </div>
+              <p style={{
+                fontFamily: MARU, fontSize: 12.5, fontWeight: 500,
+                color: INK3, margin: '0 0 14px', lineHeight: 1.5,
+              }}>
+                {isJa
+                  ? 'プレミアムにアップグレードして、すべてのジャーナル履歴にアクセスしましょう'
+                  : 'Upgrade to Premium for full access to your journal history'}
+              </p>
+              <button
+                onClick={() => {
+                  if (isStripeConfigured()) {
+                    redirectToStripe('monthly');
+                  }
+                }}
+                style={{
+                  padding: '10px 28px', borderRadius: 14, border: 'none',
+                  background: `linear-gradient(135deg, ${p.accent}, ${p.deep})`,
+                  boxShadow: `0 4px 14px ${p.accent}44`,
+                  fontFamily: MARU, fontSize: 14, fontWeight: 700, color: '#fff',
+                  cursor: 'pointer',
+                }}
+              >
+                {isJa ? 'プレミアムを見る' : 'View Premium'}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Export button */}
       {calendarExported ? (

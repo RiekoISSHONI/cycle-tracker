@@ -181,7 +181,7 @@ function App() {
         )}
 
         {activeTab === 'calendar' && cycleInfo && (
-          <CycleCalendar cycleInfo={cycleInfo} />
+          <CycleCalendar cycleInfo={cycleInfo} journalEntries={journalEntries} />
         )}
 
         {activeTab === 'care' && cycleInfo && (
