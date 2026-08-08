@@ -13,13 +13,14 @@ const TABS = [
     ),
   },
   {
-    id: 'care',
-    labelJa: 'ケア',
-    labelEn: 'Care',
+    id: 'diary',
+    labelJa: '日記',
+    labelEn: 'Diary',
     icon: (color, sw) => (
       <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/>
-        <path d="M5 19c2-4.5 5.5-7.5 9.5-9"/>
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+        <path d="M8 7h8M8 11h6"/>
       </svg>
     ),
   },
@@ -28,13 +29,13 @@ const TABS = [
     center: true,
   },
   {
-    id: 'learn',
-    labelJa: '学ぶ',
-    labelEn: 'Learn',
+    id: 'care',
+    labelJa: 'ケア',
+    labelEn: 'Care',
     icon: (color, sw) => (
       <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
-        <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+        <path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/>
+        <path d="M5 19c2-4.5 5.5-7.5 9.5-9"/>
       </svg>
     ),
   },

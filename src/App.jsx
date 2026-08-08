@@ -127,7 +127,7 @@ function App() {
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
-          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateLearn={() => setActiveTab('learn')} />
+          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateDiary={() => setActiveTab('diary')} />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (
@@ -141,7 +141,7 @@ function App() {
           />
         )}
 
-        {activeTab === 'learn' && cycleInfo && (
+        {activeTab === 'diary' && cycleInfo && (
           <Learn phase={phaseKey} />
         )}
 

@@ -473,7 +473,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
 }
 
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateLearn }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateDiary }) {
   const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
@@ -1047,7 +1047,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
 
         {/* 7 ── learn card */}
         <div
-          onClick={() => onNavigateLearn?.()}
+          onClick={() => onNavigateDiary?.()}
           style={{
             marginTop: 16,
             ...GLASS,
@@ -1085,7 +1085,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             {isJa ? 'カラダの変化を学ぼう' : 'Learn what your body is doing and why'}
           </div>
           <button
-            onClick={(e) => { e.stopPropagation(); onNavigateLearn?.(); }}
+            onClick={(e) => { e.stopPropagation(); onNavigateDiary?.(); }}
             style={{
               padding: '7px 18px',
               borderRadius: 999,
