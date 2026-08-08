@@ -473,7 +473,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
 }
 
 /* ── component ──────────────────────────────────────────────── */
-export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateCommunity }) {
+export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28, periodHistory = [], onNavigateLearn }) {
   const { t, i18n } = useTranslation();
   const phaseKey = phaseKeyFromLegacy(cycleInfo.phase);
   const day = cycleInfo.cycleDay;
@@ -1045,26 +1045,28 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
         {/* 6 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 7 ── social pod strip */}
-        <div style={{
-          marginTop: 16,
-          ...GLASS,
-          borderRadius: 24,
-          padding: '18px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 14,
-        }}>
-          {/* overlapping avatar stack */}
+        {/* 7 ── learn card */}
+        <div
+          onClick={() => onNavigateLearn?.()}
+          style={{
+            marginTop: 16,
+            ...GLASS,
+            borderRadius: 24,
+            padding: '18px 20px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 14,
+            cursor: 'pointer',
+          }}
+        >
           <div style={{ display: 'flex', flexShrink: 0 }}>
-            {['M', 'A', 'R'].map((letter, i) => {
-              const colors = [p.accent, p.deep, p.soft];
-              const textColors = i === 2 ? p.deep : '#fff';
+            {['📖', '🧬', '🌿'].map((emoji, i) => {
+              const bgs = [p.accent, PHASES.me.accent, PHASES.sei.accent];
               return (
-                <div key={letter} style={{
+                <div key={emoji} style={{
                   width: 36, height: 36,
                   borderRadius: '50%',
-                  background: colors[i],
+                  background: bgs[i],
                   border: '2.5px solid #fff',
                   display: 'flex',
                   alignItems: 'center',
@@ -1072,23 +1074,18 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                   marginLeft: i > 0 ? -10 : 0,
                   zIndex: 3 - i,
                   position: 'relative',
+                  fontSize: 16,
                 }}>
-                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: textColors }}>
-                    {letter}
-                  </span>
+                  {emoji}
                 </div>
               );
             })}
           </div>
-
-          {/* pods text */}
           <div style={{ flex: 1, fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.4 }}>
-            {copy.pods}
+            {isJa ? 'カラダの変化を学ぼう' : 'Learn what your body is doing and why'}
           </div>
-
-          {/* join button */}
           <button
-            onClick={() => onNavigateCommunity?.()}
+            onClick={(e) => { e.stopPropagation(); onNavigateLearn?.(); }}
             style={{
               padding: '7px 18px',
               borderRadius: 999,
@@ -1099,7 +1096,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             }}
           >
             <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
-              {isJa ? '参加' : 'Join'}
+              {isJa ? '学ぶ' : 'Explore'}
             </span>
           </button>
         </div>

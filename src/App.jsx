@@ -13,7 +13,7 @@ import { Settings } from './components/Settings';
 import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
 import { Care } from './components/Care';
-import { Peers } from './components/Peers';
+import { Learn } from './components/Learn';
 import { ConsentModal } from './components/ConsentModal';
 import { UpgradeSuccessBanner } from './components/UpgradeSuccessBanner';
 
@@ -127,7 +127,7 @@ function App() {
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
-          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateCommunity={() => setActiveTab('community')} />
+          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateLearn={() => setActiveTab('learn')} />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (
@@ -141,8 +141,8 @@ function App() {
           />
         )}
 
-        {activeTab === 'community' && cycleInfo && (
-          <Peers phase={phaseKey} />
+        {activeTab === 'learn' && cycleInfo && (
+          <Learn phase={phaseKey} />
         )}
 
         {activeTab === 'insights' && (

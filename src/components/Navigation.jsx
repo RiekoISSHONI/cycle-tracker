@@ -28,14 +28,13 @@ const TABS = [
     center: true,
   },
   {
-    id: 'community',
-    labelJa: 'サークル',
-    labelEn: 'Circle',
+    id: 'learn',
+    labelJa: '学ぶ',
+    labelEn: 'Learn',
     icon: (color, sw) => (
-      <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round">
-        <circle cx="9" cy="9" r="3"/>
-        <path d="M3.5 19a5.5 5.5 0 0111 0"/>
-        <path d="M16 7.5a3 3 0 010 5.5M15.5 14.5a5.5 5.5 0 015 4.5"/>
+      <svg width={21} height={21} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
       </svg>
     ),
   },
