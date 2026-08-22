@@ -167,7 +167,7 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
           borderRadius: 16,
           border: `1.5px solid ${LINE}`,
           background: '#fff',
-          fontFamily: MARU, fontSize: 14.5, fontWeight: 500,
+          fontFamily: MARU, fontSize: 14, fontWeight: 500,
           color: INK, lineHeight: 1.7,
           resize: 'vertical',
           outline: 'none',
@@ -297,7 +297,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
       {/* Entry text */}
       {entry.text && (
         <p style={{
-          fontFamily: MARU, fontSize: 13.5, fontWeight: 500,
+          fontFamily: MARU, fontSize: 13, fontWeight: 500,
           color: INK, margin: 0, lineHeight: 1.65,
           whiteSpace: 'pre-wrap', wordBreak: 'break-word',
         }}>
@@ -410,7 +410,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
             <div style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK }}>
               {isJa ? 'ジャーナル' : 'Journal'}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
               {isJa ? '日々の気持ちを記録しよう' : 'Record your daily feelings'}
             </div>
           </div>

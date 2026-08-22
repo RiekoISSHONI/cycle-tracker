@@ -438,7 +438,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                     padding: '8px 12px', borderRadius: 12,
                     background: PHASES.ki.tint, border: `1px solid ${PHASES.ki.line}`,
                   }}>
-                    <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
+                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
                       "{phrase}"
                     </span>
                   </div>
@@ -589,7 +589,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.me.accent, flexShrink: 0, marginTop: 7,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                     {tip}
                   </span>
                 </div>
@@ -612,7 +612,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.sei.accent, flexShrink: 0, marginTop: 7,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                       {tip}
                     </span>
                   </div>
@@ -637,7 +637,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                     border: `1px solid ${PHASES.ki.line}`,
                   }}>
                     <span style={{
-                      fontFamily: MARU, fontSize: 14.5, fontWeight: 500,
+                      fontFamily: MARU, fontSize: 14, fontWeight: 500,
                       color: INK, lineHeight: 1.55, fontStyle: 'italic',
                     }}>
                       "{phrase}"
@@ -663,7 +663,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                       width: 6, height: 6, borderRadius: '50%',
                       background: PHASES.mi.accent, flexShrink: 0, marginTop: 7,
                     }} />
-                    <span style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
                       {item}
                     </span>
                   </div>
@@ -802,7 +802,7 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
                   <div style={{ fontFamily: PMINCHO, fontSize: 48, fontWeight: 600, color: INK, lineHeight: 1 }}>
                     {isJa ? `${day}日目` : `Day ${day}`}
                   </div>
-                  <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
+                  <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
                     {copy.tip}
                   </div>
                 </div>

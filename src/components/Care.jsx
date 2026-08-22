@@ -72,7 +72,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
             <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
           </svg>
         </div>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
           {isJa ? '栄養' : 'Nutrition'}
         </h3>
       </div>
@@ -116,7 +116,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                   width: 6, height: 6, borderRadius: '50%',
                   background: PHASES.ki.accent, flexShrink: 0, marginTop: 6,
                 }} />
-                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                   {tip}
                 </span>
               </div>
@@ -151,7 +151,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                     {food}
                   </span>
                 </div>
@@ -174,7 +174,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                         width: 6, height: 6, borderRadius: '50%',
                         background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
                       }} />
-                      <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                      <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                         {food}
                       </span>
                     </div>
@@ -191,7 +191,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
                 <span style={{ fontSize: 16 }}>🍵</span>
-                <span style={{ fontFamily: MARU, fontSize: 12.5, fontWeight: 600, color: PHASES.me.deep, lineHeight: 1.4 }}>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.me.deep, lineHeight: 1.4 }}>
                   {tcm.tea}
                 </span>
               </div>
@@ -301,7 +301,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
             <path d="M6.5 13L12 15l5.5-2" />
           </svg>
         </div>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
           {isJa ? '運動' : 'Exercise'}
         </h3>
       </div>
@@ -372,10 +372,10 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
           </div>
 
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 700, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
               {isJa ? video.nameJa : video.nameEn}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 600, color: INK3, marginTop: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 2 }}>
               {video.channel} · {video.duration}
             </div>
           </div>
@@ -457,7 +457,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
               <path d="M16 10a4 4 0 01-8 0" />
             </svg>
           </div>
-          <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+          <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
             {isJa ? 'おすすめアイテム' : 'Phase Picks'}
           </h3>
         </div>
@@ -576,7 +576,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
                   {isJa ? catLabel.ja : catLabel.en}
                 </span>
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 14.5, fontWeight: 700, color: INK }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                 {isJa ? product.nameJa : product.nameEn}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -607,7 +607,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
 
       {/* Affiliate disclosure */}
       <div style={{
-        fontFamily: MARU, fontSize: 10.5, fontWeight: 500,
+        fontFamily: MARU, fontSize: 11, fontWeight: 500,
         color: INK3, textAlign: 'center', padding: '4px 12px', lineHeight: 1.5,
       }}>
         {isJa
@@ -718,7 +718,7 @@ export function Care({ phase, onNavigateSettings }) {
             </div>
           </div>
 
-          <h2 style={{ fontFamily: MARU, fontSize: 25, fontWeight: 800, color: INK, margin: '0 0 10px' }}>
+          <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: '0 0 10px' }}>
             {isJa ? '今週の養生' : "This Week's Care"}
           </h2>
 
@@ -740,7 +740,7 @@ export function Care({ phase, onNavigateSettings }) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={PHASES.me.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span style={{ fontFamily: MARU, fontSize: 11.5, fontWeight: 700, color: PHASES.me.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: PHASES.me.accent }}>
               {isJa ? '周期データは非公開のまま' : 'Your cycle data stays private'}
             </span>
           </div>
@@ -772,7 +772,7 @@ export function Care({ phase, onNavigateSettings }) {
               >
                 {groupIcon[group.key](tc.accent)}
               </div>
-              <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 800, color: INK, margin: 0 }}>
+              <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
                 {isJa ? group.titleJa : group.titleEn}
               </h3>
             </div>
@@ -806,7 +806,7 @@ export function Care({ phase, onNavigateSettings }) {
                 </div>
 
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontFamily: MARU, fontSize: 15.5, fontWeight: 700, color: INK }}>
+                  <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK }}>
                     {isJa ? item.nameJa : item.nameEn}
                   </div>
                   <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>

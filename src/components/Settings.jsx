@@ -42,7 +42,7 @@ function EngagementCard({ isJa, phaseKey }) {
           </svg>
         </div>
         <div style={{ flex: 1, textAlign: 'left' }}>
-          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
+          <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {isJa ? 'エンゲージメント' : 'Engagement'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -250,7 +250,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px', position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
           {isJa ? '設定' : 'Settings'}
         </h2>
       </div>
@@ -296,7 +296,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             </div>
             {/* Expiry */}
             {isPremium && subscription?.expiresAt && (
-              <div style={{ fontFamily: MARU, fontSize: 11.5, color: INK2, marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 12, color: INK2, marginTop: 2 }}>
                 {isJa ? '有効期限: ' : 'Active until '}
                 {new Date(subscription.expiresAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
@@ -311,7 +311,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 background: `${ki.accent}22`,
                 border: `1px solid ${ki.accent}44`,
                 fontFamily: MARU,
-                fontSize: 10.5,
+                fontSize: 11,
                 fontWeight: 600,
                 color: ki.accent,
               }}
@@ -346,7 +346,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Cycle settings card */}
       <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 16 }}>
+        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 16 }}>
           {isJa ? '周期設定' : 'Cycle Settings'}
         </h3>
 
@@ -441,9 +441,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>21</span>
-            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>28</span>
-            <span style={{ fontFamily: MARU, fontSize: 10.5, color: INK3 }}>35</span>
+            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>21</span>
+            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>28</span>
+            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>35</span>
           </div>
         </div>
 
@@ -470,7 +470,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
       {/* Language card */}
       <div className="card" style={{ padding: '18px 20px', position: 'relative', zIndex: 1 }}>
-        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
+        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
           {isJa ? '言語' : 'Language'}
         </h3>
 

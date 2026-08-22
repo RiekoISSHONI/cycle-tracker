@@ -199,10 +199,10 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
         <div style={{ textAlign: 'center', padding: '0 16px' }}>
-          <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
+          <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
             {isJa ? 'あなたの傾向' : 'Your Trends'}
           </h2>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6 }}>
+          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
             {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
           </p>
         </div>
@@ -248,7 +248,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
               <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 style={{ fontFamily: MARU, fontSize: 18, fontWeight: 800, color: INK, marginBottom: 6 }}>
+          <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 6 }}>
             {t('insights.title')}
           </h3>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3 }}>{t('insights.noData')}</p>
@@ -261,10 +261,10 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px' }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 800, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
           {isJa ? 'あなたの傾向' : 'Your Trends'}
         </h2>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 6 }}>
+        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
           {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
         </p>
       </div>
@@ -324,7 +324,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
               pointerEvents: 'none',
             }}
           />
-          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 12, position: 'relative' }}>
+          <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 12, position: 'relative' }}>
             {isJa ? '気分の波' : 'Mood Wave'}
           </h3>
           <div style={{ position: 'relative' }}>
@@ -342,7 +342,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           padding: 16,
         }}
       >
-        <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 12 }}>
+        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 12 }}>
           {isJa ? '周期の構成' : 'Cycle Composition'}
         </h3>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20, justifyContent: 'center' }}>
@@ -373,7 +373,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
             padding: 16,
           }}
         >
-          <h3 style={{ fontFamily: MARU, fontSize: 16, fontWeight: 800, color: INK, marginBottom: 14 }}>
+          <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 14 }}>
             {isJa ? '症状の頻度' : 'Symptom Frequency'}
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -385,7 +385,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                   <span
                     style={{
                       fontFamily: MARU,
-                      fontSize: 12.5,
+                      fontSize: 13,
                       fontWeight: 600,
                       color: INK2,
                       width: 80,

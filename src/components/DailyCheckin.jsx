@@ -214,10 +214,10 @@ export function DailyCheckin({
 
       {/* ── 2. Header ── */}
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <h2 style={{ fontFamily: MARU, fontSize: 24, fontWeight: 800, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
           {ja ? '毎日のチェックイン' : 'Daily check-in'}
         </h2>
-        <p style={{ fontFamily: MARU, fontSize: 13, color: INK2, margin: '6px 0 0' }}>
+        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: '6px 0 0' }}>
           {ja ? '今日の調子はどうですか？' : 'How are you feeling today?'}
         </p>
       </div>
@@ -225,7 +225,7 @@ export function DailyCheckin({
       {/* ── 3. Mood scale ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {ja ? '気分' : 'Mood'}
           </span>
           <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
@@ -238,7 +238,7 @@ export function DailyCheckin({
       {/* ── 4. Energy scale ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {ja ? 'エネルギー' : 'Energy'}
           </span>
           <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
@@ -251,7 +251,7 @@ export function DailyCheckin({
       {/* ── 5. Flow selector ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {ja ? '経血量' : 'Flow'}
           </span>
         </div>
@@ -261,14 +261,14 @@ export function DailyCheckin({
           onChange={setFlow}
           labels={FLOW_LABELS[lang]}
           selectedGradient={`linear-gradient(135deg, ${sei.accent}, ${sei.deep})`}
-          style={{ height: 46, borderRadius: 13, fontSize: 13.5, padding: '11px 0' }}
+          style={{ height: 46, borderRadius: 13, fontSize: 13, padding: '11px 0' }}
         />
       </div>
 
       {/* ── 6. Symptoms ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 14 }}>
-          <span style={{ fontFamily: MARU, fontSize: 19, fontWeight: 700, color: INK }}>
+          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
             {ja ? '症状' : 'Symptoms'}
           </span>
         </div>
@@ -286,7 +286,7 @@ export function DailyCheckin({
                   background: active ? p.soft : CARD,
                   color: active ? p.deep : INK2,
                   fontFamily: MARU,
-                  fontSize: 13.5,
+                  fontSize: 13,
                   fontWeight: active ? 700 : 500,
                   cursor: 'pointer',
                   transition: 'all 0.18s',
