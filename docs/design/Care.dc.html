@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;800&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Zen Kaku Gothic New', system-ui, sans-serif; background: #FAF8F5; }
+    a { color: #C47E8E; } a:hover { color: #3B3335; }
+  </style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #FAF8F5; overflow: hidden; position: relative; border-radius: 44px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.10);">
+
+  <!-- Status bar -->
+  <div style="height: 56px; padding: 14px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 15px; font-weight: 600; color: #3B3335;">9:41</div>
+    <div style="display: flex; gap: 6px; align-items: center;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#3B3335"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13" y="3" width="3" height="9" rx="1" fill="#B8ADB1"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#3B3335" stroke-width="1"/><rect x="2" y="2" width="14" height="8" rx="2" fill="#3B3335"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#3B3335"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div style="padding: 4px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(145deg, #D4897A, #B8705F); display: flex; align-items: center; justify-content: center;">
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 16px; color: #fff; font-weight: 600;">巡</span>
+      </div>
+      <span style="font-size: 17px; font-weight: 500; color: #3B3335; letter-spacing: 1px;">meguri</span>
+    </div>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A7E82" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+  </div>
+
+  <!-- Title + Phase poem -->
+  <div style="padding: 24px 28px 0; position: relative;">
+    <div style="font-family: 'Shippori Mincho B1', serif; font-size: 200px; font-weight: 800; color: rgba(142,190,144,0.05); position: absolute; top: -50px; right: -30px; line-height: 1; pointer-events: none; user-select: none;">養</div>
+    <div style="position: relative; z-index: 1;">
+      <div style="font-family: 'Shippori Mincho B1', serif; font-size: 28px; font-weight: 600; color: #3B3335;">Care</div>
+      <div style="font-size: 13px; color: #8A7E82; font-weight: 500; margin-top: 4px;">Stillness phase</div>
+    </div>
+  </div>
+
+  <!-- Phase guidance banner -->
+  <div style="margin: 20px 28px 0; padding: 18px 20px; border-radius: 14px; background: #FCEAEF; border: 1px solid rgba(228,160,176,0.15);">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+      <div style="width: 3px; height: 24px; border-radius: 2px; background: linear-gradient(180deg, #E4A0B0, #C47E8E);"></div>
+      <div style="font-family: 'Shippori Mincho B1', serif; font-size: 14px; font-weight: 600; color: #3B3335;">冬 · Winter energy</div>
+    </div>
+    <div style="font-family: 'Shippori Mincho B1', serif; font-size: 14px; font-weight: 400; color: #6B6166; line-height: 1.6; font-style: italic; padding-left: 13px;">Your body is in its quietest season. Nourish with warmth and iron-rich foods.</div>
+  </div>
+
+  <!-- Divider -->
+  <div style="margin: 22px 28px 0; border-top: 1px solid rgba(59,51,53,0.05);"></div>
+
+  <!-- Care sections as list rows -->
+  <div style="padding: 6px 28px 0;">
+    <!-- Nutrition -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(59,51,53,0.05);">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #E6F4E7; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6A9E6C" stroke-width="1.8" stroke-linecap="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 15px; font-weight: 600; color: #3B3335;">Nutrition</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Iron-rich lentil soup recipe</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+
+    <!-- Exercise -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(59,51,53,0.05);">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #FBF4DC; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8A45E" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M4 17l4-4 4 4 4-4 4 4"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 15px; font-weight: 600; color: #3B3335;">Exercise</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Gentle yoga &amp; stretching</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+
+    <!-- Teas -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(59,51,53,0.05);">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #F8ECE4; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B88A72" stroke-width="1.8" stroke-linecap="round"><path d="M17 8h1a4 4 0 010 8h-1"/><path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z"/><path d="M6 2v3M10 2v3M14 2v3"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 15px; font-weight: 600; color: #3B3335;">Tea</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Ginger &amp; chamomile blends</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+
+    <!-- Skincare -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(59,51,53,0.05);">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #FCEAEF; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C47E8E" stroke-width="1.8" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="0.5" fill="#C47E8E"/><circle cx="15" cy="10" r="0.5" fill="#C47E8E"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 15px; font-weight: 600; color: #3B3335;">Skincare</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Hydration &amp; gentle routine</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+
+    <!-- Shopping -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 16px 0;">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: #FBF4DC; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8A45E" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 15px; font-weight: 600; color: #3B3335;">Shop</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Phase-matched products</div>
+      </div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- TCM note -->
+  <div style="margin: 16px 28px 0; padding: 16px 20px; border-radius: 14px; border: 1px solid rgba(59,51,53,0.06); background: #fff;">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+      <div style="font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">TCM Principle</div>
+      <div style="padding: 2px 8px; border-radius: 99px; background: #F0ECE6; font-size: 9px; font-weight: 700; color: #8A7E82; letter-spacing: 1px;">SCIENCE + TCM</div>
+    </div>
+    <div style="font-family: 'Shippori Mincho B1', serif; font-size: 14px; color: #3B3335; line-height: 1.6; font-style: italic;">Blood and qi are depleted. Focus on warm, easily digested foods to rebuild.</div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 28px 32px; border-top: 1px solid rgba(59,51,53,0.05); background: #FAF8F5;">
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M4 11l8-6.5 8 6.5M6 9.6V19h12V9.6M10 19v-5h4v5"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B3335" stroke-width="2" stroke-linecap="round"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/><path d="M5 19c2-4.5 5.5-7.5 9.5-9"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: #3B3335;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

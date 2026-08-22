@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;800&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Zen Kaku Gothic New', system-ui, sans-serif; background: #FAF8F5; }
+    a { color: #C47E8E; } a:hover { color: #3B3335; }
+  </style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #FAF8F5; overflow: hidden; position: relative; border-radius: 44px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.10);">
+
+  <!-- Status bar -->
+  <div style="height: 56px; padding: 14px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 15px; font-weight: 600; color: #3B3335;">9:41</div>
+    <div style="display: flex; gap: 6px; align-items: center;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#3B3335"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13" y="3" width="3" height="9" rx="1" fill="#B8ADB1"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#3B3335" stroke-width="1"/><rect x="2" y="2" width="14" height="8" rx="2" fill="#3B3335"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#3B3335"/></svg>
+    </div>
+  </div>
+
+  <!-- Subscription screen visible behind (dimmed) -->
+  <div style="padding: 4px 28px 0; opacity: 0.3;">
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A7E82" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span style="font-size: 14px; color: #8A7E82; font-weight: 500;">Settings</span>
+    </div>
+  </div>
+
+  <div style="padding: 24px 28px 0; opacity: 0.3; text-align: center;">
+    <div style="font-family: 'Shippori Mincho B1', serif; font-size: 22px; font-weight: 600; color: #3B3335;">Meguri Premium</div>
+  </div>
+
+  <!-- Dimmed overlay -->
+  <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 44px; z-index: 1;"></div>
+
+  <!-- App Store subscription sheet -->
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; background: #fff; border-radius: 20px 20px 0 0; box-shadow: 0 -8px 40px rgba(0,0,0,0.15);">
+
+    <!-- Drag handle -->
+    <div style="display: flex; justify-content: center; padding: 8px 0 4px;">
+      <div style="width: 36px; height: 5px; border-radius: 3px; background: rgba(0,0,0,0.12);"></div>
+    </div>
+
+    <!-- App info -->
+    <div style="padding: 12px 24px 16px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.06);">
+      <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(145deg, #D4897A, #B8705F); margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212,137,122,0.2);">
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 24px; font-weight: 800; color: #fff;">巡</span>
+      </div>
+      <div style="font-size: 17px; font-weight: 600; color: #1C1C1E;">Meguri Premium</div>
+      <div style="font-size: 13px; color: #8E8E93; margin-top: 2px;">Annual Subscription</div>
+    </div>
+
+    <!-- Subscription details -->
+    <div style="padding: 16px 24px;">
+      <!-- Price row -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06);">
+        <div style="font-size: 15px; color: #1C1C1E;">Price</div>
+        <div style="font-size: 15px; font-weight: 600; color: #1C1C1E;">$39.99/year</div>
+      </div>
+
+      <!-- Free trial row -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06);">
+        <div style="font-size: 15px; color: #1C1C1E;">Free Trial</div>
+        <div style="font-size: 15px; font-weight: 600; color: #34C759;">7 days</div>
+      </div>
+
+      <!-- Payment method -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+        <div style="font-size: 15px; color: #1C1C1E;">Payment</div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#1C1C1E"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C4.24 16.7 4.89 10.55 8.7 10.3c1.23.07 2.08.72 2.8.78.97-.2 1.9-.89 3.13-.8 1.32.1 2.33.62 2.99 1.57-2.77 1.67-2.12 5.33.58 6.35-.5 1.3-.9 2.03-1.15 2.08zM12.05 10.23c-.15-2.32 1.72-4.3 3.95-4.53.27 2.55-2.31 4.68-3.95 4.53z"/></svg>
+          <span style="font-size: 15px; color: #1C1C1E;">Apple ID</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div style="padding: 0 24px 16px;">
+      <div style="font-size: 11px; color: #8E8E93; line-height: 1.5; text-align: center;">Payment will be charged to your Apple ID account. Subscription automatically renews unless canceled at least 24 hours before the end of the current period.</div>
+    </div>
+
+    <!-- Subscribe button -->
+    <div style="padding: 0 24px 12px;">
+      <button style="width: 100%; background: #007AFF; border: none; border-radius: 14px; padding: 16px 0; color: #fff; font-family: -apple-system, system-ui, sans-serif; font-size: 17px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        Subscribe
+      </button>
+    </div>
+
+    <!-- Confirm with Face ID -->
+    <div style="padding: 8px 24px 36px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.5" stroke-linecap="round">
+        <path d="M7 3H5a2 2 0 00-2 2v2M17 3h2a2 2 0 012 2v2M7 21H5a2 2 0 01-2-2v-2M17 21h2a2 2 0 002-2v-2"/>
+        <circle cx="9" cy="10" r="0.5" fill="#8E8E93"/>
+        <circle cx="15" cy="10" r="0.5" fill="#8E8E93"/>
+        <path d="M9 15c1 1 5 1 6 0"/>
+        <line x1="12" y1="10" x2="12" y2="13"/>
+      </svg>
+      <div style="font-size: 13px; color: #8E8E93;">Confirm with Face ID</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

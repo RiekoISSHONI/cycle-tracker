@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;800&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Zen Kaku Gothic New', system-ui, sans-serif; background: #FAF8F5; }
+    a { color: #C47E8E; } a:hover { color: #3B3335; }
+  </style>
+</helmet>
+<div style="width: 390px; height: 844px; background: #FAF8F5; overflow: hidden; position: relative; border-radius: 44px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.10);">
+
+  <!-- Status bar -->
+  <div style="height: 56px; padding: 14px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 15px; font-weight: 600; color: #3B3335;">9:41</div>
+    <div style="display: flex; gap: 6px; align-items: center;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#3B3335"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13" y="3" width="3" height="9" rx="1" fill="#B8ADB1"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#3B3335" stroke-width="1"/><rect x="2" y="2" width="14" height="8" rx="2" fill="#3B3335"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#3B3335"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div style="padding: 4px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <div style="width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(145deg, #D4897A, #B8705F); display: flex; align-items: center; justify-content: center;">
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 16px; color: #fff; font-weight: 600;">巡</span>
+      </div>
+      <span style="font-size: 17px; font-weight: 500; color: #3B3335; letter-spacing: 1px;">meguri</span>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A7E82" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </div>
+  </div>
+
+  <!-- Month title -->
+  <div style="padding: 24px 28px 0; position: relative;">
+    <div style="font-family: 'Shippori Mincho B1', serif; font-size: 180px; font-weight: 800; color: rgba(212,168,144,0.05); position: absolute; top: -40px; right: -20px; line-height: 1; pointer-events: none; user-select: none;">暦</div>
+    <div style="position: relative; z-index: 1; display: flex; align-items: baseline; gap: 10px;">
+      <div style="font-family: 'Shippori Mincho B1', serif; font-size: 28px; font-weight: 600; color: #3B3335;">August</div>
+      <div style="font-size: 15px; color: #8A7E82; font-weight: 500;">2026</div>
+    </div>
+  </div>
+
+  <!-- Phase legend -->
+  <div style="padding: 16px 28px 0; display: flex; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: #E4A0B0;"></div>
+      <div style="font-size: 10px; color: #8A7E82; font-weight: 600;">静</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: #8EBE90;"></div>
+      <div style="font-size: 10px; color: #8A7E82; font-weight: 600;">芽</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: #D4C07A;"></div>
+      <div style="font-size: 10px; color: #8A7E82; font-weight: 600;">輝</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: #D4A890;"></div>
+      <div style="font-size: 10px; color: #8A7E82; font-weight: 600;">実</div>
+    </div>
+  </div>
+
+  <!-- Calendar grid -->
+  <div style="padding: 18px 20px 0;">
+    <!-- Day headers -->
+    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; margin-bottom: 6px;">
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">SU</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">MO</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">TU</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">WE</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">TH</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">FR</div>
+      <div style="text-align: center; font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 1px; padding: 6px 0;">SA</div>
+    </div>
+
+    <!-- Week rows -->
+    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;">
+      <!-- Row 1: Aug starts on Saturday -->
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">1</div>
+
+      <!-- Row 2 -->
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">2</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">3</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">4</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">5</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">6</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">7</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">8</div>
+
+      <!-- Row 3 -->
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">9</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">10</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">11</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #F8ECE4; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">12</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">13</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">14</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">15</div>
+
+      <!-- Row 4 -->
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">16</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">17</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">18</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: rgba(240,236,230,0.5); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">19</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #FCEAEF; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500; position: relative;">20
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: #E4A0B0; position: absolute; bottom: 5px;"></div>
+      </div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #FCEAEF; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500; position: relative;">21
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: #E4A0B0; position: absolute; bottom: 5px;"></div>
+      </div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #FCEAEF; border: 2px solid #C47E8E; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; color: #C47E8E; font-weight: 700; position: relative;">22
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: #C47E8E; position: absolute; bottom: 4px;"></div>
+      </div>
+
+      <!-- Row 5 -->
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #FCEAEF; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">23</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #FCEAEF; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">24</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">25</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">26</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">27</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">28</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">29</div>
+
+      <!-- Row 6 -->
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">30</div>
+      <div style="aspect-ratio: 1; border-radius: 10px; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #3B3335; font-weight: 500;">31</div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+      <div style="aspect-ratio: 1; border-radius: 10px;"></div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div style="margin: 20px 28px 0; border-top: 1px solid rgba(59,51,53,0.05);"></div>
+
+  <!-- Upcoming events -->
+  <div style="padding: 16px 28px 0;">
+    <div style="font-size: 10px; color: #B8ADB1; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;">Upcoming</div>
+
+    <div style="display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(59,51,53,0.05); margin-bottom: 12px;">
+      <div style="width: 3px; height: 28px; border-radius: 2px; background: #E4A0B0;"></div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; font-weight: 600; color: #3B3335;">Period ends</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 1px;">~Aug 24 · in 2 days</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(59,51,53,0.05); margin-bottom: 12px;">
+      <div style="width: 3px; height: 28px; border-radius: 2px; background: #D4C07A;"></div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; font-weight: 600; color: #3B3335;">Ovulation window</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 1px;">Sep 1–3 · in 10 days</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div style="width: 3px; height: 28px; border-radius: 2px; background: #E4A0B0;"></div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; font-weight: 600; color: #3B3335;">Next period</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 1px;">~Sep 17 · in 26 days</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 28px 32px; border-top: 1px solid rgba(59,51,53,0.05); background: #FAF8F5;">
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M4 11l8-6.5 8 6.5M6 9.6V19h12V9.6M10 19v-5h4v5"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: transparent;"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B3335" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+        <div style="width: 4px; height: 4px; border-radius: 50%; background: #3B3335;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

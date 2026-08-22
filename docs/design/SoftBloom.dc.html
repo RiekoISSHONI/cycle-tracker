@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;600&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Zen Kaku Gothic New', system-ui, sans-serif; background: #FAF8F5; }
+  </style>
+</helmet>
+<!-- Phone frame -->
+<div style="width: 390px; height: 844px; background: linear-gradient(180deg, #FEF4F7 0%, #F2FAF3 35%, #FDFAEE 65%, #FAF8F5 100%); overflow: hidden; position: relative; border-radius: 44px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.10);">
+
+  <!-- Status bar -->
+  <div style="height: 56px; padding: 14px 28px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 15px; font-weight: 600; color: #3B3335;">9:41</div>
+    <div style="display: flex; gap: 6px; align-items: center;">
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="#3B3335"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13" y="3" width="3" height="9" rx="1" fill="#B8ADB1"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3" stroke="#3B3335" stroke-width="1"/><rect x="2" y="2" width="14" height="8" rx="2" fill="#3B3335"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#3B3335"/></svg>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div style="padding: 4px 24px 0; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div style="font-size: 13px; color: #8A7E82; font-weight: 500;">Good morning</div>
+      <div style="font-size: 22px; font-weight: 700; color: #3B3335; margin-top: 1px;">Sakura</div>
+    </div>
+    <div style="width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.06);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A7E82" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+    </div>
+  </div>
+
+  <!-- Cycle Ring Hero -->
+  <div style="display: flex; flex-direction: column; align-items: center; padding: 24px 0 16px;">
+    <div style="position: relative; width: 210px; height: 210px;">
+      <svg width="210" height="210" viewBox="0 0 210 210" style="transform: rotate(-90deg);">
+        <circle cx="105" cy="105" r="88" fill="none" stroke="rgba(240,236,230,0.6)" stroke-width="10"/>
+        <!-- sei (menstrual) - 5 days -->
+        <circle cx="105" cy="105" r="88" fill="none" stroke="#E4A0B0" stroke-width="10" stroke-dasharray="95 458" stroke-linecap="round" opacity="0.9"/>
+        <!-- me (follicular) - 8 days -->
+        <circle cx="105" cy="105" r="88" fill="none" stroke="#8EBE90" stroke-width="10" stroke-dasharray="152 401" stroke-dashoffset="-102" stroke-linecap="round" opacity="0.9"/>
+        <!-- ki (ovulation) - 3 days -->
+        <circle cx="105" cy="105" r="88" fill="none" stroke="#D4C07A" stroke-width="10" stroke-dasharray="57 496" stroke-dashoffset="-261" stroke-linecap="round" opacity="0.9"/>
+        <!-- mi (luteal) - 12 days -->
+        <circle cx="105" cy="105" r="88" fill="none" stroke="#D4A890" stroke-width="10" stroke-dasharray="190 363" stroke-dashoffset="-325" stroke-linecap="round" opacity="0.9"/>
+        <!-- Current day marker -->
+        <circle cx="105" cy="17" r="7" fill="#C47E8E" stroke="#fff" stroke-width="2.5"/>
+      </svg>
+      <!-- Center -->
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="font-size: 44px; font-weight: 700; color: #3B3335; line-height: 1; font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;">3</div>
+        <div style="font-size: 12px; color: #8A7E82; font-weight: 500; margin-top: 3px;">day of cycle</div>
+        <div style="margin-top: 10px; padding: 5px 16px; border-radius: 99px; background: linear-gradient(135deg, #E4A0B0, #C47E8E); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;">Stillness</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Row -->
+  <div style="padding: 0 24px 14px; display: flex; gap: 10px;">
+    <button style="flex: 1; background: linear-gradient(135deg, #E4A0B0, #C47E8E); border: none; border-radius: 16px; padding: 13px 0; color: #fff; font-family: inherit; font-size: 14px; font-weight: 600; box-shadow: 0 6px 18px rgba(228,160,176,0.28); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Check In
+    </button>
+    <button style="width: 48px; background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.6); border-radius: 16px; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8A7E82" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+    </button>
+  </div>
+
+  <!-- Cards -->
+  <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 12px;">
+    <!-- Today's Tip -->
+    <div style="background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border-radius: 22px; padding: 18px 20px; box-shadow: 0 4px 18px rgba(60,50,55,0.04); border: 1px solid rgba(255,255,255,0.55);">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 32px; height: 32px; border-radius: 10px; background: #FCEAEF; display: flex; align-items: center; justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C47E8E" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="font-size: 13px; font-weight: 700; color: #3B3335;">Today's Guidance</div>
+      </div>
+      <div style="font-size: 13px; color: #6B6166; line-height: 1.55;">Rest is your superpower right now. Gentle stretches and warm teas will help your body reset.</div>
+    </div>
+
+    <!-- 7-Day Forecast -->
+    <div style="background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border-radius: 22px; padding: 18px 20px; box-shadow: 0 4px 18px rgba(60,50,55,0.04); border: 1px solid rgba(255,255,255,0.55);">
+      <div style="font-size: 13px; font-weight: 700; color: #3B3335; margin-bottom: 14px;">7-Day Forecast</div>
+      <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #C47E8E; font-weight: 700;">TOD</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(145deg, #FCEAEF, #F8D5DD); border: 2px solid #E4A0B0; display: flex; align-items: center; justify-content: center; font-size: 15px;">😌</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">FRI</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #FCEAEF; display: flex; align-items: center; justify-content: center; font-size: 15px;">😊</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">SAT</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #FCEAEF; display: flex; align-items: center; justify-content: center; font-size: 15px;">😊</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">SUN</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 15px;">😃</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">MON</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 15px;">😄</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">TUE</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 15px;">✨</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 5px;">
+          <div style="font-size: 10px; color: #B8ADB1; font-weight: 600;">WED</div>
+          <div style="width: 38px; height: 38px; border-radius: 50%; background: #E6F4E7; display: flex; align-items: center; justify-content: center; font-size: 15px;">😃</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Journal Shortcut -->
+    <div style="background: rgba(255,255,255,0.82); backdrop-filter: blur(12px); border-radius: 22px; padding: 16px 20px; box-shadow: 0 4px 18px rgba(60,50,55,0.04); border: 1px solid rgba(255,255,255,0.55); display: flex; align-items: center; gap: 14px;">
+      <div style="width: 42px; height: 42px; border-radius: 14px; background: linear-gradient(145deg, #FBF4DC, #F5ECC8); display: flex; align-items: center; justify-content: center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B8A45E" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </div>
+      <div style="flex: 1;">
+        <div style="font-size: 14px; font-weight: 700; color: #3B3335;">How are you feeling?</div>
+        <div style="font-size: 12px; color: #8A7E82; margin-top: 2px;">Write in your journal</div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 6px 16px 28px;">
+    <div style="background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-radius: 28px; padding: 8px 6px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); display: flex; justify-content: space-around; align-items: center;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px; background: rgba(228,160,176,0.12); border-radius: 16px;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#C47E8E" stroke-width="2" stroke-linecap="round"><path d="M4 11l8-6.5 8 6.5M6 9.6V19h12V9.6M10 19v-5h4v5"/></svg>
+        <div style="font-size: 10px; font-weight: 700; color: #C47E8E;">Home</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <div style="font-size: 10px; font-weight: 600; color: #B8ADB1;">Journal</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><path d="M5 19c0-8 6-13 14-13 0 8-6 13-14 13z"/><path d="M5 19c2-4.5 5.5-7.5 9.5-9"/></svg>
+        <div style="font-size: 10px; font-weight: 600; color: #B8ADB1;">Care</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 14px;">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#B8ADB1" stroke-width="2" stroke-linecap="round"><rect x="3.5" y="5" width="17" height="15.5" rx="4"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>
+        <div style="font-size: 10px; font-weight: 600; color: #B8ADB1;">Calendar</div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
