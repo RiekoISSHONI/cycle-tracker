@@ -2,6 +2,7 @@ import { useState, useRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getGiftItems, getClothingItems } from '../utils/giftItems';
+import { trackFeature } from '../utils/telemetry';
 
 // Rotate items daily based on date seed
 function rotateItems(items, seed) {
@@ -475,6 +476,7 @@ export function PartnerShare({ cycleInfo, onClose }) {
 
   const handleShare = async () => {
     setSharing(true);
+    trackFeature('partner_share', { options: Object.keys(options).filter(k => options[k]) });
     const text = generateShareText();
 
     try {

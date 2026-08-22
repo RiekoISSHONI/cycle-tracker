@@ -1,0 +1,16 @@
+{
+  "name": "meguri-telemetry",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create meguri-telemetry",
+    "db:migrate": "wrangler d1 execute meguri-telemetry --file=schema.sql",
+    "db:migrate:local": "wrangler d1 execute meguri-telemetry --local --file=schema.sql",
+    "stats": "wrangler d1 execute meguri-telemetry --command \"SELECT event, COUNT(*) as count FROM events GROUP BY event ORDER BY count DESC LIMIT 20\""
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

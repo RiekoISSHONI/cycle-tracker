@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
 import { UpgradeModal } from './PremiumGate';
 import { getEngagementSummary } from '../utils/analytics';
+import { trackEvent } from '../utils/telemetry';
 
 const CATEGORY_META = {
   tea:      { labelJa: 'お茶',         labelEn: 'Teas',     color: '#8BAF8E' },
@@ -198,6 +199,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
   };
 
   const handleLanguageChange = (lang) => {
+    trackEvent('language_change', { lang });
     i18n.changeLanguage(lang);
   };
 
@@ -605,6 +607,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
           <div style={{ display: 'flex', gap: 10 }}>
             <button
               onClick={() => {
+                trackEvent('data_delete');
                 onReset();
                 setShowDeleteConfirm(false);
               }}

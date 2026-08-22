@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { trackEvent } from '../utils/telemetry';
 
 const PHASES_PREVIEW = [
   { name: 'Menstrual', color: 'bg-rose-500', description: 'Rest & restore' },
@@ -21,6 +22,7 @@ export function CycleSetup({ onSave }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (lastPeriodStart) {
+      trackEvent('onboarding_complete', { cycleLength: parseInt(cycleLength) });
       onSave({
         lastPeriodStart: lastPeriodStart,
         lastPeriodEnd: lastPeriodEnd || null,

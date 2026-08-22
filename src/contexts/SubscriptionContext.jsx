@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useEffect, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { trackEvent } from '../utils/telemetry';
 
 const SubscriptionContext = createContext(null);
 
@@ -68,6 +69,7 @@ export function SubscriptionProvider({ children }) {
         expiresAt: expiresAt.toISOString(),
       });
       setJustUpgraded(true);
+      trackEvent('upgrade_complete', { plan, method: 'stripe' });
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);

@@ -5,6 +5,7 @@ import { CycleRing } from './CycleRing';
 import { downloadCalendarEvents } from '../utils/calendarExport';
 import { useSubscription, FREE_LIMITS, STRIPE_LINKS, isStripeConfigured } from '../contexts/SubscriptionContext';
 import { CardPopup } from './CardPopup';
+import { trackFeature } from '../utils/telemetry';
 
 const MOOD_EMOJI = ['', '😔', '😕', '😐', '😊', '😄'];
 
@@ -20,6 +21,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
   const p = PHASES[phaseKey];
 
   const handleExportCalendar = () => {
+    trackFeature('calendar_export');
     downloadCalendarEvents(cycleInfo.lastPeriodStart || new Date().toISOString().split('T')[0], cycleLength, 6);
     setCalendarExported(true);
     setTimeout(() => setCalendarExported(false), 3000);

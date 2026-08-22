@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PHASES, CORAL, CORAL_D, PMINCHO, MARU, INK, INK2, INK3, CARD, LINE, CREAM2, phaseKeyFromLegacy } from '../utils/phases';
 import { useSubscription } from '../contexts/SubscriptionContext';
 import { UpgradeModal } from './PremiumGate';
+import { trackEvent } from '../utils/telemetry';
 
 export function Header({ cycleInfo, viewMode, setViewMode }) {
   const { t, i18n } = useTranslation();
@@ -13,10 +14,12 @@ export function Header({ cycleInfo, viewMode, setViewMode }) {
 
   const handlePartnerToggle = () => {
     if (isPartner) {
+      trackEvent('view_mode_toggle', { mode: 'personal' });
       setViewMode('personal');
       return;
     }
     if (canAccess('partnerShare')) {
+      trackEvent('view_mode_toggle', { mode: 'partner' });
       setViewMode('partner');
     } else {
       setShowUpgrade(true);

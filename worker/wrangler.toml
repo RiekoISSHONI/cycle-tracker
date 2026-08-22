@@ -1,0 +1,15 @@
+name = "meguri-telemetry"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+# Anonymous telemetry ingest — no PII stored
+# Deploy: cd worker && npx wrangler deploy
+
+[[d1_databases]]
+binding = "DB"
+database_name = "meguri-telemetry"
+database_id = ""  # Fill after: npx wrangler d1 create meguri-telemetry
+
+[vars]
+# Comma-separated list of allowed origins (your app domains)
+ALLOWED_ORIGINS = "http://localhost:5173,http://localhost:4173"

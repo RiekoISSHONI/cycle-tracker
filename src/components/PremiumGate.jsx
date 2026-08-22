@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
 import { PLANS, isStripeConfigured } from '../contexts/SubscriptionContext';
 import { PHASES, CORAL, CORAL_D, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM, CREAM2, LINE } from '../utils/phases';
+import { trackEvent } from '../utils/telemetry';
 
 export function PremiumBadge() {
   return (
@@ -73,6 +74,10 @@ export function UpgradeModal({ onClose, feature }) {
   const [selectedPlan, setSelectedPlan] = useState('annual');
   const stripeReady = isStripeConfigured();
 
+  useEffect(() => {
+    trackEvent('upgrade_modal_open', { feature, plan: selectedPlan });
+  }, []);
+
   const features = [
     { key: 'pillReminders', icon: '💊', label: t('premium.features.pillReminders') },
     { key: 'fullInsights', icon: '📊', label: t('premium.features.fullInsights') },
@@ -81,9 +86,16 @@ export function UpgradeModal({ onClose, feature }) {
     { key: 'partnerShare', icon: '💕', label: t('premium.features.partnerShare') },
   ];
 
+  const handlePlanSelect = (plan) => {
+    setSelectedPlan(plan);
+    trackEvent('upgrade_plan_select', { plan });
+  };
+
   const handleUpgrade = () => {
+    trackEvent('upgrade_tap', { plan: selectedPlan, stripe: stripeReady });
     if (!redirectToStripe(selectedPlan)) {
       upgradeToPremium(selectedPlan);
+      trackEvent('upgrade_complete', { plan: selectedPlan, method: 'demo' });
       onClose();
     }
   };
@@ -142,7 +154,7 @@ export function UpgradeModal({ onClose, feature }) {
           }}>
             {/* Monthly */}
             <button
-              onClick={() => setSelectedPlan('monthly')}
+              onClick={() => handlePlanSelect('monthly')}
               style={{
                 padding: '14px 12px', borderRadius: 18,
                 background: selectedPlan === 'monthly' ? CARD : 'transparent',
@@ -164,7 +176,7 @@ export function UpgradeModal({ onClose, feature }) {
 
             {/* Annual */}
             <button
-              onClick={() => setSelectedPlan('annual')}
+              onClick={() => handlePlanSelect('annual')}
               style={{
                 padding: '14px 12px', borderRadius: 18,
                 background: selectedPlan === 'annual' ? CARD : 'transparent',
