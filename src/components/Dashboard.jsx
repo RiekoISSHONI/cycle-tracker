@@ -1042,10 +1042,13 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           }
         />
 
-        {/* 6 ── partner guide */}
+        {/* 6 ── today's focus */}
+        <TodaysFocusCard phaseKey={phaseKey} isJa={isJa} t={t} />
+
+        {/* 7 ── partner guide */}
         <PartnerGuideCard phaseKey={phaseKey} isJa={isJa} t={t} />
 
-        {/* 7 ── journal card */}
+        {/* 8 ── journal card */}
         <div
           onClick={() => onNavigateDiary?.()}
           style={{

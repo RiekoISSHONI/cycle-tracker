@@ -88,7 +88,7 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Maru Gothic ProN', system-ui, sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
@@ -114,11 +114,11 @@ body {
 ::-webkit-scrollbar { width: 0; height: 0; }
 
 /* ==========================================
-   Typography — Zen Maru Gothic + Mincho stamps
+   Typography — Zen Kaku Gothic New (body) + Shippori Mincho B1 (display)
    ========================================== */
 
 h1, h2, h3, h4 {
-  font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.2;
@@ -129,7 +129,7 @@ h2 { font-size: 22px; }
 h3 { font-size: 20px; }
 
 .font-maru {
-  font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
 }
 
 .font-mincho, .font-display {
@@ -139,7 +139,7 @@ h3 { font-size: 20px; }
 .font-oldmin { font-family: 'Shippori Mincho B1', serif; }
 
 .font-gothic, .font-body {
-  font-family: 'Zen Maru Gothic', system-ui, sans-serif;
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
 }
 
 /* ==========================================
@@ -165,7 +165,7 @@ h3 { font-size: 20px; }
    ========================================== */
 
 .eyebrow {
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -185,7 +185,7 @@ h3 { font-size: 20px; }
   justify-content: center;
   gap: 10px;
   box-shadow: var(--shadow-accent);
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #fff;
@@ -206,7 +206,7 @@ h3 { font-size: 20px; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 14.5px;
   font-weight: 600;
   color: var(--ink);
@@ -224,7 +224,7 @@ h3 { font-size: 20px; }
   border-radius: 14px;
   background: var(--cream2);
   border: 1px solid var(--line);
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 15px;
   color: var(--ink);
   outline: none;
@@ -270,7 +270,7 @@ h3 { font-size: 20px; }
   padding: 5px 12px;
   border-radius: 99px;
   background: var(--accent-soft);
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 12.5px;
   font-weight: 700;
   color: var(--accent-deep);
@@ -308,7 +308,7 @@ h3 { font-size: 20px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
@@ -335,7 +335,7 @@ h3 { font-size: 20px; }
 .symptom-chip {
   padding: 9px 16px;
   border-radius: 99px;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 13.5px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -413,7 +413,7 @@ h3 { font-size: 20px; }
   border-radius: 14px;
   background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 14px;
   font-weight: 700;
   box-shadow: var(--shadow-accent);
@@ -488,7 +488,7 @@ h3 { font-size: 20px; }
   align-items: center;
   justify-content: center;
   position: relative;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-size: 16px;
   font-weight: 700;
 }
@@ -551,7 +551,7 @@ input[type="range"]::-moz-range-thumb {
 .btn {
   padding: 13px 20px;
   border-radius: 15px;
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
   font-weight: 700;
   font-size: 15px;
   transition: all 0.2s ease;
