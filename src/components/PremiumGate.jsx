@@ -139,7 +139,7 @@ export function UpgradeModal({ onClose, feature }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontFamily: PMINCHO, fontSize: 28, fontWeight: 700,
           }}>巡</div>
-          <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 800, margin: 0 }}>
+          <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0 }}>
             {t('premium.upgradeTo')}
           </h2>
           <p style={{ fontFamily: MARU, fontSize: 13, opacity: 0.8, marginTop: 6 }}>
@@ -166,7 +166,7 @@ export function UpgradeModal({ onClose, feature }) {
               <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginBottom: 4 }}>
                 {isJa ? '月額' : 'Monthly'}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 800, color: INK }}>
+              <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK }}>
                 {monthlyPrice}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 11, color: INK3, marginTop: 2 }}>
@@ -198,7 +198,7 @@ export function UpgradeModal({ onClose, feature }) {
               <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginBottom: 4 }}>
                 {isJa ? '年額' : 'Annual'}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 800, color: INK }}>
+              <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK }}>
                 {annualPrice}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 11, color: INK3, marginTop: 2 }}>

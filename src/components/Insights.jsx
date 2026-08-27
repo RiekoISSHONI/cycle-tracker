@@ -284,7 +284,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
             }}
           >
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 2 }}>
-              <span style={{ fontFamily: MARU, fontSize: hs.isText ? 16 : 28, fontWeight: 800, color: hs.accent }}>
+              <span style={{ fontFamily: MARU, fontSize: hs.isText ? 16 : 28, fontWeight: 700, color: hs.accent }}>
                 {hs.value}
               </span>
               {hs.unit && (

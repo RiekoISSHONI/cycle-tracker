@@ -284,7 +284,7 @@ export function Peers({ phase = 'ki' }) {
           <h2
             style={{
               fontFamily: MARU,
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: 26,
               color: INK,
               margin: '0 0 6px 0',

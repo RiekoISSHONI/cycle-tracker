@@ -1071,10 +1071,10 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
             📝
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
+            <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
               {isJa ? '今日の気持ちを書こう' : "Write about today"}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3, marginTop: 2 }}>
               {isJa ? 'ジャーナルで自分のリズムを知る' : 'Journal to understand your rhythm'}
             </div>
           </div>

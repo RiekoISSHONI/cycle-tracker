@@ -72,7 +72,7 @@ function EngagementCard({ isJa, phaseKey }) {
                 flex: 1, padding: '12px 8px', borderRadius: 14,
                 background: CREAM2, textAlign: 'center',
               }}>
-                <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 800, color: stat.color }}>
+                <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: stat.color }}>
                   {stat.value}
                 </div>
                 <div style={{ fontFamily: MARU, fontSize: 10, fontWeight: 600, color: INK3, marginTop: 2 }}>
@@ -293,7 +293,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
               {isJa ? '現在のプラン' : 'Current Plan'}
             </div>
             {/* Plan name */}
-            <div style={{ fontFamily: MARU, fontSize: 21, fontWeight: 800, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 21, fontWeight: 700, color: INK }}>
               {isPremium ? (isJa ? 'プレミアム' : 'Premium') : (isJa ? '無料' : 'Free')}
             </div>
             {/* Expiry */}
@@ -385,7 +385,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2 }}>
               {isJa ? '周期の長さ' : 'Cycle Length'}
             </label>
-            <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 800, color: currentP.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 700, color: currentP.accent }}>
               {cycleLength} {isJa ? '日' : 'days'}
             </span>
           </div>

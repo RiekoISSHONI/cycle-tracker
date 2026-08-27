@@ -43,7 +43,7 @@ export function Header({ cycleInfo, viewMode, setViewMode }) {
             boxShadow: `0 6px 14px ${CORAL}55`,
           }}>巡</div>
           <span style={{
-            fontFamily: MARU, fontSize: 24, fontWeight: 800,
+            fontFamily: MARU, fontSize: 24, fontWeight: 700,
             letterSpacing: -0.5, color: INK,
           }}>meguri</span>
         </div>
