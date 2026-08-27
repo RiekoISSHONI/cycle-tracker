@@ -1,28 +1,33 @@
 {
   "artboards": [
-    { "file": "Main.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Home" },
-    { "file": "Journal.dc.html", "x": 520, "y": 0, "w": 390, "h": 844, "title": "Journal" },
-    { "file": "CheckIn.dc.html", "x": 1040, "y": 0, "w": 390, "h": 844, "title": "Check In" },
+    { "file": "Onboarding-EN.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Onboarding (EN)" },
+    { "file": "Main.dc.html", "x": 520, "y": 0, "w": 390, "h": 844, "title": "Home" },
+    { "file": "Journal.dc.html", "x": 1040, "y": 0, "w": 390, "h": 844, "title": "Journal" },
+    { "file": "CheckIn.dc.html", "x": 1560, "y": 0, "w": 390, "h": 844, "title": "Check In" },
+    { "file": "Insights.dc.html", "x": 2080, "y": 0, "w": 390, "h": 844, "title": "Insights" },
     { "file": "Care.dc.html", "x": 0, "y": 1020, "w": 390, "h": 844, "title": "Care" },
     { "file": "Calendar.dc.html", "x": 520, "y": 1020, "w": 390, "h": 844, "title": "Calendar" },
     { "file": "PartnerShare.dc.html", "x": 1040, "y": 1020, "w": 390, "h": 844, "title": "Partner Share" },
+    { "file": "Settings-EN.dc.html", "x": 1560, "y": 1020, "w": 390, "h": 844, "title": "Settings (EN)" },
     { "file": "Subscription-EN.dc.html", "x": 0, "y": 2040, "w": 390, "h": 844, "title": "Subscription (EN)" },
     { "file": "Payment-EN.dc.html", "x": 520, "y": 2040, "w": 390, "h": 844, "title": "Payment (EN)" },
-    { "file": "Receipt-EN.dc.html", "x": 1040, "y": 2040, "w": 390, "h": 844, "title": "Receipt (EN)" },
+    { "file": "Receipt-EN.dc.html", "x": 1040, "y": 2040, "w": 390, "h": 844, "title": "Confirmed (EN)" },
     { "file": "Legal-EN.dc.html", "x": 1560, "y": 2040, "w": 390, "h": 844, "title": "Privacy (EN)" },
     { "file": "SignUp-EN.dc.html", "x": 2080, "y": 2040, "w": 390, "h": 844, "title": "Sign Up (EN)" },
-    { "file": "Subscription-JA.dc.html", "x": 0, "y": 3060, "w": 390, "h": 844, "title": "Subscription (JA)" },
-    { "file": "Payment-JA.dc.html", "x": 520, "y": 3060, "w": 390, "h": 844, "title": "Payment (JA)" },
-    { "file": "Receipt-JA.dc.html", "x": 1040, "y": 3060, "w": 390, "h": 844, "title": "Receipt (JA)" },
-    { "file": "Legal-JA.dc.html", "x": 1560, "y": 3060, "w": 390, "h": 844, "title": "Privacy (JA)" },
-    { "file": "SignUp-JA.dc.html", "x": 2080, "y": 3060, "w": 390, "h": 844, "title": "Sign Up (JA)" }
+    { "file": "Onboarding-JA.dc.html", "x": 0, "y": 3060, "w": 390, "h": 844, "title": "Onboarding (JA)" },
+    { "file": "Subscription-JA.dc.html", "x": 520, "y": 3060, "w": 390, "h": 844, "title": "Subscription (JA)" },
+    { "file": "Payment-JA.dc.html", "x": 1040, "y": 3060, "w": 390, "h": 844, "title": "Payment (JA)" },
+    { "file": "Receipt-JA.dc.html", "x": 1560, "y": 3060, "w": 390, "h": 844, "title": "Confirmed (JA)" },
+    { "file": "Legal-JA.dc.html", "x": 2080, "y": 3060, "w": 390, "h": 844, "title": "Privacy (JA)" },
+    { "file": "SignUp-JA.dc.html", "x": 2600, "y": 3060, "w": 390, "h": 844, "title": "Sign Up (JA)" },
+    { "file": "Settings-JA.dc.html", "x": 3120, "y": 3060, "w": 390, "h": 844, "title": "Settings (JA)" }
   ],
   "annotations": [
-    { "id": "design-system", "x": 1560, "y": 0, "w": 360, "text": "INK & SEASON\nDesign System\n\nType: Shippori Mincho B1 (display) + Zen Kaku Gothic New (body)\nBackground: #FAF8F5 warm cream\nPhase: sei #E4A0B0, me #8EBE90, ki #D4C07A, mi #D4A890\nBrand: Coral #D4897A → #B8705F\nInk: #3B3335 primary, #8A7E82 secondary, #B8ADB1 muted\n\nPatterns:\n· Giant kanji watermarks (5% opacity)\n· Linear cycle bar (not ring)\n· List rows + thin dividers\n· Phase-tinted icon squares (44×44, r12)\n· Dot nav indicators\n· Uppercase letter-spaced section labels\n· 28px padding, 14px border-radius" },
-    { "id": "note-row1", "x": 0, "y": -80, "w": 440, "text": "Core tabs — bottom-nav destinations plus the check-in overlay" },
-    { "id": "note-row2", "x": 0, "y": 940, "w": 440, "text": "Secondary screens — Care, Calendar, and Partner Share modal (premium)" },
-    { "id": "note-row3", "x": 0, "y": 1960, "w": 600, "text": "Monetisation & Legal — English interface (EN) · Subscription → Payment → Receipt → Privacy · Sign Up" },
-    { "id": "note-row4", "x": 0, "y": 2980, "w": 600, "text": "Monetisation & Legal — Japanese interface (JA) · サブスクリプション → お支払い → 領収書 → プライバシー · サインアップ" }
+    { "id": "design-system", "x": 2600, "y": 0, "w": 360, "text": "INK & SEASON\nDesign System\n\nType: Shippori Mincho B1 (display) + Zen Kaku Gothic New (body)\nBackground: #FAF8F5 warm cream\nPhase: sei #E4A0B0, me #8EBE90, ki #D4C07A, mi #D4A890\nBrand: Coral #D4897A → #B8705F\nInk: #3B3335 primary, #8A7E82 secondary, #B8ADB1 muted\n\nPatterns:\n· Giant kanji watermarks (5% opacity)\n· Linear cycle bar (not ring)\n· List rows + thin dividers\n· Phase-tinted icon squares (44×44, r12)\n· Dot nav indicators\n· Uppercase letter-spaced section labels\n· 28px padding, 14px border-radius" },
+    { "id": "note-row1", "x": 0, "y": -80, "w": 600, "text": "Row 1: Onboarding → Home → Core Tabs + Insights (Premium)" },
+    { "id": "note-row2", "x": 0, "y": 940, "w": 600, "text": "Row 2: Secondary — Care, Calendar, Partner Share (Premium), Settings" },
+    { "id": "note-row3", "x": 0, "y": 1960, "w": 600, "text": "Row 3: EN Monetisation — Subscription → App Store Payment → Confirmed → Privacy → Sign Up" },
+    { "id": "note-row4", "x": 0, "y": 2980, "w": 700, "text": "Row 4: JA Variants — オンボーディング → サブスクリプション → App Store → 確認 → プライバシー → サインアップ → 設定" }
   ],
   "launch": { "view": "canvas" }
 }
