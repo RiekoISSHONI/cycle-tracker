@@ -142,7 +142,7 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', paddingBottom: 110, position: 'relative' }}>
-      <Header cycleInfo={cycleInfo} viewMode={viewMode} setViewMode={setViewMode} />
+      <Header cycleInfo={cycleInfo} viewMode={viewMode} setViewMode={setViewMode} onNavigateSettings={() => setActiveTab('settings')} />
       {justUpgraded && <UpgradeSuccessBanner onDismiss={dismissUpgraded} />}
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>

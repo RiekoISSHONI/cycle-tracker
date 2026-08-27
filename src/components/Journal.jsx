@@ -340,6 +340,28 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
   const isJa = i18n.language?.startsWith('ja');
   const p = PHASES[phase];
 
+  const handleExport = () => {
+    if (!entries.length) return;
+    const sorted = [...entries].sort((a, b) => a.date.localeCompare(b.date));
+    const lines = sorted.map(e => {
+      const d = new Date(e.date + 'T00:00:00');
+      const dateStr = d.toLocaleDateString(isJa ? 'ja-JP' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
+      const pk = e.phase || 'ki';
+      const phaseName = isJa ? PHASES[pk].name : PHASES[pk].en;
+      const mood = e.mood ? MOOD_EMOJI[e.mood] : '';
+      return `${dateStr} — ${phaseName} Day ${e.cycleDay}${mood ? ' ' + mood : ''}\n${e.text || (isJa ? '(テキストなし)' : '(no text)')}\n`;
+    });
+    const header = isJa ? '巡 meguri — ジャーナルエクスポート' : '巡 meguri — Journal Export';
+    const content = `${header}\n${'─'.repeat(40)}\n\n${lines.join('\n')}`;
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `meguri-journal-${new Date().toISOString().split('T')[0]}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const today = new Date().toISOString().split('T')[0];
   const todayEntry = entries.find(e => e.date === today);
   const [editing, setEditing] = useState(null); // null = new today, or an entry object
@@ -414,18 +436,39 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
               {isJa ? '日々の気持ちを記録しよう' : 'Record your daily feelings'}
             </div>
           </div>
-          {streak > 0 && (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 6,
-              padding: '6px 14px', borderRadius: 999,
-              background: p.soft, border: `1.5px solid ${p.accent}`,
-            }}>
-              <span style={{ fontSize: 14 }}>🔥</span>
-              <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
-                {streak}
-              </span>
-            </div>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {entries.length > 0 && (
+              <button
+                onClick={handleExport}
+                style={{
+                  width: 36, height: 36, borderRadius: 99,
+                  border: `1.5px solid ${LINE}`,
+                  background: CREAM2,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', padding: 0,
+                }}
+                title={isJa ? 'エクスポート' : 'Export'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={INK2} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </button>
+            )}
+            {streak > 0 && (
+              <div style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '6px 14px', borderRadius: 999,
+                background: p.soft, border: `1.5px solid ${p.accent}`,
+              }}>
+                <span style={{ fontSize: 14 }}>🔥</span>
+                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
+                  {streak}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Editor section */}
