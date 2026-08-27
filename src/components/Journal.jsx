@@ -342,24 +342,57 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
 
   const handleExport = () => {
     if (!entries.length) return;
-    const sorted = [...entries].sort((a, b) => a.date.localeCompare(b.date));
-    const lines = sorted.map(e => {
+    const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+
+    const entryCards = sorted.map(e => {
       const d = new Date(e.date + 'T00:00:00');
-      const dateStr = d.toLocaleDateString(isJa ? 'ja-JP' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
+      const dateStr = d.toLocaleDateString(isJa ? 'ja-JP' : 'en-US', {
+        year: 'numeric', month: 'long', day: 'numeric', weekday: 'long',
+      });
       const pk = e.phase || 'ki';
-      const phaseName = isJa ? PHASES[pk].name : PHASES[pk].en;
+      const ep = PHASES[pk];
+      const phaseName = isJa ? ep.name : ep.en;
       const mood = e.mood ? MOOD_EMOJI[e.mood] : '';
-      return `${dateStr} — ${phaseName} Day ${e.cycleDay}${mood ? ' ' + mood : ''}\n${e.text || (isJa ? '(テキストなし)' : '(no text)')}\n`;
-    });
-    const header = isJa ? '巡 meguri — ジャーナルエクスポート' : '巡 meguri — Journal Export';
-    const content = `${header}\n${'─'.repeat(40)}\n\n${lines.join('\n')}`;
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `meguri-journal-${new Date().toISOString().split('T')[0]}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
+      return `
+        <div style="page-break-inside: avoid; margin-bottom: 20px; border-left: 4px solid ${ep.accent}; padding: 16px 20px; border-radius: 0 12px 12px 0; background: ${ep.tint};">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+            <span style="font-family: 'Shippori Mincho B1', serif; font-size: 15px; font-weight: 600; color: #3B3335;">${dateStr}</span>
+            <span style="font-size: 12px; color: ${ep.deep}; font-weight: 600;">${ep.kanji} ${phaseName} · Day ${e.cycleDay}${mood ? ' ' + mood : ''}</span>
+          </div>
+          <p style="font-size: 14px; color: #3B3335; line-height: 1.75; margin: 0; white-space: pre-wrap;">${(e.text || (isJa ? '(テキストなし)' : '(no text)')).replace(/</g, '&lt;')}</p>
+        </div>`;
+    }).join('');
+
+    const title = isJa ? 'ジャーナル' : 'Journal';
+    const subtitle = isJa
+      ? `${sorted.length}件のエントリー`
+      : `${sorted.length} ${sorted.length === 1 ? 'entry' : 'entries'}`;
+
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap">
+      <title>巡 meguri — ${title}</title>
+      <style>
+        @page { margin: 20mm 16mm; size: A4; }
+        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #3B3335; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        @media screen { body { max-width: 680px; margin: 0 auto; padding: 40px 24px; background: #FAF8F5; } }
+      </style></head><body>
+      <div style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid rgba(59,51,53,0.08);">
+        <div style="font-family: 'Shippori Mincho B1', serif; font-size: 36px; font-weight: 800; color: #D4897A; margin-bottom: 4px;">巡</div>
+        <div style="font-size: 12px; letter-spacing: 3px; color: #8A7E82; text-transform: uppercase; font-weight: 700;">meguri ${title}</div>
+        <div style="font-size: 13px; color: #B8ADB1; margin-top: 8px;">${subtitle}</div>
+      </div>
+      ${entryCards}
+      <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(59,51,53,0.08);">
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 11px; color: #D4897A;">巡 meguri</span>
+      </div>
+      <script>window.onafterprint=()=>window.close();window.onload=()=>setTimeout(()=>window.print(),500);</script>
+    </body></html>`;
+
+    const printWin = window.open('', '_blank');
+    if (printWin) {
+      printWin.document.write(html);
+      printWin.document.close();
+    }
   };
 
   const today = new Date().toISOString().split('T')[0];
@@ -458,11 +491,13 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
             )}
             {streak > 0 && (
               <div style={{
-                display: 'flex', alignItems: 'center', gap: 6,
+                display: 'flex', alignItems: 'center', gap: 5,
                 padding: '6px 14px', borderRadius: 999,
                 background: p.soft, border: `1.5px solid ${p.accent}`,
               }}>
-                <span style={{ fontSize: 14 }}>🔥</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
                 <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
                   {streak}
                 </span>
