@@ -1063,12 +1063,14 @@ export function Dashboard({ cycleInfo, viewMode, checkins = [], cycleLength = 28
           }}
         >
           <div style={{
-            width: 44, height: 44, borderRadius: 14,
+            width: 36, height: 36, borderRadius: 12,
             background: p.soft,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, fontSize: 22,
+            flexShrink: 0,
           }}>
-            📝
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+            </svg>
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
