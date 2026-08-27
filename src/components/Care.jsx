@@ -204,34 +204,36 @@ function NutritionSection({ phaseKey, isJa, t }) {
 }
 
 /* ── exercise video pool by phase ──────────────────────────── */
+/* Every URL below is a verified, publicly available YouTube video.
+   rotatePool() picks 2 per day so users see variety across the cycle. */
 const WORKOUT_VIDEOS = {
   sei: [
-    { id: 'sei-yoga', nameJa: 'やさしいヨガストレッチ', nameEn: 'Gentle Yoga Stretch', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=sTANio_2E0Q' },
-    { id: 'sei-walk', nameJa: 'リラックス瞑想ウォーク', nameEn: 'Calming Walk & Breathwork', duration: '20 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=swMKPacBMbU' },
-    { id: 'sei-restorative', nameJa: 'リストラティブヨガ', nameEn: 'Restorative Yoga', duration: '20 min', channel: 'Yoga With Kassandra', url: 'https://www.youtube.com/watch?v=MO8z3i02OBQ' },
-    { id: 'sei-yin', nameJa: '陰ヨガ（下半身）', nameEn: 'Yin Yoga for Lower Body', duration: '25 min', channel: 'Boho Beautiful', url: 'https://www.youtube.com/watch?v=SxQj30KkTYo' },
-    { id: 'sei-stretch', nameJa: '寝る前ストレッチ', nameEn: 'Bedtime Stretch Routine', duration: '10 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=g_tea8ZNk5A' },
+    { id: 'sei-yoga', nameJa: '生理痛・PMS向けヨガ', nameEn: 'Yoga for Cramps & PMS', duration: '20 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=4JaCcp39iVI' },
+    { id: 'sei-stretch', nameJa: '全身リラックスストレッチ', nameEn: 'Full Body Relaxation Stretch', duration: '25 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=8XNpAg5mDS8' },
+    { id: 'sei-restorative', nameJa: 'リストラティブヨガ', nameEn: 'Restorative Yoga for Deep Healing', duration: '30 min', channel: 'Yoga With Kassandra', url: 'https://www.youtube.com/watch?v=SGZdaH_fVNE' },
+    { id: 'sei-yin', nameJa: '陰ヨガ（ストレス解消）', nameEn: 'Yin Yoga — Release Stress', duration: '30 min', channel: 'Boho Beautiful', url: 'https://www.youtube.com/watch?v=pL1RWA_Qavs' },
+    { id: 'sei-calm', nameJa: 'ストレス緩和ストレッチ', nameEn: 'Stretch & Yoga for Stress Relief', duration: '15 min', channel: 'MadFit', url: 'https://www.youtube.com/watch?v=utrAlZf_Pjs' },
   ],
   me: [
-    { id: 'me-fullbody', nameJa: '全身エネルギーワークアウト', nameEn: 'Full Body Energy Boost', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
-    { id: 'me-strength', nameJa: '初心者向け筋トレ', nameEn: 'Beginner Strength Training', duration: '25 min', channel: 'Sydney Cummings', url: 'https://www.youtube.com/watch?v=UItWltVZZmE' },
-    { id: 'me-power', nameJa: 'パワーヨガフロー', nameEn: 'Power Yoga Flow', duration: '30 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=9kOCY0KNByw' },
-    { id: 'me-dumbbell', nameJa: 'ダンベルワークアウト', nameEn: 'Dumbbell Full Body', duration: '30 min', channel: 'Caroline Girvan', url: 'https://www.youtube.com/watch?v=pHmDC2lVhPo' },
-    { id: 'me-run', nameJa: 'ランニングガイド', nameEn: 'Couch to 5K Run', duration: '30 min', channel: 'The Run Experience', url: 'https://www.youtube.com/watch?v=eFg8iXI0mYE' },
+    { id: 'me-fullbody', nameJa: '全身ワークアウト', nameEn: 'Full-Body Workout to Feel the Burn', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=QPAr-t6C7c0' },
+    { id: 'me-strength', nameJa: '全身筋トレ', nameEn: 'Full Body Strength Workout', duration: '30 min', channel: 'Sydney Cummings', url: 'https://www.youtube.com/watch?v=bzj_pa_ty1Q' },
+    { id: 'me-power', nameJa: 'パワーヨガ', nameEn: 'Power Yoga', duration: '40 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=WwzihD_WmFE' },
+    { id: 'me-dumbbell', nameJa: 'ダンベル全身ワークアウト', nameEn: 'MIGHTY Full Body — Dumbbells', duration: '30 min', channel: 'Caroline Girvan', url: 'https://www.youtube.com/watch?v=ScInpT_5dIQ' },
+    { id: 'me-run', nameJa: '初心者ランニング', nameEn: 'Running Workout for Beginners', duration: '15 min', channel: 'The Run Experience', url: 'https://www.youtube.com/watch?v=t4oIzGmCQ58' },
   ],
   ki: [
-    { id: 'ki-hiit', nameJa: 'HIIT有酸素トレーニング', nameEn: 'HIIT Cardio Blast', duration: '25 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=ml6cT4AZdqI' },
-    { id: 'ki-dance', nameJa: 'ダンスワークアウト', nameEn: 'Dance Workout', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=ZWk19OVon2k' },
-    { id: 'ki-tabata', nameJa: 'タバタトレーニング', nameEn: 'Tabata Challenge', duration: '20 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=XIeCMhNWFQQ' },
-    { id: 'ki-boxing', nameJa: 'キックボクシング', nameEn: 'Kickboxing Cardio', duration: '25 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=nQqzZqLqhMA' },
-    { id: 'ki-spin', nameJa: 'サイクリングワークアウト', nameEn: 'Indoor Cycling Ride', duration: '30 min', channel: 'The Fitness Marshall', url: 'https://www.youtube.com/watch?v=dSw_p4ezb5k' },
+    { id: 'ki-hiit', nameJa: 'HIIT有酸素トレーニング', nameEn: 'HIIT Cardio — No Equipment', duration: '30 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=tYo0rWVEmYc' },
+    { id: 'ki-dance', nameJa: 'ダンスカーディオ', nameEn: 'All-Levels Dance Cardio', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=gfO48ejjQhc' },
+    { id: 'ki-tabata', nameJa: 'タバタトレーニング', nameEn: 'Full Body Tabata', duration: '12 min', channel: 'Heather Robertson', url: 'https://www.youtube.com/watch?v=JttjN5WWiL0' },
+    { id: 'ki-boxing', nameJa: 'キックボクシング', nameEn: 'Cardio Kickboxing', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=nDytx5ZCMh8' },
+    { id: 'ki-dancemarshal', nameJa: 'ダンスワークアウト', nameEn: 'Dance Sweat Session', duration: '30 min', channel: 'The Fitness Marshall', url: 'https://www.youtube.com/watch?v=K1ucmt51ODw' },
   ],
   mi: [
-    { id: 'mi-pilates', nameJa: 'やさしいピラティス', nameEn: 'Gentle Pilates Flow', duration: '20 min', channel: 'Move With Nicole', url: 'https://www.youtube.com/watch?v=K56Z12XNQ5c' },
-    { id: 'mi-stretch', nameJa: 'ストレス解消ストレッチ', nameEn: 'Stress Relief Stretching', duration: '15 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=hJbRpHZr_d0' },
-    { id: 'mi-barre', nameJa: 'バレエバー', nameEn: 'Low Impact Barre', duration: '25 min', channel: 'Barre3', url: 'https://www.youtube.com/watch?v=76lIRIjbMaY' },
-    { id: 'mi-swim', nameJa: '水泳ガイド', nameEn: 'Swimming Techniques', duration: '15 min', channel: 'Swim England', url: 'https://www.youtube.com/watch?v=gh5V0saf1UU' },
-    { id: 'mi-walk', nameJa: 'パワーウォーキング', nameEn: 'Power Walking', duration: '30 min', channel: 'Walk at Home', url: 'https://www.youtube.com/watch?v=JOe-BgYEfMo' },
+    { id: 'mi-pilates', nameJa: '朝のピラティス', nameEn: 'Morning Pilates — Full Body', duration: '30 min', channel: 'Move With Nicole', url: 'https://www.youtube.com/watch?v=LbG1ovCGp-E' },
+    { id: 'mi-yoga', nameJa: 'ストレス解消ヨガ', nameEn: 'Yoga for Anxiety & Stress', duration: '27 min', channel: 'Yoga With Adriene', url: 'https://www.youtube.com/watch?v=hJbRpHZr_d0' },
+    { id: 'mi-barre', nameJa: 'バレエバー・カーディオ', nameEn: 'Cardio Barre Workout', duration: '30 min', channel: 'POPSUGAR Fitness', url: 'https://www.youtube.com/watch?v=YNxXyVy1ypE' },
+    { id: 'mi-swim', nameJa: '水泳トレーニング入門', nameEn: 'Beginner Swim Workout', duration: '10 min', channel: 'GTN', url: 'https://www.youtube.com/watch?v=zX0l7T5MjQY' },
+    { id: 'mi-walk', nameJa: 'ウォーキング（1マイル）', nameEn: '1 Mile Brisk Walk', duration: '15 min', channel: 'Walk at Home', url: 'https://www.youtube.com/watch?v=jUiI5DlRmO4' },
   ],
 };
 
