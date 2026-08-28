@@ -81,7 +81,7 @@ const GLASS = {
   background: 'rgba(255,255,255,0.70)',
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
-  boxShadow: '0 4px 18px rgba(60,50,55,0.04)',
+  boxShadow: '0 4px 18px rgba(58,50,38,0.04)',
   border: '1px solid rgba(255,255,255,0.5)',
 };
 
@@ -356,10 +356,10 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
       return `
         <div style="page-break-inside: avoid; margin-bottom: 20px; border-left: 4px solid ${ep.accent}; padding: 16px 20px; border-radius: 0 12px 12px 0; background: ${ep.tint};">
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-            <span style="font-family: 'Shippori Mincho B1', serif; font-size: 15px; font-weight: 600; color: #3B3335;">${dateStr}</span>
+            <span style="font-family: 'Shippori Mincho B1', serif; font-size: 15px; font-weight: 600; color: #3A3226;">${dateStr}</span>
             <span style="font-size: 12px; color: ${ep.deep}; font-weight: 600;">${ep.kanji} ${phaseName} · Day ${e.cycleDay}${mood ? ' ' + mood : ''}</span>
           </div>
-          <p style="font-size: 14px; color: #3B3335; line-height: 1.75; margin: 0; white-space: pre-wrap;">${(e.text || (isJa ? '(テキストなし)' : '(no text)')).replace(/</g, '&lt;')}</p>
+          <p style="font-size: 14px; color: #3A3226; line-height: 1.75; margin: 0; white-space: pre-wrap;">${(e.text || (isJa ? '(テキストなし)' : '(no text)')).replace(/</g, '&lt;')}</p>
         </div>`;
     }).join('');
 
@@ -373,17 +373,17 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
       <title>巡 meguri — ${title}</title>
       <style>
         @page { margin: 20mm 16mm; size: A4; }
-        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #3B3335; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        @media screen { body { max-width: 680px; margin: 0 auto; padding: 40px 24px; background: #FAF8F5; } }
+        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #3A3226; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        @media screen { body { max-width: 680px; margin: 0 auto; padding: 40px 24px; background: #FFFBF2; } }
       </style></head><body>
       <div style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid rgba(59,51,53,0.08);">
-        <div style="font-family: 'Shippori Mincho B1', serif; font-size: 36px; font-weight: 800; color: #D4897A; margin-bottom: 4px;">巡</div>
-        <div style="font-size: 12px; letter-spacing: 3px; color: #8A7E82; text-transform: uppercase; font-weight: 700;">meguri ${title}</div>
-        <div style="font-size: 13px; color: #B8ADB1; margin-top: 8px;">${subtitle}</div>
+        <div style="font-family: 'Shippori Mincho B1', serif; font-size: 36px; font-weight: 800; color: #F0C543; margin-bottom: 4px;">巡</div>
+        <div style="font-size: 12px; letter-spacing: 3px; color: #8C7E6E; text-transform: uppercase; font-weight: 700;">meguri ${title}</div>
+        <div style="font-size: 13px; color: #B5A898; margin-top: 8px;">${subtitle}</div>
       </div>
       ${entryCards}
       <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(59,51,53,0.08);">
-        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 11px; color: #D4897A;">巡 meguri</span>
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 11px; color: #F0C543;">巡 meguri</span>
       </div>
       <script>window.onafterprint=()=>window.close();window.onload=()=>setTimeout(()=>window.print(),500);</script>
     </body></html>`;
@@ -450,10 +450,10 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         background: `
-          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(228,160,176,0.25), transparent 70%),
-          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(212,192,122,0.22), transparent 70%),
-          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(142,190,144,0.25), transparent 70%),
-          linear-gradient(180deg, #FFFCFA, #FDF9F6)
+          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(232,164,184,0.25), transparent 70%),
+          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,197,67,0.22), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(108,201,140,0.25), transparent 70%),
+          linear-gradient(180deg, #FFFCF2, #FFF9EE)
         `,
         pointerEvents: 'none', zIndex: 0,
       }} />

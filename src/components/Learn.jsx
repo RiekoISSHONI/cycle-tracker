@@ -99,7 +99,7 @@ const GLASS = {
   background: 'rgba(255,255,255,0.70)',
   backdropFilter: 'blur(10px)',
   WebkitBackdropFilter: 'blur(10px)',
-  boxShadow: '0 4px 18px rgba(60,50,55,0.04)',
+  boxShadow: '0 4px 18px rgba(58,50,38,0.04)',
   border: '1px solid rgba(255,255,255,0.5)',
 };
 
@@ -269,10 +269,10 @@ export function Learn({ phase = 'ki' }) {
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         background: `
-          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(228,160,176,0.25), transparent 70%),
-          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(212,192,122,0.22), transparent 70%),
-          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(142,190,144,0.25), transparent 70%),
-          linear-gradient(180deg, #FFFCFA, #FDF9F6)
+          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(232,164,184,0.25), transparent 70%),
+          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,197,67,0.22), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(108,201,140,0.25), transparent 70%),
+          linear-gradient(180deg, #FFFCF2, #FFF9EE)
         `,
         pointerEvents: 'none', zIndex: 0,
       }} />

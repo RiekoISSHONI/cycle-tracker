@@ -79,7 +79,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
 
       <div style={{
         background: CARD, borderRadius: 24,
-        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+        boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
         padding: '18px 18px',
       }}>
         {/* Toggle between modern/TCM */}
@@ -311,7 +311,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
       {/* Tips card */}
       <div style={{
         background: CARD, borderRadius: 24,
-        boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+        boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
         padding: '18px 18px',
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -356,7 +356,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
           onClick={() => { trackClick('video', video.id); trackContent('click', 'video', video.id); }}
           style={{
             background: CARD, borderRadius: 24,
-            boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+            boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
             padding: '14px 16px',
             display: 'flex', alignItems: 'center', gap: 12,
             textDecoration: 'none', cursor: 'pointer',
@@ -488,7 +488,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
       {showList && savedItems.length > 0 && (
         <div style={{
           background: CARD, borderRadius: 24,
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+          boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
           padding: '16px 16px',
         }}>
           <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK, marginBottom: 10 }}>
@@ -540,7 +540,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
             key={product.id}
             style={{
               background: CARD, borderRadius: 24,
-              boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+              boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
               padding: '14px 16px',
               display: 'flex', alignItems: 'center', gap: 12,
             }}
@@ -670,7 +670,7 @@ export function Care({ phase, onNavigateSettings }) {
         style={{
           background: CARD,
           borderRadius: 24,
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+          boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
           padding: 0,
           position: 'relative',
           overflow: 'hidden',
@@ -785,7 +785,7 @@ export function Care({ phase, onNavigateSettings }) {
                 style={{
                   background: CARD,
                   borderRadius: 24,
-                  boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+                  boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
                   padding: '14px 16px',
                   display: 'flex',
                   alignItems: 'center',
@@ -858,7 +858,7 @@ export function Care({ phase, onNavigateSettings }) {
           borderRadius: 24,
           border: 'none',
           background: CARD,
-          boxShadow: '0 8px 22px rgba(60,50,55,0.06)',
+          boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
           fontFamily: MARU,
           fontSize: 14,
           fontWeight: 700,

@@ -1,31 +1,31 @@
 @import "tailwindcss";
 
-/* Meguri 巡 — Calm pastel direction
+/* Meguri 巡 — Sunshine & Bloom direction
    Zen Kaku Gothic New (clean body), Shippori Mincho B1 (elegant display/headings) */
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================
-   Design Tokens — Calm Palette
+   Design Tokens — Sunny Warm Palette
    ========================================== */
 
 :root {
-  --cream: #FAF8F5;
-  --cream2: #F0ECE6;
+  --cream: #FFFBF2;
+  --cream2: #F5EDDB;
   --card: #FFFFFF;
-  --ink: #3B3335;
-  --ink2: #8A7E82;
-  --ink3: #B8ADB1;
-  --line: rgba(59,51,53,0.08);
-  --line2: rgba(59,51,53,0.05);
-  --coral: #D4897A;
-  --coralD: #B8705F;
+  --ink: #3A3226;
+  --ink2: #8C7E6E;
+  --ink3: #B5A898;
+  --line: rgba(58,50,38,0.08);
+  --line2: rgba(58,50,38,0.05);
+  --coral: #F0C543;
+  --coralD: #D4A72C;
 
   /* Phase accent (set dynamically, defaults to ki) */
-  --accent: #C9A96E;
-  --accent-deep: #A68B4B;
-  --accent-soft: #F2EBD9;
-  --accent-tint: #F9F5EC;
-  --accent-line: rgba(201,169,110,0.24);
+  --accent: #F0C543;
+  --accent-deep: #D4A72C;
+  --accent-soft: #FEF5D4;
+  --accent-tint: #FFFAEB;
+  --accent-line: rgba(240,197,67,0.22);
 
   /* Legacy compat */
   --paper: var(--cream);
@@ -34,43 +34,43 @@
   --terra: var(--accent);
   --muted: var(--ink3);
 
-  /* Shadows — soft mauve-brown */
-  --shadow-card: 0 6px 20px rgba(60,50,55,0.05);
-  --shadow-hero: 0 8px 26px rgba(60,50,55,0.07);
+  /* Shadows — warm honey-brown */
+  --shadow-card: 0 6px 20px rgba(58,50,38,0.05);
+  --shadow-hero: 0 8px 26px rgba(58,50,38,0.07);
   --shadow-accent: 0 10px 24px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
-/* Phase-specific token overrides — calm pastels */
-[data-phase="menstrual"], [data-phase="sei"] {
-  --accent: #D4899F;
-  --accent-deep: #B56B82;
-  --accent-soft: #F5E1E8;
-  --accent-tint: #FAF0F4;
-  --accent-line: rgba(212,137,159,0.20);
+/* Phase-specific token overrides — cheerful brights */
+[data-phase="menstrual"], [data-phase-key="sei"] {
+  --accent: #E8A4B8;
+  --accent-deep: #D0819A;
+  --accent-soft: #FDE9F0;
+  --accent-tint: #FEF3F7;
+  --accent-line: rgba(232,164,184,0.20);
 }
 
-[data-phase="follicular"], [data-phase="me"] {
-  --accent: #8BAF8E;
-  --accent-deep: #5E8A62;
-  --accent-soft: #E4EFE5;
-  --accent-tint: #F2F8F3;
-  --accent-line: rgba(139,175,142,0.22);
+[data-phase="follicular"], [data-phase-key="me"] {
+  --accent: #6CC98C;
+  --accent-deep: #4EA86C;
+  --accent-soft: #E0F5E8;
+  --accent-tint: #F0FBF3;
+  --accent-line: rgba(108,201,140,0.20);
 }
 
-[data-phase="ovulatory"], [data-phase="ki"] {
-  --accent: #C9A96E;
-  --accent-deep: #A68B4B;
-  --accent-soft: #F2EBD9;
-  --accent-tint: #F9F5EC;
-  --accent-line: rgba(201,169,110,0.24);
+[data-phase="ovulatory"], [data-phase-key="ki"] {
+  --accent: #F0C543;
+  --accent-deep: #D4A72C;
+  --accent-soft: #FEF5D4;
+  --accent-tint: #FFFAEB;
+  --accent-line: rgba(240,197,67,0.22);
 }
 
-[data-phase="luteal"], [data-phase="mi"] {
-  --accent: #9B89B5;
-  --accent-deep: #7A6699;
-  --accent-soft: #EBE5F1;
-  --accent-tint: #F5F2F9;
-  --accent-line: rgba(155,137,181,0.20);
+[data-phase="luteal"], [data-phase-key="mi"] {
+  --accent: #F0A878;
+  --accent-deep: #D48C5E;
+  --accent-soft: #FDE9DC;
+  --accent-tint: #FEF4EE;
+  --accent-line: rgba(240,168,120,0.20);
 }
 
 /* ==========================================
