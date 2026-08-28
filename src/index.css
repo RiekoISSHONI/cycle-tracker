@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* Meguri 巡 — Sunshine & Bloom direction
-   Zen Kaku Gothic New (clean body), Shippori Mincho B1 (elegant display/headings) */
-@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap');
+   M PLUS Rounded 1c (warm rounded body), Shippori Mincho B1 (elegant display/headings) */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap');
 
 /* ==========================================
    Design Tokens — Sunny Warm Palette
@@ -17,15 +17,15 @@
   --ink3: #B5A898;
   --line: rgba(58,50,38,0.08);
   --line2: rgba(58,50,38,0.05);
-  --coral: #F0C543;
-  --coralD: #D4A72C;
+  --coral: #F0B818;
+  --coralD: #D49E00;
 
   /* Phase accent (set dynamically, defaults to ki) */
-  --accent: #F0C543;
-  --accent-deep: #D4A72C;
-  --accent-soft: #FEF5D4;
-  --accent-tint: #FFFAEB;
-  --accent-line: rgba(240,197,67,0.22);
+  --accent: #F0B818;
+  --accent-deep: #D49E00;
+  --accent-soft: #FEF0C4;
+  --accent-tint: #FFF8E0;
+  --accent-line: rgba(240,184,24,0.24);
 
   /* Legacy compat */
   --paper: var(--cream);
@@ -40,37 +40,37 @@
   --shadow-accent: 0 10px 24px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
-/* Phase-specific token overrides — cheerful brights */
+/* Phase-specific token overrides — bold & vibrant */
 [data-phase="menstrual"], [data-phase-key="sei"] {
-  --accent: #E8A4B8;
-  --accent-deep: #D0819A;
-  --accent-soft: #FDE9F0;
-  --accent-tint: #FEF3F7;
-  --accent-line: rgba(232,164,184,0.20);
+  --accent: #E4849E;
+  --accent-deep: #CC6482;
+  --accent-soft: #FDE4ED;
+  --accent-tint: #FEF0F5;
+  --accent-line: rgba(228,132,158,0.22);
 }
 
 [data-phase="follicular"], [data-phase-key="me"] {
-  --accent: #6CC98C;
-  --accent-deep: #4EA86C;
-  --accent-soft: #E0F5E8;
-  --accent-tint: #F0FBF3;
-  --accent-line: rgba(108,201,140,0.20);
+  --accent: #44C474;
+  --accent-deep: #2CA85A;
+  --accent-soft: #DCFAE6;
+  --accent-tint: #EDFDF3;
+  --accent-line: rgba(68,196,116,0.22);
 }
 
 [data-phase="ovulatory"], [data-phase-key="ki"] {
-  --accent: #F0C543;
-  --accent-deep: #D4A72C;
-  --accent-soft: #FEF5D4;
-  --accent-tint: #FFFAEB;
-  --accent-line: rgba(240,197,67,0.22);
+  --accent: #F0B818;
+  --accent-deep: #D49E00;
+  --accent-soft: #FEF0C4;
+  --accent-tint: #FFF8E0;
+  --accent-line: rgba(240,184,24,0.24);
 }
 
 [data-phase="luteal"], [data-phase-key="mi"] {
-  --accent: #F0A878;
-  --accent-deep: #D48C5E;
-  --accent-soft: #FDE9DC;
-  --accent-tint: #FEF4EE;
-  --accent-line: rgba(240,168,120,0.20);
+  --accent: #F08848;
+  --accent-deep: #D47030;
+  --accent-soft: #FDE3D4;
+  --accent-tint: #FEF2EA;
+  --accent-line: rgba(240,136,72,0.22);
 }
 
 /* ==========================================
@@ -88,7 +88,7 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', system-ui, sans-serif;
+  font-family: 'M PLUS Rounded 1c', 'Hiragino Kaku Gothic ProN', system-ui, sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
@@ -114,11 +114,11 @@ body {
 ::-webkit-scrollbar { width: 0; height: 0; }
 
 /* ==========================================
-   Typography — Zen Kaku Gothic New (body) + Shippori Mincho B1 (display)
+   Typography — M PLUS Rounded 1c (body) + Shippori Mincho B1 (display)
    ========================================== */
 
 h1, h2, h3, h4 {
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'M PLUS Rounded 1c', system-ui, sans-serif;
   font-weight: 700;
   color: var(--ink);
   line-height: 1.2;
@@ -129,7 +129,7 @@ h2 { font-size: 22px; }
 h3 { font-size: 20px; }
 
 .font-maru {
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'M PLUS Rounded 1c', system-ui, sans-serif;
 }
 
 .font-mincho, .font-display {
@@ -139,7 +139,7 @@ h3 { font-size: 20px; }
 .font-oldmin { font-family: 'Shippori Mincho B1', serif; }
 
 .font-gothic, .font-body {
-  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  font-family: 'M PLUS Rounded 1c', system-ui, sans-serif;
 }
 
 /* ==========================================
@@ -165,7 +165,7 @@ h3 { font-size: 20px; }
    ========================================== */
 
 .eyebrow {
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -185,7 +185,7 @@ h3 { font-size: 20px; }
   justify-content: center;
   gap: 10px;
   box-shadow: var(--shadow-accent);
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #fff;
@@ -206,7 +206,7 @@ h3 { font-size: 20px; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 14.5px;
   font-weight: 600;
   color: var(--ink);
@@ -224,7 +224,7 @@ h3 { font-size: 20px; }
   border-radius: 14px;
   background: var(--cream2);
   border: 1px solid var(--line);
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 15px;
   color: var(--ink);
   outline: none;
@@ -270,7 +270,7 @@ h3 { font-size: 20px; }
   padding: 5px 12px;
   border-radius: 99px;
   background: var(--accent-soft);
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 12.5px;
   font-weight: 700;
   color: var(--accent-deep);
@@ -308,7 +308,7 @@ h3 { font-size: 20px; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
@@ -335,7 +335,7 @@ h3 { font-size: 20px; }
 .symptom-chip {
   padding: 9px 16px;
   border-radius: 99px;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 13.5px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -413,7 +413,7 @@ h3 { font-size: 20px; }
   border-radius: 14px;
   background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 14px;
   font-weight: 700;
   box-shadow: var(--shadow-accent);
@@ -488,7 +488,7 @@ h3 { font-size: 20px; }
   align-items: center;
   justify-content: center;
   position: relative;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 16px;
   font-weight: 700;
 }
@@ -551,7 +551,7 @@ input[type="range"]::-moz-range-thumb {
 .btn {
   padding: 13px 20px;
   border-radius: 15px;
-  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 700;
   font-size: 15px;
   transition: all 0.2s ease;

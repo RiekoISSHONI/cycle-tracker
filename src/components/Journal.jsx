@@ -369,21 +369,21 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
       : `${sorted.length} ${sorted.length === 1 ? 'entry' : 'entries'}`;
 
     const html = `<!DOCTYPE html><html><head><meta charset="utf-8">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Shippori+Mincho+B1:wght@400;500;600;700;800&display=swap">
       <title>巡 meguri — ${title}</title>
       <style>
         @page { margin: 20mm 16mm; size: A4; }
-        body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #3A3226; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; color: #3A3226; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         @media screen { body { max-width: 680px; margin: 0 auto; padding: 40px 24px; background: #FFFBF2; } }
       </style></head><body>
       <div style="text-align: center; margin-bottom: 32px; padding-bottom: 24px; border-bottom: 2px solid rgba(59,51,53,0.08);">
-        <div style="font-family: 'Shippori Mincho B1', serif; font-size: 36px; font-weight: 800; color: #F0C543; margin-bottom: 4px;">巡</div>
+        <div style="font-family: 'Shippori Mincho B1', serif; font-size: 36px; font-weight: 800; color: #F0B818; margin-bottom: 4px;">巡</div>
         <div style="font-size: 12px; letter-spacing: 3px; color: #8C7E6E; text-transform: uppercase; font-weight: 700;">meguri ${title}</div>
         <div style="font-size: 13px; color: #B5A898; margin-top: 8px;">${subtitle}</div>
       </div>
       ${entryCards}
       <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(59,51,53,0.08);">
-        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 11px; color: #F0C543;">巡 meguri</span>
+        <span style="font-family: 'Shippori Mincho B1', serif; font-size: 11px; color: #F0B818;">巡 meguri</span>
       </div>
       <script>window.onafterprint=()=>window.close();window.onload=()=>setTimeout(()=>window.print(),500);</script>
     </body></html>`;
@@ -450,9 +450,9 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         background: `
-          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(232,164,184,0.25), transparent 70%),
-          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,197,67,0.22), transparent 70%),
-          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(108,201,140,0.25), transparent 70%),
+          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(228,132,158,0.25), transparent 70%),
+          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,184,24,0.22), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(68,196,116,0.25), transparent 70%),
           linear-gradient(180deg, #FFFCF2, #FFF9EE)
         `,
         pointerEvents: 'none', zIndex: 0,

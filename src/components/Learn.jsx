@@ -269,9 +269,9 @@ export function Learn({ phase = 'ki' }) {
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         background: `
-          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(232,164,184,0.25), transparent 70%),
-          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,197,67,0.22), transparent 70%),
-          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(108,201,140,0.25), transparent 70%),
+          radial-gradient(ellipse 60% 30% at 10% 12%, rgba(228,132,158,0.25), transparent 70%),
+          radial-gradient(ellipse 55% 28% at 40% 6%, rgba(240,184,24,0.22), transparent 70%),
+          radial-gradient(ellipse 55% 30% at 75% 18%, rgba(68,196,116,0.25), transparent 70%),
           linear-gradient(180deg, #FFFCF2, #FFF9EE)
         `,
         pointerEvents: 'none', zIndex: 0,
