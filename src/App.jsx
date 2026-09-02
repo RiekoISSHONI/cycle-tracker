@@ -14,6 +14,8 @@ import { DailyCheckin } from './components/DailyCheckin';
 import { Insights } from './components/Insights';
 import { Care } from './components/Care';
 import { Journal } from './components/Journal';
+import { WorkMode } from './components/WorkMode';
+import { PartnerGuide } from './components/PartnerGuide';
 import { ConsentModal } from './components/ConsentModal';
 import { UpgradeSuccessBanner } from './components/UpgradeSuccessBanner';
 
@@ -24,7 +26,6 @@ function App() {
   const [periodHistory, setPeriodHistory] = useLocalStorage('periodHistory', []);
   const [journalEntries, setJournalEntries] = useLocalStorage('journalEntries', []);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [viewMode, setViewMode] = useState('personal');
 
   const cycleStats = useMemo(() => {
     return calculateCycleStats(periodHistory);
@@ -66,7 +67,7 @@ function App() {
 
   useEffect(() => {
     const phase = cycleInfo?.phase ? phaseKeyFromLegacy(cycleInfo.phase) : undefined;
-    trackPageView(activeTab, { phase, mode: viewMode });
+    trackPageView(activeTab, { phase });
   }, [activeTab]);
 
   const handleAcceptConsent = () => {
@@ -89,7 +90,6 @@ function App() {
     setPeriodHistory([]);
     setJournalEntries([]);
     setActiveTab('dashboard');
-    setViewMode('personal');
   };
 
   const handleLogPeriod = (date) => {
@@ -142,12 +142,12 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', paddingBottom: 110, position: 'relative' }}>
-      <Header cycleInfo={cycleInfo} viewMode={viewMode} setViewMode={setViewMode} onNavigateSettings={() => setActiveTab('settings')} />
+      <Header onNavigateSettings={() => setActiveTab('settings')} />
       {justUpgraded && <UpgradeSuccessBanner onDismiss={dismissUpgraded} />}
 
       <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
         {activeTab === 'dashboard' && cycleInfo && (
-          <Dashboard cycleInfo={cycleInfo} viewMode={viewMode} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateDiary={() => setActiveTab('diary')} />
+          <Dashboard cycleInfo={cycleInfo} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateDiary={() => setActiveTab('diary')} onNavigateCheckin={() => setActiveTab('checkin')} />
         )}
 
         {activeTab === 'checkin' && cycleInfo && (
@@ -184,11 +184,22 @@ function App() {
           <CycleCalendar cycleInfo={cycleInfo} journalEntries={journalEntries} />
         )}
 
+        {activeTab === 'work' && cycleInfo && (
+          <WorkMode
+            phase={cycleInfo.phase}
+            cycleDay={cycleInfo.cycleDay}
+          />
+        )}
+
         {activeTab === 'care' && cycleInfo && (
           <Care
             phase={cycleInfo.phase}
             onNavigateSettings={() => setActiveTab('settings')}
           />
+        )}
+
+        {activeTab === 'partner' && cycleInfo && (
+          <PartnerGuide cycleInfo={cycleInfo} />
         )}
 
         {activeTab === 'settings' && (
