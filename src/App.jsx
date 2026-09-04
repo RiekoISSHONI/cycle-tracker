@@ -145,7 +145,7 @@ function App() {
       <Header onNavigateSettings={() => setActiveTab('settings')} />
       {justUpgraded && <UpgradeSuccessBanner onDismiss={dismissUpgraded} />}
 
-      <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative' }}>
+      <main style={{ maxWidth: 480, margin: '0 auto', position: 'relative', padding: '0 16px' }}>
         {activeTab === 'dashboard' && cycleInfo && (
           <Dashboard cycleInfo={cycleInfo} checkins={checkins} cycleLength={effectiveCycleLength} periodHistory={periodHistory} onNavigateDiary={() => setActiveTab('diary')} onNavigateCheckin={() => setActiveTab('checkin')} />
         )}

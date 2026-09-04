@@ -6,7 +6,7 @@ export function Header({ onNavigateSettings }) {
     <header style={{
       position: 'sticky', top: 0, zIndex: 20,
       background: 'transparent',
-      padding: '14px 22px 0',
+      padding: '14px 28px 0',
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
