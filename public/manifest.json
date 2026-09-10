@@ -4,8 +4,8 @@
   "description": "Track your menstrual cycle with science-backed personalized recommendations",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3ece0",
-  "theme_color": "#b5582f",
+  "background_color": "#FAF6E0",
+  "theme_color": "#A09430",
   "orientation": "portrait",
   "icons": [
     {
