@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MeguriKanji } from './MeguriKanji';
-
 export function ConsentModal({ onAccept }) {
   const { t, i18n } = useTranslation();
   const [expanded, setExpanded] = useState(false);
@@ -20,7 +18,7 @@ export function ConsentModal({ onAccept }) {
               className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
               style={{ background: 'linear-gradient(150deg, #F0B818, #D49E00)' }}
             >
-              <MeguriKanji size={32} color="#fff" />
+              <span style={{ fontFamily: '"Shippori Mincho B1", serif', fontSize: 28, fontWeight: 700, color: '#fff' }}>巡</span>
             </div>
             <h2 className="text-xl font-bold text-gray-800">{t('consent.title')}</h2>
             <p className="text-gray-500 text-sm mt-1">{t('consent.subtitle')}</p>

@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { trackEvent } from '../utils/telemetry';
 import { PHASES, PHASE_ORDER, CORAL, CORAL_D } from '../utils/phases';
-import { MeguriKanji } from './MeguriKanji';
-
 export function CycleSetup({ onSave }) {
   const { t, i18n } = useTranslation();
   const [step, setStep] = useState(0);
@@ -79,7 +77,7 @@ export function CycleSetup({ onSave }) {
                   boxShadow: `0 10px 30px ${CORAL}44`,
                 }}
               >
-                <MeguriKanji size={48} color="#fff" />
+                <span style={{ fontFamily: '"Shippori Mincho B1", serif', fontSize: 42, fontWeight: 700, color: '#fff' }}>巡</span>
               </div>
 
               <h1 className="text-3xl font-display mb-3" style={{ color: 'var(--ink)' }}>

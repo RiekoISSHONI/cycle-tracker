@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSubscription } from '../contexts/SubscriptionContext';
 import { PLANS, isStripeConfigured } from '../contexts/SubscriptionContext';
 import { PHASES, CORAL, CORAL_D, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM, CREAM2, LINE } from '../utils/phases';
-import { MeguriKanji } from './MeguriKanji';
 import { trackEvent } from '../utils/telemetry';
 
 export function PremiumBadge() {
@@ -128,15 +127,18 @@ export function UpgradeModal({ onClose, feature }) {
         }}>
           <div style={{
             position: 'absolute', top: 12, left: 16, opacity: 0.1,
-          }}><MeguriKanji size={56} color="#fff" /></div>
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#fff',
+          }}>巡</div>
           <div style={{
             position: 'absolute', bottom: 8, right: 16, opacity: 0.1,
-          }}><MeguriKanji size={56} color="#fff" /></div>
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#fff',
+          }}>巡</div>
           <div style={{
             width: 56, height: 56, margin: '0 auto 14px',
             borderRadius: '50%', background: 'rgba(255,255,255,0.2)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}><MeguriKanji size={28} color="#fff" /></div>
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 28, fontWeight: 700, color: '#fff',
+          }}>巡</div>
           <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0 }}>
             {t('premium.upgradeTo')}
           </h2>

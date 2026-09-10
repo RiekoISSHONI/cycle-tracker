@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getGiftItems, getClothingItems } from '../utils/giftItems';
 import { trackFeature } from '../utils/telemetry';
-import { MeguriKanji } from './MeguriKanji';
-
 // Rotate items daily based on date seed
 function rotateItems(items, seed) {
   const shuffled = [...items];
@@ -143,7 +141,7 @@ function ShareCard({ cycleInfo, options, lang }) {
     <div className={`rounded-2xl overflow-hidden ${colors.bg} border ${colors.border}`} style={{ width: '320px' }}>
       {/* Header */}
       <div className="p-4 text-center border-b border-white/50">
-        <MeguriKanji size="1.5rem" className="text-terra mb-1" />
+        <div className="text-2xl font-display text-terra mb-1">巡</div>
         <div className="text-xs text-muted">Meguri</div>
       </div>
 
@@ -312,7 +310,7 @@ function ShareCard({ cycleInfo, options, lang }) {
       <div className="p-3 bg-white/50 text-center border-t border-white/50">
         <p className="text-xs text-muted">{t('partnerShare.sharedWithLove')} · {today}</p>
         <p className="text-xs text-terra font-display mt-1 flex items-center justify-center gap-1">
-          <MeguriKanji size="0.9em" /> meguri
+          巡 meguri
         </p>
       </div>
     </div>

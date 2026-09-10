@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PHASES, MARU, PMINCHO, INK, INK2, INK3, CREAM2, LINE, phaseKeyFromLegacy, phaseForDay } from '../utils/phases';
+import { PHASES, MARU, PMINCHO, INK, INK2, INK3, CREAM2, LINE } from '../utils/phases';
 
 /* ── phase-aware journal prompts ──────────────────────────── */
 const PROMPTS = {
