@@ -1,25 +1,20 @@
-import { useRef, useEffect, useState } from 'react';
-const LOGO_FONT = '"Shippori Mincho B1", serif';
-
 /**
- * LogoMark — Font-rendered 巡 with the しんにょう dot erased via
- * canvas compositing and a sun sparkle SVG overlaid in its place.
+ * LogoMark — Font-rendered 巡 with the しんにょう dot hidden
+ * and a sun sparkle SVG in its place.
  *
- * This matches the approved "Meguri Logo v4" artifact technique:
- * canvas globalCompositeOperation: 'destination-out' erases the dot
- * physically, then the sun icon is positioned over the cleared area.
+ * Uses a background-colored circle to cover the dot (no canvas timing
+ * issues), then positions the sun icon on top.
  *
  * Props:
  *   fontSize  – kanji font size in px (default 22)
- *   color     – kanji + sun colour (default '#fff')
- *   showSun   – whether to erase the dot and show the sun (default true)
- *   style     – forwarded to the wrapper div
+ *   color     – kanji + sun colour (default '#A09430')
+ *   bgColor   – background behind the kanji, used to mask the dot (default '#FAF6E0')
+ *   showSun   – show the sun sparkle (default true)
  */
 
-function SunIcon({ size, color }) {
+function SunIcon({ color }) {
   return (
-    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden="true"
-      style={{ display: 'block' }}>
+    <svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true">
       <circle cx="12" cy="12" r="5" fill={color} />
       <line x1="12" y1="1" x2="12" y2="4.5" stroke={color} strokeWidth="2" strokeLinecap="round" />
       <line x1="12" y1="19.5" x2="12" y2="23" stroke={color} strokeWidth="2" strokeLinecap="round" />
@@ -33,100 +28,54 @@ function SunIcon({ size, color }) {
   );
 }
 
-export function LogoMark({ fontSize = 22, color = '#fff', showSun = true, style = {} }) {
-  const canvasRef = useRef(null);
-  const [canvasDims, setCanvasDims] = useState(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const draw = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const sz = fontSize;
-      const font = `700 ${sz}px ${LOGO_FONT}`;
-
-      // Measure the text
-      const probe = document.createElement('canvas').getContext('2d');
-      probe.font = font;
-      const metrics = probe.measureText('巡');
-      const cw = Math.ceil(metrics.width) + 6;
-      const ch = Math.ceil(sz * 1.2) + 6;
-
-      canvas.width = Math.ceil(cw * dpr);
-      canvas.height = Math.ceil(ch * dpr);
-
-      const ctx = canvas.getContext('2d');
-      ctx.scale(dpr, dpr);
-
-      // Draw kanji
-      ctx.font = font;
-      ctx.fillStyle = color;
-      ctx.textBaseline = 'top';
-      ctx.fillText('巡', 3, 3);
-
-      // Erase the しんにょう dot
-      if (showSun) {
-        ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = 'rgba(0,0,0,1)';
-        ctx.beginPath();
-        ctx.ellipse(
-          sz * 0.14 + 3,
-          sz * 0.12 + 3,
-          sz * 0.14,
-          sz * 0.15,
-          0, 0, Math.PI * 2
-        );
-        ctx.fill();
-      }
-
-      setCanvasDims({ w: cw, h: ch });
-    };
-
-    // Wait for fonts, then draw
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(() => setTimeout(draw, 50));
-    } else {
-      setTimeout(draw, 300);
-    }
-  }, [fontSize, color, showSun]);
-
-  const sunSize = fontSize * 0.30;
+export function LogoMark({ fontSize = 22, color = '#A09430', bgColor = '#FAF6E0', showSun = true }) {
+  // All sizes relative to fontSize
+  const dotCoverSize = fontSize * 0.28;
+  const dotCoverLeft = fontSize * 0.02;
+  const dotCoverTop = fontSize * 0.02;
+  const sunSize = fontSize * 0.32;
+  const sunLeft = fontSize * -0.02;
+  const sunTop = fontSize * -0.04;
 
   return (
     <div style={{
       position: 'relative',
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      ...style,
+      display: 'inline-block',
+      lineHeight: 1,
+      fontSize: fontSize,
     }}>
-      <canvas
-        ref={canvasRef}
-        aria-hidden="true"
-        style={{
-          display: 'inline-block',
-          verticalAlign: 'middle',
-          width: canvasDims ? canvasDims.w : fontSize,
-          height: canvasDims ? canvasDims.h : fontSize,
-        }}
-      />
+      <span style={{
+        fontFamily: '"Shippori Mincho B1", serif',
+        fontSize, fontWeight: 700, color,
+        lineHeight: 1,
+      }}>巡</span>
+
       {showSun && (
-        <div style={{
-          position: 'absolute',
-          left: fontSize * 0.06,
-          top: fontSize * 0.02,
-          width: sunSize,
-          height: sunSize,
-          pointerEvents: 'none',
-        }}>
-          <SunIcon size={sunSize} color={color} />
-        </div>
+        <>
+          {/* Circle that covers the しんにょう dot */}
+          <div style={{
+            position: 'absolute',
+            left: dotCoverLeft,
+            top: dotCoverTop,
+            width: dotCoverSize,
+            height: dotCoverSize,
+            borderRadius: '50%',
+            background: bgColor,
+          }} />
+
+          {/* Sun sparkle */}
+          <div style={{
+            position: 'absolute',
+            left: sunLeft,
+            top: sunTop,
+            width: sunSize,
+            height: sunSize,
+            pointerEvents: 'none',
+          }}>
+            <SunIcon color={color} />
+          </div>
+        </>
       )}
-      {/* Fallback text for accessibility */}
-      <span style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)' }}>
-        巡
-      </span>
     </div>
   );
 }
