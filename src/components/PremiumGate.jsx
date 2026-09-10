@@ -11,7 +11,7 @@ export function PremiumBadge() {
       display: 'inline-flex', alignItems: 'center', gap: 4,
       padding: '2px 8px', borderRadius: 99,
       background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
-      fontFamily: MARU, fontSize: 10, fontWeight: 700, color: '#fff',
+      fontFamily: MARU, fontSize: 10, fontWeight: 700, color: '#3A3226',
     }}>
       <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -158,7 +158,7 @@ export function UpgradeModal({ onClose, feature }) {
               style={{
                 padding: '14px 12px', borderRadius: 18,
                 background: selectedPlan === 'monthly' ? CARD : 'transparent',
-                border: selectedPlan === 'monthly' ? `2px solid ${CORAL}` : `2px solid ${LINE}`,
+                border: selectedPlan === 'monthly' ? `2px solid ${CORAL_D}` : `2px solid ${LINE}`,
                 boxShadow: selectedPlan === 'monthly' ? '0 4px 14px rgba(60,50,55,0.08)' : 'none',
                 cursor: 'pointer', textAlign: 'center',
               }}
@@ -180,7 +180,7 @@ export function UpgradeModal({ onClose, feature }) {
               style={{
                 padding: '14px 12px', borderRadius: 18,
                 background: selectedPlan === 'annual' ? CARD : 'transparent',
-                border: selectedPlan === 'annual' ? `2px solid ${CORAL}` : `2px solid ${LINE}`,
+                border: selectedPlan === 'annual' ? `2px solid ${CORAL_D}` : `2px solid ${LINE}`,
                 boxShadow: selectedPlan === 'annual' ? '0 4px 14px rgba(60,50,55,0.08)' : 'none',
                 cursor: 'pointer', textAlign: 'center',
                 position: 'relative',
@@ -225,7 +225,7 @@ export function UpgradeModal({ onClose, feature }) {
                 <span style={{ fontSize: 16 }}>{f.icon}</span>
                 <span style={{ fontFamily: MARU, fontSize: 13, color: INK, flex: 1 }}>{f.label}</span>
                 {isHighlighted && (
-                  <svg width="16" height="16" viewBox="0 0 20 20" fill={CORAL}>
+                  <svg width="16" height="16" viewBox="0 0 20 20" fill={CORAL_D}>
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 )}
@@ -242,8 +242,8 @@ export function UpgradeModal({ onClose, feature }) {
               width: '100%', padding: '15px 20px',
               borderRadius: 18, border: 'none',
               background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
-              boxShadow: `0 8px 20px rgba(212,137,122,0.3)`,
-              fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#fff',
+              boxShadow: `0 8px 20px rgba(160,148,48,0.25)`,
+              fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#3A3226',
               cursor: 'pointer',
             }}
           >

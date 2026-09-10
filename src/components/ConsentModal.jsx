@@ -32,7 +32,7 @@ export function ConsentModal({ onAccept }) {
               onClick={() => handleLanguageChange('en')}
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
               style={i18n.language === 'en'
-                ? { background: '#F0B818', color: '#fff' }
+                ? { background: '#F2E88C', color: '#3A3226' }
                 : { background: '#f3f4f6', color: '#4b5563' }}
             >
               English
@@ -41,7 +41,7 @@ export function ConsentModal({ onAccept }) {
               onClick={() => handleLanguageChange('ja')}
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
               style={i18n.language === 'ja'
-                ? { background: '#F0B818', color: '#fff' }
+                ? { background: '#F2E88C', color: '#3A3226' }
                 : { background: '#f3f4f6', color: '#4b5563' }}
             >
               日本語
@@ -64,13 +64,13 @@ export function ConsentModal({ onAccept }) {
 
             <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: '#FFF8E0' }}>
               <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#FEF0C4' }}>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#D49E00">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#A09430">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
               <div>
                 <div className="font-medium text-sm" style={{ color: '#7a5800' }}>{t('consent.noAccount')}</div>
-                <div className="text-xs mt-0.5" style={{ color: '#D49E00' }}>{t('consent.noAccountDesc')}</div>
+                <div className="text-xs mt-0.5" style={{ color: '#A09430' }}>{t('consent.noAccountDesc')}</div>
               </div>
             </div>
 
@@ -128,8 +128,8 @@ export function ConsentModal({ onAccept }) {
           {/* Accept Button */}
           <button
             onClick={onAccept}
-            className="w-full py-4 text-white font-semibold rounded-2xl hover:shadow-lg transition-all active:scale-[0.98]"
-            style={{ background: 'linear-gradient(135deg, #F0B818, #D49E00)' }}
+            className="w-full py-4 font-semibold rounded-2xl hover:shadow-lg transition-all active:scale-[0.98]"
+            style={{ background: 'linear-gradient(135deg, #F2E88C, #A09430)', color: '#3A3226' }}
           >
             {t('consent.accept')}
           </button>

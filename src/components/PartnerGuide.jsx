@@ -241,17 +241,17 @@ export function PartnerGuide({ cycleInfo }) {
             width: '100%', padding: '15px 20px',
             borderRadius: 18, border: 'none',
             background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
-            boxShadow: `0 6px 18px ${CORAL}44`,
+            boxShadow: `0 6px 18px ${CORAL_D}44`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             cursor: 'pointer',
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            stroke="#3A3226" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
           </svg>
           <span style={{
-            fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#fff',
+            fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#3A3226',
           }}>
             {isJa ? 'パートナーに送る' : 'Share with Partner'}
           </span>

@@ -17,15 +17,15 @@
   --ink3: #B5A898;
   --line: rgba(58,50,38,0.08);
   --line2: rgba(58,50,38,0.05);
-  --coral: #F0B818;
-  --coralD: #D49E00;
+  --coral: #F2E88C;
+  --coralD: #A09430;
 
   /* Phase accent (set dynamically, defaults to ki) */
-  --accent: #F0B818;
-  --accent-deep: #D49E00;
-  --accent-soft: #FEF0C4;
-  --accent-tint: #FFF8E0;
-  --accent-line: rgba(240,184,24,0.24);
+  --accent: #F2E88C;
+  --accent-deep: #A09430;
+  --accent-soft: #FAF6E0;
+  --accent-tint: #FDFBEE;
+  --accent-line: rgba(160,148,48,0.20);
 
   /* Legacy compat */
   --paper: var(--cream);
@@ -564,6 +564,13 @@ input[type="range"]::-moz-range-thumb {
   background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
   box-shadow: var(--shadow-accent);
+}
+/* When accent is the light butter default, use dark text */
+:root:not([data-phase-key]) .btn-primary,
+[data-phase-key="ki"] .btn-primary,
+:root:not([data-phase-key]) .btn-accent,
+[data-phase-key="ki"] .btn-accent {
+  color: var(--ink);
 }
 .btn-ghost { background: transparent; color: var(--accent); }
 .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 10px; }

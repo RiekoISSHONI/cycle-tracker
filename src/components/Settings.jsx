@@ -331,9 +331,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 fontFamily: MARU,
                 fontSize: 12,
                 fontWeight: 700,
-                color: '#fff',
+                color: '#3A3226',
                 cursor: 'pointer',
-                boxShadow: '0 2px 8px rgba(212,137,122,0.3)',
+                boxShadow: '0 2px 8px rgba(160,148,48,0.25)',
               }}
             >
               {isJa ? 'アップグレード' : 'Upgrade'}

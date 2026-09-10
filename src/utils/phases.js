@@ -57,9 +57,9 @@ export const LINE2  = 'rgba(58,50,38,0.05)';
 export const PAPER  = CREAM;
 export const PAPER2 = CREAM2;
 
-// Brand chrome (rich gold — the app's signature colour)
-export const CORAL  = '#F0B818';
-export const CORAL_D = '#D49E00';
+// Brand chrome (butter yellow — the app's signature colour)
+export const CORAL  = '#F2E88C';
+export const CORAL_D = '#A09430';
 
 // Font stacks
 export const MARU    = '"M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", system-ui, sans-serif';

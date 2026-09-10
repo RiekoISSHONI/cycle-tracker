@@ -62,7 +62,7 @@ export function CycleSetup({ onSave }) {
               className="h-2 rounded-full transition-all duration-300"
               style={{
                 width: i === step ? 32 : 8,
-                background: i <= step ? CORAL : 'var(--line)',
+                background: i <= step ? CORAL_D : 'var(--line)',
               }}
             />
           ))}
@@ -160,7 +160,7 @@ export function CycleSetup({ onSave }) {
                     style={{
                       borderColor: 'var(--line)',
                       color: 'var(--ink)',
-                      '--tw-ring-color': `${CORAL}44`,
+                      '--tw-ring-color': `${CORAL_D}44`,
                     }}
                   />
                   {lastPeriodStart && (
@@ -189,7 +189,7 @@ export function CycleSetup({ onSave }) {
                     style={{
                       borderColor: 'var(--line)',
                       color: 'var(--ink)',
-                      '--tw-ring-color': `${CORAL}44`,
+                      '--tw-ring-color': `${CORAL_D}44`,
                     }}
                   />
                   {lastPeriodEnd && (
@@ -200,7 +200,7 @@ export function CycleSetup({ onSave }) {
                         day: 'numeric'
                       })}
                       {lastPeriodStart && lastPeriodEnd && (
-                        <span className="ml-2" style={{ color: CORAL }}>
+                        <span className="ml-2" style={{ color: CORAL_D }}>
                           ({Math.ceil((new Date(lastPeriodEnd) - new Date(lastPeriodStart)) / (1000 * 60 * 60 * 24)) + 1} {t('insights.days')})
                         </span>
                       )}
@@ -233,7 +233,7 @@ export function CycleSetup({ onSave }) {
                   className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
                   style={{ background: PHASES.ki.soft }}
                 >
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke={CORAL}>
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke={CORAL_D}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                 </div>
@@ -263,7 +263,7 @@ export function CycleSetup({ onSave }) {
 
                 <div className="flex justify-between text-sm" style={{ color: 'var(--ink3)' }}>
                   <span>21 {t('insights.days')}</span>
-                  <span className="font-medium" style={{ color: CORAL }}>28 (avg)</span>
+                  <span className="font-medium" style={{ color: CORAL_D }}>28 (avg)</span>
                   <span>35 {t('insights.days')}</span>
                 </div>
               </div>
