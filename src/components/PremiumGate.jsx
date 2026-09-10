@@ -120,29 +120,29 @@ export function UpgradeModal({ onClose, feature }) {
       }}>
         {/* Header */}
         <div style={{
-          background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
+          background: '#FAF6E0',
           padding: '32px 24px 28px',
-          textAlign: 'center', color: '#fff',
+          textAlign: 'center', color: '#A09430',
           position: 'relative', overflow: 'hidden',
         }}>
           <div style={{
-            position: 'absolute', top: 12, left: 16, opacity: 0.1,
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#fff',
+            position: 'absolute', top: 12, left: 16, opacity: 0.08,
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#A09430',
           }}>巡</div>
           <div style={{
-            position: 'absolute', bottom: 8, right: 16, opacity: 0.1,
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#fff',
+            position: 'absolute', bottom: 8, right: 16, opacity: 0.08,
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#A09430',
           }}>巡</div>
           <div style={{
             width: 56, height: 56, margin: '0 auto 14px',
-            borderRadius: '50%', background: 'rgba(255,255,255,0.2)',
+            borderRadius: '50%', background: 'rgba(160,148,48,0.12)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 28, fontWeight: 700, color: '#fff',
+            fontFamily: '"Shippori Mincho B1", serif', fontSize: 28, fontWeight: 700, color: '#A09430',
           }}>巡</div>
-          <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0 }}>
+          <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0, color: INK }}>
             {t('premium.upgradeTo')}
           </h2>
-          <p style={{ fontFamily: MARU, fontSize: 13, opacity: 0.8, marginTop: 6 }}>
+          <p style={{ fontFamily: MARU, fontSize: 13, opacity: 0.7, marginTop: 6, color: INK2 }}>
             {t('premium.unlockAll')}
           </p>
         </div>

@@ -1,4 +1,4 @@
-import { CORAL, CORAL_D, MARU, INK, INK2, CARD, LINE } from '../utils/phases';
+import { MARU, INK2, CARD, LINE } from '../utils/phases';
 import { LogoMark } from './LogoMark';
 
 export function Header({ onNavigateSettings }) {
@@ -12,16 +12,15 @@ export function Header({ onNavigateSettings }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{
           width: 40, height: 40, borderRadius: 14,
-          background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
+          background: '#FAF6E0',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          boxShadow: `0 6px 14px ${CORAL}55`,
           overflow: 'hidden',
         }}>
-          <LogoMark fontSize={22} color="#fff" />
+          <LogoMark fontSize={20} color="#A09430" />
         </div>
         <span style={{
           fontFamily: MARU, fontSize: 24, fontWeight: 700,
-          letterSpacing: -0.5, color: INK,
+          letterSpacing: -0.5, color: '#A09430',
         }}>meguri</span>
       </div>
 
