@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-// Zen Maru Gothic at weight 900 gives the plump, rounded look from the brand guide
-const LOGO_FONT = '"Zen Maru Gothic", "M PLUS Rounded 1c", sans-serif';
+const LOGO_FONT = '"Shippori Mincho B1", serif';
 
 /**
  * LogoMark — Font-rendered 巡 with the しんにょう dot erased via
@@ -45,7 +44,7 @@ export function LogoMark({ fontSize = 22, color = '#fff', showSun = true, style 
     const draw = () => {
       const dpr = window.devicePixelRatio || 1;
       const sz = fontSize;
-      const font = `900 ${sz}px ${LOGO_FONT}`;
+      const font = `700 ${sz}px ${LOGO_FONT}`;
 
       // Measure the text
       const probe = document.createElement('canvas').getContext('2d');
