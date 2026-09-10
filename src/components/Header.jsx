@@ -1,4 +1,4 @@
-import { MARU, INK2, CARD, LINE } from '../utils/phases';
+import { INK2, CARD, LINE } from '../utils/phases';
 import { LogoMark } from './LogoMark';
 
 export function Header({ onNavigateSettings }) {
@@ -19,8 +19,9 @@ export function Header({ onNavigateSettings }) {
           <LogoMark fontSize={20} color="#A09430" />
         </div>
         <span style={{
-          fontFamily: MARU, fontSize: 24, fontWeight: 700,
-          letterSpacing: -0.5, color: '#A09430',
+          fontFamily: '"Fredoka", "Zen Maru Gothic", sans-serif',
+          fontSize: 22, fontWeight: 600,
+          letterSpacing: -0.3, color: '#A09430',
         }}>meguri</span>
       </div>
 
