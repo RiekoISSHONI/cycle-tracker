@@ -430,6 +430,20 @@ h3 { font-size: 20px; }
    Animations
    ========================================== */
 
+@keyframes sun-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Sun CTA hover & active */
+button:hover .sun-cta-circle {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 8px 30px rgba(242,232,140,0.55);
+}
+button:active .sun-cta-circle {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }

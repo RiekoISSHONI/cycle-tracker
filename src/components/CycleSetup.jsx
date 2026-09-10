@@ -111,14 +111,77 @@ export function CycleSetup({ onSave }) {
                 ))}
               </div>
 
-              <button
-                onClick={handleNext}
-                className="btn-primary w-full"
-              >
-                {t('onboarding.getStarted')}
-              </button>
+              {/* Sun CTA */}
+              <div className="flex flex-col items-center mb-2">
+                <button
+                  onClick={handleNext}
+                  aria-label={t('onboarding.getStarted')}
+                  style={{
+                    position: 'relative',
+                    width: 80, height: 80,
+                    border: 'none', background: 'none',
+                    cursor: 'pointer', padding: 0,
+                  }}
+                >
+                  {/* Rotating rays */}
+                  <svg
+                    viewBox="0 0 120 120"
+                    width="120" height="120"
+                    style={{
+                      position: 'absolute',
+                      top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      animation: 'sun-spin 20s linear infinite',
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
+                      <line
+                        key={deg}
+                        x1="60" y1="10" x2="60" y2="22"
+                        stroke="#F2E88C"
+                        strokeWidth={deg % 60 === 0 ? 3.5 : 2}
+                        strokeLinecap="round"
+                        opacity={deg % 60 === 0 ? 0.7 : 0.35}
+                        transform={`rotate(${deg} 60 60)`}
+                      />
+                    ))}
+                  </svg>
+                  {/* Circle */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '50%', left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: 68, height: 68,
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #F2E88C, #D4C84C)',
+                      boxShadow: '0 6px 24px rgba(242,232,140,0.45)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    }}
+                    className="sun-cta-circle"
+                  >
+                    {/* Arrow icon */}
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
+                      stroke="#3A3226" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14" />
+                      <path d="M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </button>
+                <span style={{
+                  fontFamily: '"M PLUS Rounded 1c", sans-serif',
+                  fontSize: 14, fontWeight: 700, color: 'var(--ink2)',
+                  marginTop: 8,
+                }}>
+                  {t('onboarding.getStarted')}
+                </span>
+              </div>
 
-              <p className="text-xs mt-4" style={{ color: 'var(--ink3)' }}>
+              <p className="text-xs mt-2" style={{ color: 'var(--ink3)' }}>
                 {t('onboarding.dataPrivacy')}
               </p>
             </div>
