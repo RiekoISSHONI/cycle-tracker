@@ -131,7 +131,7 @@ export function CycleSetup({ onSave }) {
                       position: 'absolute',
                       top: '50%', left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      animation: 'sun-spin 12s linear infinite',
+                      animation: 'ray-twinkle 3s ease-in-out infinite 0.5s',
                       pointerEvents: 'none',
                     }}
                   >
