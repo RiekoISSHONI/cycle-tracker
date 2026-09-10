@@ -79,7 +79,7 @@ export function CycleSetup({ onSave }) {
                   boxShadow: '0 10px 30px rgba(242,232,140,0.35)',
                 }}
               >
-                <LogoMark fontSize={42} color="#fff" showSun={false} />
+                <LogoMark fontSize={42} color="#fff" bgColor="#F2E88C" />
               </div>
 
               <h1 className="text-3xl font-display mb-3" style={{ color: 'var(--ink)' }}>

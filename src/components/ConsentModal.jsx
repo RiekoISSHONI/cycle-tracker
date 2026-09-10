@@ -20,7 +20,7 @@ export function ConsentModal({ onAccept }) {
               className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
               style={{ background: '#F2E88C' }}
             >
-              <LogoMark fontSize={28} color="#fff" showSun={false} />
+              <LogoMark fontSize={28} color="#fff" bgColor="#F2E88C" />
             </div>
             <h2 className="text-xl font-bold text-gray-800">{t('consent.title')}</h2>
             <p className="text-gray-500 text-sm mt-1">{t('consent.subtitle')}</p>

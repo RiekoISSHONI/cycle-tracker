@@ -16,7 +16,7 @@ export function Header({ onNavigateSettings }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           overflow: 'hidden',
         }}>
-          <LogoMark fontSize={20} color="#fff" showSun={false} />
+          <LogoMark fontSize={20} color="#fff" bgColor="#F2E88C" />
         </div>
         <span style={{
           fontFamily: '"Fredoka", "Zen Maru Gothic", sans-serif',
