@@ -45,8 +45,8 @@ export function LogoMark({ fontSize = 22, color = '#A09430', bgColor = '#FAF6E0'
       fontSize: fontSize,
     }}>
       <span style={{
-        fontFamily: '"Shippori Mincho B1", serif',
-        fontSize, fontWeight: 700, color,
+        fontFamily: '"Zen Maru Gothic", sans-serif',
+        fontSize, fontWeight: 900, color,
         lineHeight: 1,
       }}>巡</span>
 
