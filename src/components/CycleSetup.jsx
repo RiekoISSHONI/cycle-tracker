@@ -75,11 +75,11 @@ export function CycleSetup({ onSave }) {
               <div
                 className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
                 style={{
-                  background: '#FAF6E0',
-                  boxShadow: '0 10px 30px rgba(160,148,48,0.15)',
+                  background: '#F2E88C',
+                  boxShadow: '0 10px 30px rgba(242,232,140,0.35)',
                 }}
               >
-                <LogoMark fontSize={42} color="#A09430" />
+                <LogoMark fontSize={42} color="#fff" showSun={false} />
               </div>
 
               <h1 className="text-3xl font-display mb-3" style={{ color: 'var(--ink)' }}>

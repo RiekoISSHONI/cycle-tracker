@@ -1,4 +1,4 @@
-import { INK2, CARD, LINE } from '../utils/phases';
+import { CORAL, CORAL_D, INK2, CARD, LINE } from '../utils/phases';
 import { LogoMark } from './LogoMark';
 
 export function Header({ onNavigateSettings }) {
@@ -12,16 +12,16 @@ export function Header({ onNavigateSettings }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{
           width: 40, height: 40, borderRadius: 14,
-          background: '#FAF6E0',
+          background: '#F2E88C',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           overflow: 'hidden',
         }}>
-          <LogoMark fontSize={20} color="#A09430" />
+          <LogoMark fontSize={20} color="#fff" showSun={false} />
         </div>
         <span style={{
           fontFamily: '"Fredoka", "Zen Maru Gothic", sans-serif',
           fontSize: 22, fontWeight: 600,
-          letterSpacing: -0.3, color: '#A09430',
+          letterSpacing: -0.3, color: '#F2E88C',
         }}>meguri</span>
       </div>
 
