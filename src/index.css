@@ -435,13 +435,31 @@ h3 { font-size: 20px; }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+@keyframes sun-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 4px 18px rgba(242,232,140,0.4);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.04);
+    box-shadow: 0 6px 26px rgba(242,232,140,0.6);
+  }
+}
+
+@keyframes ray-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 /* Sun CTA hover & active */
 button:hover .sun-cta-circle {
-  transform: translate(-50%, -50%) scale(1.06);
-  box-shadow: 0 6px 24px rgba(242,232,140,0.5);
+  animation-play-state: paused;
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 8px 30px rgba(242,232,140,0.6);
 }
 button:active .sun-cta-circle {
-  transform: translate(-50%, -50%) scale(0.97);
+  animation-play-state: paused;
+  transform: translate(-50%, -50%) scale(0.96);
 }
 
 @keyframes slide-up {
