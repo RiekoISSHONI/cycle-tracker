@@ -571,6 +571,16 @@ input[type="range"]::-moz-range-thumb {
 .text-bark { color: var(--ink); }
 .text-terra { color: var(--accent); }
 .text-muted { color: var(--ink3); }
+.bg-terra { background-color: var(--accent); }
+.bg-washi { background-color: var(--cream2); }
+.bg-cream { background-color: var(--cream); }
+.bg-cream2 { background-color: var(--cream2); }
+.border-washi { border-color: var(--cream2); }
+.from-terra { --tw-gradient-from: var(--accent); }
+.text-forest { color: var(--accent-deep); }
+.bg-forest { background-color: var(--accent-deep); }
+.shadow-terra { --tw-shadow-color: var(--accent); }
+.ring-terra { --tw-ring-color: var(--accent); }
 
 .progress-ring { transform: rotate(-90deg); }
 .cycle-ring-container { position: relative; display: flex; align-items: center; justify-content: center; }

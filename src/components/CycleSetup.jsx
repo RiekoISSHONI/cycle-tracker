@@ -1,13 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { trackEvent } from '../utils/telemetry';
-
-const PHASES_PREVIEW = [
-  { name: 'Menstrual', color: 'bg-rose-500', description: 'Rest & restore' },
-  { name: 'Follicular', color: 'bg-pink-500', description: 'Energy rising' },
-  { name: 'Ovulatory', color: 'bg-amber-500', description: 'Peak power' },
-  { name: 'Luteal', color: 'bg-violet-500', description: 'Wind down' },
-];
+import { PHASES, PHASE_ORDER, CORAL, CORAL_D } from '../utils/phases';
+import { MeguriKanji } from './MeguriKanji';
 
 export function CycleSetup({ onSave }) {
   const { t, i18n } = useTranslation();
@@ -42,12 +37,20 @@ export function CycleSetup({ onSave }) {
   // Calculate slider percentage for styling
   const sliderPercent = ((cycleLength - 21) / (35 - 21)) * 100;
 
+  // Phase preview using actual design-system colours
+  const phasePreviews = PHASE_ORDER.map((key) => {
+    const p = PHASES[key];
+    return { key, accent: p.accent, name: p.clinicalEn, description: p.poemEn.split('.')[0] + '.' };
+  });
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Background decoration */}
+    <div className="min-h-screen flex flex-col" style={{ background: 'var(--cream)' }}>
+      {/* Background decoration — warm gold & green blurs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full opacity-30 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-violet-200 rounded-full opacity-30 blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-25 blur-3xl"
+          style={{ background: PHASES.ki.soft }} />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-25 blur-3xl"
+          style={{ background: PHASES.me.soft }} />
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10">
@@ -56,9 +59,11 @@ export function CycleSetup({ onSave }) {
           {[0, 1, 2].map((i) => (
             <div
               key={i}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === step ? 'w-8 bg-pink-500' : i < step ? 'w-2 bg-pink-400' : 'w-2 bg-gray-300'
-              }`}
+              className="h-2 rounded-full transition-all duration-300"
+              style={{
+                width: i === step ? 32 : 8,
+                background: i <= step ? CORAL : 'var(--line)',
+              }}
             />
           ))}
         </div>
@@ -67,28 +72,41 @@ export function CycleSetup({ onSave }) {
           {/* Step 0: Welcome */}
           {step === 0 && (
             <div className="text-center animate-fade-in">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-terra to-rose-600 flex items-center justify-center shadow-lg shadow-terra/30">
-                <span className="text-4xl font-display text-white">巡</span>
+              <div
+                className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
+                style={{
+                  background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
+                  boxShadow: `0 10px 30px ${CORAL}44`,
+                }}
+              >
+                <MeguriKanji size={48} color="#fff" />
               </div>
 
-              <h1 className="text-3xl font-display text-bark mb-3">
+              <h1 className="text-3xl font-display mb-3" style={{ color: 'var(--ink)' }}>
                 {t('onboarding.welcome')}
               </h1>
-              <p className="text-muted mb-8 leading-relaxed">
+              <p className="mb-8 leading-relaxed" style={{ color: 'var(--ink3)' }}>
                 {t('onboarding.description')}
               </p>
 
-              {/* Phase preview cards */}
+              {/* Phase preview cards — actual phase colours */}
               <div className="grid grid-cols-2 gap-3 mb-8">
-                {PHASES_PREVIEW.map((phase, i) => (
+                {phasePreviews.map((phase, i) => (
                   <div
-                    key={phase.name}
+                    key={phase.key}
                     className="card p-4 text-left"
                     style={{ animationDelay: `${i * 0.1}s` }}
                   >
-                    <div className={`w-3 h-3 rounded-full ${phase.color} mb-2`} />
-                    <div className="font-semibold text-gray-800 text-sm">{phase.name}</div>
-                    <div className="text-xs text-gray-500">{phase.description}</div>
+                    <div
+                      className="w-3 h-3 rounded-full mb-2"
+                      style={{ background: phase.accent }}
+                    />
+                    <div className="font-semibold text-sm" style={{ color: 'var(--ink)' }}>
+                      {phase.name}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--ink3)' }}>
+                      {phase.description}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -100,7 +118,7 @@ export function CycleSetup({ onSave }) {
                 {t('onboarding.getStarted')}
               </button>
 
-              <p className="text-xs text-gray-400 mt-4">
+              <p className="text-xs mt-4" style={{ color: 'var(--ink3)' }}>
                 {t('onboarding.dataPrivacy')}
               </p>
             </div>
@@ -110,15 +128,18 @@ export function CycleSetup({ onSave }) {
           {step === 1 && (
             <div className="animate-fade-in">
               <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-rose-100 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
+                  style={{ background: PHASES.sei.soft }}
+                >
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke={PHASES.sei.accent}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-display text-bark mb-2">
+                <h2 className="text-2xl font-display mb-2" style={{ color: 'var(--ink)' }}>
                   {t('onboarding.whenLastPeriod')}
                 </h2>
-                <p className="text-muted">
+                <p style={{ color: 'var(--ink3)' }}>
                   {t('onboarding.helpsCalculate')}
                 </p>
               </div>
@@ -126,7 +147,7 @@ export function CycleSetup({ onSave }) {
               <div className="space-y-4 mb-6">
                 {/* Period Start Date */}
                 <div className="card p-5">
-                  <label className="block text-sm font-medium text-bark mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--ink)' }}>
                     {t('onboarding.periodStart')}
                   </label>
                   <input
@@ -135,10 +156,15 @@ export function CycleSetup({ onSave }) {
                     onChange={(e) => setLastPeriodStart(e.target.value)}
                     max={today}
                     required
-                    className="w-full h-12 px-4 rounded-xl border border-washi bg-white text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
+                    className="w-full h-12 px-4 rounded-xl border bg-white focus:outline-none focus:ring-2"
+                    style={{
+                      borderColor: 'var(--line)',
+                      color: 'var(--ink)',
+                      '--tw-ring-color': `${CORAL}44`,
+                    }}
                   />
                   {lastPeriodStart && (
-                    <p className="text-sm text-muted mt-2">
+                    <p className="text-sm mt-2" style={{ color: 'var(--ink3)' }}>
                       {new Date(lastPeriodStart).toLocaleDateString(locale, {
                         weekday: 'long',
                         month: 'long',
@@ -150,7 +176,7 @@ export function CycleSetup({ onSave }) {
 
                 {/* Period End Date */}
                 <div className="card p-5">
-                  <label className="block text-sm font-medium text-bark mb-2">
+                  <label className="block text-sm font-medium mb-2" style={{ color: 'var(--ink)' }}>
                     {t('onboarding.periodEnd')}
                   </label>
                   <input
@@ -159,23 +185,28 @@ export function CycleSetup({ onSave }) {
                     onChange={(e) => setLastPeriodEnd(e.target.value)}
                     min={lastPeriodStart}
                     max={today}
-                    className="w-full h-12 px-4 rounded-xl border border-washi bg-white text-bark focus:outline-none focus:ring-2 focus:ring-terra/30 focus:border-terra"
+                    className="w-full h-12 px-4 rounded-xl border bg-white focus:outline-none focus:ring-2"
+                    style={{
+                      borderColor: 'var(--line)',
+                      color: 'var(--ink)',
+                      '--tw-ring-color': `${CORAL}44`,
+                    }}
                   />
                   {lastPeriodEnd && (
-                    <p className="text-sm text-muted mt-2">
+                    <p className="text-sm mt-2" style={{ color: 'var(--ink3)' }}>
                       {new Date(lastPeriodEnd).toLocaleDateString(locale, {
                         weekday: 'long',
                         month: 'long',
                         day: 'numeric'
                       })}
                       {lastPeriodStart && lastPeriodEnd && (
-                        <span className="ml-2 text-terra">
+                        <span className="ml-2" style={{ color: CORAL }}>
                           ({Math.ceil((new Date(lastPeriodEnd) - new Date(lastPeriodStart)) / (1000 * 60 * 60 * 24)) + 1} {t('insights.days')})
                         </span>
                       )}
                     </p>
                   )}
-                  <p className="text-xs text-muted mt-2">{t('onboarding.periodEndOptional')}</p>
+                  <p className="text-xs mt-2" style={{ color: 'var(--ink3)' }}>{t('onboarding.periodEndOptional')}</p>
                 </div>
               </div>
 
@@ -198,23 +229,26 @@ export function CycleSetup({ onSave }) {
           {step === 2 && (
             <form onSubmit={handleSubmit} className="animate-fade-in">
               <div className="text-center mb-8">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-violet-100 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-violet-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
+                  style={{ background: PHASES.ki.soft }}
+                >
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke={CORAL}>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
                 </div>
-                <h2 className="text-2xl font-display text-bark mb-2">
+                <h2 className="text-2xl font-display mb-2" style={{ color: 'var(--ink)' }}>
                   {t('onboarding.howLong')}
                 </h2>
-                <p className="text-muted">
+                <p style={{ color: 'var(--ink3)' }}>
                   {t('onboarding.countDays')}
                 </p>
               </div>
 
               <div className="card p-6 mb-6">
                 <div className="text-center mb-6">
-                  <span className="text-5xl font-bold text-gray-900">{cycleLength}</span>
-                  <span className="text-xl text-gray-500 ml-2">{t('insights.days')}</span>
+                  <span className="text-5xl font-bold" style={{ color: 'var(--ink)' }}>{cycleLength}</span>
+                  <span className="text-xl ml-2" style={{ color: 'var(--ink3)' }}>{t('insights.days')}</span>
                 </div>
 
                 <input
@@ -227,14 +261,14 @@ export function CycleSetup({ onSave }) {
                   className="w-full mb-4"
                 />
 
-                <div className="flex justify-between text-sm text-gray-400">
+                <div className="flex justify-between text-sm" style={{ color: 'var(--ink3)' }}>
                   <span>21 {t('insights.days')}</span>
-                  <span className="text-pink-500 font-medium">28 (avg)</span>
+                  <span className="font-medium" style={{ color: CORAL }}>28 (avg)</span>
                   <span>35 {t('insights.days')}</span>
                 </div>
               </div>
 
-              <p className="text-center text-sm text-gray-500 mb-6">
+              <p className="text-center text-sm mb-6" style={{ color: 'var(--ink3)' }}>
                 {t('onboarding.notSure')}
               </p>
 

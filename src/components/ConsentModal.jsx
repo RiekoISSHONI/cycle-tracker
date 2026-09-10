@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MeguriKanji } from './MeguriKanji';
 
 export function ConsentModal({ onAccept }) {
   const { t, i18n } = useTranslation();
@@ -15,10 +16,11 @@ export function ConsentModal({ onAccept }) {
         <div className="p-6">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-pink-100 to-rose-100 flex items-center justify-center">
-              <svg className="w-8 h-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+            <div
+              className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center"
+              style={{ background: 'linear-gradient(150deg, #F0B818, #D49E00)' }}
+            >
+              <MeguriKanji size={32} color="#fff" />
             </div>
             <h2 className="text-xl font-bold text-gray-800">{t('consent.title')}</h2>
             <p className="text-gray-500 text-sm mt-1">{t('consent.subtitle')}</p>
@@ -28,21 +30,19 @@ export function ConsentModal({ onAccept }) {
           <div className="flex justify-center gap-2 mb-6">
             <button
               onClick={() => handleLanguageChange('en')}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                i18n.language === 'en'
-                  ? 'bg-pink-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+              className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
+              style={i18n.language === 'en'
+                ? { background: '#F0B818', color: '#fff' }
+                : { background: '#f3f4f6', color: '#4b5563' }}
             >
               English
             </button>
             <button
               onClick={() => handleLanguageChange('ja')}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                i18n.language === 'ja'
-                  ? 'bg-pink-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+              className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
+              style={i18n.language === 'ja'
+                ? { background: '#F0B818', color: '#fff' }
+                : { background: '#f3f4f6', color: '#4b5563' }}
             >
               日本語
             </button>
@@ -50,40 +50,40 @@ export function ConsentModal({ onAccept }) {
 
           {/* Key Points */}
           <div className="space-y-3 mb-6">
-            <div className="flex items-start gap-3 p-3 bg-emerald-50 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: '#EDFDF3' }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#DCFAE6' }}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#2CA85A">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div>
-                <div className="font-medium text-emerald-800 text-sm">{t('consent.localStorage')}</div>
-                <div className="text-emerald-600 text-xs mt-0.5">{t('consent.localStorageDesc')}</div>
+                <div className="font-medium text-sm" style={{ color: '#1a5c32' }}>{t('consent.localStorage')}</div>
+                <div className="text-xs mt-0.5" style={{ color: '#2CA85A' }}>{t('consent.localStorageDesc')}</div>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: '#FFF8E0' }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#FEF0C4' }}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#D49E00">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
               <div>
-                <div className="font-medium text-blue-800 text-sm">{t('consent.noAccount')}</div>
-                <div className="text-blue-600 text-xs mt-0.5">{t('consent.noAccountDesc')}</div>
+                <div className="font-medium text-sm" style={{ color: '#7a5800' }}>{t('consent.noAccount')}</div>
+                <div className="text-xs mt-0.5" style={{ color: '#D49E00' }}>{t('consent.noAccountDesc')}</div>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 bg-purple-50 rounded-xl">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
-                <svg className="w-4 h-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: '#FEF2EA' }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#FDE3D4' }}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="#D47030">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               <div>
-                <div className="font-medium text-purple-800 text-sm">{t('consent.location')}</div>
-                <div className="text-purple-600 text-xs mt-0.5">{t('consent.locationDesc')}</div>
+                <div className="font-medium text-sm" style={{ color: '#7a3a10' }}>{t('consent.location')}</div>
+                <div className="text-xs mt-0.5" style={{ color: '#D47030' }}>{t('consent.locationDesc')}</div>
               </div>
             </div>
           </div>
@@ -128,7 +128,8 @@ export function ConsentModal({ onAccept }) {
           {/* Accept Button */}
           <button
             onClick={onAccept}
-            className="w-full py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold rounded-2xl hover:shadow-lg transition-all active:scale-[0.98]"
+            className="w-full py-4 text-white font-semibold rounded-2xl hover:shadow-lg transition-all active:scale-[0.98]"
+            style={{ background: 'linear-gradient(135deg, #F0B818, #D49E00)' }}
           >
             {t('consent.accept')}
           </button>

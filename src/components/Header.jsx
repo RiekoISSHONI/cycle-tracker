@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { CORAL, CORAL_D, PMINCHO, MARU, INK, INK2, CARD, LINE } from '../utils/phases';
+import { MeguriKanji } from './MeguriKanji';
 
 export function Header({ onNavigateSettings }) {
   return (
@@ -14,9 +15,8 @@ export function Header({ onNavigateSettings }) {
           width: 40, height: 40, borderRadius: 14,
           background: `linear-gradient(150deg, ${CORAL}, ${CORAL_D})`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: PMINCHO, fontSize: 22, fontWeight: 700, color: '#fff',
           boxShadow: `0 6px 14px ${CORAL}55`,
-        }}>巡</div>
+        }}><MeguriKanji size={24} color="#fff" /></div>
         <span style={{
           fontFamily: MARU, fontSize: 24, fontWeight: 700,
           letterSpacing: -0.5, color: INK,
