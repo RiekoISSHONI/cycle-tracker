@@ -111,52 +111,51 @@ export function CycleSetup({ onSave }) {
                 ))}
               </div>
 
-              {/* Sun CTA */}
+              {/* Sun CTA — matches LogoMark sun style */}
               <div className="flex flex-col items-center mb-2">
                 <button
                   onClick={handleNext}
                   aria-label={t('onboarding.getStarted')}
                   style={{
                     position: 'relative',
-                    width: 80, height: 80,
+                    width: 100, height: 100,
                     border: 'none', background: 'none',
                     cursor: 'pointer', padding: 0,
                   }}
                 >
-                  {/* Rotating rays */}
+                  {/* Sun rays — same 8-ray pattern as LogoMark SunIcon */}
                   <svg
-                    viewBox="0 0 120 120"
-                    width="120" height="120"
+                    viewBox="0 0 24 24"
+                    width="100" height="100"
                     style={{
                       position: 'absolute',
                       top: '50%', left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      animation: 'sun-spin 20s linear infinite',
+                      animation: 'sun-spin 40s linear infinite',
                       pointerEvents: 'none',
                     }}
                   >
-                    {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
-                      <line
-                        key={deg}
-                        x1="60" y1="10" x2="60" y2="22"
-                        stroke="#F2E88C"
-                        strokeWidth={deg % 60 === 0 ? 3.5 : 2}
-                        strokeLinecap="round"
-                        opacity={deg % 60 === 0 ? 0.7 : 0.35}
-                        transform={`rotate(${deg} 60 60)`}
-                      />
-                    ))}
+                    {/* Cardinal rays */}
+                    <line x1="12" y1="0.5" x2="12" y2="3.5" stroke="#A09430" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                    <line x1="12" y1="20.5" x2="12" y2="23.5" stroke="#A09430" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                    <line x1="0.5" y1="12" x2="3.5" y2="12" stroke="#A09430" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                    <line x1="20.5" y1="12" x2="23.5" y2="12" stroke="#A09430" strokeWidth="1.5" strokeLinecap="round" opacity="0.35" />
+                    {/* Diagonal rays */}
+                    <line x1="3.8" y1="3.8" x2="5.9" y2="5.9" stroke="#A09430" strokeWidth="1.3" strokeLinecap="round" opacity="0.25" />
+                    <line x1="18.1" y1="18.1" x2="20.2" y2="20.2" stroke="#A09430" strokeWidth="1.3" strokeLinecap="round" opacity="0.25" />
+                    <line x1="3.8" y1="20.2" x2="5.9" y2="18.1" stroke="#A09430" strokeWidth="1.3" strokeLinecap="round" opacity="0.25" />
+                    <line x1="18.1" y1="5.9" x2="20.2" y2="3.8" stroke="#A09430" strokeWidth="1.3" strokeLinecap="round" opacity="0.25" />
                   </svg>
-                  {/* Circle */}
+                  {/* Circle button */}
                   <div
                     style={{
                       position: 'absolute',
                       top: '50%', left: '50%',
                       transform: 'translate(-50%, -50%)',
-                      width: 68, height: 68,
+                      width: 64, height: 64,
                       borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #F2E88C, #D4C84C)',
-                      boxShadow: '0 6px 24px rgba(242,232,140,0.45)',
+                      background: '#F2E88C',
+                      boxShadow: '0 4px 18px rgba(242,232,140,0.4)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -164,9 +163,8 @@ export function CycleSetup({ onSave }) {
                     }}
                     className="sun-cta-circle"
                   >
-                    {/* Arrow icon */}
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
-                      stroke="#3A3226" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                      stroke="#3A3226" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12h14" />
                       <path d="M12 5l7 7-7 7" />
                     </svg>
@@ -174,8 +172,8 @@ export function CycleSetup({ onSave }) {
                 </button>
                 <span style={{
                   fontFamily: '"M PLUS Rounded 1c", sans-serif',
-                  fontSize: 14, fontWeight: 700, color: 'var(--ink2)',
-                  marginTop: 8,
+                  fontSize: 13, fontWeight: 600, color: 'var(--ink3)',
+                  marginTop: 4,
                 }}>
                   {t('onboarding.getStarted')}
                 </span>

@@ -437,11 +437,11 @@ h3 { font-size: 20px; }
 
 /* Sun CTA hover & active */
 button:hover .sun-cta-circle {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 8px 30px rgba(242,232,140,0.55);
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 6px 24px rgba(242,232,140,0.5);
 }
 button:active .sun-cta-circle {
-  transform: translate(-50%, -50%) scale(0.96);
+  transform: translate(-50%, -50%) scale(0.97);
 }
 
 @keyframes slide-up {
