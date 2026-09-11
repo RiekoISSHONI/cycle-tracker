@@ -430,19 +430,13 @@ h3 { font-size: 20px; }
    Animations
    ========================================== */
 
-/* Flower CTA — petals breathe open/closed */
-@keyframes petal-breathe {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.65; transform: scale(1.1); }
+/* Circle CTA hover & active */
+.cta-circle:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(242,232,140,0.5);
 }
-
-/* Flower CTA hover & active */
-button:hover .flower-cta-circle {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 6px 26px rgba(242,232,140,0.55);
-}
-button:active .flower-cta-circle {
-  transform: translate(-50%, -50%) scale(0.96);
+.cta-circle:active {
+  transform: scale(0.95);
 }
 
 @keyframes slide-up {

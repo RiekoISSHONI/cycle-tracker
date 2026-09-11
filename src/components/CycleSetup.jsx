@@ -111,87 +111,37 @@ export function CycleSetup({ onSave }) {
                 ))}
               </div>
 
-              {/* Flower CTA */}
-              {(() => {
-                const petals = [
-                  { deg: 0,   fill: PHASES.sei.accent },
-                  { deg: 60,  fill: PHASES.me.accent  },
-                  { deg: 120, fill: PHASES.ki.accent   },
-                  { deg: 180, fill: PHASES.mi.accent   },
-                  { deg: 240, fill: '#F2E88C'          },
-                  { deg: 300, fill: PHASES.me.soft      },
-                ];
-                return (
-                  <div className="flex flex-col items-center mb-2">
-                    <button
-                      onClick={handleNext}
-                      aria-label={t('onboarding.getStarted')}
-                      style={{
-                        position: 'relative',
-                        width: 110, height: 110,
-                        border: 'none', background: 'none',
-                        cursor: 'pointer', padding: 0,
-                      }}
-                    >
-                      {/* Petals */}
-                      <svg
-                        viewBox="0 0 110 110"
-                        width="110" height="110"
-                        style={{
-                          position: 'absolute',
-                          top: '50%', left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          pointerEvents: 'none',
-                        }}
-                      >
-                        {petals.map(({ deg, fill }, i) => (
-                          <g key={deg} transform={`rotate(${deg} 55 55)`}>
-                            <ellipse
-                              cx="55" cy="19"
-                              rx="9" ry="22"
-                              fill={fill}
-                              style={{
-                                transformOrigin: '55px 55px',
-                                animation: `petal-breathe 4s ease-in-out infinite ${i * 0.35}s`,
-                              }}
-                            />
-                          </g>
-                        ))}
-                      </svg>
-                      {/* Circle button */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '50%', left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          width: 52, height: 52,
-                          borderRadius: '50%',
-                          background: '#F2E88C',
-                          boxShadow: '0 4px 16px rgba(242,232,140,0.4)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                        }}
-                        className="flower-cta-circle"
-                      >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                          stroke="#3A3226" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 12h14" />
-                          <path d="M12 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </button>
-                    <span style={{
-                      fontFamily: '"M PLUS Rounded 1c", sans-serif',
-                      fontSize: 13, fontWeight: 600, color: 'var(--ink3)',
-                      marginTop: 4,
-                    }}>
-                      {t('onboarding.getStarted')}
-                    </span>
-                  </div>
-                );
-              })()}
+              <div className="flex flex-col items-center gap-3">
+                <button
+                  onClick={handleNext}
+                  className="cta-circle"
+                  aria-label={t('onboarding.getStarted')}
+                  style={{
+                    width: 64, height: 64,
+                    borderRadius: '50%',
+                    border: 'none',
+                    background: '#F2E88C',
+                    boxShadow: '0 4px 16px rgba(242,232,140,0.35)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="#3A3226" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+                <span style={{
+                  fontFamily: '"M PLUS Rounded 1c", sans-serif',
+                  fontSize: 13, fontWeight: 600, color: 'var(--ink3)',
+                }}>
+                  {t('onboarding.getStarted')}
+                </span>
+              </div>
 
               <p className="text-xs mt-2" style={{ color: 'var(--ink3)' }}>
                 {t('onboarding.dataPrivacy')}
