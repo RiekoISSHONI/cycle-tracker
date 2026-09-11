@@ -73,10 +73,9 @@ export function CycleSetup({ onSave }) {
           {step === 0 && (
             <div className="text-center animate-fade-in">
               <div
-                className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
+                className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center logo-pulse"
                 style={{
                   background: '#F2E88C',
-                  boxShadow: '0 10px 30px rgba(242,232,140,0.35)',
                 }}
               >
                 <LogoMark fontSize={42} color="#fff" bgColor="#F2E88C" />

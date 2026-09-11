@@ -430,6 +430,21 @@ h3 { font-size: 20px; }
    Animations
    ========================================== */
 
+/* Logo pulse — gentle breathing glow */
+@keyframes logo-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(242,232,140,0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 36px rgba(242,232,140,0.5);
+    transform: scale(1.04);
+  }
+}
+.logo-pulse {
+  animation: logo-pulse 3s ease-in-out infinite;
+}
+
 /* Circle CTA hover & active */
 .cta-circle:hover {
   transform: scale(1.08);
