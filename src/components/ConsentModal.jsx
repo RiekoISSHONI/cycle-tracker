@@ -129,7 +129,7 @@ export function ConsentModal({ onAccept }) {
           <button
             onClick={onAccept}
             className="w-full py-4 font-semibold rounded-2xl hover:shadow-lg transition-all active:scale-[0.98]"
-            style={{ background: 'linear-gradient(135deg, #F2E88C, #A09430)', color: '#3A3226' }}
+            style={{ background: '#F2E88C', color: '#3A3226' }}
           >
             {t('consent.accept')}
           </button>

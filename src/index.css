@@ -589,12 +589,14 @@ input[type="range"]::-moz-range-thumb {
   color: #fff;
   box-shadow: var(--shadow-accent);
 }
-/* When accent is the light butter default, use dark text */
+/* When accent is the light butter default, solid fill + dark text */
 :root:not([data-phase-key]) .btn-primary,
 [data-phase-key="ki"] .btn-primary,
 :root:not([data-phase-key]) .btn-accent,
 [data-phase-key="ki"] .btn-accent {
+  background: #F2E88C;
   color: var(--ink);
+  box-shadow: 0 4px 14px rgba(242,232,140,0.35);
 }
 .btn-ghost { background: transparent; color: var(--accent); }
 .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 10px; }

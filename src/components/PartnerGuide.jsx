@@ -240,7 +240,7 @@ export function PartnerGuide({ cycleInfo }) {
           style={{
             width: '100%', padding: '15px 20px',
             borderRadius: 18, border: 'none',
-            background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+            background: CORAL,
             boxShadow: `0 6px 18px ${CORAL_D}44`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             cursor: 'pointer',

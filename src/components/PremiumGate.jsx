@@ -10,7 +10,7 @@ export function PremiumBadge() {
     <span style={{
       display: 'inline-flex', alignItems: 'center', gap: 4,
       padding: '2px 8px', borderRadius: 99,
-      background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+      background: CORAL,
       fontFamily: MARU, fontSize: 10, fontWeight: 700, color: '#3A3226',
     }}>
       <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">
@@ -241,7 +241,7 @@ export function UpgradeModal({ onClose, feature }) {
             style={{
               width: '100%', padding: '15px 20px',
               borderRadius: 18, border: 'none',
-              background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+              background: CORAL,
               boxShadow: `0 8px 20px rgba(160,148,48,0.25)`,
               fontFamily: MARU, fontSize: 15, fontWeight: 700, color: '#3A3226',
               cursor: 'pointer',

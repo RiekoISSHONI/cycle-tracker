@@ -327,7 +327,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 padding: '8px 16px',
                 borderRadius: 12,
                 border: 'none',
-                background: `linear-gradient(135deg, ${CORAL}, ${CORAL_D})`,
+                background: CORAL,
                 fontFamily: MARU,
                 fontSize: 12,
                 fontWeight: 700,
