@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { trackEvent } from '../utils/telemetry';
-import { PHASES, PHASE_ORDER, CORAL, CORAL_D } from '../utils/phases';
+import { PHASES, PHASE_ORDER, CORAL, CORAL_D, MARU } from '../utils/phases';
 import { LogoMark } from './LogoMark';
 
 export function CycleSetup({ onSave }) {
@@ -135,7 +135,7 @@ export function CycleSetup({ onSave }) {
                   </svg>
                 </button>
                 <span style={{
-                  fontFamily: '"M PLUS Rounded 1c", sans-serif',
+                  fontFamily: MARU,
                   fontSize: 13, fontWeight: 600, color: 'var(--ink3)',
                 }}>
                   {t('onboarding.getStarted')}

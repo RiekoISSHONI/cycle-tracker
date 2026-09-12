@@ -127,17 +127,17 @@ export function UpgradeModal({ onClose, feature }) {
         }}>
           <div style={{
             position: 'absolute', top: 12, left: 16, opacity: 0.08,
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#A09430',
+            fontFamily: PMINCHO, fontSize: 56, fontWeight: 700, color: '#A09430',
           }}>巡</div>
           <div style={{
             position: 'absolute', bottom: 8, right: 16, opacity: 0.08,
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 56, fontWeight: 700, color: '#A09430',
+            fontFamily: PMINCHO, fontSize: 56, fontWeight: 700, color: '#A09430',
           }}>巡</div>
           <div style={{
             width: 56, height: 56, margin: '0 auto 14px',
             borderRadius: '50%', background: 'rgba(160,148,48,0.12)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: '"Shippori Mincho B1", serif', fontSize: 28, fontWeight: 700, color: '#A09430',
+            fontFamily: PMINCHO, fontSize: 28, fontWeight: 700, color: '#A09430',
           }}>巡</div>
           <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0, color: INK }}>
             {t('premium.upgradeTo')}
