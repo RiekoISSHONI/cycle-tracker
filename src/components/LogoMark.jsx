@@ -1,3 +1,5 @@
+import { LOGO_KANJI } from '../utils/phases';
+
 /**
  * LogoMark — Font-rendered 巡 with the しんにょう dot hidden
  * and a sun sparkle SVG in its place.
@@ -45,7 +47,7 @@ export function LogoMark({ fontSize = 22, color = '#A09430', bgColor = '#FAF6E0'
       fontSize: fontSize,
     }}>
       <span style={{
-        fontFamily: '"Zen Maru Gothic", sans-serif',
+        fontFamily: LOGO_KANJI,
         fontSize, fontWeight: 900, color,
         lineHeight: 1,
       }}>巡</span>

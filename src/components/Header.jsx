@@ -1,4 +1,4 @@
-import { CORAL, CORAL_D, INK2, CARD, LINE } from '../utils/phases';
+import { CORAL, CORAL_D, INK2, CARD, LINE, LOGO_WORD } from '../utils/phases';
 import { LogoMark } from './LogoMark';
 
 export function Header({ onNavigateSettings }) {
@@ -19,7 +19,7 @@ export function Header({ onNavigateSettings }) {
           <LogoMark fontSize={20} color="#fff" bgColor="#F2E88C" />
         </div>
         <span style={{
-          fontFamily: '"Fredoka", "Zen Maru Gothic", sans-serif',
+          fontFamily: LOGO_WORD,
           fontSize: 22, fontWeight: 600,
           letterSpacing: -0.3, color: '#fff',
         }}>meguri</span>

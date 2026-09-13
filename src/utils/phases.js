@@ -62,11 +62,10 @@ export const CORAL  = '#F2E88C';
 export const CORAL_D = '#A09430';
 
 // Font stacks
-export const MARU    = '"M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", system-ui, sans-serif';
-export const PMINCHO = '"Shippori Mincho B1", serif';
-export const GOTHIC  = MARU;
-export const MINCHO  = PMINCHO;
-export const OLDMIN  = PMINCHO;
+export const MARU      = '"M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", system-ui, sans-serif';
+export const PMINCHO   = '"Shippori Mincho B1", serif';
+export const LOGO_KANJI = '"Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif';
+export const LOGO_WORD  = '"Fredoka", "Zen Maru Gothic", sans-serif';
 
 // Phase ranges in cycle-days
 export const PHASE_RANGES = (() => {
