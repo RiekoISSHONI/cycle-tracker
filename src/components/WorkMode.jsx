@@ -208,7 +208,7 @@ export function WorkMode({ phase, cycleDay }) {
                 <p style={{
                   fontFamily: MARU,
                   fontSize: 14,
-                  fontWeight: 400,
+                  fontWeight: 600,
                   color: INK2,
                   margin: '4px 0 0',
                   lineHeight: 1.55,
