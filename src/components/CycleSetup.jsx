@@ -180,10 +180,14 @@ export function CycleSetup({ onSave }) {
                     onChange={(e) => setLastPeriodStart(e.target.value)}
                     max={today}
                     required
-                    className="w-full h-12 px-4 rounded-xl border bg-white focus:outline-none focus:ring-2"
+                    className="w-full rounded-xl focus:outline-none focus:ring-2"
                     style={{
-                      borderColor: 'var(--line)',
+                      height: 48,
+                      padding: '0 16px',
+                      border: '1px solid var(--line)',
+                      background: '#fff',
                       color: 'var(--ink)',
+                      fontSize: 16,
                       '--tw-ring-color': `${CORAL_D}44`,
                     }}
                   />
@@ -209,10 +213,14 @@ export function CycleSetup({ onSave }) {
                     onChange={(e) => setLastPeriodEnd(e.target.value)}
                     min={lastPeriodStart}
                     max={today}
-                    className="w-full h-12 px-4 rounded-xl border bg-white focus:outline-none focus:ring-2"
+                    className="w-full rounded-xl focus:outline-none focus:ring-2"
                     style={{
-                      borderColor: 'var(--line)',
+                      height: 48,
+                      padding: '0 16px',
+                      border: '1px solid var(--line)',
+                      background: '#fff',
                       color: 'var(--ink)',
+                      fontSize: 16,
                       '--tw-ring-color': `${CORAL_D}44`,
                     }}
                   />
