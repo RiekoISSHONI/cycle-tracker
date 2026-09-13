@@ -433,16 +433,16 @@ h3 { font-size: 20px; }
 /* Logo pulse — gentle breathing glow */
 @keyframes logo-pulse {
   0%, 100% {
-    box-shadow: 0 8px 24px rgba(242,232,140,0.25);
+    box-shadow: 0 8px 24px rgba(242,232,140,0.2);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 16px 48px rgba(242,232,140,0.55);
-    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(242,232,140,0.4);
+    transform: scale(1.03);
   }
 }
 .logo-pulse {
-  animation: logo-pulse 4.5s ease-in-out infinite;
+  animation: logo-pulse 8s ease-in-out infinite;
 }
 
 /* Circle CTA hover & active */
