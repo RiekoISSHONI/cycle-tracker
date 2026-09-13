@@ -437,15 +437,13 @@ input[type="date"] {
    Animations
    ========================================== */
 
-/* Logo pulse — slow breathing glow + gentle scale */
+/* Logo pulse — slow breathing glow, no scale to avoid jitter */
 @keyframes logo-pulse {
   0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 6px 20px rgba(242,232,140,0.2);
+    box-shadow: 0 4px 12px rgba(242,232,140,0.15);
   }
   50% {
-    transform: scale(1.06);
-    box-shadow: 0 10px 40px rgba(242,232,140,0.5), 0 0 60px rgba(242,232,140,0.15);
+    box-shadow: 0 8px 36px rgba(242,232,140,0.55), 0 0 80px rgba(242,232,140,0.25);
   }
 }
 .logo-pulse {
