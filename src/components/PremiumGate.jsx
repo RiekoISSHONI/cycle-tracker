@@ -11,7 +11,7 @@ export function PremiumBadge() {
       display: 'inline-flex', alignItems: 'center', gap: 4,
       padding: '2px 8px', borderRadius: 99,
       background: CORAL,
-      fontFamily: MARU, fontSize: 10, fontWeight: 700, color: '#3A3226',
+      fontFamily: MARU, fontSize: 11, fontWeight: 700, color: '#3A3226',
     }}>
       <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -62,7 +62,7 @@ function LockedFeature({ onClick }) {
         </svg>
         <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK }}>{t('premium.unlockFeature')}</span>
       </div>
-      <p style={{ fontFamily: MARU, fontSize: 12, color: INK3, margin: 0 }}>{t('premium.tapToUpgrade')}</p>
+      <p style={{ fontFamily: MARU, fontSize: 14, color: INK3, margin: 0 }}>{t('premium.tapToUpgrade')}</p>
     </button>
   );
 }
@@ -142,7 +142,7 @@ export function UpgradeModal({ onClose, feature }) {
           <h2 style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, margin: 0, color: INK }}>
             {t('premium.upgradeTo')}
           </h2>
-          <p style={{ fontFamily: MARU, fontSize: 13, opacity: 0.7, marginTop: 6, color: INK2 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, opacity: 0.7, marginTop: 6, color: INK2 }}>
             {t('premium.unlockAll')}
           </p>
         </div>
@@ -163,13 +163,13 @@ export function UpgradeModal({ onClose, feature }) {
                 cursor: 'pointer', textAlign: 'center',
               }}
             >
-              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginBottom: 4 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginBottom: 4 }}>
                 {isJa ? '月額' : 'Monthly'}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK }}>
                 {monthlyPrice}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 11, color: INK3, marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, color: INK3, marginTop: 2 }}>
                 /{isJa ? '月' : 'mo'}
               </div>
             </button>
@@ -195,13 +195,13 @@ export function UpgradeModal({ onClose, feature }) {
               }}>
                 {savingsLabel}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginBottom: 4 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginBottom: 4 }}>
                 {isJa ? '年額' : 'Annual'}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK }}>
                 {annualPrice}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 11, color: INK3, marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, color: INK3, marginTop: 2 }}>
                 {annualMonthly}/{isJa ? '月' : 'mo'}
               </div>
             </button>
@@ -223,7 +223,7 @@ export function UpgradeModal({ onClose, feature }) {
                 }}
               >
                 <span style={{ fontSize: 16 }}>{f.icon}</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, color: INK, flex: 1 }}>{f.label}</span>
+                <span style={{ fontFamily: MARU, fontSize: 14, color: INK, flex: 1 }}>{f.label}</span>
                 {isHighlighted && (
                   <svg width="16" height="16" viewBox="0 0 20 20" fill={CORAL_D}>
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -254,7 +254,7 @@ export function UpgradeModal({ onClose, feature }) {
           {stripeReady && (
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
-              fontFamily: MARU, fontSize: 11, color: INK3,
+              fontFamily: MARU, fontSize: 14, color: INK3,
             }}>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="7" width="18" height="12" rx="2"/>
@@ -268,7 +268,7 @@ export function UpgradeModal({ onClose, feature }) {
             style={{
               width: '100%', padding: 12,
               background: 'none', border: 'none',
-              fontFamily: MARU, fontSize: 13, color: INK3,
+              fontFamily: MARU, fontSize: 14, color: INK3,
               cursor: 'pointer',
             }}
           >

@@ -89,7 +89,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
             style={{
               padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
               background: showTcm ? p.soft : CREAM2,
-              fontFamily: MARU, fontSize: 12, fontWeight: 700,
+              fontFamily: MARU, fontSize: 14, fontWeight: 700,
               color: showTcm ? p.deep : INK3,
             }}
           >
@@ -100,7 +100,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
             style={{
               padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
               background: !showTcm ? p.soft : CREAM2,
-              fontFamily: MARU, fontSize: 12, fontWeight: 700,
+              fontFamily: MARU, fontSize: 14, fontWeight: 700,
               color: !showTcm ? p.deep : INK3,
             }}
           >
@@ -116,7 +116,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                   width: 6, height: 6, borderRadius: '50%',
                   background: PHASES.ki.accent, flexShrink: 0, marginTop: 6,
                 }} />
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                   {tip}
                 </span>
               </div>
@@ -129,10 +129,10 @@ function NutritionSection({ phaseKey, isJa, t }) {
               padding: '10px 14px', borderRadius: 14,
               background: p.tint, marginBottom: 12,
             }}>
-              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.accent }}>
                 {isJa ? '原則' : 'Principle'}
               </span>
-              <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep, margin: '4px 0 0', lineHeight: 1.5 }}>
+              <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, margin: '4px 0 0', lineHeight: 1.5 }}>
                 {tcm.principle}
               </p>
             </div>
@@ -140,7 +140,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
             {/* Recommended foods */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
               <span style={{ fontSize: 13 }}>🍲</span>
-              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                 {isJa ? 'おすすめ食材' : 'Recommended Foods'}
               </span>
             </div>
@@ -151,7 +151,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.me.accent, flexShrink: 0, marginTop: 6,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                     {food}
                   </span>
                 </div>
@@ -163,7 +163,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
               <>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
                   <span style={{ fontSize: 13 }}>🚫</span>
-                  <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                     {isJa ? '控えたい食材' : 'Foods to Avoid'}
                   </span>
                 </div>
@@ -174,7 +174,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                         width: 6, height: 6, borderRadius: '50%',
                         background: PHASES.sei.accent, flexShrink: 0, marginTop: 6,
                       }} />
-                      <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                      <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                         {food}
                       </span>
                     </div>
@@ -191,7 +191,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
                 <span style={{ fontSize: 16 }}>🍵</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.me.deep, lineHeight: 1.4 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: PHASES.me.deep, lineHeight: 1.4 }}>
                   {tcm.tea}
                 </span>
               </div>
@@ -335,7 +335,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
                   }} />
                 )}
                 <span style={{
-                  fontFamily: MARU, fontSize: 12.5, fontWeight: isWarning ? 700 : 600,
+                  fontFamily: MARU, fontSize: 14, fontWeight: isWarning ? 700 : 600,
                   color: isWarning ? PHASES.sei.deep : INK2, lineHeight: 1.5,
                 }}>
                   {tip}
@@ -377,7 +377,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
             <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
               {isJa ? video.nameJa : video.nameEn}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 2 }}>
               {video.channel} · {video.duration}
             </div>
           </div>
@@ -385,7 +385,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
           <div style={{
             padding: '6px 14px', borderRadius: 20, border: 'none',
             background: PHASES.me.tint,
-            fontFamily: MARU, fontSize: 12, fontWeight: 700, color: PHASES.me.accent,
+            fontFamily: MARU, fontSize: 14, fontWeight: 700, color: PHASES.me.accent,
             whiteSpace: 'nowrap', flexShrink: 0,
           }}>
             {isJa ? '再生' : 'Watch'}
@@ -477,7 +477,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
               <path d="M9 11l3 3L22 4" />
               <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
             </svg>
-            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: showList ? p.deep : INK3 }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: showList ? p.deep : INK3 }}>
               {savedItems.length}
             </span>
           </button>
@@ -491,7 +491,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
           boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
           padding: '16px 16px',
         }}>
-          <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: INK, marginBottom: 10 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK, marginBottom: 10 }}>
             {isJa ? '買い物リスト' : 'Shopping List'}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -509,7 +509,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 </button>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, flex: 1 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, flex: 1 }}>
                   {item.name}
                 </span>
                 <a
@@ -519,7 +519,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
                   referrerPolicy="no-referrer"
                   onClick={() => { trackClick('shop', item.id); trackContent('click', 'shop', item.id); }}
                   style={{
-                    fontFamily: MARU, fontSize: 11, fontWeight: 700,
+                    fontFamily: MARU, fontSize: 14, fontWeight: 700,
                     color: PHASES.ki.accent, textDecoration: 'none',
                   }}
                 >
@@ -571,7 +571,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 2 }}>
                 <span style={{
-                  fontFamily: MARU, fontSize: 10, fontWeight: 700,
+                  fontFamily: MARU, fontSize: 11, fontWeight: 700,
                   padding: '1px 7px', borderRadius: 99,
                   background: PHASES.ki.soft, color: PHASES.ki.deep,
                 }}>
@@ -581,7 +581,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
               <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                 {isJa ? product.nameJa : product.nameEn}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
                 {isJa ? product.priceJa : product.priceEn}
               </div>
             </div>
@@ -596,7 +596,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
               style={{
                 padding: '6px 14px', borderRadius: 20, border: 'none',
                 background: PHASES.ki.tint,
-                fontFamily: MARU, fontSize: 12, fontWeight: 700,
+                fontFamily: MARU, fontSize: 14, fontWeight: 700,
                 color: PHASES.ki.accent, textDecoration: 'none',
                 whiteSpace: 'nowrap', flexShrink: 0,
               }}
@@ -609,7 +609,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
 
       {/* Affiliate disclosure */}
       <div style={{
-        fontFamily: MARU, fontSize: 11, fontWeight: 500,
+        fontFamily: MARU, fontSize: 14, fontWeight: 600,
         color: INK3, textAlign: 'center', padding: '4px 12px', lineHeight: 1.5,
       }}>
         {isJa
@@ -711,10 +711,10 @@ export function Care({ phase, onNavigateSettings }) {
               {p.kanji}
             </span>
             <div>
-              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.accent }}>
                 {isJa ? p.season : p.seasonEn}
               </span>
-              <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginLeft: 6 }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginLeft: 6 }}>
                 {isJa ? p.clinical : p.clinicalEn}
               </span>
             </div>
@@ -724,7 +724,7 @@ export function Care({ phase, onNavigateSettings }) {
             {isJa ? '今週の養生' : "This Week's Care"}
           </h2>
 
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.65, margin: '0 0 14px' }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.65, margin: '0 0 14px' }}>
             {isJa ? p.poem : p.poemEn}
           </p>
 
@@ -742,7 +742,7 @@ export function Care({ phase, onNavigateSettings }) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={PHASES.me.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
-            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: PHASES.me.accent }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: PHASES.me.accent }}>
               {isJa ? '周期データは非公開のまま' : 'Your cycle data stays private'}
             </span>
           </div>
@@ -811,10 +811,10 @@ export function Care({ phase, onNavigateSettings }) {
                   <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK }}>
                     {isJa ? item.nameJa : item.nameEn}
                   </div>
-                  <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, marginTop: 1 }}>
+                  <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
                     {isJa ? item.nameEn : item.nameJa}
                   </div>
-                  <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
+                  <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4, lineHeight: 1.4 }}>
                     {isJa ? item.noteJa : item.noteEn}
                   </div>
                 </div>
@@ -827,7 +827,7 @@ export function Care({ phase, onNavigateSettings }) {
                     border: 'none',
                     background: tc.tint,
                     fontFamily: MARU,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: 700,
                     color: tc.accent,
                     cursor: 'pointer',

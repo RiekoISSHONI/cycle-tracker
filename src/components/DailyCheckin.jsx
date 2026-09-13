@@ -200,7 +200,7 @@ export function DailyCheckin({
               <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, lineHeight: 1.3 }}>
                 {ja ? '生理開始を記録' : 'Log period start'}
               </div>
-              <div style={{ fontSize: 13, fontFamily: MARU, opacity: 0.78, marginTop: 2 }}>
+              <div style={{ fontSize: 14, fontFamily: MARU, opacity: 0.78, marginTop: 2 }}>
                 {ja ? '生理が始まったらタップ' : 'Tap if your period started today'}
               </div>
             </div>
@@ -217,7 +217,7 @@ export function DailyCheckin({
         <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: 0 }}>
           {ja ? '毎日のチェックイン' : 'Daily check-in'}
         </h2>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: '6px 0 0' }}>
+        <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, margin: '6px 0 0' }}>
           {ja ? '今日の調子はどうですか？' : 'How are you feeling today?'}
         </p>
       </div>
@@ -228,7 +228,7 @@ export function DailyCheckin({
           <span style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {ja ? '気分' : 'Mood'}
           </span>
-          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.accent }}>
             {MOOD_HINTS[lang][mood]}
           </span>
         </div>
@@ -241,7 +241,7 @@ export function DailyCheckin({
           <span style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {ja ? 'エネルギー' : 'Energy'}
           </span>
-          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.accent }}>
             {ENERGY_HINTS[lang][energy]}
           </span>
         </div>
@@ -261,7 +261,7 @@ export function DailyCheckin({
           onChange={setFlow}
           labels={FLOW_LABELS[lang]}
           selectedGradient={`linear-gradient(135deg, ${sei.accent}, ${sei.deep})`}
-          style={{ height: 46, borderRadius: 13, fontSize: 13, padding: '11px 0' }}
+          style={{ height: 46, borderRadius: 13, fontSize: 14, padding: '11px 0' }}
         />
       </div>
 
@@ -286,7 +286,7 @@ export function DailyCheckin({
                   background: active ? p.soft : CARD,
                   color: active ? p.deep : INK2,
                   fontFamily: MARU,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: active ? 700 : 500,
                   cursor: 'pointer',
                   transition: 'all 0.18s',

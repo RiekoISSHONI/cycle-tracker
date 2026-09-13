@@ -74,7 +74,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{ fontFamily: MARU, fontSize: 24, fontWeight: 700, color: INK, marginTop: 8 }}>
             {isJa ? 'パートナーガイド' : 'Partner Guide'}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4 }}>
             {isJa ? `${p.season} · ${p.name}` : `${p.seasonEn} · ${p.en}`}
           </div>
         </div>
@@ -102,7 +102,7 @@ export function PartnerGuide({ cycleInfo }) {
                 padding: '3px 10px', borderRadius: 99, background: p.soft, marginTop: 6,
               }}>
                 <span style={{ fontSize: 13 }}>{p.emoji}</span>
-                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: p.deep }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep }}>
                   {isJa ? p.name : p.en}
                 </span>
               </div>
@@ -117,7 +117,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 10 }}>
             {isJa ? '今の気持ち' : 'How she may feel'}
           </div>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: 0, lineHeight: 1.6 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, margin: 0, lineHeight: 1.6 }}>
             {partnerUnderstand}
           </p>
         </div>
@@ -136,7 +136,7 @@ export function PartnerGuide({ cycleInfo }) {
                   width: 6, height: 6, borderRadius: '50%',
                   background: PHASES.me.accent, flexShrink: 0, marginTop: 7,
                 }} />
-                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.55 }}>
                   {tip}
                 </span>
               </div>
@@ -159,7 +159,7 @@ export function PartnerGuide({ cycleInfo }) {
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.sei.accent, flexShrink: 0, marginTop: 7,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.55 }}>
                     {tip}
                   </span>
                 </div>
@@ -184,7 +184,7 @@ export function PartnerGuide({ cycleInfo }) {
                   border: `1px solid ${PHASES.ki.line}`,
                 }}>
                   <span style={{
-                    fontFamily: MARU, fontSize: 14, fontWeight: 500,
+                    fontFamily: MARU, fontSize: 14, fontWeight: 600,
                     color: INK, lineHeight: 1.55, fontStyle: 'italic',
                   }}>
                     &ldquo;{phrase}&rdquo;
@@ -210,7 +210,7 @@ export function PartnerGuide({ cycleInfo }) {
                     width: 6, height: 6, borderRadius: '50%',
                     background: PHASES.mi.accent, flexShrink: 0, marginTop: 7,
                   }} />
-                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, lineHeight: 1.55 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.55 }}>
                     {item}
                   </span>
                 </div>
@@ -229,7 +229,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.deep, marginBottom: 6 }}>
             {isJa ? '今日のヒント' : "Today's tip"}
           </div>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: p.deep, margin: 0, lineHeight: 1.55 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.55 }}>
             {tipCopy}
           </p>
         </div>

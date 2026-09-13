@@ -46,7 +46,7 @@ function EngagementCard({ isJa, phaseKey }) {
           <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {isJa ? 'エンゲージメント' : 'Engagement'}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
             {isJa ? 'コンテンツのパフォーマンス' : 'Content performance data'}
           </div>
         </div>
@@ -75,7 +75,7 @@ function EngagementCard({ isJa, phaseKey }) {
                 <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: stat.color }}>
                   {stat.value}
                 </div>
-                <div style={{ fontFamily: MARU, fontSize: 10, fontWeight: 600, color: INK3, marginTop: 2 }}>
+                <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 2 }}>
                   {isJa ? stat.labelJa : stat.labelEn}
                 </div>
               </div>
@@ -99,7 +99,7 @@ function EngagementCard({ isJa, phaseKey }) {
                     <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                       {isJa ? cat.labelJa : cat.labelEn}
                     </div>
-                    <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 2 }}>
+                    <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 2 }}>
                       {cat.impressions} {isJa ? '表示' : 'views'} · {cat.clicks} {isJa ? 'クリック' : 'clicks'}
                     </div>
                   </div>
@@ -107,7 +107,7 @@ function EngagementCard({ isJa, phaseKey }) {
                     padding: '4px 10px', borderRadius: 10,
                     background: cat.ctr > 0 ? `${cat.color}18` : CREAM2,
                   }}>
-                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: cat.ctr > 0 ? cat.color : INK3 }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: cat.ctr > 0 ? cat.color : INK3 }}>
                       {cat.ctr}%
                     </span>
                   </div>
@@ -119,7 +119,7 @@ function EngagementCard({ isJa, phaseKey }) {
               padding: '16px', borderRadius: 14,
               background: CREAM2, textAlign: 'center',
             }}>
-              <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>
                 {isJa ? 'まだデータがありません。Careタブを利用するとデータが蓄積されます。' : 'No data yet. Browse the Care tab to start collecting engagement data.'}
               </div>
             </div>
@@ -128,7 +128,7 @@ function EngagementCard({ isJa, phaseKey }) {
           {/* Top items */}
           {cats.some(c => Object.keys(c.items || {}).length > 0) && (
             <div style={{ marginTop: 14 }}>
-              <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK2, marginBottom: 8 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK2, marginBottom: 8 }}>
                 {isJa ? '人気アイテム' : 'Top Items'}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -153,10 +153,10 @@ function EngagementCard({ isJa, phaseKey }) {
                           width: 6, height: 6, borderRadius: '50%',
                           background: item.catColor, flexShrink: 0,
                         }} />
-                        <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, flex: 1 }}>
+                        <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, flex: 1 }}>
                           {itemId}
                         </span>
-                        <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+                        <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>
                           {item.impressions}i · {item.clicks}c
                         </span>
                       </div>
@@ -289,7 +289,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
           <div style={{ flex: 1 }}>
             {/* Eyebrow */}
-            <div style={{ fontFamily: MARU, fontSize: 11, color: ki.accent, fontWeight: 600, marginBottom: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, color: ki.accent, fontWeight: 600, marginBottom: 2 }}>
               {isJa ? '現在のプラン' : 'Current Plan'}
             </div>
             {/* Plan name */}
@@ -298,7 +298,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             </div>
             {/* Expiry */}
             {isPremium && subscription?.expiresAt && (
-              <div style={{ fontFamily: MARU, fontSize: 12, color: INK2, marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, color: INK2, marginTop: 2 }}>
                 {isJa ? '有効期限: ' : 'Active until '}
                 {new Date(subscription.expiresAt).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}
               </div>
@@ -313,7 +313,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 background: `${ki.accent}22`,
                 border: `1px solid ${ki.accent}44`,
                 fontFamily: MARU,
-                fontSize: 11,
+                fontSize: 14,
                 fontWeight: 600,
                 color: ki.accent,
               }}
@@ -329,7 +329,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                 border: 'none',
                 background: CORAL,
                 fontFamily: MARU,
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: 700,
                 color: '#3A3226',
                 cursor: 'pointer',
@@ -354,7 +354,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
 
         {/* Last period date input */}
         <div style={{ marginBottom: 18 }}>
-          <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, display: 'block', marginBottom: 6 }}>
+          <label style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, display: 'block', marginBottom: 6 }}>
             {isJa ? '最終生理開始日' : 'Last period start'}
           </label>
           <div style={{ position: 'relative' }}>
@@ -382,7 +382,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
         {/* Cycle length slider */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <label style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2 }}>
+            <label style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2 }}>
               {isJa ? '周期の長さ' : 'Cycle Length'}
             </label>
             <span style={{ fontFamily: MARU, fontSize: 20, fontWeight: 700, color: currentP.accent }}>
@@ -443,9 +443,9 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>21</span>
-            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>28</span>
-            <span style={{ fontFamily: MARU, fontSize: 11, color: INK3 }}>35</span>
+            <span style={{ fontFamily: MARU, fontSize: 14, color: INK3 }}>21</span>
+            <span style={{ fontFamily: MARU, fontSize: 14, color: INK3 }}>28</span>
+            <span style={{ fontFamily: MARU, fontSize: 14, color: INK3 }}>35</span>
           </div>
         </div>
 
@@ -511,7 +511,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
                     alignItems: 'center',
                     justifyContent: 'center',
                     fontFamily: MARU,
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: 600,
                     color: selected ? '#fff' : INK3,
                   }}
@@ -558,7 +558,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
               <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 600, color: INK, textAlign: 'left' }}>
                 {isJa ? row.titleJa : row.titleEn}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 12, color: INK3, textAlign: 'left', marginTop: 2 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, color: INK3, textAlign: 'left', marginTop: 2 }}>
                 {isJa ? row.subtitleJa : row.subtitleEn}
               </div>
             </div>
@@ -601,7 +601,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             zIndex: 1,
           }}
         >
-          <p style={{ fontFamily: MARU, fontSize: 13, color: '#B91C1C', marginBottom: 14 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, color: '#B91C1C', marginBottom: 14 }}>
             {isJa ? 'すべてのデータが完全に削除されます。この操作は取り消せません。' : 'All data will be permanently deleted. This action cannot be undone.'}
           </p>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -660,7 +660,7 @@ export function Settings({ cycleData, cycleInfo, onUpdate, onReset, theme, onThe
             background: INK,
             color: '#fff',
             fontFamily: MARU,
-            fontSize: 13,
+            fontSize: 14,
             fontWeight: 600,
             boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
             zIndex: 1000,

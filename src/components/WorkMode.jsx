@@ -81,7 +81,7 @@ export function WorkMode({ phase, cycleDay }) {
           <p style={{
             fontFamily: MARU,
             fontSize: 14,
-            fontWeight: 500,
+            fontWeight: 600,
             color: INK2,
             margin: '4px 0 0',
           }}>
@@ -136,7 +136,7 @@ export function WorkMode({ phase, cycleDay }) {
           {/* label */}
           <p style={{
             fontFamily: MARU,
-            fontSize: 13,
+            fontSize: 14,
             fontWeight: 600,
             color: p.deep,
             margin: '10px 0 0',
@@ -207,7 +207,7 @@ export function WorkMode({ phase, cycleDay }) {
                 </h3>
                 <p style={{
                   fontFamily: MARU,
-                  fontSize: 13,
+                  fontSize: 14,
                   fontWeight: 400,
                   color: INK2,
                   margin: '4px 0 0',

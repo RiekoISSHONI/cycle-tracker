@@ -84,7 +84,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
             {t('predictions.forecastTitle')}
           </span>
         </div>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
+        <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
           {t('predictions.needMoreData')}
         </p>
       </div>
@@ -115,7 +115,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
             <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
               {t('predictions.forecastTitle')}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
               {t('predictions.forecastSubtitle')}
             </div>
           </div>
@@ -151,7 +151,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
             >
               <span style={{
                 fontFamily: MARU,
-                fontSize: 11,
+                fontSize: 14,
                 fontWeight: isToday ? 700 : 600,
                 color: isToday ? phase.accent : INK3,
               }}>
@@ -252,7 +252,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
           <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {isJa ? '今日のフォーカス' : "Today's Focus"}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
             {isJa ? p.season : p.seasonEn}
           </div>
         </div>
@@ -265,7 +265,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
           background: p.tint,
           marginBottom: 12,
         }}>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.55 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.55 }}>
             {dailyTip}
           </p>
         </div>
@@ -293,7 +293,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
             </svg>
-            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
               {isJa ? '運動' : 'Exercise'}
             </span>
           </div>
@@ -365,7 +365,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
               <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
                 {isJa ? 'パートナーガイド' : 'Partner Guide'}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 1 }}>
                 {isJa ? '大切な人に伝えたいこと' : 'What your partner should know'}
               </div>
             </div>
@@ -381,7 +381,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
         <div>
           {/* Understanding */}
           <div style={{ padding: '12px 14px', borderRadius: 16, background: PHASES.mi.tint, marginBottom: 12 }}>
-            <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
+            <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: PHASES.mi.deep, margin: 0, lineHeight: 1.55 }}>
               {understand}
             </p>
           </div>
@@ -389,7 +389,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
           {/* Support tips */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
             <span style={{ fontSize: 14 }}>💚</span>
-            <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
               {isJa ? 'サポート方法' : 'How to Support'}
             </span>
           </div>
@@ -407,7 +407,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
             <>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
                 <span style={{ fontSize: 14 }}>⚠️</span>
-                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                   {isJa ? '避けた方がいいこと' : 'What to Avoid'}
                 </span>
               </div>
@@ -427,7 +427,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
             <>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
                 <span style={{ fontSize: 14 }}>💬</span>
-                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                   {isJa ? 'こう言ってあげて' : 'Try saying this'}
                 </span>
               </div>
@@ -437,7 +437,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
                     padding: '8px 12px', borderRadius: 12,
                     background: PHASES.ki.tint, border: `1px solid ${PHASES.ki.line}`,
                   }}>
-                    <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
+                    <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK, lineHeight: 1.5, fontStyle: 'italic' }}>
                       "{phrase}"
                     </span>
                   </div>
@@ -451,7 +451,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
             <>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, paddingTop: 8, borderTop: `1px solid ${LINE}` }}>
                 <span style={{ fontSize: 14 }}>🤲</span>
-                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                   {isJa ? '今日できること' : 'Things you can do'}
                 </span>
               </div>
@@ -531,7 +531,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
           <div style={{ fontFamily: MARU, fontSize: 28, fontWeight: 700, color: INK }}>
             {copy.hi}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 500, color: INK2, marginTop: 4 }}>
+          <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 600, color: INK2, marginTop: 4 }}>
             {copy.vibe}
           </div>
         </div>
@@ -591,7 +591,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                 <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK, marginTop: 8 }}>
                   {isJa ? `${p.name} · ${p.reading}` : `${p.en} Phase`}
                 </div>
-                <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
+                <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4 }}>
                   {isJa ? `${p.season} · ${p.clinical}` : `${p.seasonEn} · ${p.clinicalEn}`}
                 </div>
               </div>
@@ -620,14 +620,14 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               </div>
 
               {/* Phase description */}
-              <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, margin: '0 0 16px', lineHeight: 1.6 }}>
+              <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, margin: '0 0 16px', lineHeight: 1.6 }}>
                 {t(`phases.${legacyPhaseKey}.description`)}
               </p>
 
               {/* Energy */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', borderRadius: 14, background: CREAM2, marginBottom: 12 }}>
                 <span style={{ fontSize: 16 }}>⚡</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2 }}>
                   {t(`phases.${legacyPhaseKey}.energy`)}
                 </span>
               </div>
@@ -635,7 +635,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               {/* Tip */}
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '12px 16px', borderRadius: 14, background: CREAM2 }}>
                 <span style={{ fontSize: 16 }}>💡</span>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.5 }}>
                   {copy.tip}
                 </span>
               </div>
@@ -678,7 +678,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                 background: p.tint, border: `1px solid ${p.line}`,
               }}>
                 <div style={{
-                  fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent,
+                  fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.accent,
                   textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6,
                 }}>
                   {isJa ? '今日のアファメーション' : "Today's Affirmation"}
@@ -722,7 +722,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                       borderRadius: isToday ? 14 : 0,
                     }}>
                       <div style={{ width: 56, flexShrink: 0 }}>
-                        <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
+                        <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
                           {lbl}
                         </div>
                       </div>
@@ -737,7 +737,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                         ))}
                       </div>
                       <span style={{
-                        fontFamily: MARU, fontSize: 11, fontWeight: 600,
+                        fontFamily: MARU, fontSize: 14, fontWeight: 600,
                         color: phase.deep, padding: '2px 10px',
                         borderRadius: 8, background: isToday ? 'rgba(255,255,255,0.7)' : phase.tint, flexShrink: 0,
                       }}>
@@ -745,7 +745,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                       </span>
                       {f.symptoms?.length > 0 && (
                         <span style={{
-                          fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3,
+                          fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3,
                           flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                         }}>
                           {f.symptoms.join(', ')}
@@ -778,20 +778,20 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                         borderRadius: isToday ? 14 : 0,
                       }}>
                         <div style={{ width: 56, flexShrink: 0 }}>
-                          <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
+                          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: isToday ? 700 : 600, color: isToday ? phase.accent : INK3 }}>
                             {lbl}
                           </div>
                         </div>
                         <span style={{ fontSize: 18, lineHeight: 1 }}>{phase.emoji}</span>
                         <div style={{ flex: 1 }}>
                           <span style={{
-                            fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2,
+                            fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2,
                           }}>
                             {isJa ? `${phase.name} · ${phase.season}` : `${phase.en} · ${phase.seasonEn}`}
                           </span>
                         </div>
                         <span style={{
-                          fontFamily: MARU, fontSize: 11, fontWeight: 600,
+                          fontFamily: MARU, fontSize: 14, fontWeight: 600,
                           color: phase.deep, padding: '2px 10px',
                           borderRadius: 8, background: isToday ? 'rgba(255,255,255,0.7)' : phase.tint, flexShrink: 0,
                         }}>
@@ -805,7 +805,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                   marginTop: 16, padding: '12px 14px', borderRadius: 14,
                   background: CREAM2,
                 }}>
-                  <p style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
                     {isJa
                       ? '💡 チェックインを5回以上すると、気分やエネルギーの予測が表示されます'
                       : '💡 Log 5+ check-ins to unlock mood & energy predictions'}
@@ -847,7 +847,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
             <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK, lineHeight: 1.4 }}>
               {isJa ? '今日のチェックイン' : 'Daily Check-in'}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3, marginTop: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 2 }}>
               {isJa ? '気分・エネルギー・フローを記録' : 'Log mood, energy & flow'}
             </div>
           </div>
@@ -862,7 +862,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               flexShrink: 0,
             }}
           >
-            <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: PHASES.ki.deep }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: PHASES.ki.deep }}>
               {isJa ? '記録' : 'Log'}
             </span>
           </button>
@@ -896,7 +896,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
             <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK, lineHeight: 1.4 }}>
               {isJa ? '今日の気持ちを書こう' : "Write about today"}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3, marginTop: 2 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, marginTop: 2 }}>
               {isJa ? 'ジャーナルで自分のリズムを知る' : 'Journal to understand your rhythm'}
             </div>
           </div>
@@ -911,7 +911,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               flexShrink: 0,
             }}
           >
-            <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.deep }}>
               {isJa ? '書く' : 'Write'}
             </span>
           </button>

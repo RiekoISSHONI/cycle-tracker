@@ -56,7 +56,7 @@ export function UpgradeSuccessBanner({ onDismiss }) {
             {isJa ? 'プレミアムへようこそ' : 'Welcome to Premium'}
           </div>
           <div style={{
-            fontFamily: MARU, fontSize: 12, color: INK2, marginTop: 2,
+            fontFamily: MARU, fontSize: 14, color: INK2, marginTop: 2,
           }}>
             {isJa ? 'すべての機能がアンロックされました' : 'All features are now unlocked'}
           </div>

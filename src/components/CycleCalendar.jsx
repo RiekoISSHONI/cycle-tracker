@@ -150,7 +150,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
         <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: 0 }}>
           {isJa ? '周期の暦' : 'Cycle Calendar'}
         </h2>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
+        <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 6 }}>
           {isJa ? '四季のように巡る、あなたの28日。' : 'Your 28 days, cycling like the seasons.'}
         </p>
       </div>
@@ -186,7 +186,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                 {item.kanji}
               </span>
             </div>
-            <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK2, textAlign: 'center' }}>
+            <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, textAlign: 'center' }}>
               {item.label}
             </span>
           </div>
@@ -245,7 +245,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
               width: 6, height: 6, borderRadius: '50%',
               background: INK2,
             }} />
-            <span style={{ fontFamily: MARU, fontSize: 10, fontWeight: 600, color: INK3 }}>
+            <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
               {isJa ? 'ジャーナル記録あり' : 'Journal entry'}
             </span>
           </div>
@@ -363,7 +363,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                 <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK }}>
                   {ev.title}
                 </div>
-                <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, marginTop: 2 }}>
+                <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 2 }}>
                   {ev.date}
                 </div>
               </div>
@@ -373,7 +373,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                   borderRadius: 20,
                   background: ep.soft,
                   fontFamily: MARU,
-                  fontSize: 11,
+                  fontSize: 14,
                   fontWeight: 700,
                   color: ep.accent,
                   whiteSpace: 'nowrap',
@@ -400,7 +400,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
               </span>
             </div>
             <span style={{
-              fontFamily: MARU, fontSize: 11, fontWeight: 600,
+              fontFamily: MARU, fontSize: 14, fontWeight: 600,
               color: isPremium ? p.accent : INK3,
               padding: '2px 10px', borderRadius: 8,
               background: isPremium ? p.tint : CREAM2,
@@ -439,7 +439,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           <span style={{ fontSize: 13 }}>{ep.emoji}</span>
                           <span style={{
-                            fontFamily: MARU, fontSize: 13, fontWeight: 700,
+                            fontFamily: MARU, fontSize: 14, fontWeight: 700,
                             color: isEntryToday ? ep.accent : INK2,
                           }}>
                             {formatEntryDate(entry.date)}
@@ -459,7 +459,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                             <span style={{ fontSize: 14 }}>{MOOD_EMOJI[entry.mood]}</span>
                           )}
                           <span style={{
-                            fontFamily: MARU, fontSize: 10, fontWeight: 600,
+                            fontFamily: MARU, fontSize: 11, fontWeight: 600,
                             color: ep.deep, padding: '2px 8px', borderRadius: 6, background: ep.tint,
                           }}>
                             {isJa ? `${entry.cycleDay}日目` : `Day ${entry.cycleDay}`}
@@ -468,7 +468,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                       </div>
                       {entry.text && (
                         <p style={{
-                          fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                          fontFamily: MARU, fontSize: 14, fontWeight: 600,
                           color: INK, margin: 0, lineHeight: 1.5,
                           display: '-webkit-box', WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical', overflow: 'hidden',
@@ -491,7 +491,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: ep.deep }}>
                             {isJa ? `${ep.name} · ${entry.cycleDay}日目` : `${ep.en} · Day ${entry.cycleDay}`}
                           </div>
-                          <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+                          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>
                             {isJa ? ep.season : ep.seasonEn}
                           </div>
                         </div>
@@ -503,7 +503,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                       {/* Full journal text */}
                       {entry.text && (
                         <p style={{
-                          fontFamily: MARU, fontSize: 15, fontWeight: 500,
+                          fontFamily: MARU, fontSize: 15, fontWeight: 600,
                           color: INK, margin: 0, lineHeight: 1.75,
                           whiteSpace: 'pre-wrap', wordBreak: 'break-word',
                         }}>
@@ -513,7 +513,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
 
                       {!entry.text && entry.mood > 0 && (
                         <p style={{
-                          fontFamily: MARU, fontSize: 14, fontWeight: 500,
+                          fontFamily: MARU, fontSize: 14, fontWeight: 600,
                           color: INK3, margin: 0, textAlign: 'center',
                           padding: '20px 0',
                         }}>
@@ -544,7 +544,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                   : `${lockedCount} journal ${lockedCount === 1 ? 'entry' : 'entries'} locked`}
               </div>
               <p style={{
-                fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                fontFamily: MARU, fontSize: 14, fontWeight: 600,
                 color: INK3, margin: '0 0 14px', lineHeight: 1.5,
               }}>
                 {isJa

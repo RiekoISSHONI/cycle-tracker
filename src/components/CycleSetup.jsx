@@ -136,7 +136,7 @@ export function CycleSetup({ onSave }) {
                 </button>
                 <span style={{
                   fontFamily: MARU,
-                  fontSize: 13, fontWeight: 600, color: 'var(--ink3)',
+                  fontSize: 14, fontWeight: 600, color: 'var(--ink3)',
                 }}>
                   {t('onboarding.getStarted')}
                 </span>

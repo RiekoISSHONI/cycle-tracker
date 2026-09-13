@@ -55,7 +55,7 @@ function PhaseChip({ phaseKey, isAll, selected, onClick, isJa }) {
         onClick={onClick}
         style={{
           fontFamily: MARU,
-          fontSize: 13,
+          fontSize: 14,
           fontWeight: 700,
           padding: '6px 16px',
           borderRadius: 999,
@@ -79,7 +79,7 @@ function PhaseChip({ phaseKey, isAll, selected, onClick, isJa }) {
       onClick={onClick}
       style={{
         fontFamily: MARU,
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: 700,
         padding: '6px 14px',
         borderRadius: 999,
@@ -166,7 +166,7 @@ function PostCard({ post, isJa }) {
             <span
               style={{
                 fontFamily: PMINCHO,
-                fontSize: 12,
+                fontSize: 14,
                 color: p.deep,
                 fontWeight: 600,
               }}
@@ -176,7 +176,7 @@ function PostCard({ post, isJa }) {
             <span
               style={{
                 fontFamily: MARU,
-                fontSize: 11,
+                fontSize: 14,
                 color: p.deep,
                 fontWeight: 600,
                 marginLeft: 3,
@@ -191,7 +191,7 @@ function PostCard({ post, isJa }) {
         <span
           style={{
             fontFamily: MARU,
-            fontSize: 12,
+            fontSize: 14,
             color: INK3,
             flexShrink: 0,
           }}
@@ -222,7 +222,7 @@ function PostCard({ post, isJa }) {
           <span
             style={{
               fontFamily: MARU,
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 600,
               color: INK2,
             }}
@@ -237,7 +237,7 @@ function PostCard({ post, isJa }) {
           <span
             style={{
               fontFamily: MARU,
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 600,
               color: INK2,
             }}

@@ -134,7 +134,7 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
             <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
               {displayDate}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>
               {isJa ? `${p.name} · ${cycleDay}日目` : `${p.en} · Day ${cycleDay}`}
             </div>
           </div>
@@ -147,10 +147,10 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
         background: p.tint, border: `1px solid ${p.line}`,
         marginBottom: 14,
       }}>
-        <div style={{ fontFamily: MARU, fontSize: 10, fontWeight: 700, color: p.accent, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
+        <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: p.accent, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>
           {isJa ? '今日のプロンプト' : "Today's prompt"}
         </div>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: p.deep, margin: 0, lineHeight: 1.55, fontStyle: 'italic' }}>
+        <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep, margin: 0, lineHeight: 1.55, fontStyle: 'italic' }}>
           {prompt}
         </p>
       </div>
@@ -167,7 +167,7 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
           borderRadius: 16,
           border: `1.5px solid ${LINE}`,
           background: '#fff',
-          fontFamily: MARU, fontSize: 14, fontWeight: 500,
+          fontFamily: MARU, fontSize: 14, fontWeight: 600,
           color: INK, lineHeight: 1.7,
           resize: 'vertical',
           outline: 'none',
@@ -180,7 +180,7 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
 
       {/* Mood selector */}
       <div style={{ marginTop: 14 }}>
-        <div style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: INK3, marginBottom: 8 }}>
+        <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK3, marginBottom: 8 }}>
           {isJa ? '今の気分' : 'How are you feeling?'}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
@@ -268,7 +268,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 14 }}>{p.emoji}</span>
-          <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: isToday ? p.accent : INK2 }}>
+          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: isToday ? p.accent : INK2 }}>
             {displayDate}
           </span>
           {isToday && (
@@ -286,7 +286,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
             <span style={{ fontSize: 16 }}>{MOOD_EMOJI[entry.mood]}</span>
           )}
           <span style={{
-            fontFamily: MARU, fontSize: 10, fontWeight: 600,
+            fontFamily: MARU, fontSize: 11, fontWeight: 600,
             color: p.deep, padding: '2px 8px', borderRadius: 6, background: p.tint,
           }}>
             {isJa ? `${entry.cycleDay}日目` : `Day ${entry.cycleDay}`}
@@ -297,7 +297,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
       {/* Entry text */}
       {entry.text && (
         <p style={{
-          fontFamily: MARU, fontSize: 13, fontWeight: 500,
+          fontFamily: MARU, fontSize: 14, fontWeight: 600,
           color: INK, margin: 0, lineHeight: 1.65,
           whiteSpace: 'pre-wrap', wordBreak: 'break-word',
         }}>
@@ -312,7 +312,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
           style={{
             padding: '4px 12px', borderRadius: 8,
             background: 'none', border: `1px solid ${LINE}`,
-            fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3,
+            fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3,
             cursor: 'pointer',
           }}
         >
@@ -323,7 +323,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
           style={{
             padding: '4px 12px', borderRadius: 8,
             background: 'none', border: `1px solid ${LINE}`,
-            fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3,
+            fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3,
             cursor: 'pointer',
           }}
         >
@@ -465,7 +465,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
             <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK }}>
               {isJa ? 'ジャーナル' : 'Journal'}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4 }}>
               {isJa ? '日々の気持ちを記録しよう' : 'Record your daily feelings'}
             </div>
           </div>
@@ -498,7 +498,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
                 </svg>
-                <span style={{ fontFamily: MARU, fontSize: 13, fontWeight: 700, color: p.deep }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.deep }}>
                   {streak}
                 </span>
               </div>
@@ -547,7 +547,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
         {sortedEntries.length > 0 && (
           <div>
             <div style={{
-              fontFamily: MARU, fontSize: 11, fontWeight: 700, color: INK3,
+              fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK3,
               textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12,
             }}>
               {isJa ? '過去のエントリー' : 'Past Entries'}
@@ -579,7 +579,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
             <div style={{ fontFamily: MARU, fontSize: 18, fontWeight: 700, color: INK, marginBottom: 6 }}>
               {isJa ? 'まだエントリーがありません' : 'No entries yet'}
             </div>
-            <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK3, margin: 0, lineHeight: 1.5 }}>
+            <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3, margin: 0, lineHeight: 1.5 }}>
               {isJa
                 ? '毎日の気持ちを書くことで、自分のリズムが見えてきます'
                 : 'Writing daily helps you understand your own rhythm'}

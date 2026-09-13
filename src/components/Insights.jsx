@@ -202,7 +202,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: 0 }}>
             {isJa ? 'あなたの傾向' : 'Your Trends'}
           </h2>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 6 }}>
             {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
           </p>
         </div>
@@ -251,7 +251,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 6 }}>
             {t('insights.title')}
           </h3>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK3 }}>{t('insights.noData')}</p>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>{t('insights.noData')}</p>
         </div>
       </div>
     );
@@ -264,7 +264,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
         <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: 0 }}>
           {isJa ? 'あなたの傾向' : 'Your Trends'}
         </h2>
-        <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
+        <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 6 }}>
           {isJa ? '過去6周期から見えてきたこと。' : 'Patterns from your recent cycles.'}
         </p>
       </div>
@@ -288,10 +288,10 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                 {hs.value}
               </span>
               {hs.unit && (
-                <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK3 }}>{hs.unit}</span>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>{hs.unit}</span>
               )}
             </div>
-            <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK2, marginTop: 4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4 }}>
               {hs.label}
             </div>
           </div>
@@ -354,7 +354,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                 <span style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: PHASES[k].accent }}>
                   {PHASES[k].kanji}
                 </span>
-                <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK2 }}>
+                <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2 }}>
                   {PHASES[k].days}{isJa ? '日' : 'd'}
                 </span>
               </div>
@@ -385,7 +385,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                   <span
                     style={{
                       fontFamily: MARU,
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: 600,
                       color: INK2,
                       width: 80,
@@ -408,7 +408,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
                       }}
                     />
                   </div>
-                  <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 700, color: INK3, width: 28, textAlign: 'right', flexShrink: 0 }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK3, width: 28, textAlign: 'right', flexShrink: 0 }}>
                     {count}x
                   </span>
                 </div>
@@ -432,7 +432,7 @@ export function Insights({ checkins, cycleData, cycleStats, periodHistory = [] }
           <span style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: ip.accent, lineHeight: 1 }}>
             {ip.kanji}
           </span>
-          <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 600, color: INK2, lineHeight: 1.6, margin: 0 }}>
+          <p style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, lineHeight: 1.6, margin: 0 }}>
             {isJa
               ? '周期のリズムを知ることで、自分に合ったケアが見えてきます。'
               : 'Understanding your cycle rhythm helps you find the care that suits you best.'}

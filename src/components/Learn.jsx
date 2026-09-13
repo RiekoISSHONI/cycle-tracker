@@ -129,7 +129,7 @@ function PhaseSelector({ selected, onSelect, isJa }) {
           >
             <span style={{ fontSize: 14 }}>{p.emoji}</span>
             <span style={{
-              fontFamily: MARU, fontSize: 12.5,
+              fontFamily: MARU, fontSize: 14,
               fontWeight: active ? 700 : 600,
               color: active ? p.deep : INK3,
             }}>
@@ -177,7 +177,7 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
               {isJa ? topic.labelJa : topic.labelEn}
             </div>
             <p style={{
-              fontFamily: MARU, fontSize: 13, fontWeight: 500,
+              fontFamily: MARU, fontSize: 14, fontWeight: 600,
               color: INK2, margin: 0, lineHeight: 1.5,
               display: '-webkit-box',
               WebkitLineClamp: 2,
@@ -198,7 +198,7 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
               <span style={{ fontSize: 16 }}>{p.emoji}</span>
-              <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: p.deep }}>
+              <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.deep }}>
                 {isJa ? p.name : p.en}
               </span>
               {selectedPhase === currentPhase && (
@@ -212,7 +212,7 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
               )}
             </div>
             <p style={{
-              fontFamily: MARU, fontSize: 14, fontWeight: 500,
+              fontFamily: MARU, fontSize: 14, fontWeight: 600,
               color: p.deep, margin: 0, lineHeight: 1.65,
             }}>
               {content}
@@ -221,7 +221,7 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
 
           {/* Content for other phases for comparison */}
           <div style={{
-            fontFamily: MARU, fontSize: 11, fontWeight: 700, color: INK3,
+            fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK3,
             textTransform: 'uppercase', letterSpacing: 1, marginBottom: 12,
           }}>
             {isJa ? '他のフェーズ' : 'Other Phases'}
@@ -237,12 +237,12 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
                   <span style={{ fontSize: 14 }}>{op.emoji}</span>
-                  <span style={{ fontFamily: MARU, fontSize: 12, fontWeight: 700, color: op.deep }}>
+                  <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: op.deep }}>
                     {isJa ? op.name : op.en}
                   </span>
                 </div>
                 <p style={{
-                  fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                  fontFamily: MARU, fontSize: 14, fontWeight: 600,
                   color: INK2, margin: 0, lineHeight: 1.55,
                 }}>
                   {otherContent}
@@ -283,7 +283,7 @@ export function Learn({ phase = 'ki' }) {
           <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK }}>
             {isJa ? 'カラダを知る' : 'Know Your Body'}
           </div>
-          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 4 }}>
             {isJa ? 'フェーズごとの変化を学ぼう' : 'Learn what changes each phase'}
           </div>
         </div>
@@ -308,13 +308,13 @@ export function Learn({ phase = 'ki' }) {
               <div style={{ fontFamily: MARU, fontSize: 18, fontWeight: 700, color: INK }}>
                 {isJa ? p.name : p.en}
               </div>
-              <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
+              <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK3 }}>
                 {isJa ? `${p.season} · ${p.clinical}` : `${p.seasonEn} · ${p.clinicalEn}`}
               </div>
             </div>
           </div>
           <p style={{
-            fontFamily: MARU, fontSize: 13.5, fontWeight: 500,
+            fontFamily: MARU, fontSize: 13.5, fontWeight: 600,
             color: p.deep, margin: 0, lineHeight: 1.6,
             fontStyle: 'italic',
           }}>
