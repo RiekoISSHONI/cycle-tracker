@@ -437,19 +437,17 @@ input[type="date"] {
    Animations
    ========================================== */
 
-/* Logo pulse — gentle breathing glow */
+/* Logo pulse — slow breathing glow, no scale */
 @keyframes logo-pulse {
   0%, 100% {
-    box-shadow: 0 8px 24px rgba(242,232,140,0.2);
-    transform: scale(1);
+    box-shadow: 0 6px 20px rgba(242,232,140,0.2);
   }
   50% {
-    box-shadow: 0 12px 32px rgba(242,232,140,0.4);
-    transform: scale(1.03);
+    box-shadow: 0 10px 40px rgba(242,232,140,0.5), 0 0 60px rgba(242,232,140,0.15);
   }
 }
 .logo-pulse {
-  animation: logo-pulse 8s ease-in-out infinite;
+  animation: logo-pulse 6s ease-in-out infinite;
 }
 
 /* Circle CTA hover & active */
