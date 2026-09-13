@@ -51,7 +51,7 @@ const SKINCARE_POOL = [
 
 /* ── nutrition section ─────────────────────────────────────── */
 function NutritionSection({ phaseKey, isJa, t }) {
-  const [showTcm, setShowTcm] = useState(false);
+  const [showTcm, setShowTcm] = useState(true);
   const legacyPhase = PHASE_TO_LEGACY[phaseKey];
   const p = PHASES[phaseKey];
 
@@ -85,17 +85,6 @@ function NutritionSection({ phaseKey, isJa, t }) {
         {/* Toggle between modern/TCM */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
           <button
-            onClick={() => setShowTcm(false)}
-            style={{
-              padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
-              background: !showTcm ? p.soft : CREAM2,
-              fontFamily: MARU, fontSize: 12, fontWeight: 700,
-              color: !showTcm ? p.deep : INK3,
-            }}
-          >
-            {isJa ? '科学' : 'Science'}
-          </button>
-          <button
             onClick={() => setShowTcm(true)}
             style={{
               padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
@@ -105,6 +94,17 @@ function NutritionSection({ phaseKey, isJa, t }) {
             }}
           >
             {isJa ? '漢方' : 'TCM'}
+          </button>
+          <button
+            onClick={() => setShowTcm(false)}
+            style={{
+              padding: '6px 14px', borderRadius: 20, border: 'none', cursor: 'pointer',
+              background: !showTcm ? p.soft : CREAM2,
+              fontFamily: MARU, fontSize: 12, fontWeight: 700,
+              color: !showTcm ? p.deep : INK3,
+            }}
+          >
+            {isJa ? '科学' : 'Science'}
           </button>
         </div>
 
