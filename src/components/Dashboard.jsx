@@ -6,6 +6,7 @@ import { PhaseSticker } from './PhaseSticker';
 import { getDailyQuote } from '../utils/quotes';
 import { CardPopup } from './CardPopup';
 import { analyzeCycleDayPatterns, getWeeklyPredictions } from '../utils/predictions';
+import { MoodFaceMini } from './MoodFaces';
 
 /* ── copy table ─────────────────────────────────────────────── */
 const PLAY_COPY = {
@@ -158,9 +159,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
                 {dayLabels[i]}
               </span>
 
-              <span style={{ fontSize: 22, lineHeight: 1 }}>
-                {MOOD_EMOJI[Math.round(f.mood || 3)]}
-              </span>
+              <MoodFaceMini level={Math.round(f.mood || 3)} size={28} />
 
               <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 14 }}>
                 {ENERGY_BARS.slice(1).map((lvl) => (
@@ -726,7 +725,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                           {lbl}
                         </div>
                       </div>
-                      <span style={{ fontSize: 24, lineHeight: 1 }}>{MOOD_EMOJI[Math.round(f.mood || 3)]}</span>
+                      <MoodFaceMini level={Math.round(f.mood || 3)} size={28} />
                       <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 18 }}>
                         {ENERGY_BARS.slice(1).map(lvl => (
                           <div key={lvl} style={{
