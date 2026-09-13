@@ -21,7 +21,7 @@ export function Header({ onNavigateSettings }) {
         <span style={{
           fontFamily: '"Fredoka", "Zen Maru Gothic", sans-serif',
           fontSize: 22, fontWeight: 600,
-          letterSpacing: -0.3, color: '#F2E88C',
+          letterSpacing: -0.3, color: '#fff',
         }}>meguri</span>
       </div>
 
