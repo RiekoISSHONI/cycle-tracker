@@ -69,7 +69,7 @@ export function WorkMode({ phase, cycleDay }) {
         {/* ── Header ──────────────────────────────────────── */}
         <div style={{ marginBottom: 24 }}>
           <h1 style={{
-            fontFamily: PMINCHO,
+            fontFamily: MARU,
             fontSize: 26,
             fontWeight: 700,
             color: INK,
@@ -107,9 +107,9 @@ export function WorkMode({ phase, cycleDay }) {
               {p.emoji}
             </div>
             <span style={{
-              fontFamily: PMINCHO,
+              fontFamily: MARU,
               fontSize: 17,
-              fontWeight: 600,
+              fontWeight: 700,
               color: INK,
             }}>
               {isJa ? 'エネルギー' : 'Energy Level'}
@@ -157,9 +157,9 @@ export function WorkMode({ phase, cycleDay }) {
             </svg>
           </div>
           <h2 style={{
-            fontFamily: PMINCHO,
+            fontFamily: MARU,
             fontSize: 17,
-            fontWeight: 600,
+            fontWeight: 700,
             color: INK,
             margin: 0,
           }}>
@@ -196,9 +196,9 @@ export function WorkMode({ phase, cycleDay }) {
               {/* text */}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <h3 style={{
-                  fontFamily: PMINCHO,
+                  fontFamily: MARU,
                   fontSize: 15,
-                  fontWeight: 600,
+                  fontWeight: 700,
                   color: INK,
                   margin: 0,
                   lineHeight: 1.4,

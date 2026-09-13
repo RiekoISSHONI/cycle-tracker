@@ -147,7 +147,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 18, paddingBottom: 16 }}>
       {/* Title */}
       <div style={{ textAlign: 'center', padding: '0 16px' }}>
-        <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: 0 }}>
+        <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: 0 }}>
           {isJa ? '周期の暦' : 'Cycle Calendar'}
         </h2>
         <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 6 }}>
@@ -395,7 +395,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 16 }}>📝</span>
-              <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+              <span style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
                 {isJa ? 'ジャーナル履歴' : 'Journal History'}
               </span>
             </div>
@@ -538,7 +538,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
               textAlign: 'center',
             }}>
               <div style={{ fontSize: 28, marginBottom: 8 }}>🔒</div>
-              <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 6 }}>
+              <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 6 }}>
                 {isJa
                   ? `${lockedCount}件のジャーナルがロックされています`
                   : `${lockedCount} journal ${lockedCount === 1 ? 'entry' : 'entries'} locked`}

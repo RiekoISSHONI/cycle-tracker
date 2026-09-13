@@ -80,7 +80,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
           <WeekIcon color={INK3} />
-          <span style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+          <span style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {t('predictions.forecastTitle')}
           </span>
         </div>
@@ -112,7 +112,7 @@ function ForecastCard({ forecast, cycleLength, isJa, t }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <WeekIcon color={INK3} />
           <div>
-            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
               {t('predictions.forecastTitle')}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -249,7 +249,7 @@ function TodaysFocusCard({ phaseKey, isJa, t }) {
           </svg>
         </div>
         <div>
-          <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+          <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {isJa ? '今日のフォーカス' : "Today's Focus"}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -362,7 +362,7 @@ function PartnerGuideCard({ phaseKey, isJa, t }) {
               </svg>
             </div>
             <div style={{ flex: 1, textAlign: 'left' }}>
-              <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK }}>
+              <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK }}>
                 {isJa ? 'パートナーガイド' : 'Partner Guide'}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginTop: 1 }}>
@@ -528,7 +528,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
 
         {/* 2 ── greeting */}
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: INK }}>
+          <div style={{ fontFamily: MARU, fontSize: 28, fontWeight: 700, color: INK }}>
             {copy.hi}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 500, color: INK2, marginTop: 4 }}>
@@ -573,7 +573,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
                     <span style={{ fontSize: 16 }}>{p.emoji}</span>
                     <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.deep }}>{phaseName}</span>
                   </div>
-                  <div style={{ fontFamily: PMINCHO, fontSize: 48, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                  <div style={{ fontFamily: MARU, fontSize: 48, fontWeight: 700, color: INK, lineHeight: 1 }}>
                     {isJa ? `${day}日目` : `Day ${day}`}
                   </div>
                   <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: INK2, marginTop: 6, lineHeight: 1.5 }}>
@@ -588,7 +588,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               {/* Phase header */}
               <div style={{ textAlign: 'center', marginBottom: 20 }}>
                 <div style={{ fontFamily: PMINCHO, fontSize: 56, color: p.accent, lineHeight: 1 }}>{p.kanji}</div>
-                <div style={{ fontFamily: PMINCHO, fontSize: 22, fontWeight: 600, color: INK, marginTop: 8 }}>
+                <div style={{ fontFamily: MARU, fontSize: 22, fontWeight: 700, color: INK, marginTop: 8 }}>
                   {isJa ? `${p.name} · ${p.reading}` : `${p.en} Phase`}
                 </div>
                 <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
@@ -607,7 +607,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
               </div>
 
               <div style={{ textAlign: 'center', marginBottom: 20 }}>
-                <div style={{ fontFamily: PMINCHO, fontSize: 42, fontWeight: 600, color: INK, lineHeight: 1 }}>
+                <div style={{ fontFamily: MARU, fontSize: 42, fontWeight: 700, color: INK, lineHeight: 1 }}>
                   {isJa ? `${day}日目` : `Day ${day}`}
                 </div>
               </div>
@@ -844,7 +844,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
             </svg>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK, lineHeight: 1.4 }}>
               {isJa ? '今日のチェックイン' : 'Daily Check-in'}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3, marginTop: 2 }}>
@@ -893,7 +893,7 @@ export function Dashboard({ cycleInfo, checkins = [], cycleLength = 28, periodHi
             </svg>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK, lineHeight: 1.4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK, lineHeight: 1.4 }}>
               {isJa ? '今日の気持ちを書こう' : "Write about today"}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 500, color: INK3, marginTop: 2 }}>

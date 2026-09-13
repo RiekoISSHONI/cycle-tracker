@@ -173,7 +173,7 @@ function TopicCard({ topic, selectedPhase, currentPhase, isJa }) {
             {topic.emoji}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 15, fontWeight: 600, color: INK, marginBottom: 4 }}>
+            <div style={{ fontFamily: MARU, fontSize: 15, fontWeight: 700, color: INK, marginBottom: 4 }}>
               {isJa ? topic.labelJa : topic.labelEn}
             </div>
             <p style={{
@@ -280,7 +280,7 @@ export function Learn({ phase = 'ki' }) {
       <div style={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
         <div style={{ marginBottom: 16 }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK }}>
+          <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK }}>
             {isJa ? 'カラダを知る' : 'Know Your Body'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
@@ -305,7 +305,7 @@ export function Learn({ phase = 'ki' }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
             <span style={{ fontSize: 22 }}>{p.emoji}</span>
             <div>
-              <div style={{ fontFamily: PMINCHO, fontSize: 18, fontWeight: 600, color: INK }}>
+              <div style={{ fontFamily: MARU, fontSize: 18, fontWeight: 700, color: INK }}>
                 {isJa ? p.name : p.en}
               </div>
               <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>

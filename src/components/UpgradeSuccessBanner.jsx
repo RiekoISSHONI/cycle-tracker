@@ -51,7 +51,7 @@ export function UpgradeSuccessBanner({ onDismiss }) {
         </div>
         <div style={{ flex: 1 }}>
           <div style={{
-            fontFamily: PMINCHO, fontSize: 16, fontWeight: 600, color: INK,
+            fontFamily: MARU, fontSize: 16, fontWeight: 700, color: INK,
           }}>
             {isJa ? 'プレミアムへようこそ' : 'Welcome to Premium'}
           </div>

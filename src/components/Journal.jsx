@@ -131,7 +131,7 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 18 }}>{p.emoji}</span>
           <div>
-            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
               {displayDate}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3 }}>
@@ -462,7 +462,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
           <div>
-            <div style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK }}>
+            <div style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK }}>
               {isJa ? 'ジャーナル' : 'Journal'}
             </div>
             <div style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, marginTop: 4 }}>
@@ -576,7 +576,7 @@ export function Journal({ phase = 'ki', cycleDay = 1, entries = [], onSaveEntry,
             ...GLASS, borderRadius: 24,
           }}>
             <div style={{ fontSize: 40, marginBottom: 12 }}>📝</div>
-            <div style={{ fontFamily: PMINCHO, fontSize: 18, fontWeight: 600, color: INK, marginBottom: 6 }}>
+            <div style={{ fontFamily: MARU, fontSize: 18, fontWeight: 700, color: INK, marginBottom: 6 }}>
               {isJa ? 'まだエントリーがありません' : 'No entries yet'}
             </div>
             <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK3, margin: 0, lineHeight: 1.5 }}>

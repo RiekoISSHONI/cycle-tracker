@@ -71,7 +71,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{ fontFamily: PMINCHO, fontSize: 36, fontWeight: 600, color: p.accent, lineHeight: 1 }}>
             {p.kanji}
           </div>
-          <div style={{ fontFamily: PMINCHO, fontSize: 24, fontWeight: 600, color: INK, marginTop: 8 }}>
+          <div style={{ fontFamily: MARU, fontSize: 24, fontWeight: 700, color: INK, marginTop: 8 }}>
             {isJa ? 'パートナーガイド' : 'Partner Guide'}
           </div>
           <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 500, color: INK2, marginTop: 4 }}>
@@ -94,7 +94,7 @@ export function PartnerGuide({ cycleInfo }) {
               </div>
             </div>
             <div>
-              <div style={{ fontFamily: PMINCHO, fontSize: 28, fontWeight: 600, color: INK, lineHeight: 1 }}>
+              <div style={{ fontFamily: MARU, fontSize: 28, fontWeight: 700, color: INK, lineHeight: 1 }}>
                 {isJa ? `${day}日目` : `Day ${day}`}
               </div>
               <div style={{
@@ -114,7 +114,7 @@ export function PartnerGuide({ cycleInfo }) {
         <div style={{
           ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
         }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, marginBottom: 10 }}>
+          <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, marginBottom: 10 }}>
             {isJa ? '今の気持ち' : 'How she may feel'}
           </div>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: INK2, margin: 0, lineHeight: 1.6 }}>
@@ -126,7 +126,7 @@ export function PartnerGuide({ cycleInfo }) {
         <div style={{
           ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
         }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.me.deep, marginBottom: 10 }}>
+          <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: PHASES.me.deep, marginBottom: 10 }}>
             {isJa ? 'サポート方法' : 'How to support'}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -149,7 +149,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{
             ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
           }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.sei.deep, marginBottom: 10 }}>
+            <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: PHASES.sei.deep, marginBottom: 10 }}>
               {isJa ? '避けた方がいいこと' : 'What to avoid'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -173,7 +173,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{
             ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
           }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.ki.deep, marginBottom: 12 }}>
+            <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: PHASES.ki.deep, marginBottom: 12 }}>
               {isJa ? 'こう言ってあげて' : 'Words that help'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -200,7 +200,7 @@ export function PartnerGuide({ cycleInfo }) {
           <div style={{
             ...GLASS, borderRadius: 24, padding: '18px 20px', marginBottom: 14,
           }}>
-            <div style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: PHASES.mi.deep, marginBottom: 10 }}>
+            <div style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: PHASES.mi.deep, marginBottom: 10 }}>
               {isJa ? '今日できること' : 'Things you can do'}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -226,7 +226,7 @@ export function PartnerGuide({ cycleInfo }) {
           borderRadius: 24, padding: '18px 20px',
           marginBottom: 14,
         }}>
-          <div style={{ fontFamily: PMINCHO, fontSize: 14, fontWeight: 600, color: p.deep, marginBottom: 6 }}>
+          <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: p.deep, marginBottom: 6 }}>
             {isJa ? '今日のヒント' : "Today's tip"}
           </div>
           <p style={{ fontFamily: MARU, fontSize: 13, fontWeight: 500, color: p.deep, margin: 0, lineHeight: 1.55 }}>

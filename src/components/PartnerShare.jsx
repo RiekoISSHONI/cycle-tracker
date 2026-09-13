@@ -141,7 +141,7 @@ function ShareCard({ cycleInfo, options, lang }) {
     <div className={`rounded-2xl overflow-hidden ${colors.bg} border ${colors.border}`} style={{ width: '320px' }}>
       {/* Header */}
       <div className="p-4 text-center border-b border-white/50">
-        <div className="text-2xl font-display text-terra mb-1">巡</div>
+        <div className="text-2xl font-mincho text-terra mb-1">巡</div>
         <div className="text-xs text-muted">Meguri</div>
       </div>
 
@@ -149,7 +149,7 @@ function ShareCard({ cycleInfo, options, lang }) {
       <div className="p-4 text-center">
         <p className="text-sm text-muted mb-1">{t('partnerShare.sheIsIn')}</p>
         <div className="flex items-center justify-center gap-2 mb-1">
-          <span className="text-3xl font-display">{kanjiChar}</span>
+          <span className="text-3xl font-mincho">{kanjiChar}</span>
           <h2 className="text-xl font-display text-bark">{phaseName}</h2>
         </div>
         <p className="text-sm text-muted">

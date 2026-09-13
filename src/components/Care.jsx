@@ -72,7 +72,7 @@ function NutritionSection({ phaseKey, isJa, t }) {
             <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" />
           </svg>
         </div>
-        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
           {isJa ? '栄養' : 'Nutrition'}
         </h3>
       </div>
@@ -303,7 +303,7 @@ function ExerciseSection({ phaseKey, isJa, t, dayOfYear }) {
             <path d="M6.5 13L12 15l5.5-2" />
           </svg>
         </div>
-        <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
           {isJa ? '運動' : 'Exercise'}
         </h3>
       </div>
@@ -459,7 +459,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
               <path d="M16 10a4 4 0 01-8 0" />
             </svg>
           </div>
-          <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
+          <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
             {isJa ? 'おすすめアイテム' : 'Phase Picks'}
           </h3>
         </div>
@@ -720,7 +720,7 @@ export function Care({ phase, onNavigateSettings }) {
             </div>
           </div>
 
-          <h2 style={{ fontFamily: PMINCHO, fontSize: 26, fontWeight: 600, color: INK, margin: '0 0 10px' }}>
+          <h2 style={{ fontFamily: MARU, fontSize: 26, fontWeight: 700, color: INK, margin: '0 0 10px' }}>
             {isJa ? '今週の養生' : "This Week's Care"}
           </h2>
 
@@ -774,7 +774,7 @@ export function Care({ phase, onNavigateSettings }) {
               >
                 {groupIcon[group.key](tc.accent)}
               </div>
-              <h3 style={{ fontFamily: PMINCHO, fontSize: 17, fontWeight: 600, color: INK, margin: 0 }}>
+              <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
                 {isJa ? group.titleJa : group.titleEn}
               </h3>
             </div>

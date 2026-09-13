@@ -83,7 +83,7 @@ export function CardPopup({ preview, detail, title, accentBg, style = {}, disabl
               borderBottom: '1px solid rgba(59,51,53,0.06)',
             }}>
               <span style={{
-                fontFamily: PMINCHO, fontSize: 18, fontWeight: 600, color: INK,
+                fontFamily: MARU, fontSize: 18, fontWeight: 700, color: INK,
               }}>
                 {title || ''}
               </span>
