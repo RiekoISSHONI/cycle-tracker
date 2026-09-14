@@ -134,6 +134,12 @@ export function Shop({ phase }) {
 
       {/* Product Categories */}
       <CategorySection
+        title={t('nutrition.categories.soups', 'Soups')}
+        products={products.soups}
+        onProductTap={handleProductTap}
+      />
+
+      <CategorySection
         title={t('nutrition.categories.teas')}
         products={products.teas}
         onProductTap={handleProductTap}
