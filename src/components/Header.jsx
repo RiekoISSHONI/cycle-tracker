@@ -18,11 +18,38 @@ export function Header({ onNavigateSettings }) {
         }}>
           <LogoMark fontSize={20} color="#fff" bgColor="#F2E88C" />
         </div>
+        {/* wordmark: "megurı" with dotless i + sun replacing the dot */}
         <span style={{
           fontFamily: LOGO_WORD,
           fontSize: 22, fontWeight: 600,
           letterSpacing: -0.3, color: '#fff',
-        }}>meguri</span>
+        }}>
+          megur
+          <span style={{ position: 'relative', display: 'inline-block' }}>
+            &#305;{/* U+0131 dotless i */}
+            <svg
+              viewBox="0 0 24 24"
+              width="10" height="10"
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: 1,
+                transform: 'translateX(-50%)',
+                pointerEvents: 'none',
+              }}
+            >
+              <circle cx="12" cy="12" r="5" fill="#fff" />
+              <line x1="12" y1="1" x2="12" y2="5" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+              <line x1="12" y1="19" x2="12" y2="23" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+              <line x1="1" y1="12" x2="5" y2="12" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+              <line x1="19" y1="12" x2="23" y2="12" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+              <line x1="4.2" y1="4.2" x2="7" y2="7" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+              <line x1="17" y1="17" x2="19.8" y2="19.8" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+              <line x1="4.2" y1="19.8" x2="7" y2="17" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+              <line x1="17" y1="7" x2="19.8" y2="4.2" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </span>
+        </span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
