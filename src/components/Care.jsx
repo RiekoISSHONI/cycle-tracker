@@ -3,7 +3,7 @@ import { PHASES, PHASE_ORDER, PHASE_RANGES, CYCLE_LEN, CARD, INK, INK2, INK3, LI
 import { useTranslation } from 'react-i18next';
 import { trackImpression, trackClick, rotatePool, getDayOfYear } from '../utils/analytics';
 import { trackContent } from '../utils/telemetry';
-import { getCleanAffiliateUrl, openAffiliateLink, isCalmModeEnabled } from '../utils/commerce';
+import { getCleanAffiliateUrl, openAffiliateLink, isCalmModeEnabled, getIHerbUrl, IHERB_CODE } from '../utils/commerce';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const PHASE_TO_LEGACY = { sei: 'menstrual', me: 'follicular', ki: 'ovulatory', mi: 'luteal' };
@@ -241,34 +241,34 @@ const WORKOUT_VIDEOS = {
 const SHOP_PRODUCTS = {
   sei: [
     { id: 'sei-heat', nameJa: 'あずき温熱パッド', nameEn: 'Azuki Heat Pad', priceJa: '¥1,980', priceEn: '$15', asin: 'B08GY3LW5M', cat: 'wellness' },
-    { id: 'sei-iron', nameJa: '鉄分サプリ（ヘム鉄）', nameEn: 'Heme Iron Supplement', priceJa: '¥1,480', priceEn: '$12', asin: 'B07TVCFNZ6', cat: 'supplement' },
-    { id: 'sei-ginger', nameJa: '有機ジンジャーティー', nameEn: 'Organic Ginger Tea', priceJa: '¥890', priceEn: '$8', asin: 'B003D4F2US', cat: 'tea' },
+    { id: 'sei-iron', nameJa: '鉄分サプリ（ヘム鉄）', nameEn: 'Heme Iron Supplement', priceJa: '¥1,480', priceEn: '$12', iherb: 'heme iron supplement', cat: 'supplement' },
+    { id: 'sei-ginger', nameJa: '有機ジンジャーティー', nameEn: 'Organic Ginger Tea', priceJa: '¥890', priceEn: '$8', iherb: 'Traditional Medicinals ginger tea', cat: 'tea' },
     { id: 'sei-blanket', nameJa: 'ぬくぬくブランケット', nameEn: 'Cozy Weighted Blanket', priceJa: '¥4,980', priceEn: '$35', asin: 'B082WR6DBP', cat: 'comfort' },
-    { id: 'sei-mag', nameJa: 'マグネシウムオイル', nameEn: 'Magnesium Spray', priceJa: '¥1,290', priceEn: '$10', asin: 'B00BPUY3W0', cat: 'wellness' },
-    { id: 'sei-choco', nameJa: 'オーガニック高カカオチョコ', nameEn: 'Organic Dark Chocolate 85%', priceJa: '¥680', priceEn: '$6', asin: 'B003XNTJSA', cat: 'food' },
+    { id: 'sei-mag', nameJa: 'マグネシウムオイル', nameEn: 'Magnesium Spray', priceJa: '¥1,290', priceEn: '$10', iherb: 'magnesium oil spray', cat: 'wellness' },
+    { id: 'sei-choco', nameJa: 'オーガニック高カカオチョコ', nameEn: 'Organic Dark Chocolate 85%', priceJa: '¥680', priceEn: '$6', iherb: 'dark chocolate 85%', cat: 'food' },
   ],
   me: [
     { id: 'me-band', nameJa: 'トレーニングバンドセット', nameEn: 'Resistance Band Set', priceJa: '¥1,680', priceEn: '$13', asin: 'B07149YC8P', cat: 'fitness' },
-    { id: 'me-matcha', nameJa: '有機抹茶パウダー', nameEn: 'Organic Matcha Powder', priceJa: '¥1,580', priceEn: '$14', asin: 'B00DDT116M', cat: 'tea' },
-    { id: 'me-vitc', nameJa: 'ビタミンCセラム', nameEn: 'Vitamin C Serum', priceJa: '¥1,980', priceEn: '$16', asin: 'B01M4MCUAF', cat: 'skincare' },
+    { id: 'me-matcha', nameJa: '有機抹茶パウダー', nameEn: 'Organic Matcha Powder', priceJa: '¥1,580', priceEn: '$14', iherb: 'organic matcha powder', cat: 'tea' },
+    { id: 'me-vitc', nameJa: 'ビタミンCセラム', nameEn: 'Vitamin C Serum', priceJa: '¥1,980', priceEn: '$16', iherb: 'vitamin C serum', cat: 'skincare' },
     { id: 'me-journal', nameJa: 'セルフケアジャーナル', nameEn: 'Self-Care Journal', priceJa: '¥1,280', priceEn: '$11', asin: 'B09DFGZFMJ', cat: 'stationery' },
-    { id: 'me-probiotic', nameJa: 'プロバイオティクス', nameEn: 'Women\'s Probiotic', priceJa: '¥2,380', priceEn: '$18', asin: 'B078GRLKR4', cat: 'supplement' },
+    { id: 'me-probiotic', nameJa: 'プロバイオティクス', nameEn: 'Women\'s Probiotic', priceJa: '¥2,380', priceEn: '$18', iherb: 'women probiotic', cat: 'supplement' },
     { id: 'me-bottle', nameJa: '保温ボトル', nameEn: 'Insulated Water Bottle', priceJa: '¥2,180', priceEn: '$17', asin: 'B08LDG4V9V', cat: 'fitness' },
   ],
   ki: [
-    { id: 'ki-spf', nameJa: 'ミネラル日焼け止め', nameEn: 'Mineral Sunscreen SPF50', priceJa: '¥1,680', priceEn: '$14', asin: 'B00Y21TWWU', cat: 'skincare' },
-    { id: 'ki-electro', nameJa: '電解質パウダー', nameEn: 'Electrolyte Powder', priceJa: '¥1,980', priceEn: '$15', asin: 'B082X4M9PL', cat: 'supplement' },
-    { id: 'ki-jasmine', nameJa: 'ジャスミン緑茶', nameEn: 'Jasmine Green Tea', priceJa: '¥980', priceEn: '$9', asin: 'B000WG7SJC', cat: 'tea' },
+    { id: 'ki-spf', nameJa: 'ミネラル日焼け止め', nameEn: 'Mineral Sunscreen SPF50', priceJa: '¥1,680', priceEn: '$14', iherb: 'mineral sunscreen SPF 50', cat: 'skincare' },
+    { id: 'ki-electro', nameJa: '電解質パウダー', nameEn: 'Electrolyte Powder', priceJa: '¥1,980', priceEn: '$15', iherb: 'electrolyte powder', cat: 'supplement' },
+    { id: 'ki-jasmine', nameJa: 'ジャスミン緑茶', nameEn: 'Jasmine Green Tea', priceJa: '¥980', priceEn: '$9', iherb: 'jasmine green tea organic', cat: 'tea' },
     { id: 'ki-yoga', nameJa: 'ヨガマット', nameEn: 'Non-Slip Yoga Mat', priceJa: '¥3,280', priceEn: '$25', asin: 'B01LP0V1AI', cat: 'fitness' },
-    { id: 'ki-mist', nameJa: 'ローズウォーターミスト', nameEn: 'Rosewater Face Mist', priceJa: '¥1,180', priceEn: '$10', asin: 'B00UGJ5FMU', cat: 'skincare' },
-    { id: 'ki-nuts', nameJa: 'ミックスナッツ', nameEn: 'Organic Trail Mix', priceJa: '¥1,280', priceEn: '$11', asin: 'B071Z9WGB2', cat: 'food' },
+    { id: 'ki-mist', nameJa: 'ローズウォーターミスト', nameEn: 'Rosewater Face Mist', priceJa: '¥1,180', priceEn: '$10', iherb: 'Heritage Store rosewater', cat: 'skincare' },
+    { id: 'ki-nuts', nameJa: 'ミックスナッツ', nameEn: 'Organic Trail Mix', priceJa: '¥1,280', priceEn: '$11', iherb: 'organic trail mix nuts', cat: 'food' },
   ],
   mi: [
-    { id: 'mi-lavender', nameJa: 'ラベンダーオイル', nameEn: 'Lavender Essential Oil', priceJa: '¥980', priceEn: '$9', asin: 'B06Y2GZ8FN', cat: 'wellness' },
-    { id: 'mi-epsom', nameJa: 'エプソムソルト', nameEn: 'Epsom Salt Bath Soak', priceJa: '¥1,280', priceEn: '$10', asin: 'B004N762WS', cat: 'wellness' },
-    { id: 'mi-cinnamon', nameJa: 'シナモンティー', nameEn: 'Cinnamon Spice Tea', priceJa: '¥780', priceEn: '$7', asin: 'B0014AVG2Q', cat: 'tea' },
-    { id: 'mi-mask', nameJa: 'シートマスク（保湿）', nameEn: 'Hydrating Sheet Masks', priceJa: '¥1,480', priceEn: '$12', asin: 'B00JEV544S', cat: 'skincare' },
-    { id: 'mi-b6', nameJa: 'ビタミンB6', nameEn: 'Vitamin B6 Supplement', priceJa: '¥890', priceEn: '$8', asin: 'B0019LTGOU', cat: 'supplement' },
+    { id: 'mi-lavender', nameJa: 'ラベンダーオイル', nameEn: 'Lavender Essential Oil', priceJa: '¥980', priceEn: '$9', iherb: 'lavender essential oil', cat: 'wellness' },
+    { id: 'mi-epsom', nameJa: 'エプソムソルト', nameEn: 'Epsom Salt Bath Soak', priceJa: '¥1,280', priceEn: '$10', iherb: 'epsom salt bath', cat: 'wellness' },
+    { id: 'mi-cinnamon', nameJa: 'シナモンティー', nameEn: 'Cinnamon Spice Tea', priceJa: '¥780', priceEn: '$7', iherb: 'cinnamon spice tea', cat: 'tea' },
+    { id: 'mi-mask', nameJa: 'シートマスク（保湿）', nameEn: 'Hydrating Sheet Masks', priceJa: '¥1,480', priceEn: '$12', iherb: 'hydrating sheet mask', cat: 'skincare' },
+    { id: 'mi-b6', nameJa: 'ビタミンB6', nameEn: 'Vitamin B6 Supplement', priceJa: '¥890', priceEn: '$8', iherb: 'vitamin B6', cat: 'supplement' },
     { id: 'mi-candle', nameJa: 'ソイキャンドル', nameEn: 'Soy Wax Candle', priceJa: '¥1,580', priceEn: '$13', asin: 'B07FSFKJPC', cat: 'comfort' },
   ],
 };
@@ -426,7 +426,7 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
     setSavedItems(prev => {
       const exists = prev.find(i => i.id === product.id);
       if (exists) return prev.filter(i => i.id !== product.id);
-      return [...prev, { id: product.id, name: isJa ? product.nameJa : product.nameEn, asin: product.asin, addedAt: Date.now() }];
+      return [...prev, { id: product.id, name: isJa ? product.nameJa : product.nameEn, asin: product.asin, iherb: product.iherb || null, addedAt: Date.now() }];
     });
   };
 
@@ -513,17 +513,20 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
                   {item.name}
                 </span>
                 <a
-                  href={`https://www.amazon.co.jp/dp/${item.asin}?tag=meguri-22`}
+                  href={item.iherb
+                    ? getIHerbUrl(item.iherb)
+                    : `https://www.amazon.co.jp/dp/${item.asin}?tag=meguri-22`}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                   referrerPolicy="no-referrer"
                   onClick={() => { trackClick('shop', item.id); trackContent('click', 'shop', item.id); }}
                   style={{
                     fontFamily: MARU, fontSize: 14, fontWeight: 700,
-                    color: PHASES.ki.accent, textDecoration: 'none',
+                    color: item.iherb ? '#3A7D34' : PHASES.ki.accent,
+                    textDecoration: 'none',
                   }}
                 >
-                  {isJa ? '購入' : 'Buy'}
+                  {item.iherb ? 'iHerb' : (isJa ? '購入' : 'Buy')}
                 </a>
               </div>
             ))}
@@ -588,20 +591,23 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
 
             {/* Buy button */}
             <a
-              href={`https://www.amazon.co.jp/dp/${product.asin}?tag=meguri-22`}
+              href={product.iherb
+                ? getIHerbUrl(product.iherb)
+                : `https://www.amazon.co.jp/dp/${product.asin}?tag=meguri-22`}
               target="_blank"
               rel="noopener noreferrer nofollow"
               referrerPolicy="no-referrer"
               onClick={() => handleBuy(product)}
               style={{
                 padding: '6px 14px', borderRadius: 20, border: 'none',
-                background: PHASES.ki.tint,
+                background: product.iherb ? '#E8F5E8' : PHASES.ki.tint,
                 fontFamily: MARU, fontSize: 14, fontWeight: 700,
-                color: PHASES.ki.accent, textDecoration: 'none',
+                color: product.iherb ? '#3A7D34' : PHASES.ki.accent,
+                textDecoration: 'none',
                 whiteSpace: 'nowrap', flexShrink: 0,
               }}
             >
-              Amazon
+              {product.iherb ? 'iHerb' : 'Amazon'}
             </a>
           </div>
         );
@@ -615,6 +621,168 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
         {isJa
           ? '※ リンクにはアフィリエイトが含まれます。購入費用の一部が運営に充てられます。'
           : 'Links include affiliate tags. A small portion of purchases supports Meguri.'}
+      </div>
+    </div>
+  );
+}
+
+/* ── immune health section (luteal & menstrual) ─────────── */
+const IMMUNE_DATA = {
+  mi: {
+    points: [
+      {
+        icon: '🧬',
+        titleEn: 'Progesterone Drop',
+        titleJa: 'プロゲステロン低下',
+        textEn: 'Progesterone drops sharply before your period, temporarily lowering immune defenses — the "period cold" is real.',
+        textJa: '生理前にプロゲステロンが急低下し、免疫機能が一時的に下がります。「生理前の風邪」は本当です。',
+      },
+      {
+        icon: '😰',
+        titleEn: 'Cortisol & Stress',
+        titleJa: 'コルチゾールとストレス',
+        textEn: 'Hormonal shifts raise cortisol sensitivity. High cortisol is a known immune suppressant.',
+        textJa: 'ホルモンの変動でコルチゾール感受性が高まり、免疫が抑制されやすくなります。',
+      },
+      {
+        icon: '😴',
+        titleEn: 'Sleep Disruption',
+        titleJa: '睡眠の乱れ',
+        textEn: 'Pre-menstrual hormone changes can disturb your circadian rhythm and sleep quality.',
+        textJa: '生理前のホルモン変化が体内時計と睡眠の質を乱すことがあります。',
+      },
+      {
+        icon: '🩸',
+        titleEn: 'Iron & Nutrient Dips',
+        titleJa: '鉄分・栄養素の低下',
+        textEn: 'Early bleeding or fatigue can cause slight nutrient dips that affect immune cell activity.',
+        textJa: '出血初期の鉄分低下が免疫細胞の働きに影響することがあります。',
+      },
+    ],
+    tipsEn: ['Prioritize 7-9 hours of sleep', 'Eat vitamin C & zinc-rich foods', 'Reduce stress with gentle movement', 'Warm soups and herbal teas'],
+    tipsJa: ['7〜9時間の睡眠を優先', 'ビタミンCと亜鉛を含む食品を摂る', '軽い運動でストレスを軽減', '温かいスープやハーブティーを'],
+  },
+  sei: {
+    points: [
+      {
+        icon: '🩸',
+        titleEn: 'Low Hormone Window',
+        titleJa: 'ホルモン低下期',
+        textEn: 'Both estrogen and progesterone are at their lowest, which can leave your immune system less active.',
+        textJa: 'エストロゲンとプロゲステロンが最も低い状態で、免疫の働きが弱まることがあります。',
+      },
+      {
+        icon: '🥄',
+        titleEn: 'Iron Loss',
+        titleJa: '鉄分の喪失',
+        textEn: 'Menstrual bleeding depletes iron stores. Low iron directly reduces immune function.',
+        textJa: '月経出血で鉄分が減少。鉄分不足は直接的に免疫機能を低下させます。',
+      },
+      {
+        icon: '🔥',
+        titleEn: 'Inflammation Shifts',
+        titleJa: '炎症の変化',
+        textEn: 'Prostaglandins that cause cramps also affect immune signaling. Your body is managing competing demands.',
+        textJa: '痙攣を引き起こすプロスタグランジンが免疫シグナルにも影響します。',
+      },
+    ],
+    tipsEn: ['Iron-rich foods: spinach, red meat, lentils', 'Rest more than usual', 'Stay warm — cold can worsen symptoms', 'Gentle movement over intense exercise'],
+    tipsJa: ['鉄分を含む食品: ほうれん草、赤身肉、レンズ豆', 'いつもより多く休息を取る', '体を温める — 冷えは症状を悪化させます', '激しい運動より穏やかな動きを'],
+  },
+};
+
+function ImmuneHealthSection({ phaseKey, isJa }) {
+  const data = IMMUNE_DATA[phaseKey];
+  if (!data) return null;
+  const p = PHASES[phaseKey];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {/* Section header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 10,
+          background: p.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
+          {isJa ? '免疫ケア' : 'Immune Health'}
+        </h3>
+      </div>
+
+      {/* Explainer card */}
+      <div style={{
+        background: CARD, borderRadius: 24,
+        boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
+        padding: '18px 18px',
+        border: `1.5px solid ${p.line}`,
+      }}>
+        <div style={{
+          fontFamily: PMINCHO, fontSize: 15, fontWeight: 600,
+          color: p.deep, marginBottom: 14, lineHeight: 1.5,
+        }}>
+          {isJa
+            ? phaseKey === 'mi'
+              ? 'なぜ生理前に風邪をひきやすいの？'
+              : 'なぜ生理中は免疫が低下するの？'
+            : phaseKey === 'mi'
+              ? 'Why you may catch a cold before your period'
+              : 'Why your immune system dips during your period'}
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {data.points.map((pt, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{pt.icon}</span>
+              <div>
+                <div style={{
+                  fontFamily: MARU, fontSize: 14, fontWeight: 700,
+                  color: INK, marginBottom: 2,
+                }}>
+                  {isJa ? pt.titleJa : pt.titleEn}
+                </div>
+                <div style={{
+                  fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                  color: INK2, lineHeight: 1.55,
+                }}>
+                  {isJa ? pt.textJa : pt.textEn}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Tips card */}
+      <div style={{
+        background: p.tint, borderRadius: 20,
+        padding: '14px 16px',
+        border: `1.5px solid ${p.line}`,
+      }}>
+        <div style={{
+          fontFamily: MARU, fontSize: 13, fontWeight: 700,
+          color: p.deep, marginBottom: 8,
+        }}>
+          {isJa ? '💪 免疫サポートのヒント' : '💪 Immune Support Tips'}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {(isJa ? data.tipsJa : data.tipsEn).map((tip, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{
+                width: 5, height: 5, borderRadius: '50%',
+                background: p.accent, flexShrink: 0,
+              }} />
+              <span style={{
+                fontFamily: MARU, fontSize: 13, fontWeight: 600,
+                color: p.deep, lineHeight: 1.5,
+              }}>{tip}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -842,6 +1010,11 @@ export function Care({ phase, onNavigateSettings }) {
           </div>
         );
       })}
+
+      {/* Immune health — luteal & menstrual phases */}
+      {(phaseKey === 'mi' || phaseKey === 'sei') && (
+        <ImmuneHealthSection phaseKey={phaseKey} isJa={isJa} t={t} />
+      )}
 
       {/* Shopping list */}
       <ShoppingSection phaseKey={phaseKey} isJa={isJa} dayOfYear={dayOfYear} />

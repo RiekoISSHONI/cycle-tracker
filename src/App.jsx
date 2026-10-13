@@ -17,6 +17,7 @@ import { Journal } from './components/Journal';
 import { WorkMode } from './components/WorkMode';
 import { PartnerGuide } from './components/PartnerGuide';
 import { ConsentModal } from './components/ConsentModal';
+import { LandingPage } from './components/LandingPage';
 import { UpgradeSuccessBanner } from './components/UpgradeSuccessBanner';
 
 function App() {
@@ -135,6 +136,9 @@ function App() {
 
   const { justUpgraded, dismissUpgraded } = useSubscription();
 
+  // Landing page → Consent → Setup → Dashboard
+  const [showConsent, setShowConsent] = useState(false);
+  if (!hasConsented && !showConsent) return <LandingPage onGetStarted={() => setShowConsent(true)} />;
   if (!hasConsented) return <ConsentModal onAccept={handleAcceptConsent} />;
   if (!cycleData) return <CycleSetup onSave={handleSetup} />;
 

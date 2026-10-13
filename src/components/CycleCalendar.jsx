@@ -6,8 +6,7 @@ import { downloadCalendarEvents } from '../utils/calendarExport';
 import { useSubscription, FREE_LIMITS, STRIPE_LINKS, isStripeConfigured } from '../contexts/SubscriptionContext';
 import { CardPopup } from './CardPopup';
 import { trackFeature } from '../utils/telemetry';
-
-const MOOD_EMOJI = ['', '😔', '😕', '😐', '😊', '😄'];
+import { MoodFaceMini } from './MoodFaces';
 
 export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
   const { t, i18n } = useTranslation();
@@ -456,7 +455,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           {entry.mood > 0 && (
-                            <span style={{ fontSize: 14 }}>{MOOD_EMOJI[entry.mood]}</span>
+                            <MoodFaceMini level={entry.mood} size={18} />
                           )}
                           <span style={{
                             fontFamily: MARU, fontSize: 11, fontWeight: 600,
@@ -496,7 +495,7 @@ export function CycleCalendar({ cycleInfo, journalEntries = [] }) {
                           </div>
                         </div>
                         {entry.mood > 0 && (
-                          <span style={{ fontSize: 28, marginLeft: 'auto' }}>{MOOD_EMOJI[entry.mood]}</span>
+                          <span style={{ marginLeft: 'auto' }}><MoodFaceMini level={entry.mood} size={32} /></span>
                         )}
                       </div>
 

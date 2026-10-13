@@ -56,14 +56,20 @@ const TIPS = {
       "Focus on completing tasks rather than starting new ones.",
       "Extra sleep isn't laziness - your body needs more rest now.",
       "Reduce caffeine to help with any anxiety or mood swings.",
-      "Cozy activities like reading and baking match your energy perfectly."
+      "Cozy activities like reading and baking match your energy perfectly.",
+      "Your immune system dips before your period. Vitamin C and zinc-rich foods help.",
+      "The 'period cold' is real — progesterone drops lower your immune defenses.",
+      "Prioritize sleep this week. Good rest is the strongest immune booster."
     ],
     ja: [
       "食欲増加は正常です - マグネシウム摂取のためにダークチョコレートを選んで。",
       "新しいことを始めるより、タスクを完了することに集中。",
       "余分な睡眠は怠けではありません - 今、体はより多くの休息を必要としています。",
       "不安や気分の変動を和らげるためにカフェインを減らしましょう。",
-      "読書やお菓子作りなど、居心地の良い活動があなたのエネルギーにぴったり。"
+      "読書やお菓子作りなど、居心地の良い活動があなたのエネルギーにぴったり。",
+      "生理前は免疫が低下します。ビタミンCと亜鉛を含む食品が助けになります。",
+      "「生理前の風邪」は本当です — プロゲステロン低下で免疫力が下がります。",
+      "今週は睡眠を優先して。良い睡眠は最強の免疫ブースターです。"
     ]
   }
 };

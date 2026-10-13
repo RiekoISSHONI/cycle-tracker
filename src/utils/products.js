@@ -84,7 +84,7 @@ export const PHASE_PRODUCTS = {
         description: 'Clinically shown to reduce menstrual pain. TCM: warms uterus, moves blood stasis.',
         evidence: 'Multiple studies show ginger reduces dysmenorrhea as effectively as ibuprofen',
         tcmUse: 'Warms the middle jiao, dispels cold, promotes blood circulation',
-        amazonSearch: 'Traditional+Medicinals+Ginger+Tea+organic'
+        iherbSearch: 'Traditional Medicinals ginger tea',
       },
       {
         name: 'Red Date & Ginger Tea',
@@ -92,7 +92,7 @@ export const PHASE_PRODUCTS = {
         description: 'Iron-rich red dates + warming ginger. TCM classic for menstruation.',
         evidence: 'Red dates (jujube) shown to increase hemoglobin and reduce fatigue',
         tcmUse: 'Hong Zao tonifies blood and qi, calms the spirit',
-        amazonSearch: 'red+date+ginger+tea+instant'
+        iherbSearch: 'Prince of Peace red date ginger tea',
       }
     ],
     foods: [
@@ -102,7 +102,7 @@ export const PHASE_PRODUCTS = {
         description: 'Rich in iron, vitamin C, antioxidants. TCM blood tonic.',
         evidence: 'Studies show improved energy, immune function, and antioxidant status',
         tcmUse: 'Gou Qi Zi nourishes liver blood and kidney yin',
-        amazonSearch: 'Navitas+organic+goji+berries'
+        iherbSearch: 'Navitas organic goji berries',
       },
       {
         name: 'Grass-Fed Bone Broth',
@@ -110,7 +110,7 @@ export const PHASE_PRODUCTS = {
         description: 'Collagen, minerals, amino acids for recovery. TCM: deeply nourishing.',
         evidence: 'Provides glycine, proline for gut healing and joint support',
         tcmUse: 'Animal broths tonify qi, blood, and essence (jing)',
-        amazonSearch: 'Kettle+Fire+bone+broth'
+        iherbSearch: 'bone broth collagen',
       },
       {
         name: 'Dark Chocolate 85%',
@@ -118,7 +118,7 @@ export const PHASE_PRODUCTS = {
         description: 'High magnesium reduces cramps. Contains iron and antioxidants.',
         evidence: 'Magnesium-rich foods may help reduce menstrual discomfort',
         tcmUse: 'Bitter flavor clears heat, supports heart',
-        amazonSearch: 'Lindt+Excellence+85+dark+chocolate'
+        iherbSearch: 'dark chocolate 85',
       }
     ],
     skincare: [
@@ -128,7 +128,7 @@ export const PHASE_PRODUCTS = {
         description: 'Deep hydration for dry, dull menstrual phase skin.',
         evidence: 'HA holds 1000x its weight in water, proven to increase skin hydration',
         tcmUse: 'Replenishes yin fluids lost during menstruation',
-        amazonSearch: 'The+Ordinary+Hyaluronic+Acid+Serum'
+        iherbSearch: 'The Ordinary hyaluronic acid serum',
       },
       {
         name: 'Rosehip Seed Oil',
@@ -136,7 +136,7 @@ export const PHASE_PRODUCTS = {
         description: 'Rich in vitamins A & C. Restores glow to tired skin.',
         evidence: 'Studies show improved skin elasticity and brightness',
         tcmUse: 'Nourishes blood, restores luster to blood-deficient skin',
-        amazonSearch: 'Trilogy+Rosehip+Oil'
+        iherbSearch: 'Trilogy rosehip oil',
       },
       {
         name: 'Gentle Cream Cleanser',
@@ -144,7 +144,7 @@ export const PHASE_PRODUCTS = {
         description: 'Non-stripping cleanser for sensitive menstrual phase skin.',
         evidence: 'Ceramides restore skin barrier, gentle surfactants preserve moisture',
         tcmUse: 'Protects wei qi (defensive energy) of skin',
-        amazonSearch: 'CeraVe+Hydrating+Cream+Cleanser'
+        iherbSearch: 'CeraVe hydrating cleanser',
       }
     ]
   },
@@ -192,7 +192,7 @@ export const PHASE_PRODUCTS = {
         description: 'L-theanine for calm focus. Antioxidants support estrogen metabolism.',
         evidence: 'EGCG in green tea supports healthy estrogen balance',
         tcmUse: 'Clears heat, benefits the eyes, calms the mind',
-        amazonSearch: 'Jade+Leaf+organic+matcha'
+        iherbSearch: 'Jade Leaf organic matcha',
       },
       {
         name: 'Chrysanthemum Tea',
@@ -200,7 +200,7 @@ export const PHASE_PRODUCTS = {
         description: 'Cooling tea for rising energy phase. Supports liver and eyes.',
         evidence: 'Contains luteolin and apigenin with anti-inflammatory effects',
         tcmUse: 'Ju Hua clears liver heat, brightens the eyes',
-        amazonSearch: 'chrysanthemum+tea+organic'
+        iherbSearch: 'chrysanthemum tea organic',
       }
     ],
     foods: [
@@ -210,7 +210,7 @@ export const PHASE_PRODUCTS = {
         description: 'Calcium, iron, zinc. TCM kidney and blood tonic.',
         evidence: 'High in lignans that support hormone balance',
         tcmUse: 'Hei Zhi Ma nourishes liver and kidney, moistens intestines',
-        amazonSearch: 'Kevala+organic+black+sesame+seeds'
+        iherbSearch: 'organic black sesame seeds',
       },
       {
         name: 'Ground Flaxseed',
@@ -218,7 +218,7 @@ export const PHASE_PRODUCTS = {
         description: 'Lignans support estrogen balance. Omega-3 reduces inflammation.',
         evidence: 'Flax lignans shown to modulate estrogen metabolism',
         tcmUse: 'Moistens intestines, supports healthy bowel movements',
-        amazonSearch: 'Spectrum+ground+flaxseed+organic'
+        iherbSearch: 'Spectrum ground flaxseed organic',
       },
       {
         name: 'Kimchi (Probiotic)',
@@ -226,7 +226,7 @@ export const PHASE_PRODUCTS = {
         description: 'Live probiotics support gut-hormone axis. Fermented vegetables.',
         evidence: 'Gut microbiome crucial for estrogen metabolism (estrobolome)',
         tcmUse: 'Fermented foods support spleen qi and digestion',
-        amazonSearch: 'Mother+in+Laws+Kimchi'
+        amazonSearch: 'Mother+in+Laws+Kimchi',
       }
     ],
     skincare: [
@@ -236,7 +236,7 @@ export const PHASE_PRODUCTS = {
         description: 'Brightening serum - perfect for improving follicular skin.',
         evidence: 'L-ascorbic acid boosts collagen synthesis and brightens',
         tcmUse: 'Supports rising yang energy, brightens complexion',
-        amazonSearch: 'Vitamin+C+Serum+Skinceuticals'
+        iherbSearch: 'vitamin C serum ferulic acid',
       },
       {
         name: 'Gentle Exfoliating Toner',
@@ -244,7 +244,7 @@ export const PHASE_PRODUCTS = {
         description: 'Salicylic acid to refine pores as skin strengthens.',
         evidence: 'BHA penetrates pores, reduces congestion',
         tcmUse: 'Clears stagnation, promotes smooth qi flow in skin',
-        amazonSearch: 'Paulas+Choice+BHA+Exfoliant'
+        iherbSearch: 'Paula\'s Choice BHA exfoliant',
       },
       {
         name: 'Green Tea Moisturizer',
@@ -252,7 +252,7 @@ export const PHASE_PRODUCTS = {
         description: 'Light, antioxidant-rich hydration for balanced skin.',
         evidence: 'EGCG in green tea has proven antioxidant benefits',
         tcmUse: 'Clears heat while moistening, balances skin',
-        amazonSearch: 'Innisfree+Green+Tea+Moisturizer'
+        iherbSearch: 'Innisfree green tea moisturizer',
       }
     ]
   },
@@ -290,7 +290,7 @@ export const PHASE_PRODUCTS = {
         description: 'Cooling and refreshing. May help balance androgens.',
         evidence: 'Studies show spearmint/peppermint may reduce excess androgens',
         tcmUse: 'Bo He disperses wind-heat, soothes liver qi',
-        amazonSearch: 'Traditional+Medicinals+Peppermint'
+        iherbSearch: 'Traditional Medicinals peppermint tea',
       },
       {
         name: 'Jasmine Green Tea',
@@ -298,7 +298,7 @@ export const PHASE_PRODUCTS = {
         description: 'Light caffeine for peak energy. Calming jasmine aroma.',
         evidence: 'Green tea polyphenols support antioxidant status',
         tcmUse: 'Mo Li Hua soothes liver qi, uplifts mood',
-        amazonSearch: 'Numi+organic+jasmine+green+tea'
+        iherbSearch: 'Numi organic jasmine green tea',
       }
     ],
     foods: [
@@ -308,7 +308,7 @@ export const PHASE_PRODUCTS = {
         description: 'Vitamin E for follicle health. Healthy fats for hormones.',
         evidence: 'Vitamin E shown to improve endometrial thickness',
         tcmUse: 'Moistens lungs, lubricates intestines',
-        amazonSearch: 'Blue+Diamond+raw+almonds+whole+natural'
+        iherbSearch: 'raw almonds organic',
       },
       {
         name: 'Wild Salmon (Canned)',
@@ -316,7 +316,7 @@ export const PHASE_PRODUCTS = {
         description: 'Omega-3 DHA/EPA and vitamin D for fertility support.',
         evidence: 'Omega-3s reduce inflammation and support ovulation',
         tcmUse: 'Tonifies qi and blood, warms yang',
-        amazonSearch: 'Wild+Planet+wild+salmon'
+        iherbSearch: 'Wild Planet wild salmon',
       },
       {
         name: 'Cruciferous Sprouts',
@@ -324,7 +324,7 @@ export const PHASE_PRODUCTS = {
         description: 'Sulforaphane supports estrogen detox pathways.',
         evidence: 'DIM and I3C from crucifers support healthy estrogen metabolism',
         tcmUse: 'Clears heat, resolves toxins',
-        amazonSearch: 'broccoli+sprouts+seeds+organic'
+        iherbSearch: 'broccoli sprouts seeds organic',
       }
     ],
     skincare: [
@@ -334,7 +334,7 @@ export const PHASE_PRODUCTS = {
         description: 'Essential - skin is more photosensitive at peak estrogen.',
         evidence: 'UV protection prevents hyperpigmentation during hormone peak',
         tcmUse: 'Protects wei qi, prevents heat damage',
-        amazonSearch: 'Supergoop+Unseen+Sunscreen+SPF+50'
+        iherbSearch: 'mineral sunscreen SPF 50',
       },
       {
         name: 'Rosewater Face Mist',
@@ -342,7 +342,7 @@ export const PHASE_PRODUCTS = {
         description: 'Maintain your natural glow with hydrating mist.',
         evidence: 'Rose has anti-inflammatory properties, hydrates without heaviness',
         tcmUse: 'Mei Gui Hua (rose) soothes liver qi, beautifies skin',
-        amazonSearch: 'Heritage+Store+Rosewater'
+        iherbSearch: 'Heritage Store rosewater',
       },
       {
         name: 'Light Gel Moisturizer',
@@ -350,7 +350,7 @@ export const PHASE_PRODUCTS = {
         description: 'Lightweight hydration - skin is already thriving.',
         evidence: 'Hyaluronic acid gel provides hydration without occlusion',
         tcmUse: 'Light formula supports abundant yin without creating dampness',
-        amazonSearch: 'Neutrogena+Hydro+Boost+Gel+Cream'
+        iherbSearch: 'Neutrogena Hydro Boost gel cream',
       }
     ]
   },
@@ -396,7 +396,7 @@ export const PHASE_PRODUCTS = {
         description: 'Calms anxiety, improves sleep. Reduces PMS symptoms.',
         evidence: 'Clinical trials show chamomile reduces anxiety and improves sleep',
         tcmUse: 'Calms the spirit, harmonizes the stomach',
-        amazonSearch: 'Traditional+Medicinals+Chamomile'
+        iherbSearch: 'Traditional Medicinals chamomile tea',
       },
       {
         name: 'Cinnamon Tea',
@@ -404,7 +404,7 @@ export const PHASE_PRODUCTS = {
         description: 'Balances blood sugar, reduces cravings. Warming for yang.',
         evidence: 'Cinnamon improves insulin sensitivity and reduces sugar cravings',
         tcmUse: 'Rou Gui warms kidney yang, disperses cold',
-        amazonSearch: 'Pukka+cinnamon+tea'
+        iherbSearch: 'Pukka cinnamon tea',
       },
       {
         name: 'Longan Red Date Tea',
@@ -412,7 +412,7 @@ export const PHASE_PRODUCTS = {
         description: 'TCM classic for blood and qi. Calms the mind.',
         evidence: 'Longan contains iron and antioxidants, promotes calmness',
         tcmUse: 'Long Yan Rou tonifies heart blood, calms spirit',
-        amazonSearch: 'longan+red+date+tea'
+        iherbSearch: 'longan red date tea',
       }
     ],
     foods: [
@@ -422,7 +422,7 @@ export const PHASE_PRODUCTS = {
         description: 'Omega-3 ALA, melatonin for sleep. TCM kidney yang tonic.',
         evidence: 'Walnuts improve mood and contain natural melatonin',
         tcmUse: 'He Tao Ren warms kidney yang, nourishes brain',
-        amazonSearch: 'organic+raw+walnuts'
+        iherbSearch: 'organic raw walnuts',
       },
       {
         name: 'Sweet Potato',
@@ -430,7 +430,7 @@ export const PHASE_PRODUCTS = {
         description: 'Complex carbs support serotonin. Rich in vitamin A.',
         evidence: 'Complex carbs increase tryptophan uptake for serotonin production',
         tcmUse: 'Tonifies spleen qi, nourishes blood',
-        amazonSearch: 'organic+sweet+potato'
+        amazonSearch: 'organic+sweet+potato',
       },
       {
         name: 'Pumpkin Seeds',
@@ -438,7 +438,7 @@ export const PHASE_PRODUCTS = {
         description: 'High zinc and magnesium for PMS relief.',
         evidence: 'Zinc and magnesium-rich foods may help reduce PMS symptoms',
         tcmUse: 'Supports kidney function, rich in oils',
-        amazonSearch: 'Go+Raw+organic+pumpkin+seeds'
+        iherbSearch: 'Go Raw organic pumpkin seeds',
       }
     ],
     skincare: [
@@ -448,7 +448,7 @@ export const PHASE_PRODUCTS = {
         description: 'BHA cleanser to prevent luteal phase breakouts.',
         evidence: 'Salicylic acid penetrates pores, prevents acne formation',
         tcmUse: 'Clears heat and dampness that cause skin eruptions',
-        amazonSearch: 'CeraVe+SA+Cleanser'
+        iherbSearch: 'CeraVe SA cleanser',
       },
       {
         name: 'Niacinamide Serum',
@@ -456,7 +456,7 @@ export const PHASE_PRODUCTS = {
         description: 'Controls oil, minimizes pores, calms inflammation.',
         evidence: 'Niacinamide proven to reduce sebum and inflammation',
         tcmUse: 'Clears heat without drying, balances skin',
-        amazonSearch: 'The+Ordinary+Niacinamide+Zinc'
+        iherbSearch: 'The Ordinary niacinamide zinc',
       },
       {
         name: 'Tea Tree Spot Treatment',
@@ -464,7 +464,7 @@ export const PHASE_PRODUCTS = {
         description: 'Natural spot treatment for hormonal breakouts.',
         evidence: 'Tea tree oil has antibacterial properties comparable to benzoyl peroxide',
         tcmUse: 'Clears heat-toxins, resolves skin eruptions',
-        amazonSearch: 'The+Body+Shop+Tea+Tree+Oil'
+        iherbSearch: 'tea tree oil spot treatment',
       },
       {
         name: 'Clay Mask',
@@ -472,7 +472,7 @@ export const PHASE_PRODUCTS = {
         description: 'Deep cleansing for oily, congested luteal skin.',
         evidence: 'Bentonite clay absorbs excess sebum and draws out impurities',
         tcmUse: 'Clears dampness and heat from skin',
-        amazonSearch: 'Aztec+Secret+Indian+Healing+Clay'
+        iherbSearch: 'Aztec Secret Indian healing clay',
       }
     ]
   }
@@ -482,13 +482,27 @@ export function getAmazonSearchUrl(searchTerm) {
   return `https://www.amazon.com/s?k=${searchTerm}`;
 }
 
+/** iHerb rewards code — single source of truth in commerce.js, imported here for convenience */
+const IHERB_CODE = 'RDS5323';
+
+export function getIHerbSearchUrl(searchTerm) {
+  return `https://www.iherb.com/search?kw=${encodeURIComponent(searchTerm)}&rcode=${IHERB_CODE}`;
+}
+
 export function getProductUrl(product) {
   // Partner products use direct URLs (future revenue partnerships)
   if (product.isPartner && product.directUrl) {
     return product.directUrl;
   }
+  // Prefer iHerb when available
+  if (product.iherbSearch) {
+    return getIHerbSearchUrl(product.iherbSearch);
+  }
   // Fallback to Amazon affiliate search
-  return getAmazonSearchUrl(product.amazonSearch);
+  if (product.amazonSearch) {
+    return getAmazonSearchUrl(product.amazonSearch);
+  }
+  return null;
 }
 
 export function isPartnerProduct(product) {

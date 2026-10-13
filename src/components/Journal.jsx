@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PHASES, MARU, PMINCHO, INK, INK2, INK3, CREAM2, LINE } from '../utils/phases';
+import { MoodFace, MoodFaceMini } from './MoodFaces';
 
 /* ── phase-aware journal prompts ──────────────────────────── */
 const PROMPTS = {
@@ -178,28 +179,28 @@ function EntryEditor({ date, cycleDay, phaseKey, existing, onSave, onCancel, isJ
         onBlur={(e) => { e.target.style.borderColor = LINE; }}
       />
 
-      {/* Mood selector */}
+      {/* Mood selector (illustrated faces) */}
       <div style={{ marginTop: 14 }}>
         <div style={{ fontFamily: MARU, fontSize: 14, fontWeight: 700, color: INK3, marginBottom: 8 }}>
           {isJa ? '今の気分' : 'How are you feeling?'}
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 6 }}>
           {[1, 2, 3, 4, 5].map(m => (
             <button
               key={m}
               onClick={() => setMood(mood === m ? 0 : m)}
               style={{
-                width: 44, height: 44, borderRadius: 14,
+                width: 48, height: 48, borderRadius: 14,
                 background: mood === m ? p.soft : CREAM2,
                 border: mood === m ? `2px solid ${p.accent}` : '2px solid transparent',
-                cursor: 'pointer', fontSize: 22,
+                cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s',
                 WebkitTapHighlightColor: 'transparent',
-                padding: 0,
+                padding: 4,
               }}
             >
-              {MOOD_EMOJI[m]}
+              <MoodFace level={m} size={34} />
             </button>
           ))}
         </div>
@@ -283,7 +284,7 @@ function EntryCard({ entry, isJa, onEdit, onDelete }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           {entry.mood > 0 && (
-            <span style={{ fontSize: 16 }}>{MOOD_EMOJI[entry.mood]}</span>
+            <MoodFaceMini level={entry.mood} size={22} />
           )}
           <span style={{
             fontFamily: MARU, fontSize: 11, fontWeight: 600,

@@ -10,6 +10,18 @@
 
 const REDIRECT_BASE = 'https://go.meguri.app/p';
 
+/** iHerb rewards code — appended as ?rcode= to all iHerb links */
+export const IHERB_CODE = 'RDS5323';
+
+/**
+ * Generate iHerb search URL with rewards code
+ * @param {string} searchTerm - iHerb search keywords
+ * @returns {string} iHerb affiliate URL
+ */
+export function getIHerbUrl(searchTerm) {
+  return `https://www.iherb.com/search?kw=${encodeURIComponent(searchTerm)}&rcode=${IHERB_CODE}`;
+}
+
 /**
  * Generate a clean affiliate URL with no user/cycle context
  * @param {Object} product - Product with affiliate link
@@ -22,6 +34,11 @@ export function getCleanAffiliateUrl(product) {
 
   if (product.affiliateUrl) {
     return product.affiliateUrl;
+  }
+
+  // Prefer iHerb when available
+  if (product.iherb) {
+    return getIHerbUrl(product.iherb);
   }
 
   if (product.asin) {

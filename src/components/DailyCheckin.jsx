@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PHASES, MARU, PMINCHO, INK, INK2, INK3, CARD, CREAM2, LINE, LINE2, phaseKeyFromLegacy } from '../utils/phases';
+import { MoodFaceSelector, MoodFaceMini, MOOD_PALETTE } from './MoodFaces';
+import { predictMood, getMoodPredictionText } from '../utils/moodPrediction';
 
 /* ── symptom keys (unchanged for data compat) & display labels ── */
 const SYMPTOM_KEYS = [
@@ -66,6 +68,21 @@ export function DailyCheckin({
   const [flow, setFlow] = useState(existingData?.flow || 0);
   const [symptoms, setSymptoms] = useState(existingData?.symptoms || []);
   const [saved, setSaved] = useState(false);
+
+  /* mood prediction */
+  const moodPrediction = predictMood({
+    cycleDay,
+    cycleLength: 28,
+    checkins,
+  });
+  const moodPredictionText = moodPrediction
+    ? getMoodPredictionText({
+        phaseKey,
+        predictedMood: moodPrediction.predicted,
+        confidence: moodPrediction.confidence,
+        lang,
+      })
+    : '';
 
   const toggleSymptom = (key) => {
     setSymptoms((prev) =>
@@ -222,17 +239,40 @@ export function DailyCheckin({
         </p>
       </div>
 
-      {/* ── 3. Mood scale ── */}
+      {/* ── 3. Mood scale (illustrated faces) ── */}
       <div style={{ background: CARD, borderRadius: 18, padding: '20px 20px 22px', boxShadow: CARD_SHADOW, position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 14 }}>
           <span style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK }}>
             {ja ? '気分' : 'Mood'}
           </span>
-          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: p.accent }}>
+          <span style={{ fontFamily: MARU, fontSize: 14, fontWeight: 600, color: MOOD_PALETTE[mood]?.accent || p.accent }}>
             {MOOD_HINTS[lang][mood]}
           </span>
         </div>
-        <Segments count={5} value={mood} onChange={setMood} />
+        <MoodFaceSelector value={mood} onChange={setMood} size={44} gap={6} />
+
+        {/* Mood prediction hint */}
+        {moodPrediction && moodPrediction.confidence !== 'low' && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            marginTop: 14,
+            padding: '10px 14px',
+            borderRadius: 14,
+            background: MOOD_PALETTE[moodPrediction.predicted]?.bg || CREAM2,
+          }}>
+            <MoodFaceMini level={moodPrediction.predicted} size={24} />
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ fontFamily: MARU, fontSize: 12, fontWeight: 600, color: INK2, margin: 0, lineHeight: 1.4 }}>
+                {ja ? '予測' : 'Predicted'}
+                <span style={{ fontFamily: MARU, fontSize: 11, fontWeight: 600, color: INK3, marginLeft: 6 }}>
+                  {moodPredictionText}
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── 4. Energy scale ── */}
