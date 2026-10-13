@@ -626,6 +626,168 @@ function ShoppingSection({ phaseKey, isJa, dayOfYear }) {
   );
 }
 
+/* ── immune health section (luteal & menstrual) ─────────── */
+const IMMUNE_DATA = {
+  mi: {
+    points: [
+      {
+        icon: '🧬',
+        titleEn: 'Progesterone Drop',
+        titleJa: 'プロゲステロン低下',
+        textEn: 'Progesterone drops sharply before your period, temporarily lowering immune defenses — the "period cold" is real.',
+        textJa: '生理前にプロゲステロンが急低下し、免疫機能が一時的に下がります。「生理前の風邪」は本当です。',
+      },
+      {
+        icon: '😰',
+        titleEn: 'Cortisol & Stress',
+        titleJa: 'コルチゾールとストレス',
+        textEn: 'Hormonal shifts raise cortisol sensitivity. High cortisol is a known immune suppressant.',
+        textJa: 'ホルモンの変動でコルチゾール感受性が高まり、免疫が抑制されやすくなります。',
+      },
+      {
+        icon: '😴',
+        titleEn: 'Sleep Disruption',
+        titleJa: '睡眠の乱れ',
+        textEn: 'Pre-menstrual hormone changes can disturb your circadian rhythm and sleep quality.',
+        textJa: '生理前のホルモン変化が体内時計と睡眠の質を乱すことがあります。',
+      },
+      {
+        icon: '🩸',
+        titleEn: 'Iron & Nutrient Dips',
+        titleJa: '鉄分・栄養素の低下',
+        textEn: 'Early bleeding or fatigue can cause slight nutrient dips that affect immune cell activity.',
+        textJa: '出血初期の鉄分低下が免疫細胞の働きに影響することがあります。',
+      },
+    ],
+    tipsEn: ['Prioritize 7-9 hours of sleep', 'Eat vitamin C & zinc-rich foods', 'Reduce stress with gentle movement', 'Warm soups and herbal teas'],
+    tipsJa: ['7〜9時間の睡眠を優先', 'ビタミンCと亜鉛を含む食品を摂る', '軽い運動でストレスを軽減', '温かいスープやハーブティーを'],
+  },
+  sei: {
+    points: [
+      {
+        icon: '🩸',
+        titleEn: 'Low Hormone Window',
+        titleJa: 'ホルモン低下期',
+        textEn: 'Both estrogen and progesterone are at their lowest, which can leave your immune system less active.',
+        textJa: 'エストロゲンとプロゲステロンが最も低い状態で、免疫の働きが弱まることがあります。',
+      },
+      {
+        icon: '🥄',
+        titleEn: 'Iron Loss',
+        titleJa: '鉄分の喪失',
+        textEn: 'Menstrual bleeding depletes iron stores. Low iron directly reduces immune function.',
+        textJa: '月経出血で鉄分が減少。鉄分不足は直接的に免疫機能を低下させます。',
+      },
+      {
+        icon: '🔥',
+        titleEn: 'Inflammation Shifts',
+        titleJa: '炎症の変化',
+        textEn: 'Prostaglandins that cause cramps also affect immune signaling. Your body is managing competing demands.',
+        textJa: '痙攣を引き起こすプロスタグランジンが免疫シグナルにも影響します。',
+      },
+    ],
+    tipsEn: ['Iron-rich foods: spinach, red meat, lentils', 'Rest more than usual', 'Stay warm — cold can worsen symptoms', 'Gentle movement over intense exercise'],
+    tipsJa: ['鉄分を含む食品: ほうれん草、赤身肉、レンズ豆', 'いつもより多く休息を取る', '体を温める — 冷えは症状を悪化させます', '激しい運動より穏やかな動きを'],
+  },
+};
+
+function ImmuneHealthSection({ phaseKey, isJa }) {
+  const data = IMMUNE_DATA[phaseKey];
+  if (!data) return null;
+  const p = PHASES[phaseKey];
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {/* Section header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 4px' }}>
+        <div style={{
+          width: 28, height: 28, borderRadius: 10,
+          background: p.soft,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+        </div>
+        <h3 style={{ fontFamily: MARU, fontSize: 17, fontWeight: 700, color: INK, margin: 0 }}>
+          {isJa ? '免疫ケア' : 'Immune Health'}
+        </h3>
+      </div>
+
+      {/* Explainer card */}
+      <div style={{
+        background: CARD, borderRadius: 24,
+        boxShadow: '0 8px 22px rgba(58,50,38,0.06)',
+        padding: '18px 18px',
+        border: `1.5px solid ${p.line}`,
+      }}>
+        <div style={{
+          fontFamily: PMINCHO, fontSize: 15, fontWeight: 600,
+          color: p.deep, marginBottom: 14, lineHeight: 1.5,
+        }}>
+          {isJa
+            ? phaseKey === 'mi'
+              ? 'なぜ生理前に風邪をひきやすいの？'
+              : 'なぜ生理中は免疫が低下するの？'
+            : phaseKey === 'mi'
+              ? 'Why you may catch a cold before your period'
+              : 'Why your immune system dips during your period'}
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {data.points.map((pt, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+              <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{pt.icon}</span>
+              <div>
+                <div style={{
+                  fontFamily: MARU, fontSize: 14, fontWeight: 700,
+                  color: INK, marginBottom: 2,
+                }}>
+                  {isJa ? pt.titleJa : pt.titleEn}
+                </div>
+                <div style={{
+                  fontFamily: MARU, fontSize: 13, fontWeight: 500,
+                  color: INK2, lineHeight: 1.55,
+                }}>
+                  {isJa ? pt.textJa : pt.textEn}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Tips card */}
+      <div style={{
+        background: p.tint, borderRadius: 20,
+        padding: '14px 16px',
+        border: `1.5px solid ${p.line}`,
+      }}>
+        <div style={{
+          fontFamily: MARU, fontSize: 13, fontWeight: 700,
+          color: p.deep, marginBottom: 8,
+        }}>
+          {isJa ? '💪 免疫サポートのヒント' : '💪 Immune Support Tips'}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {(isJa ? data.tipsJa : data.tipsEn).map((tip, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{
+                width: 5, height: 5, borderRadius: '50%',
+                background: p.accent, flexShrink: 0,
+              }} />
+              <span style={{
+                fontFamily: MARU, fontSize: 13, fontWeight: 600,
+                color: p.deep, lineHeight: 1.5,
+              }}>{tip}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Care({ phase, onNavigateSettings }) {
   const { t, i18n } = useTranslation();
   const isJa = i18n.language.startsWith('ja');
@@ -848,6 +1010,11 @@ export function Care({ phase, onNavigateSettings }) {
           </div>
         );
       })}
+
+      {/* Immune health — luteal & menstrual phases */}
+      {(phaseKey === 'mi' || phaseKey === 'sei') && (
+        <ImmuneHealthSection phaseKey={phaseKey} isJa={isJa} t={t} />
+      )}
 
       {/* Shopping list */}
       <ShoppingSection phaseKey={phaseKey} isJa={isJa} dayOfYear={dayOfYear} />
